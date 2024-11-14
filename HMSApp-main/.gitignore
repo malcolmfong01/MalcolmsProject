@@ -1,0 +1,11 @@
+bin/*
+.project
+.settings/
+.classpath
+*.class
+
+.DS_Store
+Thumbs.db
+/bin/
+.classpath
+out/*
