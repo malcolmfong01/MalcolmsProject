@@ -3,13 +3,13 @@ package view;
 import HMSApp.HMSMain;
 import controller.AuthenticationController;
 import controller.HMSPersonnelController;
+import enums.PersonnelFileType;
 import helper.Helper;
 import model.AppointmentOutcomeRecord;
 import model.Pharmacist;
 import model.PrescribedMedication;
 import model.Prescription;
 import repository.AppointmentOutcomeRecordRepository;
-import repository.PersonnelFileType;
 import view.PharmacistUI;
 
 public class ViewAppointmentOutcomeRecordUI extends MainUI {

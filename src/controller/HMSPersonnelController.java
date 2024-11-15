@@ -8,6 +8,8 @@ import model.*;
 import repository.*;
 import java.util.UUID;
 
+import enums.PersonnelFileType;
+
 public class HMSPersonnelController {
 
     public static String generateUID(PersonnelFileType personnelFileType) {

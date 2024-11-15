@@ -2,6 +2,9 @@ package controller;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import enums.RecordFileType;
+
 import java.util.ArrayList;
 
 import model.AppointmentOutcomeRecord;
@@ -12,7 +15,6 @@ import model.PaymentRecord;
 import model.RecordStatusType;
 import repository.RecordsRepository;
 import repository.AppointmentOutcomeRecordRepository;
-import repository.RecordFileType;
 
 public class RecordsController {
 

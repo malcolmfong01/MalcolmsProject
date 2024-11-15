@@ -1,3 +1,8 @@
+/**
+ * Repository class for managing TreatmentPlans data, including loading and saving
+ * data to a CSV file. This repository maintains a HashMap where each key is a
+ * diagnosis ID, and the corresponding value is a TreatmentPlans object associated with that diagnosis.
+ */
 package repository;
 
 import model.AppointmentOutcomeRecord;
@@ -15,7 +20,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TreatmentPlansRepository extends Repository {
-    private static final String folder = "data";
+    /**
+     * Directory for storing treatment plans CSV files.
+     */
+	private static final String folder = "data";
     private static final String fileName = "treatment_plans_records.csv";
     private static boolean isRepoLoaded = false;
 
@@ -40,7 +48,10 @@ public class TreatmentPlansRepository extends Repository {
     }
 
     /**
-     * Save TreatmentPlans records map to a CSV file
+     * Saves the provided treatment plans records to the specified CSV file.
+     *
+     * @param fileName              the name of the file to save records to
+     * @param diagnosisTreatmentPlansMap the map of treatment plans records to save
      */
     public static void saveTreatmentPlansToCSV(String fileName,
             HashMap<String, TreatmentPlans> diagnosisTreatmentPlansMap) {
@@ -65,13 +76,23 @@ public class TreatmentPlansRepository extends Repository {
             System.out.println("Error saving treatment plans to CSV: " + e.getMessage());
         }
     }
-
+    /**
+     * Saves all treatment plans records in the repository to the CSV file.
+     *
+     * @return true if the save operation is successful
+     */
     public static boolean saveAlltoCSV() {
         TreatmentPlansRepository.saveTreatmentPlansToCSV(fileName, diagnosisToTreatmentPlansMap);
         return true;
     }
 
-    // Convert a TreatmentPlans object to a CSV line
+    /**
+     * Converts a TreatmentPlans object to a CSV-formatted string.
+     *
+     * @param diagnosisID   the ID of the diagnosis associated with the treatment plan
+     * @param treatmentPlan the TreatmentPlans object to convert
+     * @return a CSV-formatted string representing the treatment plan
+     */
     private static String treatmentPlanToCSV(String diagnosisID, TreatmentPlans treatmentPlan) {
         return String.join(",",
                 treatmentPlan.getDiagnosisID(), // Diagnosis ID
@@ -81,8 +102,11 @@ public class TreatmentPlansRepository extends Repository {
     }
 
     /**
-     * Load treatment plans from a CSV file or create an empty file if it doesn't
-     * exist
+     * Loads treatment plans from the specified CSV file, creating an empty file
+     * if not found. Records are added to the provided map.
+     *
+     * @param fileName              the name of the CSV file to load from
+     * @param diagnosisTreatmentPlansMap the map to store the loaded treatment plans
      */
     private static void loadTreatmentPlansFromCSV(String fileName,
             HashMap<String, TreatmentPlans> diagnosisTreatmentPlansMap) {
@@ -122,13 +146,23 @@ public class TreatmentPlansRepository extends Repository {
         }
     }
 
-    // Helper to extract Diagnosis ID from CSV line
+    /**
+     * Extracts the diagnosis ID from a CSV-formatted string.
+     *
+     * @param csv the CSV string containing the diagnosis ID
+     * @return the diagnosis ID extracted from the CSV string
+     */
     private static String getDiagnosisIDFromCSV(String csv) {
         String[] fields = csv.split(",");
         return fields[0];
     }
 
-    // Convert a CSV line to a TreatmentPlans object
+    /**
+     * Converts a CSV-formatted string to a TreatmentPlans object.
+     *
+     * @param csv the CSV string representing the TreatmentPlans
+     * @return a TreatmentPlans object, or null if parsing fails
+     */
     private static TreatmentPlans csvToTreatmentPlan(String csv) {
         String[] fields = csv.split(",");
         try {
@@ -144,7 +178,9 @@ public class TreatmentPlansRepository extends Repository {
     }
 
     /**
-     * Clear all treatment plan data and save an empty file
+     * Clears all treatment plan data in the repository and saves an empty file.
+     *
+     * @return true if the operation is successful
      */
     public static boolean clearTreatmentPlanDatabase() {
         diagnosisToTreatmentPlansMap.clear();
@@ -152,11 +188,19 @@ public class TreatmentPlansRepository extends Repository {
         setRepoLoaded(false);
         return true;
     }
-
+    /**
+     * Checks if the repository has been loaded.
+     *
+     * @return true if the repository is loaded; false otherwise
+     */
     public static boolean isRepoLoaded() {
         return isRepoLoaded;
     }
-
+    /**
+     * Sets the repository load status.
+     *
+     * @param isRepoLoaded true to set the repository as loaded, false otherwise
+     */
     public static void setRepoLoaded(boolean isRepoLoaded) {
         TreatmentPlansRepository.isRepoLoaded = isRepoLoaded;
     }
@@ -175,7 +219,13 @@ public class TreatmentPlansRepository extends Repository {
     // diagnosis ID
     // }
     // }
-
+    
+    /**
+     * Retrieves the TreatmentPlans object for the specified diagnosis ID.
+     *
+     * @param diagnosisID the diagnosis ID for which the treatment plan is requested
+     * @return the TreatmentPlans object for the specified diagnosis ID, or null if not found
+     */
     public static TreatmentPlans getTreatmentPlansByDiagnosisID(String diagnosisID) {
         // Retrieve the treatment plan for the given diagnosisID
         TreatmentPlans treatmentPlan = diagnosisToTreatmentPlansMap.get(diagnosisID);
@@ -188,6 +238,11 @@ public class TreatmentPlansRepository extends Repository {
         }
     }
 
+    /**
+     * Adds a new TreatmentPlans record to the repository.
+     *
+     * @param treatmentplans the TreatmentPlans object to add
+     */
     public static void addTreatmentPlansRecord(TreatmentPlans treatmentplans) {
         // Add the record to the repository
         diagnosisToTreatmentPlansMap.put(treatmentplans.getDiagnosisID(), treatmentplans);

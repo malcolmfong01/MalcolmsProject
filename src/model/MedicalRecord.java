@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import controller.RecordsController;
-import repository.RecordFileType;
+import enums.RecordFileType;
 
 public class MedicalRecord extends HMSRecords {
     private String patientID;

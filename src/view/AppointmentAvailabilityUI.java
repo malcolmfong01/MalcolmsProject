@@ -1,3 +1,8 @@
+/**
+ * User interface for managing a doctor's appointment availability.
+ * Allows a doctor to set available appointment time slots, specify
+ * appointment locations, and view a summary of their availability.
+ */
 package view;
 
 import java.time.LocalDateTime;
@@ -7,21 +12,32 @@ import java.util.List;
 
 import controller.RecordsController;
 import enums.AppointmentStatus;
+import enums.RecordFileType;
 import helper.DateTimePicker;
 import helper.Helper;
 import model.AppointmentRecord;
 import model.Doctor;
 import model.RecordStatusType;
-import repository.RecordFileType;
 import repository.RecordsRepository;
 
 public class AppointmentAvailabilityUI extends MainUI {
-    private Doctor doctor;
+    /**
+     * The doctor for whom appointment availability is being managed.
+     */
+	private Doctor doctor;
 
+    /**
+     * Constructs an AppointmentAvailabilityUI with the specified doctor.
+     *
+     * @param doctor the doctor whose availability is being set
+     */
     public AppointmentAvailabilityUI(Doctor doctor) {
         this.doctor = doctor;
     }
 
+    /**
+     * Prints the menu options for the Appointment Availability UI.
+     */
     @Override
     protected void printChoice() {
         System.out.println("Appointment Availability Menu:");
@@ -29,6 +45,10 @@ public class AppointmentAvailabilityUI extends MainUI {
         System.out.println("2. Back to Doctor Dashboard");
     }
 
+    /**
+     * Starts the appointment availability UI, allowing the doctor to set
+     * available time slots or return to the Doctor Dashboard.
+     */
     @Override
     public void start() {
         int choice;
@@ -43,6 +63,11 @@ public class AppointmentAvailabilityUI extends MainUI {
         } while (choice != 2);
     }
 
+    /**
+     * Allows the doctor to set available appointment time slots by entering
+     * details such as location and appointment date and time.
+     * Appointments are saved and a summary of availability is displayed.
+     */
     public void setAvailabilityForAppointments() {
         List<AppointmentRecord> availableAppointments = new ArrayList<>();
         AppointmentStatus status = AppointmentStatus.AVAILABLE;
@@ -86,6 +111,12 @@ public class AppointmentAvailabilityUI extends MainUI {
         RecordsRepository.saveAllRecordFiles();
     }
 
+    /**
+     * Displays a summary of the available appointments set by the doctor,
+     * showing details such as date, time, location, and record IDs.
+     *
+     * @param availableAppointments the list of available appointments
+     */
     private void displayAvailabilitySummary(List<AppointmentRecord> availableAppointments) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         System.out.println("\n--- Appointment Availability Summary ---");

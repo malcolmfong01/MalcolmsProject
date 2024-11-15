@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDateTime;
 
-import repository.PersonnelFileType;
+import enums.PersonnelFileType;
 
 public class SessionCookie {
 	private String uid;

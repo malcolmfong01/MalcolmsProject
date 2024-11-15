@@ -1,3 +1,9 @@
+/**
+ * Repository class for managing personnel data, including Doctors, Patients,
+ * Pharmacists, and Admins. This class provides functionality for loading
+ * and saving personnel data to and from CSV files, as well as clearing and managing
+ * personnel records in memory.
+ */
 package repository;
 
 import java.io.BufferedReader;
@@ -12,6 +18,9 @@ import java.util.HashMap;
 import model.*;
 
 public class PersonnelRepository extends Repository {
+	/**
+     * Directory for storing personnel CSV files.
+     */
     private static final String folder = "data";
     private static final String doctorsFileName = "doctors.csv";
     private static final String patientsFileName = "patients.csv";
@@ -24,7 +33,9 @@ public class PersonnelRepository extends Repository {
     public static HashMap<String, Pharmacist> PHARMACISTS = new HashMap<>();
     public static HashMap<String, Admin> ADMINS = new HashMap<>();
 
-    // Save all personnel files to CSV files
+    /**
+     * Saves all personnel records to their respective CSV files.
+     */
     public static void saveAllPersonnelFiles() {
         savePersonnelToCSV(doctorsFileName, DOCTORS);
         savePersonnelToCSV(patientsFileName, PATIENTS);
@@ -32,8 +43,12 @@ public class PersonnelRepository extends Repository {
         savePersonnelToCSV(adminsFileName, ADMINS);
     }
 
+    /**
+     * Loads all personnel records from their respective CSV files and sets the repository as loaded.
+     *
+     * @return true if all records are successfully loaded; false otherwise
+     */
     @Override
-    // Load personnel data from CSV files
     public boolean loadFromCSV() {
         try {
             loadPersonnelFromCSV(doctorsFileName, DOCTORS, Doctor.class);
@@ -48,7 +63,13 @@ public class PersonnelRepository extends Repository {
         }
     }
 
-    // Save a specific personnel map to a CSV file
+    /**
+     * Saves a specified personnel map to a CSV file.
+     *
+     * @param fileName     the name of the file to save records to
+     * @param personnelMap the map of personnel records to save
+     * @param <T>          a type parameter extending HMSPersonnel
+     */
     private static <T extends HMSPersonnel> void savePersonnelToCSV(String fileName, HashMap<String, T> personnelMap) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
@@ -62,7 +83,12 @@ public class PersonnelRepository extends Repository {
         }
     }
 
-    // Convert personnel object to a CSV line
+    /**
+     * Converts an HMSPersonnel object to a CSV-formatted string.
+     *
+     * @param personnel the personnel object to convert
+     * @return a CSV-formatted string representing the personnel
+     */
     private static String personnelToCSV(HMSPersonnel personnel) {
         StringBuilder csvBuilder = new StringBuilder();
 
@@ -116,7 +142,14 @@ public class PersonnelRepository extends Repository {
         return csvBuilder.toString();
     }
 
-    // Load personnel from a CSV file or create an empty file if it doesn't exist
+    /**
+     * Loads personnel records from a CSV file into the specified personnel map.
+     *
+     * @param fileName     the name of the CSV file to load from
+     * @param personnelMap the map to store the loaded personnel records
+     * @param type         the class type of personnel to load (e.g., Doctor, Patient)
+     * @param <T>          a type parameter extending HMSPersonnel
+     */
     private static <T extends HMSPersonnel> void loadPersonnelFromCSV(String fileName, HashMap<String, T> personnelMap,
             Class<T> type) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
@@ -159,7 +192,14 @@ public class PersonnelRepository extends Repository {
         }
     }
 
-    // Convert a CSV line to a personnel object
+    /**
+     * Converts a CSV line to a personnel object of the specified type.
+     *
+     * @param csv  the CSV string representing the personnel
+     * @param type the class type of personnel to create (e.g., Doctor, Patient)
+     * @param <T>  a type parameter extending HMSPersonnel
+     * @return a personnel object of the specified type, or null if parsing fails
+     */
     private static <T extends HMSPersonnel> T csvToPersonnel(String csv, Class<T> type) {
         String[] fields = csv.split(",");
 
@@ -235,7 +275,11 @@ public class PersonnelRepository extends Repository {
         return null;
     }
 
-    // Clear all personnel data
+    /**
+     * Clears all personnel data in the repository and saves empty files.
+     *
+     * @return true if the operation is successful
+     */
     public static boolean clearPersonnelDatabase() {
         DOCTORS.clear();
         PATIENTS.clear();
@@ -244,11 +288,19 @@ public class PersonnelRepository extends Repository {
         saveAllPersonnelFiles();
         return true;
     }
-
+    /**
+     * Checks if the repository has been loaded.
+     *
+     * @return true if the repository is loaded; false otherwise
+     */
     public static Boolean isRepoLoaded() {
         return isRepoLoaded;
     }
-
+    /**
+     * Sets the repository load status.
+     *
+     * @param isRepoLoaded true to set the repository as loaded, false otherwise
+     */
     public static void setRepoLoaded(Boolean isRepoLoaded) {
         PersonnelRepository.isRepoLoaded = isRepoLoaded;
     }

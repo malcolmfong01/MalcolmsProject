@@ -1,3 +1,8 @@
+/**
+ * Repository class for managing prescribed medication data, including loading and saving
+ * data to a CSV file. This repository maintains a HashMap where each key is a
+ * diagnosis ID, and the corresponding value is a list of prescribed medications for that diagnosis.
+ */
 package repository;
 
 import model.Prescription;
@@ -14,7 +19,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PrescriptionRepository extends Repository {
-    private static final String folder = "data";
+    /**
+     * Directory for storing prescribed Prescription CSV files.
+     */
+	private static final String folder = "data";
+	
     private static final String fileName = "prescriptions_records.csv";
     private static boolean isRepoLoaded = false;
     
@@ -22,9 +31,9 @@ public class PrescriptionRepository extends Repository {
     public static HashMap<String, Prescription> PRESCRIPTION_MAP = new HashMap<>();
 
     /**
-     * Specific loading logic for Prescription records from CSV.
+     * Loads prescription records from a CSV file and sets the repository as loaded.
      *
-     * @return boolean indicating success or failure of the load operation
+     * @return true if the records are successfully loaded; false otherwise
      */
     @Override
     public boolean loadFromCSV() {
@@ -37,14 +46,21 @@ public class PrescriptionRepository extends Repository {
             return false;
         }
     }
-    
+    /**
+     * Saves all prescription records in the repository to the CSV file.
+     *
+     * @return true if the save operation is successful
+     */
     public static boolean saveAlltoCSV() {
     	PrescriptionRepository.savePrescriptionsToCSV(fileName, PRESCRIPTION_MAP);
 		return true;
     }
 
     /**
-     * Save Prescription records map to a CSV file
+     * Saves the provided prescription records to the specified CSV file.
+     *
+     * @param fileName       the name of the file to save records to
+     * @param prescriptionMap the map of prescription records to save
      */
     public static void savePrescriptionsToCSV(String fileName, HashMap<String, Prescription> prescriptionMap) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
@@ -69,7 +85,13 @@ public class PrescriptionRepository extends Repository {
         }
     }
 
-    // Convert a Prescription object to a CSV line
+    /**
+     * Converts a Prescription object to a CSV-formatted string.
+     *
+     * @param diagnosisID   the ID of the diagnosis associated with the prescription
+     * @param prescription  the Prescription object to convert
+     * @return a CSV-formatted string representing the prescription
+     */
     private static String prescriptionToCSV(String diagnosisID, Prescription prescription) {
         return String.join(",",
                 prescription.getDiagnosisID(),                 // Diagnosis ID
@@ -78,7 +100,11 @@ public class PrescriptionRepository extends Repository {
     }
 
     /**
-     * Load prescriptions from a CSV file or create an empty file if it doesn't exist
+     * Loads prescription records from the specified CSV file, creating an empty file
+     * if not found. Records are added to the provided map.
+     *
+     * @param fileName              the name of the CSV file to load from
+     * @param diagnosisPrescriptionMap the map to store the loaded prescriptions
      */
     private static void loadPrescriptionsFromCSV(String fileName, HashMap<String, Prescription> diagnosisPrescriptionMap) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
@@ -116,13 +142,23 @@ public class PrescriptionRepository extends Repository {
         }
     }
 
-    // Helper to extract Diagnosis ID from CSV line
+    /**
+     * Extracts the diagnosis ID from a CSV-formatted string.
+     *
+     * @param csv the CSV string containing the diagnosis ID
+     * @return the diagnosis ID extracted from the CSV string
+     */
     private static String getDiagnosisIDFromCSV(String csv) {
         String[] fields = csv.split(",");
         return fields[0];
     }
 
-    // Convert a CSV line to a Prescription object
+    /**
+     * Converts a CSV-formatted string to a Prescription object.
+     *
+     * @param csv the CSV string representing the Prescription
+     * @return a Prescription object, or null if parsing fails
+     */
     private static Prescription csvToPrescription(String csv) {
         String[] fields = csv.split(",");
         try {
@@ -137,8 +173,11 @@ public class PrescriptionRepository extends Repository {
         return null;
     }
 
+
     /**
-     * Clear all prescription data and save an empty file
+     * Clears all prescription data in the repository and saves an empty file.
+     *
+     * @return true if the operation is successful
      */
     public static boolean clearPrescriptionDatabase() {
     	PRESCRIPTION_MAP.clear();
@@ -146,15 +185,28 @@ public class PrescriptionRepository extends Repository {
         setRepoLoaded(false);
         return true;
     }
-
+    /**
+     * Checks if the repository has been loaded.
+     *
+     * @return true if the repository is loaded; false otherwise
+     */
 	public static boolean isRepoLoaded() {
 		return isRepoLoaded;
 	}
-
+    /**
+     * Sets the repository load status.
+     *
+     * @param isRepoLoaded true to set the repository as loaded, false otherwise
+     */
 	public static void setRepoLoaded(boolean isRepoLoaded) {
 		PrescriptionRepository.isRepoLoaded = isRepoLoaded;
 	}
-	
+    /**
+     * Adds a new Prescription record to the repository and immediately saves the repository
+     * state to the CSV file.
+     *
+     * @param prescription the Prescription object to add
+     */
     public static void addPrescriptionRecord(Prescription prescription) {
         // Add the record to the repository
     	PRESCRIPTION_MAP.put(prescription.getDiagnosisID(), prescription);

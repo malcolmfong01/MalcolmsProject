@@ -4,8 +4,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import enums.AppointmentOutcomeStatus;
 import enums.AppointmentStatus;
 import enums.PrescriptionStatus;
+import enums.RecordFileType;
 import model.*;
 import repository.*;
 import controller.AppointmentController;
@@ -65,14 +67,35 @@ public class UpdateMedicalRecordUI {
 
         // Save updated medical record back to repository
         RecordsRepository.MEDICAL_RECORDS.put(medicalRecord.getRecordID(), medicalRecord);
-        RecordsRepository.saveAllRecordFiles();
         currentAppointmentRecord.setAppointmentStatus(AppointmentStatus.COMPLETED);
-
-        // autogenerate the appointmentoutcomerecord with prescription , typpe of service == null, consultation = null, status incomplete
-        // put in the hash map
-        // save to repo
+        generateAppointmentOutcome(newDiagnosis.getPrescription(),newDiagnosis);
+        RecordsRepository.saveAllRecordFiles();
 
     }
+    
+
+    private void generateAppointmentOutcome(Prescription prescription,Diagnosis diagnosis ) {
+    	if (currentAppointmentRecord.getAppointmentStatus() == AppointmentStatus.COMPLETED)
+        {
+        	AppointmentOutcomeRecord outcomeRecord = new AppointmentOutcomeRecord(
+        			currentAppointmentRecord.getPatientID(),
+        			currentAppointmentRecord.getDoctorID(),
+        			diagnosis.getDiagnosisID(),
+        			currentAppointmentRecord.getRecordID(),
+                    LocalDateTime.now(),
+                    prescription,
+                    null, //type of service
+                    null, //consultation notes
+                    AppointmentOutcomeStatus.INCOMPLETED);
+        	
+        	 AppointmentOutcomeRecordRepository.addAppointmentOutcomeRecord(currentAppointmentRecord.getPatientID(), outcomeRecord);
+             AppointmentOutcomeRecordRepository.saveAppointmentOutcomeRecordRepository();
+             
+        }        
+    	
+    	
+    }
+    
 
     private Diagnosis addNewDiagnosis(String patientId, String diagnosisDescription) {
         String diagnosisID = AppointmentController.generateRecordID(RecordFileType.DIAGNOSIS_RECORDS);

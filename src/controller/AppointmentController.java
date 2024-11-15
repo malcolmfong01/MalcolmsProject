@@ -10,6 +10,7 @@ import java.util.Scanner;
 import java.util.UUID;
 
 import enums.AppointmentStatus;
+import enums.RecordFileType;
 import model.AppointmentOutcomeRecord;
 import model.AppointmentRecord;
 import model.Doctor;
@@ -17,7 +18,6 @@ import model.MedicalRecord;
 import model.PaymentRecord;
 import model.RecordStatusType;
 import repository.AppointmentOutcomeRecordRepository;
-import repository.RecordFileType;
 import repository.RecordsRepository;
 import java.util.Comparator;
 

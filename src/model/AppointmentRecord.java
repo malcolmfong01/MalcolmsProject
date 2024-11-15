@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 import controller.RecordsController;
 import enums.AppointmentStatus;
+import enums.RecordFileType;
 import repository.AppointmentOutcomeRecordRepository;
-import repository.RecordFileType;
 
 public class AppointmentRecord extends HMSRecords {
 	private String appointmentOutcomeRecordID;

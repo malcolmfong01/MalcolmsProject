@@ -4,10 +4,10 @@ import helper.Helper;
 import model.MedicalRecord;
 import model.RecordStatusType;
 import repository.PersonnelRepository;
-import repository.RecordFileType;
 import repository.RecordsRepository;
 import controller.AuthenticationController;
 import controller.RecordsController;
+import enums.RecordFileType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

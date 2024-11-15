@@ -1,3 +1,8 @@
+/**
+ * Utility class for selecting a date and time from user input.
+ * This class allows a user to input a year, month, day, hour, and minute
+ * to create a LocalDateTime object.
+ */
 package helper;
 
 import java.time.LocalDateTime;
@@ -7,12 +12,14 @@ import java.util.Scanner;
 
 public class DateTimePicker {
 
-    // main only here for testing purpose
-    public static void main(String[] args) {
-        LocalDateTime selectedDateTime = pickDateTime("Please select a date and time");
-        System.out.println("You selected: " + selectedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-    }
-
+    /**
+     * Prompts the user to input a date and time. This method requests the year, month,
+     * day, hour, and minute in sequence, validating each input to ensure it falls within
+     * the appropriate range.
+     *
+     * @param title the prompt message to display before requesting input
+     * @return a LocalDateTime object representing the selected date and time
+     */
     public static LocalDateTime pickDateTime(String title) {
         Scanner scanner = Helper.sc;
         System.out.println(title);

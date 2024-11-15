@@ -1,12 +1,20 @@
+/**
+ * User interface for handling login functionality in the Hospital Management System (HMS).
+ * Allows users to log in as different personnel types (Patient, Doctor, Pharmacist, Administrator)
+ * and redirects them to the appropriate UI after successful authentication.
+ */
 package view;
 
 import helper.Helper;
 import model.*;
-import repository.PersonnelFileType;
 import controller.*;
+import enums.PersonnelFileType;
 
 public class LoginUI extends MainUI {
 
+    /**
+     * Prints the login options for the different types of users.
+     */
     @Override
     protected void printChoice() {
         printBreadCrumbs("HMS App UI > Login Page");
@@ -18,6 +26,10 @@ public class LoginUI extends MainUI {
         System.out.println("5. Back to Main Menu");
     }
 
+    /**
+     * Starts the login UI, allowing the user to select a login type
+     * and proceed with authentication.
+     */
     @Override
     public void start() {
         while (true) {
@@ -38,7 +50,10 @@ public class LoginUI extends MainUI {
         }
     }
 
-    // Login for Patient
+    /**
+     * Handles the login process for a patient.
+     * If authentication is successful, redirects the patient to the Patient UI.
+     */
     public void patientLogin() {
         String username = Helper.readString("Please enter your username:");
         String passwordHash = Helper.readString("Please enter your password:");
@@ -56,7 +71,10 @@ public class LoginUI extends MainUI {
         }
     }
 
-    // Login for Doctor
+    /**
+     * Handles the login process for a doctor.
+     * If authentication is successful, redirects the doctor to the Doctor UI.
+     */
     public void doctorLogin() {
         String username = Helper.readString("Please enter your username:");
         String passwordHash = Helper.readString("Please enter your password:");
@@ -74,6 +92,10 @@ public class LoginUI extends MainUI {
         }
     }
 
+    /**
+     * Handles the login process for a pharmacist.
+     * If authentication is successful, redirects the pharmacist to the Pharmacist UI.
+     */
     public void pharmacistLogin() {
         String username = Helper.readString("Please enter your username:");
         String passwordHash = Helper.readString("Please enter your password:");
@@ -94,7 +116,10 @@ public class LoginUI extends MainUI {
         }
     }
 
-    // Login for Administrator
+    /**
+     * Handles the login process for an administrator.
+     * If authentication is successful, redirects the administrator to the Admin UI.
+     */
     public void administratorLogin() {
         String username = Helper.readString("Please enter your username:");
         String passwordHash = Helper.readString("Please enter your password:");
@@ -112,6 +137,12 @@ public class LoginUI extends MainUI {
         }
     }
 
+    /**
+     * Prompts the user to change their password if they are using the default password.
+     * Ensures that the new password is confirmed before updating.
+     *
+     * @param personnel the HMSPersonnel object representing the user changing their password
+     */
     private void changePassword(HMSPersonnel personnel) {
         System.out.println("It appears that you are using the default password.");
         System.out.println("Please change your password for security reasons.");

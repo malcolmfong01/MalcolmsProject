@@ -1,3 +1,9 @@
+/**
+ * Repository class for managing Medicine data, including loading and saving
+ * data to a CSV file. This repository maintains a HashMap where each key is a
+ * medicine ID, and the corresponding value is a Medicine object representing details
+ * about the medicine.
+ */
 package repository;
 
 import model.Medicine;
@@ -8,10 +14,21 @@ import java.util.HashMap;
 import enums.ReplenishStatus;
 
 public class MedicineRepository extends Repository {
+    /**
+     * Folder location for storing repository files.
+     */
     private static final String folder = "data";
+    /**
+     * Name of the file used for storing medicine records.
+     */
     private static final String fileName = "medicines.csv";
+    /**
+     * Flag indicating if the repository data has been loaded.
+     */
     private static Boolean isRepoLoaded = true;
-    // Static data collection for Medicine records (key: medicineID)
+    /**
+     * HashMap holding medicine records, with medicine ID as the key and a Medicine object as the value.
+     */
     public static HashMap<String, Medicine> MEDICINES = new HashMap<>();
 
     /**
@@ -39,7 +56,10 @@ public class MedicineRepository extends Repository {
     }
 
     /**
-     * Save a specific map of Medicine records to a CSV file
+     * Saves the provided map of Medicine records to the specified CSV file.
+     *
+     * @param fileName    the name of the file to save records to
+     * @param medicinesMap the map of Medicine objects to save
      */
     private static void saveMedicinesToCSV(String fileName, HashMap<String, Medicine> medicinesMap) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
@@ -61,7 +81,12 @@ public class MedicineRepository extends Repository {
         }
     }
 
-    // Convert a Medicine object to a CSV line
+    /**
+     * Converts a Medicine object to a CSV-formatted string.
+     *
+     * @param medicine the Medicine object to convert
+     * @return a CSV-formatted string representing the Medicine
+     */
     private static String medicineToCSV(Medicine medicine) {
         return String.join(",",
                 medicine.getMedicineID(),
@@ -76,8 +101,11 @@ public class MedicineRepository extends Repository {
     }
 
     /**
-     * Load Medicine records from a CSV file or create an empty file if it doesn't
-     * exist
+     * Loads Medicine records from the specified CSV file, creating an empty file
+     * if it does not exist. Records are added to the provided HashMap.
+     *
+     * @param fileName     the name of the CSV file to load from
+     * @param medicinesMap the HashMap to store the loaded records
      */
     private static void loadMedicinesFromCSV(String fileName, HashMap<String, Medicine> medicinesMap) {
 
@@ -115,7 +143,12 @@ public class MedicineRepository extends Repository {
         }
     }
 
-    // Convert a CSV line to a Medicine object
+    /**
+     * Converts a CSV-formatted string to a Medicine object.
+     *
+     * @param csv the CSV string representing the Medicine
+     * @return a Medicine object, or null if parsing fails
+     */
     private static Medicine csvToMedicine(String csv) {
         String[] fields = csv.split(",");
         try {
@@ -137,7 +170,10 @@ public class MedicineRepository extends Repository {
     }
 
     /**
-     * Save parsing for ReplenishStatus
+     * Safely parses a string to a ReplenishStatus enum value, returning null if the status is invalid.
+     *
+     * @param status the string representation of the ReplenishStatus
+     * @return the ReplenishStatus enum value, or null if invalid
      */
     private static ReplenishStatus safeValueOf(String status) {
         try {
@@ -149,7 +185,9 @@ public class MedicineRepository extends Repository {
     }
 
     /**
-     * Clear all medicine data and save an empty file
+     * Clears all medicine data in the repository and saves an empty file.
+     *
+     * @return true if the operation is successful
      */
     public static boolean clearMedicineDatabase() {
         MEDICINES.clear();
@@ -157,11 +195,21 @@ public class MedicineRepository extends Repository {
         isRepoLoaded = false;
         return true;
     }
-
+    
+    /**
+     * Checks if the repository has been loaded.
+     *
+     * @return true if the repository is loaded; false otherwise
+     */
     public static boolean isRepoLoaded() {
         return isRepoLoaded;
     }
 
+    /**
+     * Sets the repository load status.
+     *
+     * @param isRepoLoaded true to set the repository as loaded, false otherwise
+     */
     public static void setRepoLoaded(boolean isRepoLoaded) {
         MedicineRepository.isRepoLoaded = isRepoLoaded;
     }

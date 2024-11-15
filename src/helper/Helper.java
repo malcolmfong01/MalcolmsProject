@@ -1,3 +1,8 @@
+/**
+ * Utility class providing various helper methods for input reading, validation,
+ * formatting, and general utilities for console applications.
+ * Includes methods for reading and validating user input, formatting dates, and more.
+ */
 package helper;
 
 import java.util.HashMap;
@@ -10,12 +15,25 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
 public class Helper {
+    /**
+     * Shared Scanner instance for user input.
+     */
     public static final Scanner sc = new Scanner(System.in);
 
+    /**
+     * Private constructor to prevent instantiation of this utility class.
+     */
     private Helper() {
         // Private constructor to prevent instantiation
     }
 
+    /**
+     * Reads an integer from the user with a given prompt.
+     * Continues to prompt until a valid integer is entered.
+     *
+     * @param prompt The prompt message to display to the user.
+     * @return The integer entered by the user.
+     */
     public static int readInt(String prompt) {
         while (true) {
             try {
@@ -31,6 +49,12 @@ public class Helper {
         }
     }
 
+    /**
+     * Reads a LocalDateTime input from the user in the format "yyyy-MM-dd HH:mm".
+     * Continues to prompt until a valid date and time are entered.
+     *
+     * @return LocalDateTime object representing the entered date and time.
+     */
     public static LocalDateTime readDate() {
         LocalDateTime date = null;
         boolean valid = false;
@@ -77,6 +101,12 @@ public class Helper {
         }
     }
 
+    /**
+     * Reads a double from the user with a default prompt message.
+     * Continues to prompt until a valid double is entered.
+     *
+     * @return The double entered by the user.
+     */
     public static double readDouble() {
         while (true) {
             try {
@@ -91,15 +121,33 @@ public class Helper {
         }
     }
 
+    /**
+     * Reads a string input from the user with a given prompt.
+     *
+     * @param prompt The prompt message to display to the user.
+     * @return The string entered by the user.
+     */
     public static String readString(String prompt) {
         System.out.println(prompt);
         return sc.nextLine();
     }
 
+    /**
+     * Reads a string input from the user without a prompt.
+     *
+     * @return The string entered by the user.
+     */
     public static String readString() {
         return sc.nextLine();
     }
 
+    /**
+     * Reads a valid email address from the user with a prompt.
+     * Continues to prompt until a valid email format is entered.
+     *
+     * @param prompt The prompt message to display to the user.
+     * @return A valid email address entered by the user.
+     */
     public static String readEmail(String prompt) {
         System.out.println(prompt);
         String email = sc.nextLine();
@@ -110,6 +158,13 @@ public class Helper {
         return email;
     }
 
+    /**
+     * Reads and validates a gender input from the user with a prompt.
+     * Continues to prompt until a valid gender ("M" or "F") is entered.
+     *
+     * @param prompt The prompt message to display to the user.
+     * @return The valid gender entered by the user.
+     */
     public static String readGender(String prompt) {
         System.out.println(prompt);
         String gender = sc.nextLine();
@@ -120,20 +175,45 @@ public class Helper {
         return gender;
     }
 
+    /**
+     * Prompts the user for a confirmation with a yes/no question.
+     *
+     * @param message The confirmation message to display.
+     * @return true if the user confirms with "yes"; false otherwise.
+     */
     public static boolean promptConfirmation(String message) {
         System.out.println("Are you sure you want to " + message + "? (yes/no)");
         String userInput = sc.nextLine().trim().toLowerCase();
         return userInput.equals("yes");
     }
 
+    /**
+     * Generates a unique ID for a new entry in a HashMap.
+     *
+     * @param database The HashMap to generate a unique ID for.
+     * @param <K>      The type of the HashMap's keys.
+     * @param <V>      The type of the HashMap's values.
+     * @return A unique ID based on the current size of the database.
+     */
     public static <K, V> int generateUniqueId(HashMap<K, V> database) {
         return database.isEmpty() ? 1 : database.size() + 1;
     }
 
+    /**
+     * Returns the current date and time in "yyyy-MM-dd HH:mm" format.
+     *
+     * @return The current date and time as a formatted string.
+     */
     public static String getCurrentDateTime() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 
+    /**
+     * Checks if the specified date is on a weekend (Saturday or Sunday).
+     *
+     * @param date The date string in "yyyy-MM-dd HH:mm" format.
+     * @return true if the date is on a weekend; false otherwise.
+     */
     public static boolean isWeekend(String date) {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(date, format);
@@ -141,11 +221,17 @@ public class Helper {
         return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
     }
 
+    /**
+     * Prompts the user to press Enter to continue.
+     */
     public static void pressEnterToContinue() {
         System.out.println("Press Enter to continue...");
         sc.nextLine();
     }
 
+    /**
+     * Clears the console screen (may not work in all environments).
+     */
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -176,10 +262,24 @@ public class Helper {
         }
     }
 
+    /**
+     * Retrieves a field from an array by index, returning null if the index is out of bounds or empty.
+     *
+     * @param fields The array of fields.
+     * @param index  The index to retrieve.
+     * @return The field at the specified index, or null if out of bounds or empty.
+     */
     public static String getFieldOrNull(String[] fields, int index) {
         return index < fields.length && !fields[index].isEmpty() ? fields[index] : null;
     }
 
+    /**
+     * Parses a LocalDateTime from an array by index, returning null if parsing fails or the field is empty.
+     *
+     * @param fields The array of fields.
+     * @param index  The index to parse.
+     * @return The LocalDateTime object or null if parsing fails or field is empty.
+     */
     public static LocalDateTime parseDateTimeOrNull(String[] fields, int index) {
         try {
             return index < fields.length && !fields[index].isEmpty() ? LocalDateTime.parse(fields[index]) : null;

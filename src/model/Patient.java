@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDateTime;
 
 import controller.HMSPersonnelController;
-import repository.PersonnelFileType;
+import enums.PersonnelFileType;
 
 public class Patient extends HMSPersonnel {
 

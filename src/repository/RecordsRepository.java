@@ -1,3 +1,9 @@
+/**
+ * Repository class for managing various types of records, including MedicalRecord, 
+ * AppointmentRecord, and PaymentRecord. This class provides functionality for loading
+ * and saving these records to and from CSV files, as well as clearing and managing
+ * records in memory.
+ */
 package repository;
 
 import model.*;
@@ -17,6 +23,9 @@ import controller.RecordsController;
 import enums.AppointmentStatus;
 
 public class RecordsRepository extends Repository {
+    /**
+     * Directory for storing records CSV files.
+     */
     private static final String folder = "data";
     private static final String medicalFileName = "medical_records.csv";
     private static final String appointmentFileName = "appointment_records.csv";
@@ -31,9 +40,9 @@ public class RecordsRepository extends Repository {
     public static HashMap<String, PaymentRecord> PAYMENT_RECORDS = new HashMap<>();
 
     /**
-     * Specific loading logic for all records from CSV files.
+     * Loads all record types from their respective CSV files and sets the repository as loaded.
      *
-     * @return boolean indicating success or failure of the load operation
+     * @return true if all records are successfully loaded; false otherwise
      */
     @Override
     public boolean loadFromCSV() {
@@ -50,7 +59,7 @@ public class RecordsRepository extends Repository {
     }
 
     /**
-     * Save all record files into CSV format
+     * Saves all record types (medical, appointment, and payment) to their respective CSV files.
      */
     public static void saveAllRecordFiles() {
         saveRecordsToCSV(medicalFileName, MEDICAL_RECORDS);
@@ -59,7 +68,11 @@ public class RecordsRepository extends Repository {
     }
 
     /**
-     * Save a specific record map to a CSV file
+     * Saves a specific record map to a CSV file.
+     *
+     * @param fileName        the name of the file to save records to
+     * @param recordsMapRecordID the map of records to save
+     * @param <T>             a type parameter extending HMSRecords
      */
     private static <T extends HMSRecords> void saveRecordsToCSV(String fileName,
             HashMap<String, T> recordsMapRecordID) {
@@ -81,8 +94,13 @@ public class RecordsRepository extends Repository {
             System.out.println("Error saving record data: " + e.getMessage());
         }
     }
-
-    // Convert a record object to a CSV line
+    
+    /**
+     * Converts a record object to a CSV-formatted string.
+     *
+     * @param record the record object to convert
+     * @return a CSV-formatted string representing the record
+     */
     private static String recordToCSV(HMSRecords record) {
         if (record instanceof MedicalRecord) {
             MedicalRecord medRecord = (MedicalRecord) record;
@@ -107,7 +125,7 @@ public class RecordsRepository extends Repository {
                     appRecord.getDoctorID(),
                     appRecord.getAppointmentTime().toString(),
                     appRecord.getLocation(),
-                    (outcome != null)?appRecord.getAppointmentStatus().toString() : "");
+                    appRecord.getAppointmentStatus().toString());
             // AppointmentOutcomeRecord appointmentOutcomeRecord,
         } else if (record instanceof PaymentRecord) {
             PaymentRecord payRecord = (PaymentRecord) record;
@@ -124,7 +142,12 @@ public class RecordsRepository extends Repository {
     }
 
     /**
-     * Load records from a CSV file or create an empty file if it doesn't exist
+     * Loads records from a CSV file into the specified records map.
+     *
+     * @param fileName        the name of the CSV file to load from
+     * @param recordsMapRecordID the map to store the loaded records
+     * @param type            the class type of record to load (e.g., MedicalRecord, AppointmentRecord)
+     * @param <T>             a type parameter extending HMSRecords
      */
     private static <T extends HMSRecords> void loadRecordsFromCSV(String fileName,
             HashMap<String, T> recordsMapRecordID,
@@ -168,7 +191,14 @@ public class RecordsRepository extends Repository {
         }
     }
 
-    // Convert a CSV line to a record object
+    /**
+     * Converts a CSV line to a record object of the specified type.
+     *
+     * @param csv  the CSV string representing the record
+     * @param type the class type of record to create (e.g., MedicalRecord, AppointmentRecord)
+     * @param <T>  a type parameter extending HMSRecords
+     * @return a record object of the specified type, or null if parsing fails
+     */
     private static <T extends HMSRecords> T csvToRecord(String csv, Class<T> type) {
         String[] fields = csv.split(",");
         // RecordsController rc = new RecordsController();
@@ -196,16 +226,6 @@ public class RecordsRepository extends Repository {
                     }
                 }
                 return type.cast(new AppointmentRecord(
-                        // fields[0], // recordID
-                        // fields[1], // patientID
-                        // LocalDateTime.parse(fields[2]), // createdDate
-                        // LocalDateTime.parse(fields[3]), // updatedDate
-                        // RecordStatusType.toEnumRecordStatusType(fields[4]), // recordStatus
-                        // LocalDateTime.parse(fields[5]), // appointmentTime
-                        // fields[6], // location
-                        // AppointmentStatus.toEnumAppointmentStatus(fields[7]), // appointmentStatus
-                        // rc.getAppointmentOutcomeRecordByPatientId(fields[1]) //
-                        // appointmentOutcomeRecord
                         fields[0], // recordID (MRID)
                         LocalDateTime.parse(fields[1]), // createdDate
                         LocalDateTime.parse(fields[2]), // updatedDate
@@ -237,7 +257,9 @@ public class RecordsRepository extends Repository {
     }
 
     /**
-     * Clear all record data and save empty files
+     * Clears all records in the repository and saves empty files.
+     *
+     * @return true if the operation is successful
      */
     public static boolean clearRecordDatabase() {
         MEDICAL_RECORDS.clear();
@@ -247,11 +269,19 @@ public class RecordsRepository extends Repository {
         setRepoLoaded(false);
         return true;
     }
-
+    /**
+     * Checks if the repository has been loaded.
+     *
+     * @return true if the repository is loaded; false otherwise
+     */
     public static Boolean isRepoLoaded() {
         return isRepoLoaded;
     }
-
+    /**
+     * Sets the repository load status.
+     *
+     * @param isRepoLoaded true to set the repository as loaded, false otherwise
+     */
     public static void setRepoLoaded(Boolean isRepoLoaded) {
         RecordsRepository.isRepoLoaded = isRepoLoaded;
     }

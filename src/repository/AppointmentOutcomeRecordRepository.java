@@ -1,3 +1,8 @@
+/**
+ * Repository class for managing AppointmentOutcomeRecord data, including loading and saving
+ * data to a CSV file. This repository maintains a HashMap where each key is a patient ID, 
+ * and the corresponding value is a list of appointment outcome records for that patient.
+ */
 package repository;
 
 import java.io.BufferedReader;
@@ -15,21 +20,48 @@ import model.AppointmentOutcomeRecord;
 import model.Prescription;
 
 public class AppointmentOutcomeRecordRepository extends Repository {
+	/**
+     * Indicates the data folder location for storing repository files.
+     */
     private static final String folder = "data";
+    /**
+     * Boolean flag indicating whether the repository data has been loaded.
+     */
     private static boolean isRepoLoaded = false;
+    /**
+     * Name of the file used for storing appointment outcome records.
+     */
     private static final String AppointmentOutcomeRecordsfileName = "appointment_outcome_records.csv";
-    //key value = patientID
+    /**
+     * HashMap holding patient outcome records, with patient ID as the key and an ArrayList
+     * of AppointmentOutcomeRecord objects as the value.
+     */
     public static HashMap<String, ArrayList<AppointmentOutcomeRecord>>patientOutcomeRecords = new HashMap<>();
 
+    /**
+     * Loads appointment outcome records from a CSV file and sets the repository as loaded.
+     *
+     * @return true if the records are successfully loaded
+     */
     @Override
     public boolean loadFromCSV() {
         loadAppoinmentOutcomeRecordsFromCSV(AppointmentOutcomeRecordsfileName, patientOutcomeRecords);
         setRepoLoaded(true);
         return true;
     }
+    /**
+     * Saves the current state of the appointment outcome records repository to a CSV file.
+     */
     public static void saveAppointmentOutcomeRecordRepository() {
         saveAppoinmentOutcomeRecordsToCSV(AppointmentOutcomeRecordsfileName, patientOutcomeRecords);
     }
+    
+    /**
+     * Saves the provided appointment outcome records to the specified CSV file.
+     *
+     * @param fileName            the name of the file to save records to
+     * @param patientOutcomeRecords the records to save
+     */
     public static void saveAppoinmentOutcomeRecordsToCSV(String fileName,
                                                          HashMap<String, ArrayList<AppointmentOutcomeRecord>>patientOutcomeRecords) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
@@ -56,7 +88,12 @@ public class AppointmentOutcomeRecordRepository extends Repository {
         }
     }
 
-    // Convert an AppointmentOutcomeRecord object to a CSV line
+    /**
+     * Converts an AppointmentOutcomeRecord object to a CSV-formatted string.
+    *
+    * @param record the AppointmentOutcomeRecord to convert
+    * @return a CSV-formatted string representing the record
+    */
     private static String appointmentOutcomeToCSV( AppointmentOutcomeRecord record) {
         return String.join(",",
                 record.getPatientID(), // Patient ID
@@ -70,8 +107,11 @@ public class AppointmentOutcomeRecordRepository extends Repository {
         );
     }
     /**
-     * Load AppointmentOutcomeRecord records from a CSV file, or create an empty
-     * file if it doesn't exist
+     * Loads appointment outcome records from the specified CSV file, creating an empty file 
+     * if it does not exist. Records are added to the provided HashMap.
+     *
+     * @param fileName            the name of the CSV file to load from
+     * @param patientOutcomeRecords the HashMap to store the loaded records
      */
     public static void loadAppoinmentOutcomeRecordsFromCSV(String fileName,
                                                            HashMap<String, ArrayList<AppointmentOutcomeRecord>>patientOutcomeRecords) {
@@ -108,12 +148,23 @@ public class AppointmentOutcomeRecordRepository extends Repository {
         }
     }
 
+    /**
+     * Extracts the patient ID from a CSV-formatted string.
+     *
+     * @param csv the CSV string containing the patient ID
+     * @return the patient ID extracted from the CSV string
+     */
     private static String getPatientIDFromCSV(String csv) {
         String[] fields = csv.split(",");
         return fields[0];
     }
 
-    // Convert a CSV line to an AppointmentOutcomeRecord object
+    /**
+     * Converts a CSV-formatted string to an AppointmentOutcomeRecord object.
+     *
+     * @param csv the CSV string representing the AppointmentOutcomeRecord
+     * @return an AppointmentOutcomeRecord object, or null if parsing fails
+     */
     private static AppointmentOutcomeRecord csvToOutcomeRecord(String csv) {
         // Split by comma, ignoring commas within quotes
         String[] fields = csv.split(",");
@@ -145,7 +196,9 @@ public class AppointmentOutcomeRecordRepository extends Repository {
     }
 
     /**
-     * Clear all appointment outcome record data and save empty files
+     * Clears all data in the appointment outcome record repository and saves an empty file.
+     *
+     * @return true if the operation is successful
      */
     public static boolean clearOutcomeRecordDatabase() {
         patientOutcomeRecords.clear();
@@ -153,13 +206,28 @@ public class AppointmentOutcomeRecordRepository extends Repository {
         return true;
     }
 
+    /**
+     * Checks if the repository has been loaded.
+     *
+     * @return true if the repository is loaded; false otherwise
+     */
     public static boolean isRepoLoaded() {
         return isRepoLoaded;
     }
-
+    /**
+     * Sets the repository load status.
+     *
+     * @param isRepoLoaded true to set the repository as loaded, false otherwise
+     */
     public static void setRepoLoaded(boolean isRepoLoaded) {
         AppointmentOutcomeRecordRepository.isRepoLoaded = isRepoLoaded;
     }
+    /**
+     * Adds an appointment outcome record to the HashMap for the specified patient ID.
+     *
+     * @param patientID the patient ID associated with the record
+     * @param record    the AppointmentOutcomeRecord to add
+     */
     public static void addAppointmentOutcomeRecordIntoHashMapValue(String patientID, AppointmentOutcomeRecord record) {
         // Retrieve the list of records for the patient ID, or create a new list if none exists
         ArrayList<AppointmentOutcomeRecord> records = patientOutcomeRecords.getOrDefault(patientID, new ArrayList<>());
@@ -172,6 +240,13 @@ public class AppointmentOutcomeRecordRepository extends Repository {
         System.out.println(records);
 
     }
+    /**
+     * Adds an appointment outcome record to the repository and immediately saves the repository
+     * state to a CSV file.
+     *
+     * @param patientID the patient ID associated with the record
+     * @param record    the AppointmentOutcomeRecord to add
+     */
     public static void addAppointmentOutcomeRecord(String patientID, AppointmentOutcomeRecord record) {
         // Retrieve the list of records for the patient ID, or create a new list if none exists
         ArrayList<AppointmentOutcomeRecord> records = patientOutcomeRecords.getOrDefault(patientID, new ArrayList<>());
@@ -181,10 +256,7 @@ public class AppointmentOutcomeRecordRepository extends Repository {
         patientOutcomeRecords.put(patientID, records);
         saveAppointmentOutcomeRecordRepository();
     }
-//    public static void addOutcomeRecord(String patientID, AppointmentOutcomeRecord outcomeRecord) {
-//        // Add the record to the repository
-//    	patientOutcomeRecords.put(outcomeRecord.getAppointmentOutcomeRecordID(), outcomeRecord);
-//
-//    	saveAppointmentOutcomeRecordRepository();
-//    }
+    
+    
+
 }

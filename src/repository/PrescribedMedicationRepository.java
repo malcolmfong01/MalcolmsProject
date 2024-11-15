@@ -33,6 +33,12 @@ public class PrescribedMedicationRepository extends Repository {
             return false;
         }
     }
+
+    /**
+     * Saves all prescribed medication records in the repository to the CSV file.
+     *
+     * @return true if the save operation is successful
+     */
     public static boolean saveAlltoCSV() {
     	PrescribedMedicationRepository.saveMedicationsToCSV(fileName,diagnosisToMedicationsMap);
 		return true;
@@ -40,7 +46,10 @@ public class PrescribedMedicationRepository extends Repository {
 
     
     /**
-     * Save prescribed medications to CSV
+     * Saves the provided prescribed medication records to the specified CSV file.
+     *
+     * @param fileName the name of the file to save records to
+     * @param diagnosisToMedicationsMap the map of prescribed medications to save
      */
     public static void saveMedicationsToCSV(String fileName, HashMap<String, ArrayList<PrescribedMedication>> diagnosisToMedicationsMap) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
@@ -64,7 +73,13 @@ public class PrescribedMedicationRepository extends Repository {
         }
     }
 
-    // Convert a PrescribedMedication object to a CSV line
+    /**
+     * Converts a prescribed medication to a CSV-formatted string.
+     *
+     * @param diagnosisID the ID of the diagnosis associated with the medication
+     * @param medication the PrescribedMedication object to convert
+     * @return a CSV-formatted string representing the prescribed medication
+     */
     private static String medicationToCSV(String diagnosisID, PrescribedMedication medication) {
         return String.join(",",
                 medication.getDiagnosisID(),
@@ -77,7 +92,11 @@ public class PrescribedMedicationRepository extends Repository {
     }
 
     /**
-     * Load medications from a CSV file or create an empty file if not found
+     * Loads prescribed medications from the specified CSV file, creating an empty file if not found.
+     * Records are added to the provided map.
+     *
+     * @param fileName the name of the CSV file to load from
+     * @param diagnosisToMedicationsMap the map to store the loaded prescribed medications
      */
     private static void loadMedicationsFromCSV(String fileName, HashMap<String, ArrayList<PrescribedMedication>> diagnosisToMedicationsMap) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
@@ -114,18 +133,33 @@ public class PrescribedMedicationRepository extends Repository {
             System.out.println("Error reading medications: " + e.getMessage());
         }
     }
-
+    /**
+     * Adds a prescribed medication to the map for the specified diagnosis ID.
+     *
+     * @param diagnosisID the ID of the diagnosis associated with the medication
+     * @param medication the PrescribedMedication to add
+     */
     public static void addMedication(String diagnosisID, PrescribedMedication medication) {
         ArrayList<PrescribedMedication> medications = diagnosisToMedicationsMap.getOrDefault(diagnosisID, new ArrayList<>());
         medications.add(medication);
         diagnosisToMedicationsMap.put(diagnosisID, medications);
     }
-
+    /**
+     * Extracts the diagnosis ID from a CSV-formatted string.
+     *
+     * @param csv the CSV string containing the diagnosis ID
+     * @return the diagnosis ID extracted from the CSV string
+     */
     private static String getDiagnosisIDFromCSV(String csv) {
         String[] fields = csv.split(",");
         return fields[0];
     }
-
+    /**
+     * Converts a CSV-formatted string to a PrescribedMedication object.
+     *
+     * @param csv the CSV string representing the PrescribedMedication
+     * @return a PrescribedMedication object, or null if parsing fails
+     */
     private static PrescribedMedication csvToMedication(String csv) {
         String[] fields = csv.split(",");
         try {
@@ -144,20 +178,29 @@ public class PrescribedMedicationRepository extends Repository {
     }
 
     /**
-     * Clear all prescribed medication data and save an empty file
+     * Clears all Medication data in the repository and saves empty files.
+     *
+     * @return true if the operation is successful
      */
-
     public static boolean clearPrescribedMedicationDatabase() {
         diagnosisToMedicationsMap.clear();
         saveMedicationsToCSV(fileName, diagnosisToMedicationsMap);
         setRepoLoaded(false);
         return true;
     }
-
+    /**
+     * Checks if the repository has been loaded.
+     *
+     * @return true if the repository is loaded; false otherwise
+     */
 	public static boolean isRepoLoaded() {
 		return isRepoLoaded;
 	}
-
+    /**
+     * Sets the repository load status.
+     *
+     * @param isRepoLoaded true to set the repository as loaded, false otherwise
+     */
 	public static void setRepoLoaded(boolean isRepoLoaded) {
 		PrescribedMedicationRepository.isRepoLoaded = isRepoLoaded;
 	}

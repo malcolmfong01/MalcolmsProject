@@ -1,3 +1,8 @@
+/**
+ * User interface for managing the outcome of appointments.
+ * Allows a doctor to view incomplete appointments, select one, and record the
+ * outcome, including consultation notes and type of service.
+ */
 package view;
 
 import java.time.LocalDateTime;
@@ -13,12 +18,24 @@ import enums.PrescriptionStatus;
 import helper.Helper;
 
 public class AppointmentRecordOutcomeUI extends MainUI {
-    private Doctor doctor;
+    /**
+     * The doctor recording appointment outcomes.
+     */
+	private Doctor doctor;
 
+
+    /**
+     * Constructs an AppointmentRecordOutcomeUI for the specified doctor.
+     *
+     * @param doctor the doctor managing appointment outcomes
+     */
     public AppointmentRecordOutcomeUI(Doctor doctor) {
         this.doctor = doctor;
     }
-
+    
+    /**
+     * Prints the menu options for the Appointment Outcome UI.
+     */
     @Override
     protected void printChoice() {
         System.out.println("Appointment Outcome Menu:");
@@ -26,6 +43,10 @@ public class AppointmentRecordOutcomeUI extends MainUI {
         System.out.println("2. Back to Doctor Dashboard");
     }
 
+    /**
+     * Starts the appointment outcome UI, allowing the doctor to record
+     * the outcome of an appointment or return to the Doctor Dashboard.
+     */
     @Override
     public void start() {
         int choice = 0;
@@ -40,129 +61,72 @@ public class AppointmentRecordOutcomeUI extends MainUI {
         } while (choice != 2);
     }
 
+    /**
+     * Displays incomplete appointments for the doctor and allows them
+     * to select one for recording the outcome.
+     */
     public void recordAppointmentOutcome() {
-        // prompt doctor to select appointment outcome record that is not completed,
+        // prompt doctor to select appointment outcome record that is incompleted,
         // then only update service etc, then set to completed
-        System.out.println("\n--- Confirmed Appointments for Dr. " + doctor.getFullName() + " ---");
+    	System.out.println("\n--- Incompleted Appointments for Dr. " + doctor.getFullName() + " ---");
 
-        ArrayList<AppointmentRecord> confirmedAppointments = new ArrayList<>();
+        ArrayList<AppointmentOutcomeRecord> incompletedAppointments = new ArrayList<>();
         int index = 1;
 
-        for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
-            if (doctor.getUID().equals(appointment.getDoctorID())
-                    && appointment.getAppointmentStatus() == AppointmentStatus.CONFIRMED) {
-                confirmedAppointments.add(appointment);
-                System.out.printf("%d. Appointment on %s at %s with Patient ID: %s%n",
+        for (ArrayList<AppointmentOutcomeRecord> appointments : AppointmentOutcomeRecordRepository.patientOutcomeRecords.values()) {
+            for (AppointmentOutcomeRecord appointment : appointments) {
+                if (doctor.getUID().equals(appointment.getDoctorID())
+                    && appointment.getAppointmentOutcomeStatus() == AppointmentOutcomeStatus.INCOMPLETED) {
+                    incompletedAppointments.add(appointment);
+                    System.out.printf("%d. Appointment on %s at %s with Patient ID: %s%n",
                         index,
                         appointment.getAppointmentTime().getDayOfWeek(),
                         appointment.getAppointmentTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
                         appointment.getPatientID());
-                index++;
+                    index++;
+                }
             }
         }
 
-        if (confirmedAppointments.isEmpty()) {
+
+        if (incompletedAppointments.isEmpty()) {
             System.out.println("No confirmed appointments found.");
             return;
         }
 
+        // Prompt the user to select an appointment
         int selectedIndex = Helper.readInt("\nEnter the number of the appointment to record outcome: ");
-        if (selectedIndex < 1 || selectedIndex > confirmedAppointments.size()) {
+        if (selectedIndex < 1 || selectedIndex > incompletedAppointments.size()) {
             System.out.println("Invalid selection.");
             return;
         }
 
-        AppointmentRecord selectedAppointment = confirmedAppointments.get(selectedIndex - 1);
+        // Process the selected appointment outcome
+        AppointmentOutcomeRecord selectedAppointment = incompletedAppointments.get(selectedIndex - 1);
         processOutcome(selectedAppointment);
     }
 
-    private void processOutcome(AppointmentRecord appointment) {
+    /**
+     * Processes the selected appointment by allowing the doctor to enter
+     * details such as type of service and consultation notes, then marks
+     * the appointment as completed.
+     *
+     * @param appointment the AppointmentOutcomeRecord to process
+     */
+    private void processOutcome(AppointmentOutcomeRecord appointment) {
         System.out.println("\n--- Select Diagnosis for Patient (ID: " + appointment.getPatientID() + ") ---");
-        
-        //FIXME: The DiagnosisRepos SHOULD NOT handle this function getDiagnosesByPatientID!
-        ArrayList<Diagnosis> diagnoses = DiagnosisRepository.getDiagnosesByPatientID(appointment.getPatientID());
-        if (diagnoses.isEmpty()) {
-            System.out.println("No diagnoses found for this patient.");
-            return;
-        }
-
-        for (int i = 0; i < diagnoses.size(); i++) {
-            Diagnosis diagnosis = diagnoses.get(i);
-            System.out.printf("%d. Diagnosis ID: %s, Condition: %s%n", i + 1, diagnosis.getDiagnosisID(),
-                    diagnosis.getDiagnosisDescription());
-        }
-
-        int diagnosisIndex = Helper.readInt("\nEnter the number of the diagnosis to use: ");
-        if (diagnosisIndex < 1 || diagnosisIndex > diagnoses.size()) {
-            System.out.println("Invalid selection.");
-            return;
-        }
-
-        Diagnosis selectedDiagnosis = diagnoses.get(diagnosisIndex - 1);
-        String diagnosisID = selectedDiagnosis.getDiagnosisID();
-
-        if (!Helper.promptConfirmation("record the outcome")) {
-            System.out.println("No changes made.");
-            return;
-        }
-
-        appointment.setAppointmentStatus(AppointmentStatus.COMPLETED);
-
-        String outcomeRecordID = appointment.getRecordID();
-        ArrayList<PrescribedMedication> medications = new ArrayList<>();
-        Prescription prescription = new Prescription(diagnosisID, LocalDateTime.now(), medications);
-        PrescriptionRepository.addPrescriptionRecord(prescription);
-
-        if (Helper.promptConfirmation("prescribe medication")) {
-            while (true) {
-                String medicationName = Helper.readString("Enter medication name: ");
-                Medicine medicine = MedicineController.getMedicineByName(medicationName);
-                if (medicine == null) {
-                    System.out.println("Invalid medication name. Please try again.");
-                    continue;
-                }
-
-                int quantity = Helper.readInt("Enter quantity: ");
-                int periodDays = Helper.readInt("Enter period (days): ");
-                String dosage = Helper.readString("Enter dosage: ");
-
-                PrescribedMedication medication = new PrescribedMedication(diagnosisID, medicine.getMedicineID(),
-                        quantity, periodDays, PrescriptionStatus.PENDING, dosage);
-                medications.add(medication);
-                PrescribedMedicationRepository.addMedication(diagnosisID, medication);
-
-                if (!Helper.promptConfirmation("add another prescribed medication")) {
-                    break;
-                }
-            }
-        }
 
         String typeOfService = Helper.readString("Enter the type of service: ");
         String consultationNotes = Helper.readString("Enter your consultation notes: ");
+        
+        appointment.setTypeOfService(typeOfService);
+        appointment.setConsultationNotes(consultationNotes);
+        appointment.setAppointmentOutcomeStatus(AppointmentOutcomeStatus.COMPLETED); 
 
-        AppointmentOutcomeRecord outcomeRecord = new AppointmentOutcomeRecord(
-                appointment.getPatientID(),
-                doctor.getUID(),
-                diagnosisID,
-                outcomeRecordID,
-                LocalDateTime.now(),
-                prescription,
-                typeOfService,
-                consultationNotes,
-                AppointmentOutcomeStatus.COMPLETED);
-
-        AppointmentOutcomeRecordRepository.addAppointmentOutcomeRecord(appointment.getPatientID(), outcomeRecord);
-        appointment.setAppointmentOutcomeRecordID(outcomeRecordID);
-
-        // Save changes to the repository
-        RecordsRepository.saveAllRecordFiles();
         AppointmentOutcomeRecordRepository.saveAppointmentOutcomeRecordRepository();
-        DiagnosisRepository.saveAlltoCSV();
-        TreatmentPlansRepository.saveAlltoCSV();
-        PrescribedMedicationRepository.saveAlltoCSV();
-
         System.out.println("Appointment outcome recorded and saved successfully.");
     }
+
 
 
 }

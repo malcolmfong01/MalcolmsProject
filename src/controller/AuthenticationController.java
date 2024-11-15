@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 
+import enums.PersonnelFileType;
+import enums.RecordFileType;
 import helper.Helper;
 import model.*;
-import repository.PersonnelFileType;
 import repository.PersonnelRepository;
-import repository.RecordFileType;
 
 public class AuthenticationController {
     public static SessionCookie cookie = new SessionCookie(null, null);

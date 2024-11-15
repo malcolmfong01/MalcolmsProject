@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDateTime;
 
 import controller.RecordsController;
-import repository.RecordFileType;
+import enums.RecordFileType;
 
 public class PaymentRecord extends HMSRecords {
     private double paymentAmount;

@@ -1,3 +1,8 @@
+/**
+ * Repository class for managing Diagnosis data, including loading and saving
+ * data to a CSV file. This repository maintains a HashMap where each key is a
+ * patient ID, and the corresponding value is a list of Diagnosis records for that patient.
+ */
 package repository;
 
 import java.io.BufferedReader;
@@ -17,10 +22,22 @@ import model.Prescription;
 import model.TreatmentPlans;
 
 public class DiagnosisRepository extends Repository {
+    /**
+     * Folder location for storing repository files.
+     */
     private static final String folder = "data";
+    /**
+     * Name of the file used for storing diagnosis records.
+     */
     private static final String fileName = "diagnosis_records.csv";
+    /**
+     * Flag indicating if the repository data has been loaded.
+     */
     private static boolean isRepoLoaded = false;
-    // Static data collection for Diagnosis records (key = patientID)
+    /**
+     * HashMap holding patient diagnosis records, with patient ID as the key and an
+     * ArrayList of Diagnosis objects as the value.
+     */
     public static HashMap<String, ArrayList<Diagnosis>> patientDiagnosisRecords = new HashMap<>();
 
     /**
@@ -39,13 +56,22 @@ public class DiagnosisRepository extends Repository {
         }
         return false;
     }
-
+    /**
+     * Saves the current state of the diagnosis records repository to a CSV file.
+     *
+     * @return true if the save operation is successful
+     */
     public static boolean saveAlltoCSV() {
         DiagnosisRepository.saveDiagnosisRecordsToCSV(fileName, patientDiagnosisRecords);
         return true;
     }
 
-    // Save and load methods, and any other methods in DiagnosisRepository
+    /**
+     * Saves the provided diagnosis records to the specified CSV file.
+     *
+     * @param fileName             the name of the file to save records to
+     * @param patientDiagnosisRecords the records to save
+     */
     public static void saveDiagnosisRecordsToCSV(String fileName,
             HashMap<String, ArrayList<Diagnosis>> patientDiagnosisRecords) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
@@ -75,7 +101,12 @@ public class DiagnosisRepository extends Repository {
             System.out.println("Error saving diagnosis records to CSV: " + e.getMessage());
         }
     }
-
+    /**
+     * Converts a Diagnosis object to a CSV-formatted string.
+     *
+     * @param record the Diagnosis to convert
+     * @return a CSV-formatted string representing the record
+     */
     private static String diagnosisToCSV(Diagnosis record) {
         return String.join(",",
                 record.getPatientID(), // Patient ID
@@ -88,7 +119,13 @@ public class DiagnosisRepository extends Repository {
                 "\"" + record.getDiagnosisDescription() + "\"" // Diagnosis description
         );
     }
-
+    /**
+     * Loads diagnosis records from the specified CSV file, creating an empty file 
+     * if it does not exist. Records are added to the provided HashMap.
+     *
+     * @param fileName             the name of the CSV file to load from
+     * @param patientDiagnosisRecords the HashMap to store the loaded records
+     */
     public static void loadDiagnosisRecordsFromCSV(String fileName,
             HashMap<String, ArrayList<Diagnosis>> patientDiagnosisRecords) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
@@ -124,22 +161,24 @@ public class DiagnosisRepository extends Repository {
             System.out.println("Error reading diagnosis records: " + e.getMessage());
         }
     }
-
+    /**
+     * Adds a diagnosis record to the HashMap for the specified patient ID.
+     *
+     * @param patientID the patient ID associated with the diagnosis
+     * @param diagnosis the Diagnosis to add
+     */
     public static void addDiagnosis(String patientID, Diagnosis diagnosis) {
         ArrayList<Diagnosis> diagnoses = patientDiagnosisRecords.getOrDefault(patientID, new ArrayList<>());
-//        System.out.println(diagnoses);
-//        System.out.println(patientDiagnosisRecords.size());
         diagnoses.add(diagnosis);
-//        System.out.println(diagnoses);
-//        System.out.println(patientDiagnosisRecords.size());
         patientDiagnosisRecords.put(patientID, diagnoses);
-//        System.out.println(diagnoses);
-//        System.out.println(patientDiagnosisRecords.size());
-
-        //System.out.println(diagnoses);
 
     }
-
+    /**
+     * Converts a CSV-formatted string to a Diagnosis object.
+     *
+     * @param csv the CSV string representing the Diagnosis
+     * @return a Diagnosis object, or null if parsing fails
+     */
     private static Diagnosis csvToDiagnosisRecord(String csv) {
         String[] fields = csv.split(",");
         try {
@@ -159,15 +198,28 @@ public class DiagnosisRepository extends Repository {
         }
         return null;
     }
-
+    /**
+     * Checks if the repository has been loaded.
+     *
+     * @return true if the repository is loaded; false otherwise
+     */
     public static boolean isRepoLoaded() {
         return isRepoLoaded;
     }
-
+    /**
+     * Sets the repository load status.
+     *
+     * @param isRepoLoaded true to set the repository as loaded, false otherwise
+     */
     public static void setRepoLoaded(boolean isRepoLoaded) {
         DiagnosisRepository.isRepoLoaded = isRepoLoaded;
     }
-    
+    /**
+     * Retrieves a list of diagnoses for the specified patient ID.
+     *
+     * @param patientID the patient ID for which diagnoses are requested
+     * @return an ArrayList of Diagnosis objects for the specified patient ID
+     */
     public static ArrayList<Diagnosis> getDiagnosesByPatientID(String patientID) {
         ArrayList<Diagnosis> diagnosesForPatient = new ArrayList<>();
         

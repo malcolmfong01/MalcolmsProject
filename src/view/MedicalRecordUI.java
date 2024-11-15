@@ -1,3 +1,8 @@
+/**
+ * User interface for displaying a patient's medical record in a formatted view.
+ * Allows the user to view detailed information about a patient's diagnoses,
+ * prescriptions, and prescribed medications.
+ */
 package view;
 
 import java.util.ArrayList;
@@ -14,16 +19,26 @@ import model.PrescribedMedication;
 
 public class MedicalRecordUI extends MainUI {
 
+    /**
+     * The medical record to be displayed.
+     */
     private MedicalRecord medicalRecord;
     private Patient patient;
 
-    // Constructor to initialize MedicalRecordUI with the specified medical record
+    /**
+     * Constructs a MedicalRecordUI with the specified medical record.
+     *
+     * @param medicalRecord the medical record to be displayed
+     */
     public MedicalRecordUI(MedicalRecord medicalRecord) {
         this.medicalRecord = medicalRecord;
         this.patient = HMSPersonnelController.getPatientById(medicalRecord.getPatientID());
     }
 
-    // Method to display a formatted medical record in a box
+    /**
+     * Displays the medical record in a formatted box structure.
+     * Includes basic patient information, diagnoses, prescriptions, and medications.
+     */
     public void displayMedicalRecordInBox() {
         String border = "+------------------------------------------+";
         System.out.println(border);
@@ -91,7 +106,9 @@ public class MedicalRecordUI extends MainUI {
         System.out.println(border);
     }
 
-    // Method to print options for this UI
+    /**
+     * Prints the available options for the MedicalRecordUI.
+     */
     @Override
     protected void printChoice() {
         System.out.println("Options:");
@@ -99,7 +116,10 @@ public class MedicalRecordUI extends MainUI {
         System.out.println("Enter your choice: ");
     }
 
-    // Start method to display the medical record and provide a back option
+    /**
+     * Starts the MedicalRecordUI, displaying the medical record and allowing
+     * the user to navigate back to the previous menu.
+     */
     @Override
     public void start() {
         displayMedicalRecordInBox(); // Display the medical record
