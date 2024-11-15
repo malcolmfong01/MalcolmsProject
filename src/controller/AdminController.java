@@ -30,41 +30,6 @@ import repository.*;
  */
 public class AdminController extends HMSPersonnelController {
 	
-	 /**
-     * Lists all medicines currently available in the system.
-     */
-	public static void listAllMedicine() {
-		MedicineController.listAllMedicines();
-	}
-	
-	/**
-     * Adds a new medicine to the system.
-     * 
-     * @param medicine The medicine to be added.
-     */
-	public static void addMedicine(Medicine medicine) {
-		
-		 MedicineController.addMedicine(medicine);
-	}
-	
-	/**
-     * Updates the details of an existing medicine in the system.
-     * 
-     * @param medicineID The ID of the medicine to be updated.
-     * @param medicine The updated medicine object.
-     */
-	public static void updateMedicine(String medicineID, Medicine medicine) {
-		 MedicineController.updateMedicine(medicineID, medicine);		
-	}
-	
-	 /**
-     * Removes a medicine from the system by its ID.
-     * 
-     * @param medicineID The ID of the medicine to be removed.
-     */
-	public static void removeMedicine(String medicineID) {
-		 MedicineController.removeMedicine(medicineID);
-	}
 	
 	/**
      * Approves a replenishment request for a medicine.
