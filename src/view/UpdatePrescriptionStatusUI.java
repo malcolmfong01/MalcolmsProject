@@ -23,7 +23,6 @@ public class UpdatePrescriptionStatusUI extends MainUI {
 
     @Override
     public void start() {
-        printBreadCrumbs("Hospital Management System > Update Prescription Status");
         updatePrescriptionStatus();
     }
 

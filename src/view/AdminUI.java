@@ -42,7 +42,6 @@ public class AdminUI extends MainUI {
 	@Override
     protected void printChoice() {
         System.out.printf("Welcome! Admin --- %s ---\n", admin.getFullName());
-        printBreadCrumbs("HMS App UI > Admin Dashboard");
         System.out.println("Administrator Menu:");
         System.out.println("1. View and Manage Hospital Staff");
         System.out.println("2. View Appointments Details");
@@ -68,19 +67,15 @@ public class AdminUI extends MainUI {
             choice = Helper.readInt("");
             switch (choice) {
                 case 1:
-                    printBreadCrumbs("HMS App UI > Admin Dashboard > View and Manage Staff");
                     viewAndManageStaff();
                     break;
-                case 2: 
-                	printBreadCrumbs("HMS App UI > Admin Dashboard > View Appointments");
+                case 2:
                 	AdminController.listAllAppointments();
                     break;
                 case 3:
-                    printBreadCrumbs("HMS App UI > Admin Dashboard > View And Manage Medication Inventory");
                     viewAndManageMedicationInventory();
                     break;
                 case 4:
-                    printBreadCrumbs("HMS App UI > Admin Dashboard > Approve Replenish Request");
                     approveReplenishRequest();
                     break;
                 case 5:

@@ -9,21 +9,6 @@ public abstract class MainUI {
     public MainUI() {
     }
 
-    /**
-     * Method to print breadcrumbs for navigation purposes.
-     * Breadcrumbs help users track their current location in the app.
-     * 
-     * @param breadcrumb Breadcrumbs description showing the current view context.
-     */
-    protected void printBreadCrumbs(String breadcrumb) {
-        String spaces = String.format("%" + (105 - breadcrumb.length()) + "s", "");
-        System.out.println(
-                "╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║ " + breadcrumb + spaces + "║");
-        System.out.println(
-                "╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
-    }
-
     public void printWarning(String breadcrumb) {
         String spaces = String.format("%" + (105 - breadcrumb.length()) + "s", "");
         System.out.println("[ERROR !!! " + breadcrumb + spaces + "!!!]");
