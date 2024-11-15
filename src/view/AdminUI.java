@@ -270,7 +270,7 @@ public class AdminUI extends MainUI {
 	    System.out.println("4. Remove Medicine");
 	    int choice = Helper.readInt("");
 	    switch(choice) {
-	    	case 1: AdminController.listAllMedicine();
+	    	case 1: MedicineController.listAllMedicines();
 	    	break;
 	    	case 2: addMedicine();
 	    	break;
