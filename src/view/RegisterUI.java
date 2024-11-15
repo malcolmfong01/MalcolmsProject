@@ -22,7 +22,6 @@ public class RegisterUI extends MainUI {
 
     @Override
     protected void printChoice() {
-        printBreadCrumbs("HMS App UI > Register Page");
         System.out.println("You would like to register as:");
         System.out.println("1. Patient");
         System.out.println("2. Doctor");

@@ -16,7 +16,6 @@ public class SubmitReplenishmentRequestUI extends MainUI {
 
     @Override
     public void start() {
-        printBreadCrumbs("Hospital Management System > Submit Replenishment Requests");
         submitReplenishmentRequests();
     }
 

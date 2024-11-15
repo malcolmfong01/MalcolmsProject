@@ -31,7 +31,6 @@ public class HMSAppUI extends MainUI {
      */
 	@Override
 	protected void printChoice() {
-		printBreadCrumbs("HMS App UI");
 		System.out.println("Would you like to? :");
 		System.out.println("1. Login");
 		System.out.println("2. Register an account");

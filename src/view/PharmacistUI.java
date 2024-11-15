@@ -28,7 +28,6 @@ public class PharmacistUI extends MainUI{
 	@Override
 	protected void printChoice() {
 		System.out.printf("Welcome! Pharmacist --- %s ---\n", pharmacist.getFullName());
-		printBreadCrumbs("HMS App UI > Pharmacist Dashboard");
         System.out.println("Pharmacist Menu:");
         System.out.println("1. View Appointment Outcome Record");
         System.out.println("2. Update Prescription Status");

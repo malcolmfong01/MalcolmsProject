@@ -17,7 +17,6 @@ public class LoginUI extends MainUI {
      */
     @Override
     protected void printChoice() {
-        printBreadCrumbs("HMS App UI > Login Page");
         System.out.println("You would like to login as:");
         System.out.println("1. Patient");
         System.out.println("2. Doctor");
