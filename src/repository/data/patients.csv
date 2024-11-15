@@ -1,3 +1,5 @@
-P001,alex,888,alex,alexdope@gmail.com,98989898,alex,1980-01-01T00:00,Male,Patients,insurance info,allegies,1980-11-01T00:00
-PA-781025e9-7628-4476-85bf-fefd004f64d4,Patient1,p1p1p1,p1,p1@gmail.com,696969696\,p1,1111-11-11T00:00,M,Patients,1234567,ghost,1111-11-11T00:00
-PA-8e949996-ef89-4613-a8d7-d46053bb4f42,kwancg chen,a,a,a@a.com,123456,a,1111-11-11T00:00,M,Patients,12345,,1111-11-11T00:00
+ID,FullName,Username,Email,PhoneNo,PasswordHash,DoB,Gender,Role,Allergies,DateOfAdmission
+P001,penis,penis,penis@gmail.com,098098,penis,2022-02-02T00:00,M,Patients,,2022-02-02T00:00
+P000,dallas,dall,dallas@gmail.com,098098,dall,2022-02-02T00:00,M,Patients,no,2022-02-02T00:00
+P003,rocky,rocky,roccky@gmail.com,08908,password,2002-02-02T00:00,M,Patients,no,2002-02-02T00:00
+P002,poop,poop,poop@gmail.ccom,098098,Pkojih76!,2022-02-02T00:00,M,Patients,asd,2022-02-02T00:00

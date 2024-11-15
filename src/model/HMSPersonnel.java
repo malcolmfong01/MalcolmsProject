@@ -8,7 +8,6 @@ public class HMSPersonnel {
     
     private String UID;
     private String fullName;
-    private String idCard;
     private String username;
     private String email;
     private String phoneNo;
@@ -18,11 +17,10 @@ public class HMSPersonnel {
     private String role;
 
     // Constructor
-    public HMSPersonnel(String UID, String fullName, String idCard, String username, String email, String phoneNo,
+    public HMSPersonnel(String UID, String fullName, String username, String email, String phoneNo,
                         String passwordHash, LocalDateTime DoB, String gender, String role) {
         this.UID = UID;
         this.fullName = fullName;
-        this.idCard = idCard;
         this.username = username;
         this.email = email;
         this.phoneNo = phoneNo;
@@ -47,14 +45,6 @@ public class HMSPersonnel {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
-    }
-
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
     }
 
     public String getUsername() {

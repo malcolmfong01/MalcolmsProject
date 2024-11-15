@@ -9,6 +9,9 @@ import helper.Helper;
 import model.*;
 import controller.*;
 import enums.PersonnelFileType;
+import repository.PersonnelRepository;
+
+import java.util.regex.Pattern;
 
 public class LoginUI extends MainUI {
 
@@ -61,6 +64,9 @@ public class LoginUI extends MainUI {
         HMSPersonnel personnel = AuthenticationController.login(username, passwordHash, PersonnelFileType.PATIENTS);
 
         if (personnel != null && personnel instanceof Patient) {
+            if ("password".equals(passwordHash)) {
+                promptChangePassword(personnel);
+            }
             Patient retrievedPatient = (Patient) personnel; // Cast to Patient
             PatientUI patUI = new PatientUI(retrievedPatient);
             patUI.start();
@@ -81,8 +87,8 @@ public class LoginUI extends MainUI {
         HMSPersonnel personnel = AuthenticationController.login(username, passwordHash, PersonnelFileType.DOCTORS);
 
         if (personnel instanceof Doctor) {
-            if ("default".equals(passwordHash)) {
-                changePassword(personnel);
+            if ("password".equals(passwordHash)) {
+                promptChangePassword(personnel);
             }
             DoctorUI docUI = new DoctorUI((Doctor) personnel);
             docUI.start();
@@ -102,8 +108,8 @@ public class LoginUI extends MainUI {
         HMSPersonnel personnel = AuthenticationController.login(username, passwordHash, PersonnelFileType.PHARMACISTS);
 
         if (personnel instanceof Pharmacist) {
-            if ("default".equals(passwordHash)) {
-                changePassword(personnel);
+            if ("password".equals(passwordHash)) {
+                promptChangePassword(personnel);
             }
             System.out.println("Login Successful!");
             // TODO:
@@ -126,8 +132,8 @@ public class LoginUI extends MainUI {
         HMSPersonnel personnel = AuthenticationController.login(username, passwordHash, PersonnelFileType.ADMINS);
 
         if (personnel instanceof Admin) {
-            if ("default".equals(passwordHash)) {
-                changePassword(personnel);
+            if ("password".equals(passwordHash)) {
+                promptChangePassword(personnel);
             }
             AdminUI adminUI = new AdminUI((Admin) personnel);
             adminUI.start();
@@ -142,22 +148,68 @@ public class LoginUI extends MainUI {
      *
      * @param personnel the HMSPersonnel object representing the user changing their password
      */
-    private void changePassword(HMSPersonnel personnel) {
+    public static boolean changePassword(HMSPersonnel personnel, String oldPassword, String newPassword) {
+        // Check if the old password matches the stored one
+        if (newPassword.equals(oldPassword)) {
+            System.out.println("Please use a new password.");
+            return false;
+        }
+
+        // Validate the new password strength
+        if (!isValidPassword(newPassword)) {
+            System.out.println("Password must be at least 8 characters long, contain an uppercase letter, a number, and a special character.");
+            return false;
+        }
+
+
+        return true;
+    }
+
+    private static boolean isValidPassword(String password) {
+        // Check password length
+        if (password.length() < 8) {
+            return false;
+        }
+        // Check for uppercase letter
+        if (!Pattern.compile("[A-Z]").matcher(password).find()) {
+            return false;
+        }
+        // Check for lowercase letter
+        if (!Pattern.compile("[a-z]").matcher(password).find()) {
+            return false;
+        }
+        // Check for a digit
+        if (!Pattern.compile("[0-9]").matcher(password).find()) {
+            return false;
+        }
+        // Check for special character
+        if (!Pattern.compile("[!@#$%^&*(),.?\":{}|<>]").matcher(password).find()) {
+            return false;
+        }
+        return true;
+    }
+
+    private void promptChangePassword(HMSPersonnel personnel) {
         System.out.println("It appears that you are using the default password.");
         System.out.println("Please change your password for security reasons.");
 
         while (true) {
+            String oldPassword = personnel.getPasswordHash();
             String newPassword = Helper.readString("Enter new password:");
             String confirmPassword = Helper.readString("Confirm new password:");
 
             if (newPassword.equals(confirmPassword) && !newPassword.isEmpty()) {
-                AuthenticationController.updatePassword(personnel, newPassword);
-                System.out.println("Password changed successfully!");
-                break;
+                if (changePassword(personnel,oldPassword, newPassword)) {
+                    AuthenticationController.updatePassword(personnel, newPassword);
+                    System.out.println("Password changed successfully!");
+                    break;
+                }
             } else {
                 System.out.println("Passwords do not match or are empty. Try again.");
             }
+
         }
     }
+
 
 }

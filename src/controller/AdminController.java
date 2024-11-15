@@ -116,7 +116,6 @@ public class AdminController extends HMSPersonnelController {
         System.out.println("--------------------------------------------------");
         System.out.printf("%-20s: %s%n", "UID", personnel.getUID());
         System.out.printf("%-20s: %s%n", "Full Name", personnel.getFullName());
-        System.out.printf("%-20s: %s%n", "ID Card", personnel.getIdCard());
         System.out.printf("%-20s: %s%n", "Username", personnel.getUsername());
         System.out.printf("%-20s: %s%n", "Email", personnel.getEmail());
         System.out.printf("%-20s: %s%n", "Phone No", personnel.getPhoneNo());
@@ -135,10 +134,7 @@ public class AdminController extends HMSPersonnelController {
     public static void printDoctorDetails(Doctor doctor) {
         System.out.println("============== Doctor Details ==============");
         printPersonnelDetails(doctor);
-        System.out.printf("%-20s: %s%n", "Specialty", doctor.getSpecialty());
-        System.out.printf("%-20s: %s%n", "Medical License", doctor.getMedicalLicenseNumber());
         System.out.printf("%-20s: %s%n", "Date Joined", doctor.getDateJoin());
-        System.out.printf("%-20s: %s years%n", "Experience", doctor.getYearsOfExperiences());
         System.out.println("===========================================\n");
         System.out.println();
     }
@@ -151,7 +147,6 @@ public class AdminController extends HMSPersonnelController {
     public static void printPharmacistDetails(Pharmacist pharmacist) {
         System.out.println("========== Pharmacist Details ===========");
         printPersonnelDetails(pharmacist);
-        System.out.printf("%-20s: %s%n", "License Number", pharmacist.getPharmacistLicenseNumber());
         System.out.printf("%-20s: %s%n", "Date of Employment", pharmacist.getDateOfEmployment());
         System.out.println("=========================================\n");
         System.out.println();

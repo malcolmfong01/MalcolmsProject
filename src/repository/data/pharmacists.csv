@@ -1,6 +1,5 @@
-PH-95119818-8b6d-479d-9bd1-b17561d396a9,kc,kc,kc,kc@kc.xom,123,kc,1111-11-11T00:00,M,PHARMACISTS,assdfgh,1111-11-11T00:00
-PH-2b2f82b4-e54e-4bbd-b249-0b467b6e6517,Liu Yanzhi,111,yanzhi,111@gmail.com,111,111,1111-11-11T00:00,F,PHARMACISTS,111,1111-11-11T00:00
-P001,Alice Tan,S1234567A,alice.tan,alice@example.com,12345678,passwordHash1,1985-05-15T00:00,Female,Pharmacists,PLN123,2010-06-01T00:00
-P003,Charlie Wong,S3456789C,charlie.wong,charlie@example.com,34567890,passwordHash3,1990-11-25T00:00,Male,Pharmacists,PLN789,2015-11-05T00:00
-P002,Bob Lim,S2345678B,bob.lim,bob@example.com,23456789,passwordHash2,1982-08-20T00:00,Male,Pharmacists,PLN456,2012-03-12T00:00
-PH-de888a0f-8df1-4815-b4b5-36b8c477eb5a,Pharmacist1,dsfgzh,phar1,phar1@pahr.com,123456,phar1,1111-11-11T00:00,F,PHARMACISTS,12345678,1111-11-11T00:00
+ID,FullName,Username,Email,PhoneNo,PasswordHash,DoB,Gender,Role,DateOfEmployment
+PH000,dallas,dall,dallas@gmail.ccom,098098,dall,2022-02-02T00:00,M,PHARMACISTS,2022-02-02T00:00
+PH001,penis,penis,penis@gmial.com,098908,penis,2022-02-02T00:00,M,PHARMACISTS,2022-02-02T00:00
+PH002,rokcy,roccky,rocky@gmail.com,08098,password,2022-02-02T00:00,M,PHARMACISTS,2022-02-02T00:00
+PH003,lol,poo,lol@gmail.com,098098,password,2022-02-02T00:00,M,PHARMACISTS,2022-02-02T00:00

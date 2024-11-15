@@ -48,15 +48,15 @@ public class Dummymain {
         System.out.println("---- Medicine Repository Test Complete ----");
 
         // 1. Create and add new Pharmacist objects to the repository
-        Pharmacist pharm1 = new Pharmacist("P001", "Alice Tan", "S1234567A", "alice.tan",
+        Pharmacist pharm1 = new Pharmacist("Alice Tan", "S1234567A", "alice.tan",
                 "alice@example.com", "12345678", "passwordHash1", LocalDateTime.of(1985, 5, 15, 0, 0),
-                "Female", "Pharmacists", "PLN123", LocalDateTime.of(2010, 6, 1, 0, 0));
-        Pharmacist pharm2 = new Pharmacist("P002", "Bob Lim", "S2345678B", "bob.lim",
+                "Female", "Pharmacists", LocalDateTime.of(2010, 6, 1, 0, 0));
+        Pharmacist pharm2 = new Pharmacist("Bob Lim", "S2345678B", "bob.lim",
                 "bob@example.com", "23456789", "passwordHash2", LocalDateTime.of(1982, 8, 20, 0, 0),
-                "Male", "Pharmacists", "PLN456", LocalDateTime.of(2012, 3, 12, 0, 0));
-        Pharmacist pharm3 = new Pharmacist("P003", "Charlie Wong", "S3456789C", "charlie.wong",
+                "Male", "Pharmacists", LocalDateTime.of(2012, 3, 12, 0, 0));
+        Pharmacist pharm3 = new Pharmacist( "Charlie Wong", "S3456789C", "charlie.wong",
                 "charlie@example.com", "34567890", "passwordHash3", LocalDateTime.of(1990, 11, 25, 0, 0),
-                "Male", "Pharmacists", "PLN789", LocalDateTime.of(2015, 11, 5, 0, 0));
+                "Male", "Pharmacists", LocalDateTime.of(2015, 11, 5, 0, 0));
 
         // Add these pharmacists to the repository's in-memory collection
         PersonnelRepository.PHARMACISTS.put(pharm1.getUID(), pharm1);

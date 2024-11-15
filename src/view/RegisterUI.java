@@ -53,12 +53,10 @@ public class RegisterUI extends MainUI {
  // Registration for Patient
     public void patientRegister() {
         String fullName = Helper.readString("Enter full name:");
-        String idCard = Helper.readString("Enter ID card number:");
         String email = Helper.readEmail("Enter email:");
         String phoneNo = Helper.readString("Enter phone number:");
         LocalDateTime DoB = Helper.readDate("Enter date of birth (yyyy-MM-dd):");
         String gender = Helper.readGender("Enter gender (M/F):");
-        String insuranceInfo = Helper.readString("Enter insurance information:");
         String allergies = Helper.readString("Enter allergies (if any):");
         String bloodType = Helper.readString("Enter BloodType (Leave blank if unsure):");
         bloodType = (bloodType=="") ? null : bloodType;
@@ -71,10 +69,8 @@ public class RegisterUI extends MainUI {
             username = Helper.readString("Enter a new username: ");
         }
 
-        String password = Helper.readString("Enter desired password:");
-
         // Register the patient
-        String patientUID = AuthenticationController.registerPatient(fullName, idCard, username, email, phoneNo, password, DoB, gender, insuranceInfo, allergies, dateOfAdmission);
+        String patientUID = AuthenticationController.registerPatient(fullName, username, email, phoneNo, "password", DoB, gender, allergies, dateOfAdmission);
         if (patientUID != null) {
             System.out.println("Patient registered successfully!");
 
@@ -106,37 +102,29 @@ public class RegisterUI extends MainUI {
     // Registration for Doctor
     public void doctorRegister() {
         String fullName = Helper.readString("Enter full name:");
-        String idCard = Helper.readString("Enter ID card number:");
         String email = Helper.readEmail("Enter email:");
         String phoneNo = Helper.readString("Enter phone number:");
         LocalDateTime DoB = Helper.readDate("Enter date of birth (yyyy-MM-dd):");
         String gender = Helper.readGender("Enter gender (M/F):");
-        String specialty = Helper.readString("Enter specialty:");
-        String medicalLicenseNumber = Helper.readString("Enter medical license number:");
         LocalDateTime dateJoin = Helper.readDate("Enter date of joining (yyyy-MM-dd):");
-        int yearsOfExperience = Helper.readInt("Enter years of experience:", 1, 50);
         String username = Helper.readString("Enter desired username:");
         
 		while (AuthenticationController.isUsernameTaken(username, PersonnelRepository.DOCTORS)) {
 		System.out.println("The username '" + username + "' is already taken. Please enter a new username:");
 		username = Helper.readString("Enter a new username: ");
 		}
-		
-        String password = Helper.readString("Enter desired password:");
 
-        boolean success = AuthenticationController.registerDoctor(fullName, idCard, username, email, phoneNo, password, DoB, gender, specialty, medicalLicenseNumber, dateJoin, yearsOfExperience);
+        boolean success = AuthenticationController.registerDoctor(fullName, username, email, phoneNo, "password", DoB, gender, dateJoin);
         System.out.println(success ? "Doctor registered successfully!" : "Registration failed. Username may already exist.");
     }
 
     // Registration for Pharmacist
     public void pharmacistRegister() {
         String fullName = Helper.readString("Enter full name:");
-        String idCard = Helper.readString("Enter ID card number:");
         String email = Helper.readEmail("Enter email:");
         String phoneNo = Helper.readString("Enter phone number:");
         LocalDateTime DoB = Helper.readDate("Enter date of birth (yyyy-MM-dd):");
         String gender = Helper.readGender("Enter gender (M/F):");
-        String pharmacistLicenseNumber = Helper.readString("Enter pharmacist license number:");
         LocalDateTime dateOfEmployment = Helper.readDate("Enter date of employment (yyyy-MM-dd):");
         String username = Helper.readString("Enter desired username:");
         
@@ -144,17 +132,14 @@ public class RegisterUI extends MainUI {
 		System.out.println("The username '" + username + "' is already taken. Please enter a new username:");
 		username = Helper.readString("Enter a new username: ");
 		}
-		
-        String password = Helper.readString("Enter desired password:");
 
-        boolean success = AuthenticationController.registerPharmacist(fullName, idCard, username, email, phoneNo, password, DoB, gender, pharmacistLicenseNumber, dateOfEmployment);
+        boolean success = AuthenticationController.registerPharmacist(fullName, username, email, phoneNo, "password", DoB, gender, dateOfEmployment);
         System.out.println(success ? "Pharmacist registered successfully!" : "Registration failed. Username may already exist.");
     }
 
     // Registration for Admin
     public void adminRegister() {
     	String fullName = Helper.readString("Enter full name:");
-        String idCard = Helper.readString("Enter ID card number:");
         String email = Helper.readEmail("Enter email:");        
         String phoneNo = Helper.readString("Enter phone number:");
         LocalDateTime DoB = Helper.readDate("Enter date of birth (yyyy-MM-dd):");
@@ -165,10 +150,8 @@ public class RegisterUI extends MainUI {
 		System.out.println("The username '" + username + "' is already taken. Please enter a new username:");
 		username = Helper.readString("Enter a new username: ");
 		}
-		
-        String password = Helper.readString("Enter desired password:");
 
-        boolean success = AuthenticationController.registerAdmin(fullName, idCard, username, email, phoneNo, password, DoB, gender, dateOfCreation);
+        boolean success = AuthenticationController.registerAdmin(fullName, username, email, phoneNo, "password", DoB, gender, dateOfCreation);
         System.out.println(success ? "Admin registered successfully!" : "Registration failed. Username may already exist.");
     }
 }

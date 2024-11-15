@@ -172,8 +172,8 @@ public class AdminUI extends MainUI {
              LocalDateTime dateJoin = readDate();
              System.out.println("Enter Years of Experiences: " );
              int yearsOfExperiences = Helper.readInt("");
-             Doctor doctor = new Doctor(fullName,idCard, username, email, phoneNo, "default", 
-            		 DoB, gender, specialty, medicalLicenseNumber, dateJoin, yearsOfExperiences);
+             Doctor doctor = new Doctor(fullName, username, email, phoneNo, "default",
+            		 DoB, gender, dateJoin);
              HMSPersonnel personnel = (HMSPersonnel) doctor;
              AdminController.addPersonnel(personnel);
         }      
@@ -183,7 +183,7 @@ public class AdminUI extends MainUI {
         	String pharmacistLicenseNumber = Helper.readString();
         	System.out.println("Enter Date Of Employment (YYYY-MM-DD HH:MM) : " );
         	LocalDateTime dateOfEmployment = readDate();
-        	Pharmacist pharmacist = new Pharmacist(fullName,idCard, username, email, phoneNo, "defaultPassword", DoB, gender,pharmacistLicenseNumber , dateOfEmployment);
+        	Pharmacist pharmacist = new Pharmacist(fullName, username, email, phoneNo, "defaultPassword", DoB, gender , dateOfEmployment);
         	HMSPersonnel personnel = (HMSPersonnel) pharmacist;
         	AdminController.addPersonnel(personnel);
         }
@@ -219,9 +219,6 @@ public class AdminUI extends MainUI {
             doctor.setEmail(email);
             doctor.setPhoneNo(phoneNo);
             doctor.setPasswordHash(hashedPassword);
-            doctor.setSpecialty(specialty);
-            doctor.setMedicalLicenseNumber(medicalLicenseNumber);
-            doctor.setYearsOfExperiences(yearsOfExperiences);
 
             AdminController.updatePersonnel(doctor.getUID(), doctor);
         } else {
@@ -231,7 +228,7 @@ public class AdminUI extends MainUI {
             pharmacist.setEmail(email);
             pharmacist.setPhoneNo(phoneNo);
             pharmacist.setPasswordHash(hashedPassword);
-            pharmacist.setPharmacistLicenseNumber(pharmacistLicenseNumber);
+
 
             AdminController.updatePersonnel(pharmacist.getUID(), pharmacist);
         }

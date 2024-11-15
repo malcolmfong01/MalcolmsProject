@@ -8,30 +8,28 @@ import enums.PersonnelFileType;
 public class Patient extends HMSPersonnel {
 
 
-    private String insuranceInfo;
+
     private String allergies;
     private LocalDateTime dateOfAdmission;
 
     // Constructor for creation of Patient
-    public Patient(String fullName, String idCard, String username, String email, String phoneNo,
-                   String passwordHash, LocalDateTime DoB, String gender,
-                    String insuranceInfo, String allergies, LocalDateTime dateOfAdmission) {
-        super(HMSPersonnelController.generateUID(PersonnelFileType.PATIENTS), fullName, idCard, username, email, phoneNo, passwordHash, DoB, gender, "Patients");
+    public Patient(String fullName, String username, String email, String phoneNo,
+                   String passwordHash, LocalDateTime DoB, String gender, String allergies, LocalDateTime dateOfAdmission) {
+        super(HMSPersonnelController.generateUID(PersonnelFileType.PATIENTS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Patients");
 
 
-        this.insuranceInfo = insuranceInfo;
+
         this.allergies = allergies;
         this.dateOfAdmission = dateOfAdmission;
     }
     
     // Constructor for creation of Patient from CSV
-    public Patient(String UID, String fullName, String idCard, String username, String email, String phoneNo,
-                   String passwordHash, LocalDateTime DoB, String gender, String role,
-                    String insuranceInfo, String allergies, LocalDateTime dateOfAdmission) {
-        super(UID, fullName, idCard, username, email, phoneNo, passwordHash, DoB, gender, role);
+    public Patient(String UID, String fullName, String username, String email, String phoneNo,
+                   String passwordHash, LocalDateTime DoB, String gender, String role, String allergies, LocalDateTime dateOfAdmission) {
+        super(UID, fullName, username, email, phoneNo, passwordHash, DoB, gender, role);
 
 
-        this.insuranceInfo = insuranceInfo;
+
         this.allergies = allergies;
         this.dateOfAdmission = dateOfAdmission;
     }
@@ -39,13 +37,6 @@ public class Patient extends HMSPersonnel {
     // Getters and Setters
 
 
-    public String getInsuranceInfo() {
-        return insuranceInfo;
-    }
-
-    public void setInsuranceInfo(String insuranceInfo) {
-        this.insuranceInfo = insuranceInfo;
-    }
 
     public String getAllergies() {
         return allergies;

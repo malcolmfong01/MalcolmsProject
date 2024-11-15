@@ -22,7 +22,6 @@ public class UpdatePatientParticularsUI {
         System.out.println("Full Name        : " + patient.getFullName());
         System.out.println("Phone Number     : " + patient.getPhoneNo());
         System.out.println("Email            : " + patient.getEmail());
-        System.out.println("Insurance Info   : " + patient.getInsuranceInfo());
         System.out.println("Allergies        : " + patient.getAllergies());
         System.out.println("Date of Admission: " + (patient.getDateOfAdmission() != null 
                                 ? patient.getDateOfAdmission().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) 
@@ -79,7 +78,6 @@ public class UpdatePatientParticularsUI {
                 case 4:
                     System.out.print("Enter new insurance information: ");
                     String insuranceInfo = scanner.nextLine();
-                    patient.setInsuranceInfo(insuranceInfo);
                     System.out.println("Insurance information updated.");
                     break;
                 case 5:

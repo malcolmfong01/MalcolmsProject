@@ -93,16 +93,60 @@ public class AuthenticationController {
             return false;
         }
     }
+    // Generate ID card similar to the UID generation method
+    public static String generateIdCard(PersonnelFileType personnelFileType) {
+        String prefix = "";
+        int nextId = 0;
+        Map<String, ? extends HMSPersonnel> repository = null;
+
+        switch (personnelFileType) {
+            case ADMINS:
+                prefix = "AD";
+                repository = PersonnelRepository.ADMINS;
+                break;
+            case DOCTORS:
+                prefix = "D";
+                repository = PersonnelRepository.DOCTORS;
+                break;
+            case PATIENTS:
+                prefix = "P";
+                repository = PersonnelRepository.PATIENTS;
+                break;
+            case PHARMACISTS:
+                prefix = "PH";
+                repository = PersonnelRepository.PHARMACISTS;
+                break;
+            default:
+                return "";
+        }
+        // Find the highest ID currently in the repository
+        if (repository != null && !repository.isEmpty()) {
+            for (String idCard : repository.keySet()) {
+                if (idCard.startsWith(prefix)) {
+                    try {
+                        // Extract the numeric part after the prefix and parse it
+                        int currentId = Integer.parseInt(idCard.substring(prefix.length()));
+                        nextId = Math.max(nextId, currentId + 1);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid ID format: " + idCard);
+                        // Handle the error or skip the invalid entry
+                    }
+                }
+            }
+        }
+
+        // Format the next ID with leading zeros (e.g., "A001")
+        return String.format("%s%03d", prefix, nextId);
+    }
 
     // Register Patient
-    public static String registerPatient(String fullName, String idCard, String username, String email,
+    public static String registerPatient(String fullName, String username, String email,
             String phoneNo, String passwordHash, LocalDateTime DoB,
-            String gender, String insuranceInfo, String allergies,
+            String gender, String allergies,
             LocalDateTime dateOfAdmission) {
 
         // Register patient
-        Patient patient = new Patient(fullName, idCard, username, email, phoneNo, passwordHash, DoB, gender,
-                insuranceInfo, allergies, dateOfAdmission);
+        Patient patient = new Patient(fullName, username, email, phoneNo, passwordHash, DoB, gender, allergies, dateOfAdmission);
         PersonnelRepository.PATIENTS.put(patient.getUID(), patient);
         PersonnelRepository.saveAllPersonnelFiles();
         System.out.println("Patient registered successfully with username: " + username);
@@ -110,14 +154,12 @@ public class AuthenticationController {
     }
 
     // Register Doctor
-    public static boolean registerDoctor(String fullName, String idCard, String username, String email,
+    public static boolean registerDoctor(String fullName, String username, String email,
             String phoneNo, String passwordHash, LocalDateTime DoB,
-            String gender, String specialty, String medicalLicenseNumber,
-            LocalDateTime dateJoin, int yearsOfExperience) {
-
+            String gender,
+            LocalDateTime dateJoin) {
         // Register doctor
-        Doctor doctor = new Doctor(fullName, idCard, username, email, phoneNo, passwordHash, DoB, gender, specialty,
-                medicalLicenseNumber, dateJoin, yearsOfExperience);
+        Doctor doctor = new Doctor(fullName, username, email, phoneNo, passwordHash, DoB, gender, dateJoin );
         PersonnelRepository.DOCTORS.put(doctor.getUID(), doctor);
         PersonnelRepository.saveAllPersonnelFiles();
         System.out.println("Doctor registered successfully with username: " + username);
@@ -125,14 +167,13 @@ public class AuthenticationController {
     }
 
     // Register Pharmacist
-    public static boolean registerPharmacist(String fullName, String idCard, String username, String email,
+    public static boolean registerPharmacist(String fullName, String username, String email,
             String phoneNo, String passwordHash, LocalDateTime DoB,
-            String gender, String pharmacistLicenseNumber,
+            String gender,
             LocalDateTime dateOfEmployment) {
-
         // Register pharmacist
-        Pharmacist pharmacist = new Pharmacist(fullName, idCard, username, email, phoneNo, passwordHash, DoB, gender,
-                pharmacistLicenseNumber, dateOfEmployment);
+        Pharmacist pharmacist = new Pharmacist(fullName, username, email, phoneNo, passwordHash, DoB, gender,
+                 dateOfEmployment);
         PersonnelRepository.PHARMACISTS.put(pharmacist.getUID(), pharmacist);
         PersonnelRepository.saveAllPersonnelFiles();
         System.out.println("Pharmacist registered successfully with username: " + username);
@@ -140,12 +181,11 @@ public class AuthenticationController {
     }
 
     // Register Admin
-    public static boolean registerAdmin(String fullName, String idCard, String username, String email,
+    public static boolean registerAdmin(String fullName, String username, String email,
             String phoneNo, String passwordHash, LocalDateTime DoB,
             String gender, LocalDateTime dateOfCreation) {
-
         // Register admin
-        Admin admin = new Admin(fullName, idCard, username, email, phoneNo, passwordHash, DoB, gender, "Admins",
+        Admin admin = new Admin(fullName, username, email, phoneNo, passwordHash, DoB, gender, "Admins",
                 dateOfCreation);
         PersonnelRepository.ADMINS.put(admin.getUID(), admin);
         PersonnelRepository.saveAllPersonnelFiles();

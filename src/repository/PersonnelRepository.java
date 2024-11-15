@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Objects;
+
 import model.*;
 
 public class PersonnelRepository extends Repository {
@@ -74,6 +76,8 @@ public class PersonnelRepository extends Repository {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(getCsvHeader(fileName));
+            writer.newLine();
             for (T personnel : personnelMap.values()) {
                 writer.write(personnelToCSV(personnel));
                 writer.newLine();
@@ -81,6 +85,18 @@ public class PersonnelRepository extends Repository {
         } catch (IOException e) {
             System.out.println("Error saving personnel data: " + e.getMessage());
         }
+    }
+    private static String getCsvHeader(String fileName) {
+        if (Objects.equals(fileName, "doctors.csv")) {
+            return "ID,FullName,Username,Email,PhoneNo,PasswordHash,DoB,Gender,Role,DateJoin";
+        } else if (Objects.equals(fileName, "patients.csv")) {
+            return "ID,FullName,Username,Email,PhoneNo,PasswordHash,DoB,Gender,Role,Allergies,DateOfAdmission";
+        } else if (Objects.equals(fileName, "pharmacists.csv")) {
+            return "ID,FullName,Username,Email,PhoneNo,PasswordHash,DoB,Gender,Role,DateOfEmployment";
+        } else if (Objects.equals(fileName, "admins.csv")) {
+            return "ID,FullName,Username,Email,PhoneNo,PasswordHash,DoB,Gender,Role,DateOfCreation";
+        }
+        return "ID,FullName,Username,Email,PhoneNo,PasswordHash,DoB,Gender,Role";
     }
 
     /**
@@ -95,7 +111,6 @@ public class PersonnelRepository extends Repository {
         // Add common fields
         csvBuilder.append(personnel.getUID()).append(",");
         csvBuilder.append(personnel.getFullName()).append(",");
-        csvBuilder.append(personnel.getIdCard()).append(",");
         csvBuilder.append(personnel.getUsername()).append(",");
         csvBuilder.append(personnel.getEmail()).append(",");
         csvBuilder.append(personnel.getPhoneNo()).append(",");
@@ -107,16 +122,13 @@ public class PersonnelRepository extends Repository {
         // Add Doctor-specific fields or empty placeholders
         if (personnel instanceof Doctor) {
             Doctor doctor = (Doctor) personnel;
-            csvBuilder.append(doctor.getSpecialty()).append(",");
-            csvBuilder.append(doctor.getMedicalLicenseNumber()).append(",");
             csvBuilder.append(doctor.getDateJoin().toString()).append(",");
-            csvBuilder.append(doctor.getYearsOfExperiences()).append(",");
+
         }
 
         // Add Patient-specific fields or empty placeholders
         if (personnel instanceof Patient) {
             Patient patient = (Patient) personnel;
-            csvBuilder.append(patient.getInsuranceInfo()).append(",");
             csvBuilder.append(patient.getAllergies()).append(",");
             csvBuilder.append(patient.getDateOfAdmission().toString()).append(",");
         }
@@ -124,7 +136,6 @@ public class PersonnelRepository extends Repository {
         // Add Pharmacist-specific fields or empty placeholders
         if (personnel instanceof Pharmacist) {
             Pharmacist pharmacist = (Pharmacist) personnel;
-            csvBuilder.append(pharmacist.getPharmacistLicenseNumber()).append(",");
             csvBuilder.append(pharmacist.getDateOfEmployment().toString()).append(",");
         }
 
@@ -208,64 +219,55 @@ public class PersonnelRepository extends Repository {
                 return type.cast(new Doctor(
                         fields[0], // UID
                         fields[1], // fullName
-                        fields[2], // idCard
-                        fields[3], // username
-                        fields[4], // email
-                        fields[5], // phoneNo
-                        fields[6], // passwordHash
-                        LocalDateTime.parse(fields[7]), // DoB (LocalDateTime)
-                        fields[8], // gender
-                        fields[9], // role (e.g., Doctor)
-                        fields[10], // specialty
-                        fields[11], // medicalLicenseNumber
-                        LocalDateTime.parse(fields[12]), // dateJoin (LocalDateTime)
-                        Integer.parseInt(fields[13]) // yearsOfExperience
+                        fields[2], // username
+                        fields[3], // email
+                        fields[4], // phoneNo
+                        fields[5], // passwordHash
+                        LocalDateTime.parse(fields[6]), // DoB (LocalDateTime)
+                        fields[7], // gender
+                        fields[8], // role (e.g., Doctor)
+                        LocalDateTime.parse(fields[9]) // dateJoin (LocalDateTime)
                 ));
             } else if (type == Patient.class) {
                 return type.cast(new Patient(
                         fields[0], // UID
                         fields[1], // fullName
-                        fields[2], // idCard
-                        fields[3], // username
-                        fields[4], // email
-                        fields[5], // phoneNo
-                        fields[6], // passwordHash
-                        LocalDateTime.parse(fields[7]), // DoB (LocalDateTime)
-                        fields[8], // gender
-                        fields[9], // role (e.g., Patient)
-                        fields[10], // insurance info
-                        fields[11], // allergies
-                        LocalDateTime.parse(fields[12]) // dateOfAdmission (LocalDateTime)
+                        fields[2], // username
+                        fields[3], // email
+                        fields[4], // phoneNo
+                        fields[5], // passwordHash
+                        LocalDateTime.parse(fields[6]), // DoB (LocalDateTime)
+                        fields[7], // gender
+                        fields[8], // role (e.g., Patient)
+                        fields[9], // allergies
+                        LocalDateTime.parse(fields[10]) // dateOfAdmission (LocalDateTime)
 
                 ));
             } else if (type == Pharmacist.class) {
                 return type.cast(new Pharmacist(
                         fields[0], // UID
                         fields[1], // fullName
-                        fields[2], // idCard
-                        fields[3], // username
-                        fields[4], // email
-                        fields[5], // phoneNo
-                        fields[6], // passwordHash
-                        LocalDateTime.parse(fields[7]), // DoB (LocalDateTime)
-                        fields[8], // gender
-                        fields[9], // role (e.g., Pharmacist)
-                        fields[10], // pharmacistLicenseNumber
-                        LocalDateTime.parse(fields[11]) // dateOfEmployment (LocalDateTime)
+                        fields[2], // username
+                        fields[3], // email
+                        fields[4], // phoneNo
+                        fields[5], // passwordHash
+                        LocalDateTime.parse(fields[6]), // DoB (LocalDateTime)
+                        fields[7], // gender
+                        fields[8], // role (e.g., Pharmacist)
+                        LocalDateTime.parse(fields[9]) // dateOfEmployment (LocalDateTime)
                 ));
             } else if (type == Admin.class) {
                 return type.cast(new Admin(
                         fields[0], // UID
                         fields[1], // fullName
-                        fields[2], // idCard
-                        fields[3], // username
-                        fields[4], // email
-                        fields[5], // phoneNo
-                        fields[6], // passwordHash
-                        LocalDateTime.parse(fields[7]), // DoB (LocalDateTime)
-                        fields[8], // gender
-                        fields[9], // role (e.g., Admin)
-                        LocalDateTime.parse(fields[10]) // dateOfCreation (LocalDateTime)
+                        fields[2], // username
+                        fields[3], // email
+                        fields[4], // phoneNo
+                        fields[5], // passwordHash
+                        LocalDateTime.parse(fields[6]), // DoB (LocalDateTime)
+                        fields[7], // gender
+                        fields[8], // role (e.g., Admin)
+                        LocalDateTime.parse(fields[9]) // dateOfCreation (LocalDateTime)
                 ));
             }
         } catch (Exception e) {

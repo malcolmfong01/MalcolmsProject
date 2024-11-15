@@ -13,28 +13,59 @@ import enums.PersonnelFileType;
 public class HMSPersonnelController {
 
     public static String generateUID(PersonnelFileType personnelFileType) {
-        UUID uuid = UUID.randomUUID();
-        String uuidAsString = uuid.toString();
+        String prefix = "";
+        int nextId = 0;
+        Map<String, ? extends HMSPersonnel> repository = null;
 
         switch (personnelFileType) {
             case ADMINS:
-                return "AD-" + uuidAsString;
+                prefix = "A";
+                repository = PersonnelRepository.ADMINS;
+                break;
             case DOCTORS:
-                return "DO-" + uuidAsString;
+                prefix = "D";
+                repository = PersonnelRepository.DOCTORS;
+                break;
             case PATIENTS:
-                return "PA-" + uuidAsString;
+                prefix = "P";
+                repository = PersonnelRepository.PATIENTS;
+                break;
             case PHARMACISTS:
-                return "PH-" + uuidAsString;
+                prefix = "PH";
+                repository = PersonnelRepository.PHARMACISTS;
+                break;
             default:
                 return "";
         }
+        // Find the highest ID currently in the repository
+        if (repository != null && !repository.isEmpty()) {
+            for (String idCard : repository.keySet()) {
+                if (idCard.startsWith(prefix)) {
+                    try {
+                        // Extract the numeric part after the prefix and parse it
+                        int currentId = Integer.parseInt(idCard.substring(prefix.length()));
+                        nextId = Math.max(nextId, currentId + 1);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid ID format: " + idCard);
+                        // Handle the error or skip the invalid entry
+                    }
+                }
+            }
+        }
+
+        // Format the next ID with leading zeros (e.g., "A001")
+        return String.format("%s%03d", prefix, nextId);
     }
 
     // Add a new personnel (e.g., Doctor, Patient, etc.)
     public static boolean addPersonnel(HMSPersonnel personnel) {
-        if (personnel == null || personnel.getUID() == null) {
+        if (personnel == null) {
             System.out.println("Error: Invalid personnel data.");
             return false;
+        }
+        // Automatically generate UID if not provided
+        if (personnel.getUID() == null || personnel.getUID().isEmpty()) {
+            personnel.setUID(generateUID(determinePersonnelType(personnel)));
         }
 
         // Determine the type of personnel and add it to the appropriate collection
@@ -58,6 +89,19 @@ public class HMSPersonnelController {
         // Save the updated personnel to the file
         PersonnelRepository.saveAllPersonnelFiles();
         return true;
+    }
+    // Determine personnel type based on the class of personnel
+    private static PersonnelFileType determinePersonnelType(HMSPersonnel personnel) {
+        if (personnel instanceof Doctor) {
+            return PersonnelFileType.DOCTORS;
+        } else if (personnel instanceof Patient) {
+            return PersonnelFileType.PATIENTS;
+        } else if (personnel instanceof Pharmacist) {
+            return PersonnelFileType.PHARMACISTS;
+        } else if (personnel instanceof Admin) {
+            return PersonnelFileType.ADMINS;
+        }
+        return null;
     }
 
     // Remove personnel by UID
@@ -225,7 +269,6 @@ public class HMSPersonnelController {
 
         // Update fields from HMSPersonnel class
         existingPatient.setFullName(updatedPatient.getFullName());
-        existingPatient.setIdCard(updatedPatient.getIdCard());
         existingPatient.setUsername(updatedPatient.getUsername());
         existingPatient.setEmail(updatedPatient.getEmail());
         existingPatient.setPhoneNo(updatedPatient.getPhoneNo());
@@ -234,7 +277,6 @@ public class HMSPersonnelController {
         existingPatient.setGender(updatedPatient.getGender());
 
         // Update fields specific to Patient class
-        existingPatient.setInsuranceInfo(updatedPatient.getInsuranceInfo());
         existingPatient.setAllergies(updatedPatient.getAllergies());
         existingPatient.setDateOfAdmission(updatedPatient.getDateOfAdmission());
 
