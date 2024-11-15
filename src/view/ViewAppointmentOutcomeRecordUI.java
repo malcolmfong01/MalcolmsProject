@@ -16,7 +16,6 @@ public class ViewAppointmentOutcomeRecordUI extends MainUI {
 
     @Override
     public void start() {
-        printBreadCrumbs("Hospital Management System > View Appointment Outcome Records");
         viewAppointmentOutcomeRecords();
     }
 

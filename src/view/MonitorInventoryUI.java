@@ -19,7 +19,6 @@ public class MonitorInventoryUI extends MainUI {
 
     @Override
     public void start() {
-        printBreadCrumbs("Hospital Management System > Monitor Inventory");
         monitorInventory();
     }
 

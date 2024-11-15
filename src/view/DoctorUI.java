@@ -58,7 +58,6 @@ public class DoctorUI extends MainUI {
 	@Override
 	protected void printChoice() {
 		System.out.printf("Welcome! Dr. --- %s ---\n", doctor.getFullName());
-		printBreadCrumbs("HMS App UI > Doctor Dashboard");
 		System.out.println("Doctor Menu:");
 		System.out.println("1. View Patient Medical Records");
 		System.out.println("2. Update Patient Medical Records");
