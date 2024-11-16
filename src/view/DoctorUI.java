@@ -67,6 +67,7 @@ public class DoctorUI extends MainUI {
 		System.out.println("6. View Upcoming Appointments");
 		System.out.println("7. Record Appointment Outcome");
 		System.out.println("8. Logout");
+		System.out.print("Enter your choice: ");
 	}
 
 	/**
@@ -85,7 +86,7 @@ public class DoctorUI extends MainUI {
 		int choice;
 		do {
 			printChoice();
-			choice = sc.nextInt();
+			choice = Helper.readInt("");
 			switch (choice) {
 				case 1 : viewPatientMedicalRecord(doctor.getUID());break;
 				case 2 : selectAndUpdateMedicalRecord();break;

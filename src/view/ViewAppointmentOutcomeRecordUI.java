@@ -23,6 +23,7 @@ public class ViewAppointmentOutcomeRecordUI extends MainUI {
     protected void printChoice() {
         System.out.println("1. View another appointment outcome record");
         System.out.println("2. Return to main menu");
+        System.out.print("Enter your choice: ");
     }
 
     public void viewAppointmentOutcomeRecords() {

@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import controller.HMSPersonnelController;
+import helper.Helper;
 import model.Patient;
 
 public class UpdatePatientParticularsUI {
@@ -34,7 +35,6 @@ public class UpdatePatientParticularsUI {
 
     // Start the UI for updating patient particulars
     public void start() {
-        Scanner scanner = new Scanner(System.in);
         int choice;
         boolean keepUpdating = true;
 
@@ -46,59 +46,40 @@ public class UpdatePatientParticularsUI {
             System.out.println("1. Update Full Name");
             System.out.println("2. Update Phone Number");
             System.out.println("3. Update Email");
-            System.out.println("4. Update Insurance Information");
-            System.out.println("5. Update Allergies");
-            System.out.println("6. Update Date of Admission");
-            System.out.println("7. Update Date of Birth");
-            System.out.println("8. Finish and Save");
+            System.out.println("4. Update Allergies");
+            System.out.println("5. Update Date of Birth");
+            System.out.println("6. Finish and Save");
             System.out.print("Enter your choice: ");
 
-            choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            choice = Helper.readInt("");
 
             switch (choice) {
                 case 1:
-                    System.out.print("Enter new full name: ");
-                    String fullName = scanner.nextLine();
+                    String fullName = Helper.readString("Enter new full name:");
                     patient.setFullName(fullName);
                     System.out.println("Full name updated.");
                     break;
                 case 2:
-                    System.out.print("Enter new phone number: ");
-                    String phoneNumber = scanner.nextLine();
+                    String phoneNumber = Helper.readValidPhoneNumber("Enter new phone number: ");
                     patient.setPhoneNo(phoneNumber);
                     System.out.println("Phone number updated.");
                     break;
                 case 3:
-                    System.out.print("Enter new email: ");
-                    String email = scanner.nextLine();
+                    String email = Helper.readEmail("Enter new email:");
                     patient.setEmail(email);
                     System.out.println("Email updated.");
                     break;
                 case 4:
-                    System.out.print("Enter new insurance information: ");
-                    String insuranceInfo = scanner.nextLine();
-                    System.out.println("Insurance information updated.");
-                    break;
-                case 5:
-                    System.out.print("Enter new allergies information: ");
-                    String allergies = scanner.nextLine();
+                    String allergies = Helper.readString("Enter new allergies (if any):");
                     patient.setAllergies(allergies);
                     System.out.println("Allergies updated.");
                     break;
-                case 6:
-                    System.out.print("Enter new date of admission (yyyy-MM-dd HH:mm): ");
-                    String dateOfAdmission = scanner.nextLine();
-                    patient.setDateOfAdmission(LocalDateTime.parse(dateOfAdmission, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-                    System.out.println("Date of admission updated.");
-                    break;
-                case 7:
-                    System.out.print("Enter new date of birth (yyyy-MM-dd HH:mm): ");
-                    String dob = scanner.nextLine();
-                    patient.setDoB(LocalDateTime.parse(dob, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                case 5:
+                    LocalDateTime DoB = Helper.readDate("Enter new date of birth (yyyy-MM-dd):");
+                    patient.setDoB(DoB);
                     System.out.println("Date of birth updated.");
                     break;
-                case 8:
+                case 6:
                     // Save all updates
                     if (HMSPersonnelController.updatePatientParticulars(patient.getUID(), patient)) {
                         System.out.println("All changes saved successfully.");

@@ -48,6 +48,7 @@ public class AdminUI extends MainUI {
         System.out.println("3. View and Manage Medication Inventory ");
         System.out.println("4. Approve Replenishment Requests");
         System.out.println("5. Logout");
+        System.out.print("Enter your choice: ");
     }
     
 	/**
