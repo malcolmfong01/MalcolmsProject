@@ -99,7 +99,7 @@ public class AdminController extends HMSPersonnelController {
 	    }
 
 	    if (!found) {
-	        System.out.println("No appointments found.");
+	        System.out.println("No other appointments found.");
 	    }
 
 	    System.out.println("---------------------------------------");

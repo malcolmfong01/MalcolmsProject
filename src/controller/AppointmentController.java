@@ -4,41 +4,46 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 import enums.AppointmentOutcomeStatus;
 import enums.AppointmentStatus;
 import enums.RecordFileType;
-import model.AppointmentOutcomeRecord;
-import model.AppointmentRecord;
-import model.Doctor;
-import model.MedicalRecord;
-import model.PaymentRecord;
-import model.RecordStatusType;
+import model.*;
 import repository.AppointmentOutcomeRecordRepository;
 import repository.RecordsRepository;
-import java.util.Comparator;
 
 public class AppointmentController {
 
 	private static final System.Logger logger = System.getLogger(RecordsController.class.getName());
+	// Map to keep track of the next ID for each record type
+	private static final Map<RecordFileType, Integer> recordCounters = new HashMap<>();
 
+	static {
+		// Initialize counters for each record type starting at 0
+		for (RecordFileType recType : RecordFileType.values()) {
+			recordCounters.put(recType, 0);
+		}
+	}
 	public static String generateRecordID(RecordFileType recType) {
-		UUID uuid = UUID.randomUUID();
-		String uuidAsString = uuid.toString();
+		// Get the current counter for the specified record type
+		int nextId = recordCounters.get(recType);
+		// Format the ID with a prefix and leading zeros (e.g., "A-000")
+		String prefix = "";
 		switch (recType) {
 		case APPOINTMENT_OUTCOME_RECORDS:
-			return "AO-" + uuidAsString;
+			prefix = "AO-";
+			break;
 		case DIAGNOSIS_RECORDS:
-			return "DIAG-" + uuidAsString;
+			prefix = "DIAG-";
+			break;
 		case MEDICINE_RECORDS:
-			return "MR-" + uuidAsString;
+			prefix= "MR-";
 		default:
-			return "R-" + uuidAsString;
+			prefix = "R-";
 		}
+		// Return the formatted ID
+		return String.format("%s%03d", prefix, nextId);
 	}
 
 	public static ArrayList<AppointmentRecord> getAppointmentsByDoctorAndPatient(String doctorID, String patientID,
