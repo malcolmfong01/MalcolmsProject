@@ -31,10 +31,14 @@ public class HMSAppUI extends MainUI {
      */
 	@Override
 	protected void printChoice() {
-		System.out.println("Would you like to? :");
-		System.out.println("1. Login");
-		System.out.println("2. Register an account");
-		System.out.println("3. Close App");
+		System.out.println("-------------------------------------");
+		System.out.println("| Welcome to SCSJ Group 3's HMS App |");
+		System.out.println("-------------------------------------");
+		System.out.println("| What would you like to do? :      |");
+		System.out.println("| 1. Login                          |");
+		System.out.println("| 2. Register an account            |");
+		System.out.println("| 3. Close App                      |");
+		System.out.println("-------------------------------------");
 		System.out.print("Enter your choice: ");
 	}
 
