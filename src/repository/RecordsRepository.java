@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import helper.Helper;
 import controller.RecordsController;
@@ -66,6 +67,20 @@ public class RecordsRepository extends Repository {
         saveRecordsToCSV(appointmentFileName, APPOINTMENT_RECORDS);
         saveRecordsToCSV(paymentFileName, PAYMENT_RECORDS);
     }
+    /**
+     * Returns the CSV header based on the file name.
+     *
+     * @param fileName the name of the file
+     * @return the CSV header string
+     */
+    private static String getCsvHeader(String fileName) {
+        if (Objects.equals(fileName, medicalFileName)) {
+            return "Record ID,Full Name,Phone Number,Email,Created Date,Updated Date,Record status,Patient ID,Doctor ID,Blood Type";
+        } else if (Objects.equals(fileName, appointmentFileName)) {
+            return "Record ID,Created Date,Updated Date,Record status,Appointment Outcome Record ID, Patient ID,Doctor ID,Appointment Time, Location, Appointment Status";
+        }
+        return "Record ID,Created Date,Updated Date,Record Status,Patient ID,Payment Amount";
+    }
 
     /**
      * Saves a specific record map to a CSV file.
@@ -85,6 +100,8 @@ public class RecordsRepository extends Repository {
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(getCsvHeader(fileName));
+            writer.newLine();
             for (T record : recordsMapRecordID.values()) {
                 writer.write(recordToCSV(record));
                 writer.newLine();
@@ -94,6 +111,7 @@ public class RecordsRepository extends Repository {
             System.out.println("Error saving record data: " + e.getMessage());
         }
     }
+
     
     /**
      * Converts a record object to a CSV-formatted string.
@@ -177,7 +195,14 @@ public class RecordsRepository extends Repository {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
+            boolean isFirstLine = true; // To skip the header row
+
             while ((line = reader.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue; // Skip the header row
+                }
+
                 T record = csvToRecord(line, type);
                 // MedicalRecord medicalrecord = csvToRecord(line, type);
                 // String[] fields = line.split(",");

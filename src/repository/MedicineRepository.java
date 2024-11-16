@@ -66,14 +66,8 @@ public class MedicineRepository extends Repository {
     private static void saveMedicinesToCSV(String fileName, HashMap<String, Medicine> medicinesMap) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
-        // Ensure the directory exists
-        File directory = new File("./src/repository/" + folder);
-        if (!directory.exists()) {
-            directory.mkdirs(); // Create the directory if it doesn't exist
-        }
-
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write(getCsvHeader(fileName));
+            writer.write(getCsvHeader());
             writer.newLine();
             for (Medicine medicine : medicinesMap.values()) {
                 writer.write(medicineToCSV(medicine));
@@ -84,7 +78,7 @@ public class MedicineRepository extends Repository {
             System.out.println("Error saving medicine data: " + e.getMessage());
         }
     }
-    private static String getCsvHeader(String fileName) {
+    private static String getCsvHeader() {
         return "Medicine ID,Name,Manufacturer,Expiry Date,Stock,Low Level Stock,Replenishment Stock,Status,Request Date,Approved Date";
     }
 

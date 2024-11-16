@@ -346,7 +346,9 @@ public class AdminUI extends MainUI {
 
         if (!requestFound) {
             System.out.println("No replenishment requests found.");
+            return ;
         }
+
         String medicineID = Helper.readString("Enter Medicine ID: ");
         Medicine medicine = MedicineController.getMedicineByUID(medicineID);
         if(medicine == null) {

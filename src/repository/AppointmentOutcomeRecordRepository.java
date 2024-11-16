@@ -73,6 +73,8 @@ public class AppointmentOutcomeRecordRepository extends Repository {
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(getCsvHeader());
+            writer.newLine();
             for (String patientID: patientOutcomeRecords.keySet()) {
                 for (AppointmentOutcomeRecord record : patientOutcomeRecords.get(patientID)) {
                     if (record != null) {
@@ -86,6 +88,9 @@ public class AppointmentOutcomeRecordRepository extends Repository {
         } catch (IOException e) {
             System.out.println("Error saving appointment outcome records to CSV: " + e.getMessage());
         }
+    }
+    private static String getCsvHeader() {
+        return "Appointment ID,Name,Manufacturer,Expiry Date,Stock,Low Level Stock,Replenishment Stock,Status,Request Date,Approved Date";
     }
 
     /**

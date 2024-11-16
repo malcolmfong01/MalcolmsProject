@@ -1,18 +1,14 @@
 package controller;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 import enums.RecordFileType;
 
 import java.util.ArrayList;
 
-import model.AppointmentOutcomeRecord;
-import model.AppointmentRecord;
-import model.Diagnosis;
-import model.MedicalRecord;
-import model.PaymentRecord;
-import model.RecordStatusType;
+import model.*;
 import repository.RecordsRepository;
 import repository.AppointmentOutcomeRecordRepository;
 
@@ -21,18 +17,44 @@ public class RecordsController {
     private static final System.Logger logger = System.getLogger(RecordsController.class.getName());
 
     public static String generateRecordID(RecordFileType recType) {
-        UUID uuid = UUID.randomUUID();
-        String uuidAsString = uuid.toString();
+        String prefix = "";
+        int nextId = 0;
+        Map<String, ? extends HMSRecords> repository = null;
         switch (recType) {
             case APPOINTMENT_RECORDS:
-                return "A-" + uuidAsString;
+                prefix = "A-";
+                repository = RecordsRepository.APPOINTMENT_RECORDS;
+                break;
             case PAYMENT_RECORDS:
-                return "P-" + uuidAsString;
+                prefix = "P-";
+                repository = RecordsRepository.PAYMENT_RECORDS;
+                break;
             case MEDICAL_RECORDS:
-                return "MR-" + uuidAsString;
+                prefix = "MR-";
+                repository = RecordsRepository.MEDICAL_RECORDS;
+                break;
             default:
-                return "R-" + uuidAsString;
+                return "";  // Return an empty string for unrecognized types
         }
+        // Find the highest ID currently in the repository
+        if (repository != null && !repository.isEmpty()) {
+            for (String id : repository.keySet()) {
+                if (id.startsWith(prefix)) {
+                    try {
+                        // Extract the numeric part after the prefix and parse it
+                        int currentId = Integer.parseInt(id.substring(prefix.length()));
+                        nextId = Math.max(nextId, currentId + 1);
+                    } catch (NumberFormatException e) {
+                        logger.log(System.Logger.Level.WARNING, "Invalid ID format: {0}", id);
+                        // Handle the error or skip the invalid entry
+                    }
+                }
+            }
+        }
+
+        // Format the next ID with leading zeros (e.g., "A001", "MR002")
+        return String.format("%s%03d", prefix, nextId);
+
     }
 
     public Boolean checkRecordsDuplication(String UID, RecordFileType recType) {
