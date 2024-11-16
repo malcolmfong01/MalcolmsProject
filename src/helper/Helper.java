@@ -176,6 +176,46 @@ public class Helper {
     }
 
     /**
+     * Prompts the user to enter a valid blood type until the input is valid.
+     * Acceptable blood types are: "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-".
+     *
+     * @param prompt The prompt message to display to the user.
+     * @return The valid blood type entered by the user.
+     */
+    public static String readValidBloodType(String prompt) {
+        String[] validBloodTypes = {"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"};
+        while (true) {
+            System.out.print(prompt);
+            String input = sc.nextLine().toUpperCase();
+            for (String validType : validBloodTypes) {
+                if (input.equals(validType)) {
+                    return input;
+                }
+            }
+            System.out.println("Invalid blood type. Please enter a valid blood type (e.g., A+, O-, etc.).");
+        }
+    }
+
+    /**
+     * Prompts the user to enter a valid phone number until the input is valid.
+     * A valid phone number must have exactly 8 digits and start with either 8 or 9.
+     *
+     * @param prompt The prompt message to display to the user.
+     * @return The valid phone number entered by the user.
+     */
+    public static String readValidPhoneNumber(String prompt) {
+        String phoneRegex = "^[89]\\d{7}$";
+        while (true) {
+            System.out.print(prompt);
+            String input = sc.nextLine();
+            if (input.matches(phoneRegex)) {
+                return input;
+            }
+            System.out.println("Invalid phone number. Please enter an 8-digit phone number starting with 8 or 9.");
+        }
+    }
+
+    /**
      * Prompts the user for a confirmation with a yes/no question.
      *
      * @param message The confirmation message to display.

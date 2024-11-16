@@ -60,7 +60,7 @@ public class PatientUI extends MainUI {
 		int choice = 0;
 		do {
 			printChoice();
-			choice = Helper.readInt("");
+			choice = sc.nextInt();
 			switch (choice) {
 			case 1 : viewPatientMedicalRecord(patient.getUID());break;
 			case 2 : updatePatientPrivateInfo(patient.getUID());break;

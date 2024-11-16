@@ -54,13 +54,13 @@ public class RegisterUI extends MainUI {
     public void patientRegister() {
         String fullName = Helper.readString("Enter full name:");
         String email = Helper.readEmail("Enter email:");
-        String phoneNo = Helper.readString("Enter phone number:");
+        String phoneNo = Helper.readValidPhoneNumber("Enter phone number:");
         LocalDateTime DoB = Helper.readDate("Enter date of birth (yyyy-MM-dd):");
         String gender = Helper.readGender("Enter gender (M/F):");
         String allergies = Helper.readString("Enter allergies (if any):");
-        String bloodType = Helper.readString("Enter BloodType (Leave blank if unsure):");
+        String bloodType = Helper.readValidBloodType("Enter BloodType:");
         bloodType = (bloodType=="") ? null : bloodType;
-        LocalDateTime dateOfAdmission = Helper.readDate("Enter date of admission (yyyy-MM-dd):");
+        LocalDateTime dateOfAdmission = LocalDateTime.now();
         String username = Helper.readString("Enter desired username:");
         
         // Ensure username is unique
@@ -103,10 +103,10 @@ public class RegisterUI extends MainUI {
     public void doctorRegister() {
         String fullName = Helper.readString("Enter full name:");
         String email = Helper.readEmail("Enter email:");
-        String phoneNo = Helper.readString("Enter phone number:");
+        String phoneNo = Helper.readValidPhoneNumber("Enter phone number:");
         LocalDateTime DoB = Helper.readDate("Enter date of birth (yyyy-MM-dd):");
         String gender = Helper.readGender("Enter gender (M/F):");
-        LocalDateTime dateJoin = Helper.readDate("Enter date of joining (yyyy-MM-dd):");
+        LocalDateTime dateJoin = LocalDateTime.now();
         String username = Helper.readString("Enter desired username:");
         
 		while (AuthenticationController.isUsernameTaken(username, PersonnelRepository.DOCTORS)) {
@@ -122,10 +122,10 @@ public class RegisterUI extends MainUI {
     public void pharmacistRegister() {
         String fullName = Helper.readString("Enter full name:");
         String email = Helper.readEmail("Enter email:");
-        String phoneNo = Helper.readString("Enter phone number:");
+        String phoneNo = Helper.readValidPhoneNumber("Enter phone number:");
         LocalDateTime DoB = Helper.readDate("Enter date of birth (yyyy-MM-dd):");
         String gender = Helper.readGender("Enter gender (M/F):");
-        LocalDateTime dateOfEmployment = Helper.readDate("Enter date of employment (yyyy-MM-dd):");
+        LocalDateTime dateOfEmployment = LocalDateTime.now();
         String username = Helper.readString("Enter desired username:");
         
 		while (AuthenticationController.isUsernameTaken(username, PersonnelRepository.PHARMACISTS)) {
@@ -141,7 +141,7 @@ public class RegisterUI extends MainUI {
     public void adminRegister() {
     	String fullName = Helper.readString("Enter full name:");
         String email = Helper.readEmail("Enter email:");        
-        String phoneNo = Helper.readString("Enter phone number:");
+        String phoneNo = Helper.readValidPhoneNumber("Enter phone number:");
         LocalDateTime DoB = Helper.readDate("Enter date of birth (yyyy-MM-dd):");
         String gender = Helper.readGender("Enter gender (M/F):");
         LocalDateTime dateOfCreation = LocalDateTime.now();

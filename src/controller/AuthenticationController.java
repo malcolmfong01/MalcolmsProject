@@ -93,51 +93,6 @@ public class AuthenticationController {
             return false;
         }
     }
-    // Generate ID card similar to the UID generation method
-    public static String generateIdCard(PersonnelFileType personnelFileType) {
-        String prefix = "";
-        int nextId = 0;
-        Map<String, ? extends HMSPersonnel> repository = null;
-
-        switch (personnelFileType) {
-            case ADMINS:
-                prefix = "AD";
-                repository = PersonnelRepository.ADMINS;
-                break;
-            case DOCTORS:
-                prefix = "D";
-                repository = PersonnelRepository.DOCTORS;
-                break;
-            case PATIENTS:
-                prefix = "P";
-                repository = PersonnelRepository.PATIENTS;
-                break;
-            case PHARMACISTS:
-                prefix = "PH";
-                repository = PersonnelRepository.PHARMACISTS;
-                break;
-            default:
-                return "";
-        }
-        // Find the highest ID currently in the repository
-        if (repository != null && !repository.isEmpty()) {
-            for (String idCard : repository.keySet()) {
-                if (idCard.startsWith(prefix)) {
-                    try {
-                        // Extract the numeric part after the prefix and parse it
-                        int currentId = Integer.parseInt(idCard.substring(prefix.length()));
-                        nextId = Math.max(nextId, currentId + 1);
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid ID format: " + idCard);
-                        // Handle the error or skip the invalid entry
-                    }
-                }
-            }
-        }
-
-        // Format the next ID with leading zeros (e.g., "A001")
-        return String.format("%s%03d", prefix, nextId);
-    }
 
     // Register Patient
     public static String registerPatient(String fullName, String username, String email,

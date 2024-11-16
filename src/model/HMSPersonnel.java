@@ -16,6 +16,7 @@ public class HMSPersonnel {
     private String gender;
     private String role;
 
+
     // Constructor
     public HMSPersonnel(String UID, String fullName, String username, String email, String phoneNo,
                         String passwordHash, LocalDateTime DoB, String gender, String role) {
