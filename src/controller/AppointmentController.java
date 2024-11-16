@@ -30,14 +30,14 @@ public class AppointmentController {
 		UUID uuid = UUID.randomUUID();
 		String uuidAsString = uuid.toString();
 		switch (recType) {
-			case APPOINTMENT_OUTCOME_RECORDS:
-				return "AO-" + uuidAsString;
-			case DIAGNOSIS_RECORDS:
-				return "DIAG-" + uuidAsString;
-			case MEDICINE_RECORDS:
-				return "MR-" + uuidAsString;
-			default:
-				return "R-" + uuidAsString;
+		case APPOINTMENT_OUTCOME_RECORDS:
+			return "AO-" + uuidAsString;
+		case DIAGNOSIS_RECORDS:
+			return "DIAG-" + uuidAsString;
+		case MEDICINE_RECORDS:
+			return "MR-" + uuidAsString;
+		default:
+			return "R-" + uuidAsString;
 		}
 	}
 
