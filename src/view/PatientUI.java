@@ -145,6 +145,7 @@ public class PatientUI extends MainUI {
 
 	// 4. scheduleAppointment
 	public void scheduleAppointment() {
+		viewAvailableAppointmentSlots();
 		System.out.println("\n--- Schedule Appointment for Patient ID: " + patient.getUID() + " ---");
 		ScheduleAppointmentUI scheduleAppointmentUI = new ScheduleAppointmentUI(patient);
 		scheduleAppointmentUI.start();
@@ -152,6 +153,7 @@ public class PatientUI extends MainUI {
 
 	// 5. rescheduleAppointment
 	public void rescheduleAppointment() {
+		viewAvailableAppointmentSlots();
 		System.out.println("\n--- Reschedule an Appointment ---");
 		RescheduleAppointmentUI rescheduleAppointmentUI = new RescheduleAppointmentUI(patient);
 		rescheduleAppointmentUI.start();
