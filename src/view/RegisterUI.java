@@ -73,7 +73,7 @@ public class RegisterUI extends MainUI {
         // Register the patient
         String patientUID = AuthenticationController.registerPatient(fullName, username, email, phoneNo, "password", DoB, gender, allergies, dateOfAdmission);
         if (patientUID != null) {
-            System.out.println("Patient registered successfully!");
+            System.out.println("Patient registered successfully!, your default password is: password ");
 
             // Generate a new medical record ID (assuming RecordsController has a method for this)
             String recordID = RecordsController.generateRecordID(RecordFileType.MEDICAL_RECORDS);
@@ -119,7 +119,7 @@ public class RegisterUI extends MainUI {
 		}
 
         boolean success = AuthenticationController.registerDoctor(fullName, username, email, phoneNo, "password", DoB, gender, dateJoin);
-        System.out.println(success ? "Doctor registered successfully!" : "Registration failed. Username may already exist.");
+        System.out.println(success ? "Doctor registered successfully!, your default password is: password " : "Registration failed. Username may already exist.");
     }
 
     // Registration for Pharmacist
@@ -138,7 +138,7 @@ public class RegisterUI extends MainUI {
 		}
 
         boolean success = AuthenticationController.registerPharmacist(fullName, username, email, phoneNo, "password", DoB, gender, dateOfEmployment);
-        System.out.println(success ? "Pharmacist registered successfully!" : "Registration failed. Username may already exist.");
+        System.out.println(success ? "Pharmacist registered successfully!, your default password is: password "  : "Registration failed. Username may already exist.");
     }
 
     // Registration for Admin
@@ -156,6 +156,6 @@ public class RegisterUI extends MainUI {
 		}
 
         boolean success = AuthenticationController.registerAdmin(fullName, username, email, phoneNo, "password", DoB, gender, dateOfCreation);
-        System.out.println(success ? "Admin registered successfully!" : "Registration failed. Username may already exist.");
+        System.out.println(success ? "Admin registered successfully!, your default password is: password " : "Registration failed. Username may already exist.");
     }
 }
