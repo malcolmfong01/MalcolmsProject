@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
+import enums.AppointmentOutcomeStatus;
 import enums.AppointmentStatus;
 import enums.RecordFileType;
 import model.AppointmentOutcomeRecord;
@@ -29,14 +30,14 @@ public class AppointmentController {
 		UUID uuid = UUID.randomUUID();
 		String uuidAsString = uuid.toString();
 		switch (recType) {
-		case APPOINTMENT_OUTCOME_RECORDS:
-			return "AO-" + uuidAsString;
-		case DIAGNOSIS_RECORDS:
-			return "DIAG-" + uuidAsString;
-		case MEDICINE_RECORDS:
-			return "MR-" + uuidAsString;
-		default:
-			return "R-" + uuidAsString;
+			case APPOINTMENT_OUTCOME_RECORDS:
+				return "AO-" + uuidAsString;
+			case DIAGNOSIS_RECORDS:
+				return "DIAG-" + uuidAsString;
+			case MEDICINE_RECORDS:
+				return "MR-" + uuidAsString;
+			default:
+				return "R-" + uuidAsString;
 		}
 	}
 
@@ -134,6 +135,21 @@ public class AppointmentController {
 		} else {
 			return false;
 		}
+	}
+
+	public static List<AppointmentOutcomeRecord> getPastAppointmentOutcomes(String patientId) {
+		List<AppointmentOutcomeRecord> pastOutcomes = new ArrayList<>();
+		// Retrieve past appointment outcomes for the given patient ID
+		for (List<AppointmentOutcomeRecord> outcomes : AppointmentOutcomeRecordRepository.patientOutcomeRecords
+				.values()) {
+			for (AppointmentOutcomeRecord outcome : outcomes) {
+				if (outcome.getPatientID().equals(patientId)
+						&& outcome.getAppointmentOutcomeStatus() == AppointmentOutcomeStatus.COMPLETED) {
+					pastOutcomes.add(outcome);
+				}
+			}
+		}
+		return pastOutcomes;
 	}
 
 }
