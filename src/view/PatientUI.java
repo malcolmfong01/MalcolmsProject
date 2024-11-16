@@ -62,42 +62,21 @@ public class PatientUI extends MainUI {
 		int choice = 0;
 		do {
 			printChoice();
-			choice = sc.nextInt();
+			choice = Helper.readInt("");
 			switch (choice) {
-				case 1:
-					viewPatientMedicalRecord(patient.getUID());
-					break;
-				case 2:
-					updatePatientPrivateInfo(patient.getUID());
-					break;
-				case 3:
-					viewAvailableAppointmentSlots();
-					break;
-				case 4:
-					scheduleAppointment();
-					break;
-				case 5:
-					rescheduleAppointment();
-					break;
-				case 6:
-					cancelAppointment();
-					break;
-				case 7:
-					viewScheduledAppointments();
-					break;
-				case 8:
-					viewPastAppointmentOutcomes();
-					break;
-				case 9:
-					acknowledgeRejectedAppointments();
-					break;
-				case 10:
-					System.out.println("Logging out...");
+			case 1 : viewPatientMedicalRecord(patient.getUID());break;
+			case 2 : updatePatientPrivateInfo(patient.getUID());break;
+			case 3 : viewAvailableAppointmentSlots();break;
+			case 4 : scheduleAppointment();break;
+			case 5 : rescheduleAppointment();break;
+			case 6 : cancelAppointment();break;
+			case 7 : viewScheduledAppointments();break;
+			case 8 : viewPastAppointmentOutcomes();break;
+			case 9 : acknowledgeRejectedAppointments();break;
+			case 10 : System.out.println("Logging out...");
 					HMSMain.main(null);
 					break;// Return to the main application
-				default:
-					System.out.println("Invalid choice!");
-					break;
+			default : System.out.println("Invalid choice!");break;
 			}
 		} while (choice != 10);
 
