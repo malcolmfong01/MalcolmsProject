@@ -11,6 +11,8 @@ import model.Medicine;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Objects;
+
 import enums.ReplenishStatus;
 
 public class MedicineRepository extends Repository {
@@ -71,6 +73,8 @@ public class MedicineRepository extends Repository {
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(getCsvHeader(fileName));
+            writer.newLine();
             for (Medicine medicine : medicinesMap.values()) {
                 writer.write(medicineToCSV(medicine));
                 writer.newLine();
@@ -79,6 +83,9 @@ public class MedicineRepository extends Repository {
         } catch (IOException e) {
             System.out.println("Error saving medicine data: " + e.getMessage());
         }
+    }
+    private static String getCsvHeader(String fileName) {
+        return "Medicine ID,Name,Manufacturer,Expiry Date,Stock,Low Level Stock,Status,Request Date,Approved Date";
     }
 
     /**

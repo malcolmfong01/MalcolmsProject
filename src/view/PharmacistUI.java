@@ -34,7 +34,6 @@ public class PharmacistUI extends MainUI{
         System.out.println("3. View Medication Inventory");
         System.out.println("4. Submit Replenishment Request");
         System.out.println("5. Logout");
-        System.out.print("Enter your choice: ");
 
 		
 	}

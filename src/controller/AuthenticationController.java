@@ -3,6 +3,7 @@ package controller;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import enums.PersonnelFileType;
 import enums.RecordFileType;
@@ -105,7 +106,6 @@ public class AuthenticationController {
         PersonnelRepository.PATIENTS.put(patient.getUID(), patient);
         PersonnelRepository.saveAllPersonnelFiles();
         System.out.println("Patient registered successfully with username: " + username);
-        System.out.println("The default password is 'password'. Please ensure you update it after your first login for security purposes.");
         return patient.getUID();
     }
 
@@ -119,7 +119,6 @@ public class AuthenticationController {
         PersonnelRepository.DOCTORS.put(doctor.getUID(), doctor);
         PersonnelRepository.saveAllPersonnelFiles();
         System.out.println("Doctor registered successfully with username: " + username);
-        System.out.println("The default password is 'password'. Please ensure you update it after your first login for security purposes.");
         return true;
     }
 
@@ -134,7 +133,6 @@ public class AuthenticationController {
         PersonnelRepository.PHARMACISTS.put(pharmacist.getUID(), pharmacist);
         PersonnelRepository.saveAllPersonnelFiles();
         System.out.println("Pharmacist registered successfully with username: " + username);
-        System.out.println("The default password is 'password'. Please ensure you update it after your first login for security purposes.");
         return true;
     }
 
@@ -148,7 +146,6 @@ public class AuthenticationController {
         PersonnelRepository.ADMINS.put(admin.getUID(), admin);
         PersonnelRepository.saveAllPersonnelFiles();
         System.out.println("Admin registered successfully with username: " + username);
-        System.out.println("The default password is 'password'. Please ensure you update it after your first login for security purposes.");
         return true;
     }
 
@@ -159,6 +156,29 @@ public class AuthenticationController {
 
     public static boolean isUsernameTaken(String username, Map<String, ? extends HMSPersonnel> personnelMap) {
         return personnelMap.values().stream().anyMatch(personnel -> personnel.getUsername().equals(username));
+    }
+    public static boolean isValidPassword(String password) {
+        // Check password length
+        if (password.length() < 8) {
+            return false;
+        }
+        // Check for uppercase letter
+        if (!Pattern.compile("[A-Z]").matcher(password).find()) {
+            return false;
+        }
+        // Check for lowercase letter
+        if (!Pattern.compile("[a-z]").matcher(password).find()) {
+            return false;
+        }
+        // Check for a digit
+        if (!Pattern.compile("[0-9]").matcher(password).find()) {
+            return false;
+        }
+        // Check for special character
+        if (!Pattern.compile("[!@#$%^&*(),.?\":{}|<>]").matcher(password).find()) {
+            return false;
+        }
+        return true;
     }
 
 }

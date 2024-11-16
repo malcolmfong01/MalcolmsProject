@@ -43,7 +43,6 @@ public class AppointmentAvailabilityUI extends MainUI {
         System.out.println("Appointment Availability Menu:");
         System.out.println("1. Set Availability for Appointments");
         System.out.println("2. Back to Doctor Dashboard");
-        System.out.print("Enter your choice: ");
     }
 
     /**

@@ -52,7 +52,6 @@ public class UpdateMedicalRecordUI {
         System.out.println("1. Add Treatment Plan");
         System.out.println("2. Add Prescription");
         System.out.println("3. Add Both Treatment Plan and Prescription");
-        System.out.print("Enter your choice: ");
 
         int updateChoice = sc.nextInt();
         sc.nextLine(); // Consume newline left-over
