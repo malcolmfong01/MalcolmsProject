@@ -15,12 +15,14 @@ import controller.PatientController;
 import controller.RecordsController;
 import enums.AppointmentStatus;
 import helper.Helper;
+import model.AppointmentOutcomeRecord;
 import model.AppointmentRecord;
 import model.Diagnosis;
 import model.Doctor;
 import model.MedicalRecord;
 import model.Patient;
 import model.PrescribedMedication;
+import model.Prescription;
 import model.TreatmentPlans;
 import repository.DiagnosisRepository;
 import repository.PersonnelRepository;
@@ -227,7 +229,45 @@ public class PatientUI extends MainUI {
 
 	// 8. viewPastAppointmentOutcomes
 	public void viewPastAppointmentOutcomes() {
+		System.out.println("\n--- Past Appointment Outcomes ---");
 
+		// Get the past appointment outcomes for the patient
+		List<AppointmentOutcomeRecord> pastOutcomes = AppointmentController
+				.getPastAppointmentOutcomes(patient.getUID());
+
+		if (pastOutcomes.isEmpty()) {
+			System.out.println("No past appointment outcomes found.");
+			System.out.println("---------------------------------------");
+			return;
+		}
+
+		for (AppointmentOutcomeRecord outcome : pastOutcomes) {
+			System.out.println("Appointment Outcome ID: " + outcome.getAppointmentOutcomeRecordID());
+			System.out.println("Patient ID: " + outcome.getPatientID());
+			System.out.println("Doctor ID: " + outcome.getDoctorID());
+			System.out.println("Appointment Time: "
+					+ outcome.getAppointmentTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+			System.out.println("Type of Service: " + outcome.getTypeOfService());
+			System.out.println("Consultation Notes: " + outcome.getConsultationNotes());
+			System.out.println("Appointment Outcome Status: " + outcome.getAppointmentOutcomeStatus());
+
+			// Display prescription details if available
+			Prescription prescription = outcome.getPrescription();
+			if (prescription != null && prescription.getMedications() != null) {
+				System.out.println("Prescription Details:");
+				for (PrescribedMedication medication : prescription.getMedications()) {
+					System.out.println("Medicine ID: " + medication.getMedicineID());
+					System.out.println("Quantity: " + medication.getMedicineQuantity());
+					System.out.println("Dosage: " + medication.getDosage());
+					System.out.println("Period (days): " + medication.getPeriodDays());
+					System.out.println("Prescription Status: " + medication.getPrescriptionStatus());
+					System.out.println();
+				}
+			} else {
+				System.out.println("No prescription details available for this appointment outcome record.");
+			}
+			System.out.println("---------------------------------------");
+		}
 	}
 
 	// 9. acknowledgeRejectedAppointments
