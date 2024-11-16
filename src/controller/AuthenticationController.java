@@ -105,6 +105,7 @@ public class AuthenticationController {
         PersonnelRepository.PATIENTS.put(patient.getUID(), patient);
         PersonnelRepository.saveAllPersonnelFiles();
         System.out.println("Patient registered successfully with username: " + username);
+        System.out.println("The default password is 'password'. Please ensure you update it after your first login for security purposes.");
         return patient.getUID();
     }
 
@@ -118,6 +119,7 @@ public class AuthenticationController {
         PersonnelRepository.DOCTORS.put(doctor.getUID(), doctor);
         PersonnelRepository.saveAllPersonnelFiles();
         System.out.println("Doctor registered successfully with username: " + username);
+        System.out.println("The default password is 'password'. Please ensure you update it after your first login for security purposes.");
         return true;
     }
 
@@ -132,6 +134,7 @@ public class AuthenticationController {
         PersonnelRepository.PHARMACISTS.put(pharmacist.getUID(), pharmacist);
         PersonnelRepository.saveAllPersonnelFiles();
         System.out.println("Pharmacist registered successfully with username: " + username);
+        System.out.println("The default password is 'password'. Please ensure you update it after your first login for security purposes.");
         return true;
     }
 
@@ -145,6 +148,7 @@ public class AuthenticationController {
         PersonnelRepository.ADMINS.put(admin.getUID(), admin);
         PersonnelRepository.saveAllPersonnelFiles();
         System.out.println("Admin registered successfully with username: " + username);
+        System.out.println("The default password is 'password'. Please ensure you update it after your first login for security purposes.");
         return true;
     }
 
