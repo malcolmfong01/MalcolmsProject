@@ -85,7 +85,7 @@ public class MedicineRepository extends Repository {
         }
     }
     private static String getCsvHeader(String fileName) {
-        return "Medicine ID,Name,Manufacturer,Expiry Date,Stock,Low Level Stock,Status,Request Date,Approved Date";
+        return "Medicine ID,Name,Manufacturer,Expiry Date,Stock,Low Level Stock,Replenishment Stock,Status,Request Date,Approved Date";
     }
 
     /**
@@ -102,6 +102,7 @@ public class MedicineRepository extends Repository {
                 medicine.getExpiryDate().toString(),
                 String.valueOf(medicine.getInventoryStock()),
                 String.valueOf(medicine.getLowStockLevel()),
+                String.valueOf(medicine.getReplenishmentStock()),
                 medicine.getReplenishStatus().toString(),
                 medicine.getReplenishRequestDate().toString(),
                 medicine.getApprovedDate().toString());
@@ -166,9 +167,10 @@ public class MedicineRepository extends Repository {
                     LocalDateTime.parse(fields[3]), // expiryDate
                     Integer.parseInt(fields[4]), // inventoryStock
                     Integer.parseInt(fields[5]), // lowStockLevel
-                    safeValueOf(fields[6]), // replenish status
-                    LocalDateTime.parse(fields[7]), // replenishRequestDate;
-                    LocalDateTime.parse(fields[8]) // approvedDate
+                    Integer.parseInt(fields[6]), // lowStockLevel
+                    safeValueOf(fields[7]), // replenish status
+                    LocalDateTime.parse(fields[8]), // replenishRequestDate;
+                    LocalDateTime.parse(fields[9]) // approvedDate
             );
         } catch (Exception e) {
             System.out.println("Error parsing medicine data: " + e.getMessage());

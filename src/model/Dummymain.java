@@ -21,10 +21,10 @@ public class Dummymain {
     public static void main(String[] args) {
         // 1. Create and add new Medicine objects to the repository
         Medicine med1 = new Medicine("M001", "Paracetamol", "ABC Pharmaceuticals",
-                LocalDateTime.of(2025, 6, 30, 0, 0), 100, 20, ReplenishStatus.NULL, LocalDateTime.of(2023, 12, 1, 0, 0), LocalDateTime.of(1, 1, 1, 0, 0));
+                LocalDateTime.of(2025, 6, 30, 0, 0), 100, 20, 10,ReplenishStatus.NULL, LocalDateTime.of(2023, 12, 1, 0, 0), LocalDateTime.of(1, 1, 1, 0, 0));
         
         Medicine med2 = new Medicine("M002", "Ibuprofen", "XYZ Pharma",
-                LocalDateTime.of(2024, 8, 15, 0, 0), 50, 10, ReplenishStatus.NULL, LocalDateTime.of(2023, 11, 20, 0, 0), LocalDateTime.of(1, 1, 1, 0, 0));
+                LocalDateTime.of(2024, 8, 15, 0, 0), 50, 10, 10,ReplenishStatus.NULL, LocalDateTime.of(2023, 11, 20, 0, 0), LocalDateTime.of(1, 1, 1, 0, 0));
         
         // Adding these medicines to the repository's in-memory collection
         MedicineRepository.MEDICINES.put(med1.getMedicineID(), med1);

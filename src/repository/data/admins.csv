@@ -1,5 +1,6 @@
 ID,FullName,Username,Email,PhoneNo,PasswordHash,DoB,Gender,Role,DateOfCreation
 A000,yanyox,yanyox,yanyox@gmail.com,098098,yayox,2022-02-20T00:00,F,Admins,2024-11-15T23:33:38.241293
+A005,Lam Yan Yee,yanyox2,yanyee@gmail.com,82880687,Yanyox926933!,2002-02-15T00:00,F,Admins,2024-11-16T21:14:05.414753
 A003,poop,lol,poo@gmail.com,08098,password,0220-02-02T00:00,M,Admins,2024-11-16T00:25:44.276482200
 A004,test,test,test@gmail.com,88889999,Testtest1!,2002-02-02T00:00,F,Admins,2024-11-16T15:17:20.171970300
 A001,dallad,dallas,dallas@gmail.com,098098,dallas,2022-02-02T00:00,M,Admins,2024-11-15T23:45:12.313298100

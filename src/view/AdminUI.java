@@ -283,6 +283,7 @@ public class AdminUI extends MainUI {
         LocalDateTime expiryDate = DateTimePicker.pickDateTime("Enter Expiry Date: ");
         int inventoryStock = Helper.readInt("Enter Inventory Stock: ");
         int lowStockLevel = Helper.readInt("Enter Low Stock Level: ");
+        int replenishStock = 0;
         System.out.print("Enter Replenish Status: ");
         ReplenishStatus status = ReplenishStatus.NULL;
         String dateTimeString = "0001-01-01 00:00";
@@ -291,7 +292,7 @@ public class AdminUI extends MainUI {
 
         // Generate the next medicine ID
         Medicine medicine = new Medicine(medicineID,name, manufacturer, expiryDate,
-                inventoryStock, lowStockLevel, status, date, date);
+                inventoryStock, lowStockLevel,replenishStock, status, date, date);
         MedicineController.addMedicine(medicine);
     }
     
@@ -329,6 +330,23 @@ public class AdminUI extends MainUI {
      */
     public static void approveReplenishRequest() {
 
+        System.out.println("Replenishment Requests and Status:");
+
+        boolean requestFound = false;
+        for (Medicine med : MedicineRepository.MEDICINES.values()) {
+            if (med.getReplenishStatus() == ReplenishStatus.REQUESTED) {
+                requestFound = true;
+                System.out.println("Medicine ID: " + med.getMedicineID());
+                System.out.println("Name: " + med.getName());
+                System.out.println("Replenish Status: " + med.getReplenishStatus());
+                System.out.println("Replenishment Request Date: " + med.getReplenishRequestDate());
+                System.out.println();
+            }
+        }
+
+        if (!requestFound) {
+            System.out.println("No replenishment requests found.");
+        }
         String medicineID = Helper.readString("Enter Medicine ID: ");
         Medicine medicine = MedicineController.getMedicineByUID(medicineID);
         if(medicine == null) {
@@ -338,14 +356,13 @@ public class AdminUI extends MainUI {
         	System.out.println("No Replenish Request For This Medicine!");
         	return;
         }
-        String manufacturer = Helper.readString("Enter New Manufacturer: ");
-        medicine.setManufacturer(manufacturer);
+//        String manufacturer = Helper.readString("Enter New Manufacturer: ");
+//        medicine.setManufacturer(manufacturer);
 
         LocalDateTime expiryDate = DateTimePicker.pickDateTime("Enter New Expiry Date (YYYY-MM-DD HH:MM:): ");
         medicine.setExpiryDate(expiryDate);
 
-        int inventoryStock = Helper.readInt("Enter New Inventory Stock: ");
-        medicine.setInventoryStock(inventoryStock);
+        medicine.setInventoryStock(medicine.getInventoryStock()+medicine.getReplenishmentStock());
 
         int lowStockLevel = Helper.readInt("Enter New Low Stock Level: ");
         medicine.setLowStockLevel(lowStockLevel);

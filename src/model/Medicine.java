@@ -10,19 +10,21 @@ public class Medicine {
     private LocalDateTime expiryDate;
     private int inventoryStock;
     private int lowStockLevel;
+    private int replenishmentStock;
     private ReplenishStatus status;
     private LocalDateTime replenishRequestDate;
     private LocalDateTime approvedDate;
 
     // Constructor
     public Medicine(String medicineID, String name, String manufacturer, LocalDateTime expiryDate, int inventoryStock,
-            int lowStockLevel, ReplenishStatus status, LocalDateTime replenishRequestDate, LocalDateTime approvedDate) {
+            int lowStockLevel, int replenishmentStock, ReplenishStatus status, LocalDateTime replenishRequestDate, LocalDateTime approvedDate) {
         this.medicineID = medicineID;
         this.name = name;
         this.manufacturer = manufacturer;
         this.expiryDate = expiryDate;
         this.inventoryStock = inventoryStock;
         this.lowStockLevel = lowStockLevel;
+        this.replenishmentStock = replenishmentStock;
         this.status = status;
         this.replenishRequestDate = replenishRequestDate;
         this.approvedDate = approvedDate;
@@ -101,4 +103,11 @@ public class Medicine {
         this.replenishRequestDate = replenishRequestDate;
     }
 
+    public int getReplenishmentStock() {
+        return replenishmentStock;
+    }
+
+    public void setReplenishmentStock(int replenishmentStock) {
+        this.replenishmentStock = replenishmentStock;
+    }
 }

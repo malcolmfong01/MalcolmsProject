@@ -66,7 +66,7 @@ public class SubmitReplenishmentRequestUI extends MainUI {
         // Proceed with replenishment request
         System.out.print("Enter Requested Quantity: ");
         int requestedQuantity = Helper.readInt("");
-
+        medicine.setReplenishmentStock(requestedQuantity);
         medicine.setReplenishStatus(ReplenishStatus.REQUESTED);
         medicine.setReplenishRequestDate(LocalDateTime.now());
         MedicineRepository.saveAllMedicinesToCSV();  // Save changes
@@ -87,6 +87,7 @@ public class SubmitReplenishmentRequestUI extends MainUI {
                 System.out.println("Medicine ID: " + med.getMedicineID());
                 System.out.println("Name: " + med.getName());
                 System.out.println("Replenish Status: " + med.getReplenishStatus());
+                System.out.println("Replenishment Stock: " + med.getReplenishmentStock());
                 System.out.println("Replenishment Request Date: " + med.getReplenishRequestDate());
                 System.out.println();
             }

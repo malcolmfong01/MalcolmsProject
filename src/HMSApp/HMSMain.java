@@ -4,11 +4,7 @@
  */
 package HMSApp;
 
-import java.util.Scanner;
-
-import model.*;
-import repository.*;
-import view.*;
+import view.HMSAppUI;
 
 /**
  * Main entry point for the Hospital Management System (HMS) application.
