@@ -8,7 +8,7 @@ import enums.ReplenishStatus;
 public class MedicineController {
 
     private static String generateNextMedicineID() {
-        int maxID = 0;
+        int maxID = -1;
 
         // Loop through existing medicines to find the largest current ID number
         for (String id : MedicineRepository.MEDICINES.keySet()) {
