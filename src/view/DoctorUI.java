@@ -85,7 +85,7 @@ public class DoctorUI extends MainUI {
 		int choice;
 		do {
 			printChoice();
-			choice = sc.nextInt();
+			choice = Helper.readInt("");
 			switch (choice) {
 				case 1 : viewPatientMedicalRecord(doctor.getUID());break;
 				case 2 : selectAndUpdateMedicalRecord();break;
