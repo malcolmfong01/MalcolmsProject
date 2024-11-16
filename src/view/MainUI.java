@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Scanner;
+
 public abstract class MainUI {
 
     protected abstract void printChoice();
@@ -48,16 +50,44 @@ public abstract class MainUI {
      * @return The user's choice as an integer.
      */
     protected int getUserChoice(int maxChoice) {
-        try {
-            int choice = Integer.parseInt(System.console().readLine());
-            if (choice < 1 || choice > maxChoice) {
+//        try {
+//            int choice = Integer.parseInt(System.console().readLine());
+//            if (choice < 1 || choice > maxChoice) {
+//                handleInvalidInput();
+//                return -1;
+//            }
+//            return choice;
+//        } catch (NumberFormatException e) {
+//            handleInvalidInput();
+//            return -1;
+//        }
+        // Check if console is available
+        if (System.console() != null) {
+            try {
+                int choice = Integer.parseInt(System.console().readLine());
+                if (choice < 1 || choice > maxChoice) {
+                    handleInvalidInput();
+                    return -1;
+                }
+                return choice;
+            } catch (NumberFormatException e) {
                 handleInvalidInput();
                 return -1;
             }
-            return choice;
-        } catch (NumberFormatException e) {
-            handleInvalidInput();
-            return -1;
+        } else {
+            // Fallback to Scanner if console is null
+            Scanner scanner = new Scanner(System.in);
+            try {
+                int choice = Integer.parseInt(scanner.nextLine());
+                if (choice < 1 || choice > maxChoice) {
+                    handleInvalidInput();
+                    return -1;
+                }
+                return choice;
+            } catch (NumberFormatException e) {
+                handleInvalidInput();
+                return -1;
+            }
         }
     }
 }

@@ -41,7 +41,6 @@ public class AppointmentRecordOutcomeUI extends MainUI {
         System.out.println("Appointment Outcome Menu:");
         System.out.println("1. Record Appointment Outcome");
         System.out.println("2. Back to Doctor Dashboard");
-        System.out.print("Enter your choice: ");
     }
 
     /**

@@ -7,14 +7,45 @@ import enums.ReplenishStatus;
 
 public class MedicineController {
 
+    private static String generateNextMedicineID() {
+        int maxID = 0;
+
+        // Loop through existing medicines to find the largest current ID number
+        for (String id : MedicineRepository.MEDICINES.keySet()) {
+            if (id.startsWith("M")) {
+                try {
+                    // Extract the numeric part of the ID (e.g., "M003" => 3)
+                    int currentID = Integer.parseInt(id.substring(1));
+                    maxID = Math.max(maxID, currentID);
+                } catch (NumberFormatException e) {
+                    // If ID format is incorrect, ignore it
+                }
+            }
+        }
+
+        // Increment the max ID by 1 to generate the next ID
+        maxID++;
+
+        // Format the new ID as M001, M002, etc.
+        return String.format("M%03d", maxID);
+    }
+    // Public method to expose the ID generation functionality
+    public static String getNextMedicineID() {
+        return generateNextMedicineID(); // Call the private method
+    }
     /**
      * Add a new medicine to the repository.
      */
     public static boolean addMedicine(Medicine medicine) {
-        if (medicine == null || medicine.getMedicineID() == null) {
+        if (medicine == null || medicine.getName() == null) {
             System.out.println("Error: Invalid medicine data.");
             return false;
         }
+        // Generate next medicine ID
+        String nextMedicineID = generateNextMedicineID();
+
+        // Set the new generated medicine ID
+        medicine.setMedicineID(nextMedicineID);
 
         MedicineRepository.MEDICINES.put(medicine.getMedicineID(), medicine);
         MedicineRepository.saveAllMedicinesToCSV();

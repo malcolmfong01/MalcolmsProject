@@ -106,9 +106,6 @@ public class RecordsRepository extends Repository {
             MedicalRecord medRecord = (MedicalRecord) record;
             return String.join(",",
                     medRecord.getRecordID(),
-                    medRecord.getPatientName(),
-                    medRecord.getPatientPhoneNumber(),
-                    medRecord.getPatientEmail(),
                     medRecord.getCreatedDate().toString(),
                     medRecord.getUpdatedDate().toString(),
                     medRecord.getRecordStatus().toString(),
@@ -209,19 +206,16 @@ public class RecordsRepository extends Repository {
             if (type == MedicalRecord.class) {
                 return type.cast(new MedicalRecord(
                         fields[0], // recordID
-                        fields[1], //patient name
-                        fields[2], //patient phone number
-                        fields[3], //patient email
-                        LocalDateTime.parse(fields[4]), // createdDate
-                        LocalDateTime.parse(fields[5]), // updatedDate
-                        RecordStatusType.toEnumRecordStatusType(fields[6]), // recordStatus //ACTIVE
-                        fields[7], // patientID
-                        fields[8], // doctorID
-                        fields[9], // bloodType
-                        DiagnosisRepository.patientDiagnosisRecords.getOrDefault(fields[7], new ArrayList<>())));
+                        LocalDateTime.parse(fields[1]), // createdDate
+                        LocalDateTime.parse(fields[2]), // updatedDate
+                        RecordStatusType.toEnumRecordStatusType(fields[3]), // recordStatus //ACTIVE
+                        fields[4], // patientID
+                        fields[5], // doctorID
+                        fields[6], // bloodType
+                        DiagnosisRepository.patientDiagnosisRecords.getOrDefault(fields[4], new ArrayList<>())));
             } else if (type == AppointmentRecord.class) {
                 ArrayList<AppointmentOutcomeRecord> outcomeRecords = AppointmentOutcomeRecordRepository.patientOutcomeRecords
-                        .get(fields[8]);
+                        .get(fields[5]);
                 AppointmentOutcomeRecord matchingRecord = null;
                 if (outcomeRecords != null) {
                     for (AppointmentOutcomeRecord record : outcomeRecords) {

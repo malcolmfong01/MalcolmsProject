@@ -355,6 +355,6 @@ public class Helper {
      */
     public static boolean isValidGender(String gender) {
         String genderRegex = "^[MF]$";
-        return gender.toUpperCase().matches(genderRegex);
+        return gender.matches(genderRegex);
     }
 }

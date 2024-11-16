@@ -107,7 +107,7 @@ public class HMSPersonnelController {
     // Remove personnel by UID
     public static boolean removePersonnel(String UID, PersonnelFileType type) {
         if (UID == null || UID.isEmpty()) {
-            System.out.println("Error: Invalid UID.");
+            System.out.println("Error: Invalid ID Card.");
             return false;
         }
 
@@ -149,14 +149,14 @@ public class HMSPersonnelController {
                 return false;
         }
 
-        System.out.println("Error: Personnel not found with UID: " + UID);
+        System.out.println("Error: Personnel not found with ID Card: " + UID);
         return false;
     }
 
     // Retrieve personnel by UID
     public static HMSPersonnel getPersonnelByUID(String UID, PersonnelFileType type) {
         if (UID == null || UID.isEmpty()) {
-            System.out.println("Error: Invalid UID.");
+            System.out.println("Error: Invalid ID Card.");
             return null;
         }
 
@@ -240,13 +240,13 @@ public class HMSPersonnelController {
     // Retrieve a patient by UID
     public static Patient getPatientById(String UID) {
         if (UID == null || UID.isEmpty()) {
-            System.out.println("Error: Invalid UID.");
+            System.out.println("Error: Invalid ID Card.");
             return null;
         }
 
         Patient patient = PersonnelRepository.PATIENTS.get(UID);
         if (patient == null) {
-            System.out.println("Error: Patient not found with UID: " + UID);
+            System.out.println("Error: Patient not found with ID Card: " + UID);
         }
         return patient;
     }
@@ -255,7 +255,7 @@ public class HMSPersonnelController {
     // Update a patient's particulars by UID
     public static boolean updatePatientParticulars(String UID, Patient updatedPatient) {
         if (UID == null || UID.isEmpty() || updatedPatient == null) {
-            System.out.println("Error: Invalid UID or patient data.");
+            System.out.println("Error: Invalid ID Card or patient data.");
             return false;
         }
 
@@ -263,7 +263,7 @@ public class HMSPersonnelController {
         Patient existingPatient = PersonnelRepository.PATIENTS.get(UID);
 
         if (existingPatient == null) {
-            System.out.println("Error: Patient not found with UID: " + UID);
+            System.out.println("Error: Patient not found with ID Card: " + UID);
             return false;
         }
 
@@ -284,7 +284,7 @@ public class HMSPersonnelController {
         PersonnelRepository.PATIENTS.put(UID, existingPatient);
         PersonnelRepository.saveAllPersonnelFiles();
 
-        System.out.println("Patient details updated successfully for UID: " + UID);
+        System.out.println("Patient details updated successfully for ID Card: " + UID);
         return true;
     }
 }

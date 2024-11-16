@@ -52,8 +52,6 @@ public class MedicalRecordUI extends MainUI {
         System.out.printf("| %-20s: %-20s |\n", "Patient DOB", (patient != null ? patient.getDoB() : "Unknown"));
         System.out.printf("| %-20s: %-20s |\n", "Patient Gender", (patient != null ? patient.getGender() : "Unknown"));
         System.out.printf("| %-20s: %-20s |\n", "Blood Type", medicalRecord.getBloodType());
-        System.out.printf("| %-20s: %-20s |\n", "Phone Number", (patient != null ? patient.getPhoneNo(): "Unknown"));
-        System.out.printf("| %-20s: %-20s |\n", "Email", (patient != null ? patient.getEmail() : "Unknown"));
         System.out.println(border);
 
         // Diagnosis Section

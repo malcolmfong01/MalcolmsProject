@@ -198,13 +198,13 @@ public class AdminController extends HMSPersonnelController {
         System.out.println("===========================================");
         
         for (Doctor doctor : PersonnelRepository.DOCTORS.values()) {
-            if (doctor.getGender().equalsIgnoreCase(gender)) {
+            if (doctor.getGender().trim().equalsIgnoreCase(gender)) {
                 printDoctorDetails(doctor);
             }
         }
         
         for (Pharmacist pharmacist : PersonnelRepository.PHARMACISTS.values()) {
-            if (pharmacist.getGender().equalsIgnoreCase(gender)) {
+            if (pharmacist.getGender().trim().equalsIgnoreCase(gender)) {
                 printPharmacistDetails(pharmacist);
             }
         }

@@ -26,7 +26,6 @@ public class LoginUI extends MainUI {
         System.out.println("3. Pharmacist");
         System.out.println("4. Administrator");
         System.out.println("5. Back to Main Menu");
-        System.out.print("Enter your choice: ");
     }
 
     /**
