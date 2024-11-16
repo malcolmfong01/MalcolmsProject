@@ -49,6 +49,7 @@ public class PatientUI extends MainUI {
 		System.out.println("8. View Past Appointment Outcome Records");
 		System.out.println("9. Acknowledge Rejected Appointment Slots"); // my added
 		System.out.println("10. Logout");
+		System.out.print("Enter your choice: ");
 	}
 
 	public void start() {
@@ -60,7 +61,7 @@ public class PatientUI extends MainUI {
 		int choice = 0;
 		do {
 			printChoice();
-			choice = sc.nextInt();
+			choice = Helper.readInt("");
 			switch (choice) {
 			case 1 : viewPatientMedicalRecord(patient.getUID());break;
 			case 2 : updatePatientPrivateInfo(patient.getUID());break;

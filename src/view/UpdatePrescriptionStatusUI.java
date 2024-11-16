@@ -30,6 +30,7 @@ public class UpdatePrescriptionStatusUI extends MainUI {
     protected void printChoice() {
         System.out.println("1. Try another prescription update");
         System.out.println("2. Return to main menu");
+        System.out.print("Enter your choice: ");
     }
 
     /**

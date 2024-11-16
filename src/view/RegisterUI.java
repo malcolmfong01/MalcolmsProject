@@ -28,6 +28,7 @@ public class RegisterUI extends MainUI {
         System.out.println("3. Pharmacist");
         System.out.println("4. Administrator");
         System.out.println("5. Back to Main Menu");
+        System.out.print("Enter your choice: ");
     }
 
     @Override
@@ -79,14 +80,17 @@ public class RegisterUI extends MainUI {
 
             // Create the MedicalRecord for the new patient
             MedicalRecord mr = new MedicalRecord(
-                LocalDateTime.now(), // Created date
-                LocalDateTime.now(), // Updated date
-                RecordStatusType.ACTIVE, // Record status
-                patientUID,              // patientID
-                null,                // doctorID (can be assigned later)
-                bloodType,
-                new ArrayList<>(),    // Empty diagnosis list
-                allergies
+                    fullName, // patient name
+                    phoneNo, //  patient phone number
+                    email,   // patient email
+                    LocalDateTime.now(), // Created date
+                    LocalDateTime.now(), // Updated date
+                    RecordStatusType.ACTIVE,// Record status
+                    patientUID,              // patientID
+                    null,                // doctorID (can be assigned later)
+                    bloodType,
+                    new ArrayList<>(),    // Empty diagnosis list
+                    allergies
             );
 
             // Add the new MedicalRecord to the repository
