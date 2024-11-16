@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Objects;
@@ -20,7 +19,7 @@ import java.util.Objects;
 import model.*;
 
 public class PersonnelRepository extends Repository {
-	/**
+    /**
      * Directory for storing personnel CSV files.
      */
     private static final String folder = "data";
@@ -29,6 +28,7 @@ public class PersonnelRepository extends Repository {
     private static final String pharmacistsFileName = "pharmacists.csv";
     private static final String adminsFileName = "admins.csv";
     private static Boolean isRepoLoaded = false;
+
     // Static data collections for personnel
     public static HashMap<String, Doctor> DOCTORS = new HashMap<>();
     public static HashMap<String, Patient> PATIENTS = new HashMap<>();
@@ -53,10 +53,10 @@ public class PersonnelRepository extends Repository {
     @Override
     public boolean loadFromCSV() {
         try {
-            loadPersonnelFromCSV(doctorsFileName, DOCTORS, Doctor.class);
-            loadPersonnelFromCSV(patientsFileName, PATIENTS, Patient.class);
-            loadPersonnelFromCSV(pharmacistsFileName, PHARMACISTS, Pharmacist.class);
-            loadPersonnelFromCSV(adminsFileName, ADMINS, Admin.class);
+            loadPersonnelFromCSV(doctorsFileName, DOCTORS, Doctor.class, true); // true: CSV has headers
+            loadPersonnelFromCSV(patientsFileName, PATIENTS, Patient.class, true);
+            loadPersonnelFromCSV(pharmacistsFileName, PHARMACISTS, Pharmacist.class, true);
+            loadPersonnelFromCSV(adminsFileName, ADMINS, Admin.class, true);
             setRepoLoaded(true);
             return true;
         } catch (Exception e) {
@@ -86,6 +86,13 @@ public class PersonnelRepository extends Repository {
             System.out.println("Error saving personnel data: " + e.getMessage());
         }
     }
+
+    /**
+     * Returns the CSV header based on the file name.
+     *
+     * @param fileName the name of the file
+     * @return the CSV header string
+     */
     private static String getCsvHeader(String fileName) {
         if (Objects.equals(fileName, "doctors.csv")) {
             return "ID,FullName,Username,Email,PhoneNo,PasswordHash,DoB,Gender,Role,DateJoin";
@@ -108,7 +115,6 @@ public class PersonnelRepository extends Repository {
     private static String personnelToCSV(HMSPersonnel personnel) {
         StringBuilder csvBuilder = new StringBuilder();
 
-        // Add common fields
         csvBuilder.append(personnel.getUID()).append(",");
         csvBuilder.append(personnel.getFullName()).append(",");
         csvBuilder.append(personnel.getUsername()).append(",");
@@ -119,35 +125,19 @@ public class PersonnelRepository extends Repository {
         csvBuilder.append(personnel.getGender()).append(",");
         csvBuilder.append(personnel.getRole()).append(",");
 
-        // Add Doctor-specific fields or empty placeholders
         if (personnel instanceof Doctor) {
             Doctor doctor = (Doctor) personnel;
-            csvBuilder.append(doctor.getDateJoin().toString()).append(",");
-
-        }
-
-        // Add Patient-specific fields or empty placeholders
-        if (personnel instanceof Patient) {
+            csvBuilder.append(doctor.getDateJoin().toString());
+        } else if (personnel instanceof Patient) {
             Patient patient = (Patient) personnel;
             csvBuilder.append(patient.getAllergies()).append(",");
-            csvBuilder.append(patient.getDateOfAdmission().toString()).append(",");
-        }
-
-        // Add Pharmacist-specific fields or empty placeholders
-        if (personnel instanceof Pharmacist) {
+            csvBuilder.append(patient.getDateOfAdmission().toString());
+        } else if (personnel instanceof Pharmacist) {
             Pharmacist pharmacist = (Pharmacist) personnel;
-            csvBuilder.append(pharmacist.getDateOfEmployment().toString()).append(",");
-        }
-
-        // Add Admin-specific fields or empty placeholder
-        if (personnel instanceof Admin) {
+            csvBuilder.append(pharmacist.getDateOfEmployment().toString());
+        } else if (personnel instanceof Admin) {
             Admin admin = (Admin) personnel;
-            csvBuilder.append(admin.getDateOfCreation().toString()).append(",");
-        }
-
-        // Remove the trailing comma at the end
-        if (csvBuilder.charAt(csvBuilder.length() - 1) == ',') {
-            csvBuilder.setLength(csvBuilder.length() - 1);
+            csvBuilder.append(admin.getDateOfCreation().toString());
         }
 
         return csvBuilder.toString();
@@ -159,44 +149,47 @@ public class PersonnelRepository extends Repository {
      * @param fileName     the name of the CSV file to load from
      * @param personnelMap the map to store the loaded personnel records
      * @param type         the class type of personnel to load (e.g., Doctor, Patient)
+     * @param hasHeader    true if the CSV file has a header row
      * @param <T>          a type parameter extending HMSPersonnel
      */
-    private static <T extends HMSPersonnel> void loadPersonnelFromCSV(String fileName, HashMap<String, T> personnelMap,
-            Class<T> type) {
+    private static <T extends HMSPersonnel> void loadPersonnelFromCSV(
+            String fileName, HashMap<String, T> personnelMap, Class<T> type, boolean hasHeader) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
-        // Ensure the directory exists
         File directory = new File("./src/repository/" + folder);
         if (!directory.exists()) {
-            directory.mkdirs(); // Create the directory if it doesn't exist
+            directory.mkdirs();
         }
 
         File file = new File(filePath);
-
         if (!file.exists()) {
             try {
-                file.createNewFile(); // Create an empty file if it doesn't exist
+                file.createNewFile();
                 System.out.println("Created empty file: " + filePath);
             } catch (IOException e) {
                 System.out.println("Error creating file: " + e.getMessage());
             }
-            return; // No data to load, as the file was just created
+            return;
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
-            int lineNumber = 1; // To track which line might cause an issue
+            boolean isFirstLine = hasHeader;
+
             while ((line = reader.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue;
+                }
+
                 T personnel = csvToPersonnel(line, type);
                 if (personnel != null) {
                     personnelMap.put(personnel.getUID(), personnel);
                 } else {
-                    System.out.println("Warning: Failed to parse personnel at line " + lineNumber + " in " + fileName);
+                    System.out.println("Warning: Failed to parse personnel in file: " + fileName);
                 }
-                lineNumber++;
             }
-            // System.out.println("Successfully loaded " + personnelMap.size() + " personnel
-            // from " + fileName);
+
             System.out.println("Successfully loaded from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading personnel data: " + e.getMessage());
@@ -217,58 +210,20 @@ public class PersonnelRepository extends Repository {
         try {
             if (type == Doctor.class) {
                 return type.cast(new Doctor(
-                        fields[0], // UID
-                        fields[1], // fullName
-                        fields[2], // username
-                        fields[3], // email
-                        fields[4], // phoneNo
-                        fields[5], // passwordHash
-                        LocalDateTime.parse(fields[6]), // DoB (LocalDateTime)
-                        fields[7], // gender
-                        fields[8], // role (e.g., Doctor)
-                        LocalDateTime.parse(fields[9]) // dateJoin (LocalDateTime)
-                ));
+                        fields[0], fields[1], fields[2], fields[3], fields[4], fields[5],
+                        LocalDateTime.parse(fields[6]), fields[7], fields[8], LocalDateTime.parse(fields[9])));
             } else if (type == Patient.class) {
                 return type.cast(new Patient(
-                        fields[0], // UID
-                        fields[1], // fullName
-                        fields[2], // username
-                        fields[3], // email
-                        fields[4], // phoneNo
-                        fields[5], // passwordHash
-                        LocalDateTime.parse(fields[6]), // DoB (LocalDateTime)
-                        fields[7], // gender
-                        fields[8], // role (e.g., Patient)
-                        fields[9], // allergies
-                        LocalDateTime.parse(fields[10]) // dateOfAdmission (LocalDateTime)
-
-                ));
+                        fields[0], fields[1], fields[2], fields[3], fields[4], fields[5],
+                        LocalDateTime.parse(fields[6]), fields[7], fields[8], fields[9], LocalDateTime.parse(fields[10])));
             } else if (type == Pharmacist.class) {
                 return type.cast(new Pharmacist(
-                        fields[0], // UID
-                        fields[1], // fullName
-                        fields[2], // username
-                        fields[3], // email
-                        fields[4], // phoneNo
-                        fields[5], // passwordHash
-                        LocalDateTime.parse(fields[6]), // DoB (LocalDateTime)
-                        fields[7], // gender
-                        fields[8], // role (e.g., Pharmacist)
-                        LocalDateTime.parse(fields[9]) // dateOfEmployment (LocalDateTime)
-                ));
+                        fields[0], fields[1], fields[2], fields[3], fields[4], fields[5],
+                        LocalDateTime.parse(fields[6]), fields[7], fields[8], LocalDateTime.parse(fields[9])));
             } else if (type == Admin.class) {
                 return type.cast(new Admin(
-                        fields[0], // UID
-                        fields[1], // fullName
-                        fields[2], // username
-                        fields[3], // email
-                        fields[4], // phoneNo
-                        fields[5], // passwordHash
-                        LocalDateTime.parse(fields[6]), // DoB (LocalDateTime)
-                        fields[7], // gender
-                        fields[8], // role (e.g., Admin)
-                        LocalDateTime.parse(fields[9]) // dateOfCreation (LocalDateTime)
-                ));
+                        fields[0], fields[1], fields[2], fields[3], fields[4], fields[5],
+                        LocalDateTime.parse(fields[6]), fields[7], fields[8], LocalDateTime.parse(fields[9])));
             }
         } catch (Exception e) {
             System.out.println("Error parsing personnel data: " + e.getMessage());
@@ -290,6 +245,7 @@ public class PersonnelRepository extends Repository {
         saveAllPersonnelFiles();
         return true;
     }
+
     /**
      * Checks if the repository has been loaded.
      *
@@ -298,6 +254,7 @@ public class PersonnelRepository extends Repository {
     public static Boolean isRepoLoaded() {
         return isRepoLoaded;
     }
+
     /**
      * Sets the repository load status.
      *
@@ -306,5 +263,4 @@ public class PersonnelRepository extends Repository {
     public static void setRepoLoaded(Boolean isRepoLoaded) {
         PersonnelRepository.isRepoLoaded = isRepoLoaded;
     }
-
 }
