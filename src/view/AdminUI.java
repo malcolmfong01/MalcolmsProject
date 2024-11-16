@@ -3,6 +3,7 @@ package view;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Objects;
 import java.util.Scanner;
 import HMSApp.HMSMain;
 import model.Admin;
@@ -48,7 +49,6 @@ public class AdminUI extends MainUI {
         System.out.println("3. View and Manage Medication Inventory ");
         System.out.println("4. Approve Replenishment Requests");
         System.out.println("5. Logout");
-        System.out.print("Enter your choice: ");
     }
     
 	/**
@@ -114,8 +114,8 @@ public class AdminUI extends MainUI {
 	            AdminController.listPersonnelByRole(PersonnelFileType.PHARMACISTS);
 	            break;
 	        case 2:
-	            AdminController.listPersonnelByGender("Male");
-	            AdminController.listPersonnelByGender("Female");
+	            AdminController.listPersonnelByGender("M");
+	            AdminController.listPersonnelByGender("F");
 	            break;
 	        case 3:
 	            AdminController.listPersonnelByAge();
@@ -152,39 +152,23 @@ public class AdminUI extends MainUI {
     public static void addPersonnel(String role) {
         System.out.println("Enter Full Name: " );
         String fullName = Helper.readString();
-        System.out.println("Enter ID Card: " );
-        String idCard = Helper.readString();
         System.out.println("Enter Username: " );
         String username = Helper.readString();
-        System.out.println("Enter Email: "  );
-        String email = Helper.readString();
-        System.out.println("Enter Phone No: " );
-        String phoneNo = Helper.readString();
-        System.out.println("Enter DOB (YYYY-MM-DD HH:MM):" );
-        LocalDateTime DoB = readDate();
-        System.out.println("Enter Gender: " );
-        String gender = Helper.readString();
+        String email = Helper.readEmail("Enter Email: ");
+        String phoneNo = Helper.readValidPhoneNumber("Enter phone number:" );
+        LocalDateTime DoB = Helper.readDate("Enter date of birth (yyyy-MM-dd):");
+        String gender = Helper.readGender("Enter gender (M/F):");
         if (role == "Doctor" ) {
-        	 System.out.println("Enter Speciality: " );
-             String specialty = Helper.readString();
-             System.out.println("Enter Medical License Number: " );
-             String medicalLicenseNumber = Helper.readString();
-             System.out.println("Enter Date Join (YYYY-MM-DD HH:MM): " );
-             LocalDateTime dateJoin = readDate();
-             System.out.println("Enter Years of Experiences: " );
-             int yearsOfExperiences = Helper.readInt("");
-             Doctor doctor = new Doctor(fullName, username, email, phoneNo, "default",
+             LocalDateTime dateJoin = LocalDateTime.now();
+             Doctor doctor = new Doctor(fullName, username, email, phoneNo, "password",
             		 DoB, gender, dateJoin);
              HMSPersonnel personnel = (HMSPersonnel) doctor;
              AdminController.addPersonnel(personnel);
         }      
         
         else {
-        	System.out.println("Enter Pharmacist License Number: " );
-        	String pharmacistLicenseNumber = Helper.readString();
-        	System.out.println("Enter Date Of Employment (YYYY-MM-DD HH:MM) : " );
-        	LocalDateTime dateOfEmployment = readDate();
-        	Pharmacist pharmacist = new Pharmacist(fullName, username, email, phoneNo, "defaultPassword", DoB, gender , dateOfEmployment);
+        	LocalDateTime dateOfEmployment = LocalDateTime.now();
+        	Pharmacist pharmacist = new Pharmacist(fullName, username, email, phoneNo, "password", DoB, gender , dateOfEmployment);
         	HMSPersonnel personnel = (HMSPersonnel) pharmacist;
         	AdminController.addPersonnel(personnel);
         }
@@ -196,7 +180,7 @@ public class AdminUI extends MainUI {
      * @param role The role of the personnel to be updated (Doctor or Pharmacist).
      */
     public static void updatePersonnel(String role) {
-        String UID = Helper.readString("Enter UID: ");
+        String UID = Helper.readString("Enter ID Card: ");
         Doctor doctor = (Doctor) HMSPersonnelController.getPersonnelByUID(UID, PersonnelFileType.DOCTORS);
         Pharmacist pharmacist = (Pharmacist) HMSPersonnelController.getPersonnelByUID(UID,
                 PersonnelFileType.PHARMACISTS);
@@ -207,14 +191,28 @@ public class AdminUI extends MainUI {
         }
 
         String username = Helper.readString("Enter New Username: ");
-        String email = Helper.readString("Enter New Email: ");
-        String phoneNo = Helper.readString("Enter New Phone No: ");
+        if (role.equals("Doctor")) {
+            while (AuthenticationController.isUsernameTaken(username, PersonnelRepository.DOCTORS)) {
+            System.out.println("The username '" + username + "' is already taken. Please enter a new username:");
+            username = Helper.readString("Enter a new username: ");
+            }
+
+        }
+        while (AuthenticationController.isUsernameTaken(username, PersonnelRepository.PHARMACISTS)) {
+            System.out.println("The username '" + username + "' is already taken. Please enter a new username:");
+            username = Helper.readString("Enter a new username: ");
+        }
+        String email = Helper.readEmail("Enter New Email: ");
+        String phoneNo = Helper.readValidPhoneNumber("Enter New Phone No: ");
         String hashedPassword = Helper.readString("Enter New Password: ");
 
+
+        while (!AuthenticationController.isValidPassword(hashedPassword)) {
+            System.out.println("Password must be at least 8 characters long, contain an uppercase letter, a number, and a special character.");
+            hashedPassword = Helper.readString("Enter New Password: ");
+        }
+
         if (role.equals("Doctor")) {
-            String specialty = Helper.readString("Enter New Specialty: ");
-            String medicalLicenseNumber = Helper.readString("Enter New Medical License Number: ");
-            int yearsOfExperiences = Helper.readInt("Enter New Years of Experience: ");
 
             doctor.setUsername(username);
             doctor.setEmail(email);
@@ -223,7 +221,6 @@ public class AdminUI extends MainUI {
 
             AdminController.updatePersonnel(doctor.getUID(), doctor);
         } else {
-            String pharmacistLicenseNumber = Helper.readString("Enter New Pharmacist License Number: ");
 
             pharmacist.setUsername(username);
             pharmacist.setEmail(email);
@@ -241,7 +238,7 @@ public class AdminUI extends MainUI {
      * @param role The role of the personnel to be removed (Doctor or Pharmacist).
      */
     public static void removePersonnel(String role) {
-    	System.out.println("Enter Staff UID: ");
+    	System.out.println("Enter Staff ID Card: ");
     	if(role == "Doctor") {
     		String uidDoctor = Helper.readString();
             AdminController.removePersonnel(uidDoctor, PersonnelFileType.DOCTORS);
@@ -280,7 +277,7 @@ public class AdminUI extends MainUI {
      * Prompts the user to enter details for adding a new medicine to the inventory.
      */
     public static void addMedicine() {
-        String medicineID = Helper.readString("Enter Medicine ID: ");
+        String medicineID = MedicineController.getNextMedicineID();
         String name = Helper.readString("Enter Medicine Name: ");
         String manufacturer = Helper.readString("Enter Manufacturer: ");
         LocalDateTime expiryDate = DateTimePicker.pickDateTime("Enter Expiry Date: ");
@@ -291,7 +288,9 @@ public class AdminUI extends MainUI {
         String dateTimeString = "0001-01-01 00:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime date = LocalDateTime.parse(dateTimeString, formatter);
-        Medicine medicine = new Medicine(medicineID, name, manufacturer, expiryDate,
+
+        // Generate the next medicine ID
+        Medicine medicine = new Medicine(medicineID,name, manufacturer, expiryDate,
                 inventoryStock, lowStockLevel, status, date, date);
         MedicineController.addMedicine(medicine);
     }
@@ -302,6 +301,10 @@ public class AdminUI extends MainUI {
     public static void updateMedicine() {
         String medicineID = Helper.readString("Enter Medicine ID: ");
         Medicine medicine = MedicineController.getMedicineByUID(medicineID);
+        if (medicine == null) {
+            updateMedicine();
+            return ;
+        }
         String manufacturer = Helper.readString("Enter New Manufacturer: ");
         medicine.setManufacturer(manufacturer);
         LocalDateTime expiryDate = DateTimePicker.pickDateTime("Enter New Expiry Date (YYYY-MM-DD HH:MM:): ");
@@ -356,28 +359,6 @@ public class AdminUI extends MainUI {
         AdminController.approveReplenishRequest(medicineID, medicine);
     }
 
-    
-    /**
-     * Reads a valid date from the user input.
-     * 
-     * @return The parsed date as a LocalDateTime object.
-     */
-    public static LocalDateTime readDate() {
-    	LocalDateTime date = null;
-        boolean valid = false;
-        while (!valid) {
-            String input = Helper.readString();
-
-            try {
-                // Parse the input into LocalDateTime
-                date = LocalDateTime.parse(input, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-                valid = true; // Input is valid, exit the loop
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format. Please use YYYY-MM-DD HH:MM.");
-            }
-        }
-        return date;
-    }
     
 
    
