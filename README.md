@@ -48,7 +48,8 @@ The codebase is modularly organized to ensure maintainability:
 - **Model**: Represents entities like patients, staff, inventory, and appointments.  
 - **Boundary**: Handles user interactions through CLI menus.  
 - **Controller**: Implements the core logic and manages the flow between components.  
-- **Repository**: Stores in-memory data for application state.  
+- **Repository**: Stores in-memory data for application state.
+- **Database**: CSV Files to store memory after the system shuts down/reboots.
 
 ### CLI Commands  
 The CLI interface provides simple, intuitive commands for user interactions, ensuring smooth navigation across all user roles.  
@@ -63,21 +64,17 @@ The CLI interface provides simple, intuitive commands for user interactions, ens
 
 ### Utilities:  
 - Command Line Interface (CLI) for interaction  
-- Custom Logger for transaction and event history tracking  
 
 ---
 
 ## **Contributors**  
 
-The MediCare 🏥 team collaborated across all phases of development, from ideation to deployment:  
-
-| **Name**          | **Github Username** | **Role**        |  
-|--------------------|---------------------|-----------------|  
-| Alice Tan          | @alice-tan93       | Project Lead    |  
-| Bryan Lim          | @bryanlim1998      | Backend Dev     |  
-| Chloe Wong         | @chloewonghms      | Backend Dev     |  
-| Daniel Ng          | @danielng12        | CLI Specialist  |  
-| Esther Lee         | @estherleeHMS      | Testing & QA    |  
+|     **Name**       | **Github Username**| 
+|--------------------|--------------------|  
+| Malcolm Fong       | @malcolmfong01     | 
+| Lam Yan Yee        | @yanyox            |  
+| Khoo Ze Kang       | @zk0008            |  
+| Carwyn Yeo         | @carwynyeo         |   
 
 ---  
 
