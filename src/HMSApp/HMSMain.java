@@ -4,13 +4,17 @@
  */
 package HMSApp;
 
-import view.HMSAppUI;
+import java.util.Scanner;
+
+import model.*;
+import repository.*;
+import view.*;
 
 /**
  * Main entry point for the Hospital Management System (HMS) application.
  * Initializes the application interface and displays a welcome message.
  *
- * @param // args command-line arguments (not used)
+ * @param args command-line arguments (not used)
  */
 public class HMSMain {
     public static void main(String[] args) {
