@@ -123,12 +123,14 @@ public class AppointmentAvailabilityUI extends MainUI {
         System.out.println("\n--- Appointment Availability Summary ---");
 
         for (AppointmentRecord appointment : availableAppointments) {
-            System.out.printf("Date: %s, Time: %s, Location: %s, Record ID: %s, Doctor ID: %s\n",
-                    appointment.getAppointmentTime().toLocalDate(),
-                    appointment.getAppointmentTime().format(dateTimeFormatter),
-                    appointment.getLocation(),
-                    appointment.getRecordID(),
-                    appointment.getDoctorID());
+            if(appointment.getAppointmentStatus()==AppointmentStatus.AVAILABLE) {
+                System.out.printf("Date: %s, Time: %s, Location: %s, Record ID: %s, Doctor ID: %s\n",
+                        appointment.getAppointmentTime().toLocalDate(),
+                        appointment.getAppointmentTime().format(dateTimeFormatter),
+                        appointment.getLocation(),
+                        appointment.getRecordID(),
+                        appointment.getDoctorID());
+            }
         }
 
         System.out.println("---------------------------------------");
