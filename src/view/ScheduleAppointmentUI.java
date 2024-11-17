@@ -2,13 +2,11 @@ package view;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Scanner;
 
 import controller.DoctorController;
 import enums.AppointmentStatus;
 import helper.Helper;
-import model.AppointmentRecord;
+import model.Appointment;
 import model.Doctor;
 import model.Patient;
 import repository.PersonnelRepository;
@@ -72,8 +70,8 @@ public class ScheduleAppointmentUI extends MainUI {
 				continue;
 			}
 
-			AppointmentRecord existingAppointment = null;
-			for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+			Appointment existingAppointment = null;
+			for (Appointment appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
 				if (appointment.getDoctorID().equals(doctorId)
 						&& appointment.getAppointmentTime().equals(appointmentTime)
 						&& appointment.getAppointmentStatus() == AppointmentStatus.AVAILABLE) {
@@ -94,7 +92,7 @@ public class ScheduleAppointmentUI extends MainUI {
 		}
 	}
 
-	private void displayScheduledSummary(AppointmentRecord existingAppointment) {
+	private void displayScheduledSummary(Appointment existingAppointment) {
 		String doctorName = DoctorController.getDoctorNameById(existingAppointment.getDoctorID());
 		System.out.println("\n--- Scheduled Availability Summary ---");
 		System.out.println("Doctor ID        : " + existingAppointment.getDoctorID());

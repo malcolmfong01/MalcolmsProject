@@ -15,7 +15,7 @@ import enums.AppointmentStatus;
 import enums.RecordFileType;
 import helper.DateTimePicker;
 import helper.Helper;
-import model.AppointmentRecord;
+import model.Appointment;
 import model.Doctor;
 import model.RecordStatusType;
 import repository.RecordsRepository;
@@ -70,7 +70,7 @@ public class AppointmentAvailabilityUI extends MainUI {
      * Appointments are saved and a summary of availability is displayed.
      */
     public void setAvailabilityForAppointments() {
-        List<AppointmentRecord> availableAppointments = new ArrayList<>();
+        List<Appointment> availableAppointments = new ArrayList<>();
         AppointmentStatus status = AppointmentStatus.AVAILABLE;
 
         System.out.println("Enter your availability. Type 'done' when finished.");
@@ -86,7 +86,7 @@ public class AppointmentAvailabilityUI extends MainUI {
             
 
             // Create appointment record
-            AppointmentRecord appointment = new AppointmentRecord(
+            Appointment appointment = new Appointment(
                     RecordsController.generateRecordID(RecordFileType.APPOINTMENT_RECORDS),
                     LocalDateTime.now(),
                     LocalDateTime.now(),
@@ -118,11 +118,11 @@ public class AppointmentAvailabilityUI extends MainUI {
      *
      * @param availableAppointments the list of available appointments
      */
-    private void displayAvailabilitySummary(List<AppointmentRecord> availableAppointments) {
+    private void displayAvailabilitySummary(List<Appointment> availableAppointments) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         System.out.println("\n--- Appointment Availability Summary ---");
 
-        for (AppointmentRecord appointment : availableAppointments) {
+        for (Appointment appointment : availableAppointments) {
             System.out.printf("Date: %s, Time: %s, Location: %s, Record ID: %s, Doctor ID: %s\n",
                     appointment.getAppointmentTime().toLocalDate(),
                     appointment.getAppointmentTime().format(dateTimeFormatter),

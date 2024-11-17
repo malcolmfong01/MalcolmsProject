@@ -1,32 +1,20 @@
 package view;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import HMSApp.HMSMain;
 import controller.AppointmentController;
-import controller.AuthenticationController;
 import controller.DoctorController;
-import controller.HMSPersonnelController;
-import controller.PatientController;
-import controller.RecordsController;
 import enums.AppointmentStatus;
 import helper.Helper;
-import model.AppointmentOutcomeRecord;
-import model.AppointmentRecord;
+import model.*;
+import model.Appointment;
 import model.Diagnosis;
-import model.Doctor;
-import model.MedicalRecord;
-import model.Patient;
-import model.PrescribedMedication;
-import model.Prescription;
 import model.TreatmentPlans;
 import repository.DiagnosisRepository;
 import repository.PersonnelRepository;
-import repository.PrescribedMedicationRepository;
 import repository.RecordsRepository;
 import repository.TreatmentPlansRepository;
 
@@ -121,7 +109,7 @@ public class PatientUI extends MainUI {
 	// 3. viewAvailableAppointmentSlots
 	public static void viewAvailableAppointmentSlots() {
 		System.out.println("\n--- Available Appointment Slots ---");
-		List<AppointmentRecord> availableSlots = AppointmentController.getAvailableAppointmentSlotsFromAllDoctor();
+		List<Appointment> availableSlots = AppointmentController.getAvailableAppointmentSlotsFromAllDoctor();
 
 		if (availableSlots.isEmpty()) {
 			System.out.println("No appointments found");
@@ -129,7 +117,7 @@ public class PatientUI extends MainUI {
 			return;
 		}
 
-		for (AppointmentRecord appointment : availableSlots) {
+		for (Appointment appointment : availableSlots) {
 			String doctorName = DoctorController.getDoctorNameById(appointment.getDoctorID());
 			System.out.println("Doctor ID        : " + appointment.getDoctorID());
 			System.out.println("Doctor           : " + doctorName);
@@ -163,7 +151,7 @@ public class PatientUI extends MainUI {
 	public void cancelAppointment() {
 		System.out.println("\n--- Scheduled Appointments ---");
 
-		List<AppointmentRecord> confirmedAppointments = AppointmentController
+		List<Appointment> confirmedAppointments = AppointmentController
 				.getConfirmedAppointments(patient.getUID());
 		if (confirmedAppointments.isEmpty()) {
 			System.out.println("No confirmed appointments to cancel.");
@@ -171,7 +159,7 @@ public class PatientUI extends MainUI {
 			return;
 		}
 		int index = 1;
-		for (AppointmentRecord appointment : confirmedAppointments) {
+		for (Appointment appointment : confirmedAppointments) {
 			String doctorName = DoctorController.getDoctorNameById(appointment.getDoctorID());
 			System.out.println(index++ + ")");
 			System.out.println("Doctor ID        : " + appointment.getDoctorID());
@@ -206,7 +194,7 @@ public class PatientUI extends MainUI {
 	public static void viewScheduledAppointments() {
 		System.out.println("\n--- Scheduled Appointments ---");
 
-		List<AppointmentRecord> scheduledSlots = AppointmentController.getAllAppointments(patient.getUID());
+		List<Appointment> scheduledSlots = AppointmentController.getAllAppointments(patient.getUID());
 
 		if (scheduledSlots.isEmpty()) {
 			System.out.println("No appointments found");
@@ -214,7 +202,7 @@ public class PatientUI extends MainUI {
 			return;
 		}
 
-		for (AppointmentRecord appointment : scheduledSlots) {
+		for (Appointment appointment : scheduledSlots) {
 			String doctorName = DoctorController.getDoctorNameById(appointment.getDoctorID());
 			System.out.println("Doctor ID        : " + appointment.getDoctorID());
 			System.out.println("Doctor           : " + doctorName);
@@ -276,7 +264,7 @@ public class PatientUI extends MainUI {
 	public void acknowledgeRejectedAppointments() {
 		System.out.println("\n--- Acknowledge Rejected Appointments ---");
 
-		List<AppointmentRecord> canceledAppointments = AppointmentController
+		List<Appointment> canceledAppointments = AppointmentController
 				.getCancelledAppointmentSlots(patient.getUID());
 		if (canceledAppointments.isEmpty()) {
 			System.out.println("No canceled appointments found.");
@@ -284,7 +272,7 @@ public class PatientUI extends MainUI {
 			return;
 		}
 
-		for (AppointmentRecord appointment : canceledAppointments) {
+		for (Appointment appointment : canceledAppointments) {
 			String doctorName = DoctorController.getDoctorNameById(appointment.getDoctorID());
 			System.out.println("Doctor ID        : " + appointment.getDoctorID());
 			System.out.println("Doctor           : " + doctorName);

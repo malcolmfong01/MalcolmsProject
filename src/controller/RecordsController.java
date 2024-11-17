@@ -2,7 +2,6 @@ package controller;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.UUID;
 
 import enums.RecordFileType;
 
@@ -115,7 +114,7 @@ public class RecordsController {
     }
 
     private Boolean updateAppointmentRecord(String recordID, LocalDateTime updatedDate) {
-        AppointmentRecord record = RecordsRepository.APPOINTMENT_RECORDS.get(recordID);
+        Appointment record = RecordsRepository.APPOINTMENT_RECORDS.get(recordID);
         if (record != null) {
             record.setUpdatedDate(updatedDate);
             RecordsRepository.saveAllRecordFiles();
@@ -213,7 +212,7 @@ public class RecordsController {
             return null;
     }
 
-    public AppointmentRecord getDiagnosisRecordbyID(String recordID) {
+    public Appointment getDiagnosisRecordbyID(String recordID) {
         if (RecordsRepository.isRepoLoad())
             return RecordsRepository.APPOINTMENT_RECORDS.get(recordID);
         else

@@ -5,31 +5,18 @@
  */
 package view;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.UUID;
 
 import HMSApp.HMSMain;
 import controller.*;
 import enums.AppointmentOutcomeStatus;
 import enums.AppointmentStatus;
-import enums.PrescriptionStatus;
-import enums.RecordFileType;
 import helper.Helper;
 import model.*;
 import repository.AppointmentOutcomeRecordRepository;
 import repository.DiagnosisRepository;
-import repository.PersonnelRepository;
-import repository.PrescribedMedicationRepository;
 import repository.PrescriptionRepository;
 import repository.RecordsRepository;
 import repository.TreatmentPlansRepository;
@@ -146,18 +133,18 @@ public class DoctorUI extends MainUI {
 			return;
 		}
 
-		AppointmentRecord currentAppointmentRecord = AppointmentController.retrieveEarliestConfirmedAppointmentRecord(doctor.getUID(),
+		Appointment currentAppointment = AppointmentController.retrieveEarliestConfirmedAppointmentRecord(doctor.getUID(),
 				medicalRecord.getPatientID());
 
 
-		if (currentAppointmentRecord == null) {
+		if (currentAppointment == null) {
 			System.out.println("Error: There are no pending appointments for the current patient.");
 			System.out.println("You cannot update the medical record");
 			return;
 		}
 
 		// Use UpdateMedicalRecordUI to handle the updating process
-		UpdateMedicalRecordUI updateUI = new UpdateMedicalRecordUI(doctor, medicalRecord,currentAppointmentRecord);
+		UpdateMedicalRecordUI updateUI = new UpdateMedicalRecordUI(doctor, medicalRecord, currentAppointment);
 		updateUI.start();
 
 		// After updating, save the medical record explicitly back to the repository
@@ -174,7 +161,7 @@ public class DoctorUI extends MainUI {
 		boolean found = false;
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+		for (Appointment appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
 			if (doctor.getUID().equals(appointment.getDoctorID())) {
 				found = true;
 				System.out.println("Appointment Record:");
@@ -211,7 +198,7 @@ public class DoctorUI extends MainUI {
 		Scanner sc = new Scanner(System.in);
 
 		boolean found = false;
-		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+		for (Appointment appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
 			if (doctor.getUID().equals(appointment.getDoctorID())
 					&& appointment.getAppointmentStatus().equals(AppointmentStatus.PENDING)) {
 				found = true;
@@ -256,7 +243,7 @@ public class DoctorUI extends MainUI {
 
 		boolean found = false;
 
-		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+		for (Appointment appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
 			if (doctor.getUID().equals(appointment.getDoctorID())
 					&& appointment.getAppointmentStatus().equals(AppointmentStatus.CONFIRMED)) {
 				found = true;
@@ -278,9 +265,9 @@ public class DoctorUI extends MainUI {
 
 	public boolean setAppointmentRecordStatus(String AppointmentRecordID, String status) {
 		boolean flag = false;
-		AppointmentRecord appointmentRecord = RecordsRepository.APPOINTMENT_RECORDS.get(AppointmentRecordID);
-		if (appointmentRecord != null) {
-			appointmentRecord.setAppointmentStatus(AppointmentStatus.toEnumAppointmentStatus(status));
+		Appointment appointment = RecordsRepository.APPOINTMENT_RECORDS.get(AppointmentRecordID);
+		if (appointment != null) {
+			appointment.setAppointmentStatus(AppointmentStatus.toEnumAppointmentStatus(status));
 
 		}
 		return flag;

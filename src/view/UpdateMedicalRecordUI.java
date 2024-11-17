@@ -16,27 +16,27 @@ import controller.MedicineController;
 public class UpdateMedicalRecordUI {
     private Doctor doctor;
     private MedicalRecord medicalRecord;
-    private AppointmentRecord currentAppointmentRecord;
+    private Appointment currentAppointment;
     private Scanner sc;
 
     // Constructor to initialize with the doctor and medical record to be updated
-    public UpdateMedicalRecordUI(Doctor doctor, MedicalRecord medicalRecord,AppointmentRecord currentAppointmentRecord) {
+    public UpdateMedicalRecordUI(Doctor doctor, MedicalRecord medicalRecord, Appointment currentAppointment) {
         this.doctor = doctor;
         this.medicalRecord = medicalRecord;
-        this.currentAppointmentRecord = currentAppointmentRecord;
+        this.currentAppointment = currentAppointment;
         this.sc = new Scanner(System.in);
     }
 
     public void start() {
-        // displaying currentAppointmentRecord that the doctor is working on
+        // displaying currentAppointment that the doctor is working on
 
-        //currentAppointmentRecord = AppointmentController.retrieveEarliestConfirmedAppointmentRecord(doctor.getUID(),
+        //currentAppointment = AppointmentController.retrieveEarliestConfirmedAppointmentRecord(doctor.getUID(),
                // medicalRecord.getPatientID());
         System.out.println("\n-- Current Appointment Details --");
         System.out.println("Patient ID: " + medicalRecord.getPatientID());
-        System.out.println("Appointment DateTime: " + currentAppointmentRecord.getAppointmentTime());
+        System.out.println("Appointment DateTime: " + currentAppointment.getAppointmentTime());
         System.out.println("Doctor: " + doctor.getFullName());
-        System.out.println("Status: " + currentAppointmentRecord.getAppointmentStatus().toString());
+        System.out.println("Status: " + currentAppointment.getAppointmentStatus().toString());
         System.out.println("=========================================");
 
 
@@ -68,7 +68,7 @@ public class UpdateMedicalRecordUI {
 
         // Save updated medical record back to repository
         RecordsRepository.MEDICAL_RECORDS.put(medicalRecord.getRecordID(), medicalRecord);
-        currentAppointmentRecord.setAppointmentStatus(AppointmentStatus.COMPLETED);
+        currentAppointment.setAppointmentStatus(AppointmentStatus.COMPLETED);
         generateAppointmentOutcome(newDiagnosis.getPrescription(),newDiagnosis);
         RecordsRepository.saveAllRecordFiles();
 
@@ -76,20 +76,20 @@ public class UpdateMedicalRecordUI {
     
 
     private void generateAppointmentOutcome(Prescription prescription,Diagnosis diagnosis ) {
-    	if (currentAppointmentRecord.getAppointmentStatus() == AppointmentStatus.COMPLETED)
+    	if (currentAppointment.getAppointmentStatus() == AppointmentStatus.COMPLETED)
         {
         	AppointmentOutcomeRecord outcomeRecord = new AppointmentOutcomeRecord(
-        			currentAppointmentRecord.getPatientID(),
-        			currentAppointmentRecord.getDoctorID(),
+        			currentAppointment.getPatientID(),
+        			currentAppointment.getDoctorID(),
         			diagnosis.getDiagnosisID(),
-        			currentAppointmentRecord.getRecordID(),
+        			currentAppointment.getRecordID(),
                     LocalDateTime.now(),
                     prescription,
                     null, //type of service
                     null, //consultation notes
                     AppointmentOutcomeStatus.INCOMPLETED);
         	
-        	 AppointmentOutcomeRecordRepository.addAppointmentOutcomeRecord(currentAppointmentRecord.getPatientID(), outcomeRecord);
+        	 AppointmentOutcomeRecordRepository.addAppointmentOutcomeRecord(currentAppointment.getPatientID(), outcomeRecord);
              AppointmentOutcomeRecordRepository.saveAppointmentOutcomeRecordRepository();
              
         }        

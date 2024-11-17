@@ -5,17 +5,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import enums.AppointmentStatus;
 import enums.PersonnelFileType;
-import enums.ReplenishStatus;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
-import helper.Helper; // Ensure this import exists
 import model.*; // Make sure these models are correctly imported
 import repository.*;
 
@@ -51,7 +46,7 @@ public class AdminController extends HMSPersonnelController {
 
 	    boolean found = false;
 
-	    for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+	    for (Appointment appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
 	       
 	        System.out.println("Appointment ID: " + appointment.getRecordID());
 	        System.out.println("Patient ID: " + appointment.getPatientID());
