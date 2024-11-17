@@ -72,6 +72,14 @@ public class UpdatePrescriptionStatusUI extends MainUI {
         String medicineID = Helper.readString();
         PrescribedMedication selectedMedication = null;
 
+        // Check if the prescription is null
+        if (selectedRecord.getPrescription() == null) {
+            printWarning("Error: No prescription found in the appointment outcome record.");
+            returnToMenu();
+            return;
+        }
+
+        // If the prescription is not null, proceed to find the medication
         for (PrescribedMedication medication : selectedRecord.getPrescription().getMedications()) {
             if (medication.getMedicineID().equals(medicineID)) {
                 selectedMedication = medication;
@@ -84,6 +92,7 @@ public class UpdatePrescriptionStatusUI extends MainUI {
             returnToMenu();
             return;
         }
+
 
         // Step 4: Update Prescription Status
         System.out.print("Enter New Status (e.g., DISPENSED): ");

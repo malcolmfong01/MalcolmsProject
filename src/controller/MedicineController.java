@@ -7,6 +7,7 @@ import enums.ReplenishStatus;
 
 public class MedicineController {
 
+
     private static String generateNextMedicineID() {
         int maxID = -1;
 
@@ -34,7 +35,12 @@ public class MedicineController {
         return generateNextMedicineID(); // Call the private method
     }
     /**
-     * Add a new medicine to the repository.
+     * Adds a new medicine to the repository.
+     * Validates the medicine data before adding it to the repository.
+     * Saves the updated repository to a CSV file after a successful addition.
+     *
+     * @param medicine The {@link Medicine} object to be added.
+     * @return {@code true} if the medicine is successfully added; {@code false} otherwise.
      */
     public static boolean addMedicine(Medicine medicine) {
         if (medicine == null || medicine.getName() == null) {
@@ -54,7 +60,13 @@ public class MedicineController {
     }
 
     /**
-     * Update an existing medicine's details in the repository.
+     * Updates an existing medicine in the repository.
+     * Validates the provided medicine ID and updated medicine data before updating.
+     * Saves the updated repository to a CSV file after a successful update.
+     *
+     * @param medicineID      The ID of the medicine to update.
+     * @param updatedMedicine The {@link Medicine} object with updated data.
+     * @return {@code true} if the medicine is successfully updated; {@code false} otherwise.
      */
     public static boolean updateMedicine(String medicineID, Medicine updatedMedicine) {
         if (medicineID == null || medicineID.isEmpty() || updatedMedicine == null) {
@@ -74,7 +86,12 @@ public class MedicineController {
     }
 
     /**
-     * Remove a medicine from the repository by its ID.
+     * Removes a medicine from the repository by its ID.
+     * Validates the medicine ID before attempting the removal.
+     * Saves the updated repository to a CSV file after a successful removal.
+     *
+     * @param medicineID The ID of the medicine to remove.
+     * @return {@code true} if the medicine is successfully removed; {@code false} otherwise.
      */
     public static boolean removeMedicine(String medicineID) {
         if (medicineID == null || medicineID.isEmpty()) {
@@ -94,7 +111,11 @@ public class MedicineController {
     }
 
     /**
-     * Retrieve a medicine from the repository by its ID.
+     * Retrieves a medicine from the repository by its ID.
+     * Validates the medicine ID before attempting the retrieval.
+     *
+     * @param medicineID The unique ID of the medicine to retrieve.
+     * @return The {@link Medicine} object if found; {@code null} otherwise.
      */
     public static Medicine getMedicineByUID(String medicineID) {
         if (medicineID == null || medicineID.isEmpty()) {
@@ -135,7 +156,11 @@ public class MedicineController {
         }
     }
     /**
-     * Retrieve a medicine from the repository by its name.
+     * Retrieves a medicine from the repository by its name.
+     * Validates the medicine name before attempting the retrieval.
+     *
+     * @param medicineName The name of the medicine to retrieve.
+     * @return The {@link Medicine} object if found; {@code null} otherwise.
      */
     //for doctor purpose ,ck
     public static Medicine getMedicineByName(String medicineName) {

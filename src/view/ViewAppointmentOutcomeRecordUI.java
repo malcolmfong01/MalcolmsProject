@@ -11,21 +11,34 @@ import model.PrescribedMedication;
 import model.Prescription;
 import repository.AppointmentOutcomeRecordRepository;
 import view.PharmacistUI;
-
+/**
+ * The ViewAppointmentOutcomeRecordUI class provides a user interface for viewing
+ * appointment outcome records for patients within the Hospital Management System.
+ */
 public class ViewAppointmentOutcomeRecordUI extends MainUI {
-
+    /**
+     * Starts the UI for viewing appointment outcome records and displays the
+     * appropriate breadcrumbs.
+     */
     @Override
     public void start() {
         viewAppointmentOutcomeRecords();
     }
-
+    /**
+     * Prints the available choices for the user when interacting with the
+     * appointment outcome record UI.
+     */
     @Override
     protected void printChoice() {
         System.out.println("1. View another appointment outcome record");
         System.out.println("2. Return to main menu");
         System.out.print("Enter your choice: ");
     }
-
+    /**
+     * Retrieves and displays appointment outcome records for a specified patient
+     * based on their patient ID. If no records are found, an appropriate warning is
+     * displayed.
+     */
     public void viewAppointmentOutcomeRecords() {
         System.out.print("Enter Patient ID to view appointment outcome records: ");
         String patientID = Helper.readString();
@@ -42,7 +55,12 @@ public class ViewAppointmentOutcomeRecordUI extends MainUI {
         printChoice();
         handleUserChoice();
     }
-
+    /**
+     * Displays the details of a given AppointmentOutcomeRecord, including
+     * prescription information if available.
+     *
+     * @param record The AppointmentOutcomeRecord to be displayed.
+     */
     private void displayAppointmentOutcomeRecord(AppointmentOutcomeRecord record) {
         printSeparator();
         System.out.println("Appointment Outcome for Record ID: " + record.getAppointmentOutcomeRecordID());
@@ -70,7 +88,10 @@ public class ViewAppointmentOutcomeRecordUI extends MainUI {
         }
         printSeparator();
     }
-
+    /**
+     * Handles the user's choice to view another appointment outcome record or
+     * return to the Pharmacist UI.
+     */
     private void handleUserChoice() {
         int choice = getUserChoice(2);
         switch (choice) {
@@ -82,7 +103,8 @@ public class ViewAppointmentOutcomeRecordUI extends MainUI {
     }
 
     /**
-     * Returns to the Pharmacist UI menu.
+     * Returns the user to the Pharmacist UI menu. If the authenticated user is not
+     * a valid pharmacist, it redirects to the main menu.
      */
     private void returnToPharmacistUI() {
         Pharmacist pharmacist = (Pharmacist) HMSPersonnelController.getPersonnelByUID(

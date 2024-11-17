@@ -327,7 +327,14 @@ public class Helper {
             return null; // return null if parsing fails or field is empty
         }
     }
-
+    /**
+     * Parses a Double from an array by index.
+     * Returns null if parsing fails or the field is empty.
+     *
+     * @param fields The array of fields.
+     * @param index  The index to parse.
+     * @return The Double value or null if parsing fails or the field is empty.
+     */
     public static Double parseDoubleOrNull(String[] fields, int index) {
         try {
             return index < fields.length && !fields[index].isEmpty() ? Double.parseDouble(fields[index]) : null;

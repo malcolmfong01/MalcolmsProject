@@ -276,6 +276,13 @@ public class DoctorUI extends MainUI {
 		System.out.println("---------------------------------------");
 	}
 
+    /**
+     * Updates the status of a specific appointment record.
+     *
+     * @param AppointmentRecordID the ID of the appointment record
+     * @param status              the new status to set
+     * @return true if the status update was successful, false otherwise
+     */
 	public boolean setAppointmentRecordStatus(String AppointmentRecordID, String status) {
 		boolean flag = false;
 		AppointmentRecord appointmentRecord = RecordsRepository.APPOINTMENT_RECORDS.get(AppointmentRecordID);

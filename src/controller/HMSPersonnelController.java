@@ -11,7 +11,11 @@ import java.util.UUID;
 import enums.PersonnelFileType;
 
 public class HMSPersonnelController {
-
+    /**
+     * Generates a unique ID (UID) for the personnel based on their type.
+     * @param personnelFileType the type of personnel (Admin, Doctor, Patient, Pharmacist)
+     * @return a unique UID string for the personnel
+     */
     public static String generateUID(PersonnelFileType personnelFileType) {
         String prefix = "";
         int nextId = 0;
@@ -56,7 +60,11 @@ public class HMSPersonnelController {
         // Format the next ID with leading zeros (e.g., "A001")
         return String.format("%s%03d", prefix, nextId);
     }
-
+    /**
+     * Adds a new personnel (e.g., Doctor, Patient, etc.) to the system.
+     * @param personnel the personnel to be added
+     * @return true if personnel is successfully added, false if the data is invalid
+     */
     // Add a new personnel (e.g., Doctor, Patient, etc.)
     public static boolean addPersonnel(HMSPersonnel personnel) {
         if (personnel == null) {
@@ -90,6 +98,7 @@ public class HMSPersonnelController {
         PersonnelRepository.saveAllPersonnelFiles();
         return true;
     }
+
     // Determine personnel type based on the class of personnel
     private static PersonnelFileType determinePersonnelType(HMSPersonnel personnel) {
         if (personnel instanceof Doctor) {
@@ -104,6 +113,12 @@ public class HMSPersonnelController {
         return null;
     }
 
+    /**
+     * Removes a personnel member from the system based on their UID and type.
+     * @param UID the UID of the personnel to be removed
+     * @param type the type of personnel (Admin, Doctor, Patient, Pharmacist)
+     * @return true if personnel is successfully removed, false if UID is invalid or personnel not found
+     */
     // Remove personnel by UID
     public static boolean removePersonnel(String UID, PersonnelFileType type) {
         if (UID == null || UID.isEmpty()) {
@@ -152,7 +167,12 @@ public class HMSPersonnelController {
         System.out.println("Error: Personnel not found with ID Card: " + UID);
         return false;
     }
-
+    /**
+     * Retrieves a personnel member based on their UID and type.
+     * @param UID the UID of the personnel to retrieve
+     * @param type the type of personnel (Admin, Doctor, Patient, Pharmacist)
+     * @return the personnel object if found, or null if not found
+     */
     // Retrieve personnel by UID
     public static HMSPersonnel getPersonnelByUID(String UID, PersonnelFileType type) {
         if (UID == null || UID.isEmpty()) {
@@ -174,7 +194,12 @@ public class HMSPersonnelController {
                 return null;
         }
     }
-
+    /**
+     * Updates the details of a personnel member based on their UID.
+     * @param UID the UID of the personnel to update
+     * @param updatedPersonnel the new personnel data
+     * @return true if the personnel is successfully updated, false otherwise
+     */
     // Update personnel details
     public static boolean updatePersonnel(String UID, HMSPersonnel updatedPersonnel) {
         if (UID == null || UID.isEmpty() || updatedPersonnel == null) {
@@ -204,7 +229,10 @@ public class HMSPersonnelController {
         PersonnelRepository.saveAllPersonnelFiles();
         return true;
     }
-
+    /**
+     * Lists all personnel of a specific type.
+     * @param type the type of personnel to list (Admin, Doctor, Patient, Pharmacist)
+     */
     // List all personnel of a specific type
     public static void listAllPersonnel(PersonnelFileType type) {
         Map<String, ? extends HMSPersonnel> personnelMap = null;
@@ -236,7 +264,11 @@ public class HMSPersonnelController {
             System.out.println("No personnel found for type: " + type);
         }
     }
-
+    /**
+     * Retrieves a patient by their UID.
+     * @param UID the UID of the patient to retrieve
+     * @return the Patient object if found, or null if not found
+     */
     // Retrieve a patient by UID
     public static Patient getPatientById(String UID) {
         if (UID == null || UID.isEmpty()) {
@@ -250,7 +282,12 @@ public class HMSPersonnelController {
         }
         return patient;
     }
-
+    /**
+     * Updates a patient's particulars by UID.
+     * @param UID the UID of the patient to update
+     * @param updatedPatient the updated patient details
+     * @return true if the update was successful, false otherwise
+     */
     // Update a patient's particulars by UID
     // Update a patient's particulars by UID
     public static boolean updatePatientParticulars(String UID, Patient updatedPatient) {

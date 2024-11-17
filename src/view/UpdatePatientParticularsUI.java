@@ -7,16 +7,25 @@ import java.util.Scanner;
 import controller.HMSPersonnelController;
 import helper.Helper;
 import model.Patient;
-
+/**
+ * This class provides a user interface to view and update the particulars of a Patient.
+ * It displays current information about the patient and offers options to modify specific fields.
+ */
 public class UpdatePatientParticularsUI {
     
     private Patient patient;
-
+    /**
+     * Constructor to initialize the UI with a specific patient object.
+     *
+     * @param patient The Patient object whose details are to be viewed and updated.
+     */
     // Constructor to initialize with the current patient object
     public UpdatePatientParticularsUI(Patient patient) {
         this.patient = patient;
     }
-
+    /**
+     * Displays the current particulars of the patient.
+     */
     // Display current personal particulars
     public void displayCurrentParticulars() {
         System.out.println("\n--- Current Personal Particulars ---");
@@ -32,7 +41,9 @@ public class UpdatePatientParticularsUI {
                                 : "N/A"));
         System.out.println("-------------------------------------\n");
     }
-
+    /**
+     * Starts the UI for updating patient particulars, offering options to modify different fields.
+     */
     // Start the UI for updating patient particulars
     public void start() {
         int choice;
