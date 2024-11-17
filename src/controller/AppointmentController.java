@@ -188,8 +188,10 @@ public class AppointmentController {
 			AppointmentRecord selectedAppointment = confirmedAppointments.get(choice - 1);
 			selectedAppointment.setAppointmentStatus(AppointmentStatus.AVAILABLE);
 			selectedAppointment.setPatientID(null);
+			String appointmentOutcomeRecordID = selectedAppointment.getAppointmentOutcomeRecordID();
+			selectedAppointment.setAppointmentOutcomeRecordID(null);
 			RecordsRepository.saveAllRecordFiles();
-			return selectedAppointment.getAppointmentOutcomeRecordID();
+			return appointmentOutcomeRecordID;
 		} else {
 			return null;
 		}
