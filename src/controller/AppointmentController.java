@@ -215,23 +215,25 @@ public class AppointmentController {
 		return canceledSlots;
 	}
 
-	/**
-	 * Cancels an appointment from the confirmed appointments list based on the
-	 * user's choice.
-	 *
-	 * @param choice                The index of the appointment to be canceled.
-	 * @param confirmedAppointments A list of confirmed appointment records.
-	 * @return true if the appointment was successfully canceled, false otherwise.
-	 */
-	public static boolean cancelAppointment(int choice, List<AppointmentRecord> confirmedAppointments) {
+    /**
+     * Cancels an appointment from the confirmed appointments list based on the user's choice.
+     *
+     * @param choice The index of the appointment to be canceled.
+     * @param confirmedAppointments A list of confirmed appointment records.
+     * @return appointmentOutcomeRecordID if the appointment was successfully canceled, null otherwise.
+     */
+	public static String cancelAppointment(int choice, List<AppointmentRecord> confirmedAppointments) {
+
 		if (choice >= 1 && choice <= confirmedAppointments.size()) {
 			AppointmentRecord selectedAppointment = confirmedAppointments.get(choice - 1);
 			selectedAppointment.setAppointmentStatus(AppointmentStatus.AVAILABLE);
 			selectedAppointment.setPatientID(null);
+			String appointmentOutcomeRecordID = selectedAppointment.getAppointmentOutcomeRecordID();
+			selectedAppointment.setAppointmentOutcomeRecordID(null);
 			RecordsRepository.saveAllRecordFiles();
-			return true;
+			return appointmentOutcomeRecordID;
 		} else {
-			return false;
+			return null;
 		}
 	}
 
