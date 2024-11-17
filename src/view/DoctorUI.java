@@ -35,26 +35,26 @@ import repository.RecordsRepository;
 import repository.TreatmentPlansRepository;
 
 public class DoctorUI extends MainUI {
-    /**
-     * The doctor using this UI.
-     */
+	/**
+	 * The doctor using this UI.
+	 */
 	private Doctor doctor;
 
-    /**
-     * Constructs a DoctorUI for the specified doctor.
-     *
-     * @param doctor the doctor interacting with the UI
-     */
+	/**
+	 * Constructs a DoctorUI for the specified doctor.
+	 *
+	 * @param doctor the doctor interacting with the UI
+	 */
 	public DoctorUI(Doctor doctor) {
 		this.doctor = doctor;
 
 	}
 
-    /**
-     * Constructs a DoctorUI for the specified doctor.
-     *
-     * @param doctor the doctor interacting with the UI
-     */
+	/**
+	 * Constructs a DoctorUI for the specified doctor.
+	 *
+	 * @param doctor the doctor interacting with the UI
+	 */
 	@Override
 	protected void printChoice() {
 		System.out.printf("Welcome! Dr. --- %s ---\n", doctor.getFullName());
@@ -71,15 +71,15 @@ public class DoctorUI extends MainUI {
 	}
 
 	/**
-     * Starts the doctor dashboard and processes the menu options.
-     */
+	 * Starts the doctor dashboard and processes the menu options.
+	 */
 	public void start() {
 		showDoctorDashboard();
 	}
 
-    /**
-     * Displays the Doctor Dashboard and handles user input for menu navigation.
-     */
+	/**
+	 * Displays the Doctor Dashboard and handles user input for menu navigation.
+	 */
 
 	public void showDoctorDashboard() {
 		Scanner sc = new Scanner(System.in);
@@ -88,26 +88,44 @@ public class DoctorUI extends MainUI {
 			printChoice();
 			choice = Helper.readInt("");
 			switch (choice) {
-				case 1 : viewPatientMedicalRecord(doctor.getUID());break;
-				case 2 : selectAndUpdateMedicalRecord();break;
-				case 3 : viewPersonalSchedule();break;
-				case 4 : availabilityForAppointments();break; // Open new UI for setting availability
-				case 5 : acceptOrDeclineAppointmentRequests();break;
-				case 6 : viewUpcomingAppointments();break;
-				case 7 : recordAppointmentOutcome();break;
-				case 8 : System.out.println("Logging out..."); HMSMain.main(null); break;
-				default : System.out.println("Invalid choice!");
+				case 1:
+					viewPatientMedicalRecord(doctor.getUID());
+					break;
+				case 2:
+					selectAndUpdateMedicalRecord();
+					break;
+				case 3:
+					viewPersonalSchedule();
+					break;
+				case 4:
+					availabilityForAppointments();
+					break; // Open new UI for setting availability
+				case 5:
+					acceptOrDeclineAppointmentRequests();
+					break;
+				case 6:
+					viewUpcomingAppointments();
+					break;
+				case 7:
+					recordAppointmentOutcome();
+					break;
+				case 8:
+					System.out.println("Logging out...");
+					HMSMain.main(null);
+					break;
+				default:
+					System.out.println("Invalid choice!");
 			}
 		} while (choice != 8);
 
 		sc.close(); // Close the Scanner
 	}
 
-    /**
-     * Displays all patient medical records associated with this doctor.
-     *
-     * @param doctorId the ID of the doctor
-     */
+	/**
+	 * Displays all patient medical records associated with this doctor.
+	 *
+	 * @param doctorId the ID of the doctor
+	 */
 	public void viewPatientMedicalRecord(String doctorId) {
 		System.out.println("\n--- All Patients' Medical Records for Doctor ID: " + doctorId + " ---");
 		boolean recordsFound = false;
@@ -124,15 +142,15 @@ public class DoctorUI extends MainUI {
 		System.out.println("---------------------------------------");
 	}
 
-    /**
-     * Allows the doctor to select and update a patient's medical record.
-     */
+	/**
+	 * Allows the doctor to select and update a patient's medical record.
+	 */
 	public void selectAndUpdateMedicalRecord() {
 		System.out.println("Enter Patient ID to select medical record:");
 		String patientId = Helper.readString();
 
 		// Retrieve the medical record by the doctor and patient ID
-		String medicalRecordID = retrieveMedicalRecordID(doctor.getUID(), patientId);
+		String medicalRecordID = retrieveMedicalRecordID(patientId);
 
 		if (medicalRecordID == null) {
 			System.out.println("No medical record found for the specified patient.");
@@ -146,9 +164,9 @@ public class DoctorUI extends MainUI {
 			return;
 		}
 
-		AppointmentRecord currentAppointmentRecord = AppointmentController.retrieveEarliestConfirmedAppointmentRecord(doctor.getUID(),
+		AppointmentRecord currentAppointmentRecord = AppointmentController.retrieveEarliestConfirmedAppointmentRecord(
+				doctor.getUID(),
 				medicalRecord.getPatientID());
-
 
 		if (currentAppointmentRecord == null) {
 			System.out.println("Error: There are no pending appointments for the current patient.");
@@ -157,7 +175,7 @@ public class DoctorUI extends MainUI {
 		}
 
 		// Use UpdateMedicalRecordUI to handle the updating process
-		UpdateMedicalRecordUI updateUI = new UpdateMedicalRecordUI(doctor, medicalRecord,currentAppointmentRecord);
+		UpdateMedicalRecordUI updateUI = new UpdateMedicalRecordUI(doctor, medicalRecord, currentAppointmentRecord);
 		updateUI.start();
 
 		// After updating, save the medical record explicitly back to the repository
@@ -165,9 +183,9 @@ public class DoctorUI extends MainUI {
 		RecordsRepository.saveAllRecordFiles(); // Save to persist changes
 	}
 
-    /**
-     * Displays the doctor's personal schedule of appointments.
-     */
+	/**
+	 * Displays the doctor's personal schedule of appointments.
+	 */
 	public void viewPersonalSchedule() {
 		System.out.println("\n--- Appointments for Dr. " + doctor.getFullName() + " (ID: " + doctor.getUID() + ") ---");
 
@@ -194,17 +212,18 @@ public class DoctorUI extends MainUI {
 		System.out.println("---------------------------------------");
 	}
 
-    /**
-     * Opens the UI for setting the doctor's availability for appointments.
-     */
+	/**
+	 * Opens the UI for setting the doctor's availability for appointments.
+	 */
 	public void availabilityForAppointments() {
 		AppointmentAvailabilityUI availabilityUI = new AppointmentAvailabilityUI(doctor);
 		availabilityUI.start();
 	}
 
-    /**
-     * Allows the doctor to review and either accept or decline pending appointment requests.
-     */
+	/**
+	 * Allows the doctor to review and either accept or decline pending appointment
+	 * requests.
+	 */
 	public void acceptOrDeclineAppointmentRequests() {
 		System.out.println(
 				"\n--- Request Appointments for: " + doctor.getFullName() + " (UID: " + doctor.getUID() + ") ---");
@@ -224,9 +243,36 @@ public class DoctorUI extends MainUI {
 				String choice = sc.nextLine().trim().toLowerCase();
 
 				if ("accept".equals(choice)) {
+					String patientID = appointment.getPatientID();
+					String doctorID = appointment.getDoctorID();
+					System.out.println(doctorID);
+					String medicalRecordID = retrieveMedicalRecordID(patientID);
+
 					appointment.setAppointmentStatus(AppointmentStatus.CONFIRMED);
+					// Update the doctor ID in the medical record
+					RecordsRepository.updateDoctorIDInMedicalRecord(medicalRecordID, doctorID);
 					System.out.println(
 							"Appointment with Patient ID: " + appointment.getPatientID() + " has been confirmed.");
+
+					// Now we will generate the appointment outcome record
+					if (medicalRecordID != null) {
+						MedicalRecord medicalRecord = RecordsRepository.MEDICAL_RECORDS.get(medicalRecordID);
+
+						// Assuming you have a way to get the diagnosis ID, type of service, and
+						// consultation notes
+						String diagnosisID = ""; // Retrieve the diagnosis ID (you may need to implement a way to get
+													// this)
+						String typeOfService = ""; // Define the type of service provided
+						String consultationNotes = ""; // Get consultation notes from the doctor
+
+						// Generate the appointment outcome record
+						generateAppointmentOutcomeRecord(medicalRecord,
+								diagnosisID, typeOfService, consultationNotes, appointment.getAppointmentTime());
+						break;
+					} else {
+						System.out.println("No medical record found for Patient ID: " + patientID);
+					}
+
 				} else if ("decline".equals(choice)) {
 					appointment.setAppointmentStatus(AppointmentStatus.CANCELED);
 					System.out.println("Appointment with Patient ID: " + appointment.getPatientID()
@@ -244,12 +290,11 @@ public class DoctorUI extends MainUI {
 		System.out.println("---------------------------------------");
 
 		RecordsRepository.saveAllRecordFiles();
-
 	}
 
-    /**
-     * Displays all upcoming confirmed appointments for the doctor.
-     */
+	/**
+	 * Displays all upcoming confirmed appointments for the doctor.
+	 */
 	public void viewUpcomingAppointments() {
 		System.out.println(
 				"\n--- Upcoming Appointments for: " + doctor.getFullName() + " (UID: " + doctor.getUID() + ") ---");
@@ -276,13 +321,13 @@ public class DoctorUI extends MainUI {
 		System.out.println("---------------------------------------");
 	}
 
-    /**
-     * Updates the status of a specific appointment record.
-     *
-     * @param AppointmentRecordID the ID of the appointment record
-     * @param status              the new status to set
-     * @return true if the status update was successful, false otherwise
-     */
+	/**
+	 * Updates the status of a specific appointment record.
+	 *
+	 * @param AppointmentRecordID the ID of the appointment record
+	 * @param status              the new status to set
+	 * @return true if the status update was successful, false otherwise
+	 */
 	public boolean setAppointmentRecordStatus(String AppointmentRecordID, String status) {
 		boolean flag = false;
 		AppointmentRecord appointmentRecord = RecordsRepository.APPOINTMENT_RECORDS.get(AppointmentRecordID);
@@ -294,78 +339,64 @@ public class DoctorUI extends MainUI {
 
 	}
 
-    /**
-     * Generates an appointment outcome record for a specific medical record and diagnosis.
-     * Populates the outcome record with details such as patient ID, doctor ID, type of service,
-     * and consultation notes, and marks the outcome status as incomplete.
-     *
-     * @param medicalRecord      the medical record associated with the appointment
-     * @param diagnosisID        the ID of the diagnosis for the appointment outcome
-     * @param typeOfService      the type of service provided during the appointment
-     * @param consultationNotes  notes taken by the doctor during the consultation
-     * @return the created AppointmentOutcomeRecord object
-     */
+	/**
+	 * Generates an appointment outcome record for a specific medical record and
+	 * diagnosis.
+	 * Populates the outcome record with details such as patient ID, doctor ID, type
+	 * of service,
+	 * and consultation notes, and marks the outcome status as incomplete.
+	 *
+	 * @param medicalRecord     the medical record associated with the appointment
+	 * @param diagnosisID       the ID of the diagnosis for the appointment outcome
+	 * @param typeOfService     the type of service provided during the appointment
+	 * @param consultationNotes notes taken by the doctor during the consultation
+	 * @return the created AppointmentOutcomeRecord object
+	 */
 	public AppointmentOutcomeRecord generateAppointmentOutcomeRecord(MedicalRecord medicalRecord, String diagnosisID,
-			String typeOfService, String consultationNotes) {
-
+			String typeOfService, String consultationNotes, LocalDateTime appointmentTime) {
+		String UID = AppointmentController.generateRecordID(RecordFileType.APPOINTMENT_OUTCOME_RECORDS);
 		AppointmentOutcomeRecord outcomeRecord = new AppointmentOutcomeRecord(
+				UID,
 				medicalRecord.getPatientID(),
 				medicalRecord.getDoctorID(),
 				diagnosisID,
-				medicalRecord.getRecordID(),
-				LocalDateTime.now(),
+				appointmentTime,
 				PrescriptionRepository.PRESCRIPTION_MAP.get(diagnosisID),
 				typeOfService,
 				consultationNotes,
 				AppointmentOutcomeStatus.INCOMPLETED);
 
 		AppointmentOutcomeRecordRepository.addAppointmentOutcomeRecord(medicalRecord.getPatientID(), outcomeRecord);
-		AppointmentOutcomeRecordRepository.saveAppointmentOutcomeRecordRepository();
+		// AppointmentOutcomeRecordRepository.saveAppointmentOutcomeRecordRepository();
 		return outcomeRecord;
 
 	}
-	
-    /**
-     * Retrieves the medical record ID for a given doctor and patient.
-     *
-     * @param doctorId  the ID of the doctor
-     * @param patientId the ID of the patient
-     * @return the ID of the matching medical record, or null if no record is found
-     */
-	public static String getMedicalRecordID(String doctorId, String patientId) {
-		// through the medical records in the repository
+
+	/**
+	 * Retrieves a medical record ID for the specified doctor and patient.
+	 * Searches through records in the repository to find the one that matches
+	 * the doctor and patient IDs.
+	 *
+	 * @param doctorID  the ID of the doctor
+	 * @param patientID the ID of the patient
+	 * @return the ID of the medical record matching the doctor and patient, or null
+	 *         if none found
+	 */
+	public String retrieveMedicalRecordID(String patientID) {
 		for (MedicalRecord record : RecordsRepository.MEDICAL_RECORDS.values()) {
-			// Check if the record matches the provided doctorId and patientId
-			if (record.getDoctorID().equals(doctorId) && record.getPatientID().equals(patientId)) {
-				return record.getRecordID(); // Return the matching record's ID
-			}
-		}
-		// If no record is found, return null or an appropriate message
-		return null; // Or throw an exception if preferred
-	}
-	
-    /**
-     * Retrieves a medical record ID for the specified doctor and patient.
-     * Searches through records in the repository to find the one that matches
-     * the doctor and patient IDs.
-     *
-     * @param doctorID  the ID of the doctor
-     * @param patientID the ID of the patient
-     * @return the ID of the medical record matching the doctor and patient, or null if none found
-     */
-	public String retrieveMedicalRecordID(String doctorID, String patientID) {
-		for (MedicalRecord record : RecordsRepository.MEDICAL_RECORDS.values()) {
-			if (record.getDoctorID().equals(doctorID) && record.getPatientID().equals(patientID)) {
+			if (record.getPatientID().equals(patientID)) {
+				String recordID = record.getRecordID();
+				System.out.println(recordID);
 				return record.getRecordID(); // Return the matching record's ID
 			}
 		}
 		return null; // No matching record found
 	}
-	
-    /**
-     * Launches the appointment outcome recording interface for the doctor,
-     * allowing the doctor to record outcomes for completed appointments.
-     */
+
+	/**
+	 * Launches the appointment outcome recording interface for the doctor,
+	 * allowing the doctor to record outcomes for completed appointments.
+	 */
 	public void recordAppointmentOutcome() {
 		AppointmentRecordOutcomeUI outcomeUI = new AppointmentRecordOutcomeUI(doctor);
 		outcomeUI.start();

@@ -11,9 +11,12 @@ import model.PrescribedMedication;
 import model.Prescription;
 import repository.AppointmentOutcomeRecordRepository;
 import view.PharmacistUI;
+
 /**
- * The ViewAppointmentOutcomeRecordUI class provides a user interface for viewing
- * appointment outcome records for patients within the Hospital Management System.
+ * The ViewAppointmentOutcomeRecordUI class provides a user interface for
+ * viewing
+ * appointment outcome records for patients within the Hospital Management
+ * System.
  */
 public class ViewAppointmentOutcomeRecordUI extends MainUI {
     /**
@@ -24,6 +27,7 @@ public class ViewAppointmentOutcomeRecordUI extends MainUI {
     public void start() {
         viewAppointmentOutcomeRecords();
     }
+
     /**
      * Prints the available choices for the user when interacting with the
      * appointment outcome record UI.
@@ -34,6 +38,7 @@ public class ViewAppointmentOutcomeRecordUI extends MainUI {
         System.out.println("2. Return to main menu");
         System.out.print("Enter your choice: ");
     }
+
     /**
      * Retrieves and displays appointment outcome records for a specified patient
      * based on their patient ID. If no records are found, an appropriate warning is
@@ -44,7 +49,8 @@ public class ViewAppointmentOutcomeRecordUI extends MainUI {
         String patientID = Helper.readString();
 
         if (AppointmentOutcomeRecordRepository.patientOutcomeRecords.containsKey(patientID)) {
-            for (AppointmentOutcomeRecord record : AppointmentOutcomeRecordRepository.patientOutcomeRecords.get(patientID)) {
+            for (AppointmentOutcomeRecord record : AppointmentOutcomeRecordRepository.patientOutcomeRecords
+                    .get(patientID)) {
                 displayAppointmentOutcomeRecord(record);
             }
         } else {
@@ -55,6 +61,7 @@ public class ViewAppointmentOutcomeRecordUI extends MainUI {
         printChoice();
         handleUserChoice();
     }
+
     /**
      * Displays the details of a given AppointmentOutcomeRecord, including
      * prescription information if available.
@@ -63,7 +70,7 @@ public class ViewAppointmentOutcomeRecordUI extends MainUI {
      */
     private void displayAppointmentOutcomeRecord(AppointmentOutcomeRecord record) {
         printSeparator();
-        System.out.println("Appointment Outcome for Record ID: " + record.getAppointmentOutcomeRecordID());
+        System.out.println("Appointment Outcome for Record ID: " + record.getUID());
         System.out.println("Patient ID: " + record.getPatientID());
         System.out.println("Doctor ID: " + record.getDoctorID());
         System.out.println("Diagnosis ID: " + record.getDiagnosisID());
@@ -88,6 +95,7 @@ public class ViewAppointmentOutcomeRecordUI extends MainUI {
         }
         printSeparator();
     }
+
     /**
      * Handles the user's choice to view another appointment outcome record or
      * return to the Pharmacist UI.
@@ -97,7 +105,7 @@ public class ViewAppointmentOutcomeRecordUI extends MainUI {
         switch (choice) {
             case 1 -> viewAppointmentOutcomeRecords(); // View another record
             case 2 -> returnToPharmacistUI(); // Return to Pharmacist UI
-            //case 2 -> exitApp(); // Return to main menu or exit
+            // case 2 -> exitApp(); // Return to main menu or exit
             default -> handleInvalidInput();
         }
     }
@@ -108,7 +116,7 @@ public class ViewAppointmentOutcomeRecordUI extends MainUI {
      */
     private void returnToPharmacistUI() {
         Pharmacist pharmacist = (Pharmacist) HMSPersonnelController.getPersonnelByUID(
-            AuthenticationController.cookie.getUid(), PersonnelFileType.PHARMACISTS);
+                AuthenticationController.cookie.getUid(), PersonnelFileType.PHARMACISTS);
         if (pharmacist != null) {
             PharmacistUI pharmacistUI = new PharmacistUI();
             pharmacistUI.start();
