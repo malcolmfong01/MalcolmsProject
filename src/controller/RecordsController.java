@@ -11,11 +11,18 @@ import java.util.ArrayList;
 import model.*;
 import repository.RecordsRepository;
 import repository.AppointmentOutcomeRecordRepository;
-
+/**
+ * Controller class responsible for managing and handling various records (Medical, Appointment, Payment) in the system.
+ * This class provides functionality to generate record IDs, add, update, delete, and retrieve records from the repository.
+ */
 public class RecordsController {
 
     private static final System.Logger logger = System.getLogger(RecordsController.class.getName());
-
+    /**
+     * Generates a unique record ID based on the record type.
+     * @param recType the type of record (Appointment, Payment, or Medical)
+     * @return a unique record ID as a string
+     */
     public static String generateRecordID(RecordFileType recType) {
         String prefix = "";
         int nextId = 0;
@@ -56,7 +63,12 @@ public class RecordsController {
         return String.format("%s%03d", prefix, nextId);
 
     }
-
+    /**
+     * Checks if a record of the specified type already exists for a given UID.
+     * @param UID the unique identifier of the record
+     * @param recType the type of record to check (Appointment, Payment, or Medical)
+     * @return true if a record exists for the given UID, otherwise false
+     */
     public Boolean checkRecordsDuplication(String UID, RecordFileType recType) {
         switch (recType) {
             case MEDICAL_RECORDS:
@@ -69,11 +81,23 @@ public class RecordsController {
                 return true;
         }
     }
-
+    /**
+     * Adds a new medical record to the repository.
+     * @param mr the MedicalRecord object to be added
+     */
     public void addMedicalRecord(MedicalRecord mr) {
         RecordsRepository.MEDICAL_RECORDS.put(mr.getRecordID(), mr);
     }
-
+    /**
+     * Updates an existing record based on the record type and provided details.
+     * @param recordID the ID of the record to be updated
+     * @param recType the type of record (Appointment, Payment, or Medical)
+     * @param status the status to be set for the record
+     * @param doctorID the doctor ID to be set for the record
+     * @param patientID the patient ID to be set for the record
+     * @param updatedDate the date and time when the record was updated
+     * @return true if the record was successfully updated, otherwise false
+     */
     public Boolean updateRecord(String recordID, RecordFileType recType, String status, String doctorID,
             String patientID, LocalDateTime updatedDate) {
         if (!RecordsRepository.isRepoLoad()) {
@@ -137,7 +161,11 @@ public class RecordsController {
         logger.log(System.Logger.Level.WARNING, "Payment Record with ID {0} not found.", recordID);
         return false;
     }
-
+    /**
+     * Deletes a record based on the record ID.
+     * @param recordID the ID of the record to be deleted
+     * @return true if the record was successfully deleted, otherwise false
+     */
     public Boolean deleteRecord(String recordID) {
         if (deleteMedicalRecord(recordID)) {
             return true;
@@ -180,7 +208,11 @@ public class RecordsController {
         }
         return false;
     }
-
+    /**
+     * Retrieves a medical record by the patient ID.
+     * @param patientID the ID of the patient whose medical record is to be retrieved
+     * @return the medical record for the given patient ID, or null if not found
+     */
     public MedicalRecord getMedicalRecordsByPatientID(String patientID) {
         if (RecordsRepository.isRepoLoad()) {
             for (MedicalRecord record : RecordsRepository.MEDICAL_RECORDS.values()) {
@@ -192,7 +224,11 @@ public class RecordsController {
         }
         return null;
     }
-
+    /**
+     * Retrieves a list of medical records by the doctor ID.
+     * @param doctorID the ID of the doctor whose medical records are to be retrieved
+     * @return a list of medical records for the given doctor ID
+     */
     public ArrayList<MedicalRecord> getMedicalRecordsByDoctorID(String doctorID) {
         ArrayList<MedicalRecord> recordsByDoctor = new ArrayList<>(); // Initialize an empty list
 
@@ -205,21 +241,33 @@ public class RecordsController {
         }
         return recordsByDoctor; // Return the list, even if it might be empty
     }
-
+    /**
+     * Retrieves a medical record by the record ID.
+     * @param recordID the ID of the medical record to retrieve
+     * @return the medical record corresponding to the given record ID, or null if not found
+     */
     public MedicalRecord getMedicalRecordbyID(String recordID) {
         if (RecordsRepository.isRepoLoad())
             return RecordsRepository.MEDICAL_RECORDS.get(recordID);
         else
             return null;
     }
-
+    /**
+     * Retrieves an appointment record by the record ID.
+     * @param recordID the ID of the appointment record to retrieve
+     * @return the appointment record corresponding to the given record ID, or null if not found
+     */
     public AppointmentRecord getDiagnosisRecordbyID(String recordID) {
         if (RecordsRepository.isRepoLoad())
             return RecordsRepository.APPOINTMENT_RECORDS.get(recordID);
         else
             return null;
     }
-
+    /**
+     * Retrieves a payment record by the record ID.
+     * @param recordID the ID of the payment record to retrieve
+     * @return the payment record corresponding to the given record ID, or null if not found
+     */
     public PaymentRecord getPaymentRecordbyID(String recordID) {
         if (RecordsRepository.isRepoLoad())
             return RecordsRepository.PAYMENT_RECORDS.get(recordID);
@@ -241,6 +289,13 @@ public class RecordsController {
     //
     // return records;
     // }
+    /**
+     * Retrieves a list of appointment outcome records for a given patient ID.
+     * This method retrieves all appointment outcome records related to the patient.
+     * @param patientID the ID of the patient whose appointment outcome records are to be retrieved
+     * @return an ArrayList of AppointmentOutcomeRecord objects associated with the given patient ID, or an empty list if no records are found
+     */
+    //Initially had static keyword
     public ArrayList<AppointmentOutcomeRecord> getAppointmentOutcomeRecordByPatientId(String patientID) {
         // Retrieve the list of records for the given patientID, or an empty list if
         // none exists
