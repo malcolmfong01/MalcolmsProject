@@ -1,6 +1,6 @@
 /**
  * Repository class for managing AppointmentOutcomeRecord data, including loading and saving
- * data to a CSV file. This repository maintains a HashMap where each key is a patient ID, 
+ * data to a CSV file. This repository maintains a HashMap where each key is a patient ID,
  * and the corresponding value is a list of appointment outcome records for that patient.
  */
 package repository;
@@ -55,7 +55,7 @@ public class AppointmentOutcomeRecordRepository extends Repository {
     public static void saveAppointmentOutcomeRecordRepository() {
         saveAppoinmentOutcomeRecordsToCSV(AppointmentOutcomeRecordsfileName, patientOutcomeRecords);
     }
-    
+
     /**
      * Saves the provided appointment outcome records to the specified CSV file.
      *
@@ -112,7 +112,7 @@ public class AppointmentOutcomeRecordRepository extends Repository {
         );
     }
     /**
-     * Loads appointment outcome records from the specified CSV file, creating an empty file 
+     * Loads appointment outcome records from the specified CSV file, creating an empty file
      * if it does not exist. Records are added to the provided HashMap.
      *
      * @param fileName            the name of the CSV file to load from
@@ -261,7 +261,50 @@ public class AppointmentOutcomeRecordRepository extends Repository {
         patientOutcomeRecords.put(patientID, records);
         saveAppointmentOutcomeRecordRepository();
     }
-    
-    
+
+    /**
+     * Deletes an appointment outcome record by its record ID.
+     *
+     * @param recordID the unique ID of the appointment outcome record to delete
+     * @return true if the record was successfully deleted, false otherwise
+     */
+    public static boolean deleteAppointmentOutcomeRecord(String recordID) {
+        // Iterate over the HashMap to find and delete the record
+        for (String patientID : patientOutcomeRecords.keySet()) {
+            ArrayList<AppointmentOutcomeRecord> records = patientOutcomeRecords.get(patientID);
+
+            if (records != null) {
+                // Find the record with the matching recordID
+                AppointmentOutcomeRecord recordToDelete = null;
+                for (AppointmentOutcomeRecord record : records) {
+                    if (record.getAppointmentOutcomeRecordID().equals(recordID)) {
+                        recordToDelete = record;
+                        break;
+                    }
+                }
+
+                // If found, remove it
+                if (recordToDelete != null) {
+                    records.remove(recordToDelete);
+
+                    // If the list becomes empty, remove the patientID entry
+                    if (records.isEmpty()) {
+                        patientOutcomeRecords.remove(patientID);
+                    } else {
+                        // Update the HashMap with the modified list
+                        patientOutcomeRecords.put(patientID, records);
+                    }
+
+                    // Save changes to the CSV
+                    saveAppointmentOutcomeRecordRepository();
+                    System.out.println("Appointment outcome record deleted successfully.");
+                    return true;
+                }
+            }
+        }
+
+        System.out.println("No matching record found for deletion.");
+        return false;
+    }
 
 }

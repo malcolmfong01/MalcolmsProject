@@ -181,17 +181,17 @@ public class AppointmentController {
      *
      * @param choice The index of the appointment to be canceled.
      * @param confirmedAppointments A list of confirmed appointment records.
-     * @return true if the appointment was successfully canceled, false otherwise.
+     * @return appointmentOutcomeRecordID if the appointment was successfully canceled, null otherwise.
      */
-	public static boolean cancelAppointment(int choice, List<AppointmentRecord> confirmedAppointments) {
+	public static String cancelAppointment(int choice, List<AppointmentRecord> confirmedAppointments) {
 		if (choice >= 1 && choice <= confirmedAppointments.size()) {
 			AppointmentRecord selectedAppointment = confirmedAppointments.get(choice - 1);
 			selectedAppointment.setAppointmentStatus(AppointmentStatus.AVAILABLE);
 			selectedAppointment.setPatientID(null);
 			RecordsRepository.saveAllRecordFiles();
-			return true;
+			return selectedAppointment.getAppointmentOutcomeRecordID();
 		} else {
-			return false;
+			return null;
 		}
 	}
 

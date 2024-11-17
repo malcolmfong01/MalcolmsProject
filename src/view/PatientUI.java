@@ -29,6 +29,9 @@ import repository.PersonnelRepository;
 import repository.PrescribedMedicationRepository;
 import repository.RecordsRepository;
 import repository.TreatmentPlansRepository;
+
+import static repository.AppointmentOutcomeRecordRepository.deleteAppointmentOutcomeRecord;
+
 /**
  * PatientUI class represents the user interface for a patient in the HMS system.
  * This class handles patient-specific interactions such as viewing medical records,
@@ -219,8 +222,10 @@ public class PatientUI extends MainUI {
 		try {
 			int choice = Helper.readInt("Enter the number of the appointment you wish to cancel: ");
 
-			boolean success = AppointmentController.cancelAppointment(choice, confirmedAppointments);
-			if (success) {
+			String success = AppointmentController.cancelAppointment(choice, confirmedAppointments);
+			// add deleteAppointmentOutcome
+			if (success != null) {
+				deleteAppointmentOutcomeRecord(success);
 				System.out.println("The appointment has been successfully cancelled.");
 			} else {
 				System.out.println("Invalid selection. Please enter a valid number.");
