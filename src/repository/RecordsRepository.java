@@ -41,7 +41,8 @@ public class RecordsRepository extends Repository {
     public static HashMap<String, PaymentRecord> PAYMENT_RECORDS = new HashMap<>();
 
     /**
-     * Loads all record types from their respective CSV files and sets the repository as loaded.
+     * Loads all record types from their respective CSV files and sets the
+     * repository as loaded.
      *
      * @return true if all records are successfully loaded; false otherwise
      */
@@ -60,13 +61,15 @@ public class RecordsRepository extends Repository {
     }
 
     /**
-     * Saves all record types (medical, appointment, and payment) to their respective CSV files.
+     * Saves all record types (medical, appointment, and payment) to their
+     * respective CSV files.
      */
     public static void saveAllRecordFiles() {
         saveRecordsToCSV(medicalFileName, MEDICAL_RECORDS);
         saveRecordsToCSV(appointmentFileName, APPOINTMENT_RECORDS);
         saveRecordsToCSV(paymentFileName, PAYMENT_RECORDS);
     }
+
     /**
      * Returns the CSV header based on the file name.
      *
@@ -85,9 +88,9 @@ public class RecordsRepository extends Repository {
     /**
      * Saves a specific record map to a CSV file.
      *
-     * @param fileName        the name of the file to save records to
+     * @param fileName           the name of the file to save records to
      * @param recordsMapRecordID the map of records to save
-     * @param <T>             a type parameter extending HMSRecords
+     * @param <T>                a type parameter extending HMSRecords
      */
     private static <T extends HMSRecords> void saveRecordsToCSV(String fileName,
             HashMap<String, T> recordsMapRecordID) {
@@ -112,7 +115,6 @@ public class RecordsRepository extends Repository {
         }
     }
 
-    
     /**
      * Converts a record object to a CSV-formatted string.
      *
@@ -165,10 +167,11 @@ public class RecordsRepository extends Repository {
     /**
      * Loads records from a CSV file into the specified records map.
      *
-     * @param fileName        the name of the CSV file to load from
+     * @param fileName           the name of the CSV file to load from
      * @param recordsMapRecordID the map to store the loaded records
-     * @param type            the class type of record to load (e.g., MedicalRecord, AppointmentRecord)
-     * @param <T>             a type parameter extending HMSRecords
+     * @param type               the class type of record to load (e.g.,
+     *                           MedicalRecord, AppointmentRecord)
+     * @param <T>                a type parameter extending HMSRecords
      */
     private static <T extends HMSRecords> void loadRecordsFromCSV(String fileName,
             HashMap<String, T> recordsMapRecordID,
@@ -223,7 +226,8 @@ public class RecordsRepository extends Repository {
      * Converts a CSV line to a record object of the specified type.
      *
      * @param csv  the CSV string representing the record
-     * @param type the class type of record to create (e.g., MedicalRecord, AppointmentRecord)
+     * @param type the class type of record to create (e.g., MedicalRecord,
+     *             AppointmentRecord)
      * @param <T>  a type parameter extending HMSRecords
      * @return a record object of the specified type, or null if parsing fails
      */
@@ -234,9 +238,9 @@ public class RecordsRepository extends Repository {
             if (type == MedicalRecord.class) {
                 return type.cast(new MedicalRecord(
                         fields[0], // recordID
-                        fields[1], //patient name
-                        fields[2], //patient phone number
-                        fields[3], //patient email
+                        fields[1], // patient name
+                        fields[2], // patient phone number
+                        fields[3], // patient email
                         LocalDateTime.parse(fields[4]), // createdDate
                         LocalDateTime.parse(fields[5]), // updatedDate
                         RecordStatusType.toEnumRecordStatusType(fields[6]), // recordStatus //ACTIVE
@@ -250,7 +254,7 @@ public class RecordsRepository extends Repository {
                 AppointmentOutcomeRecord matchingRecord = null;
                 if (outcomeRecords != null) {
                     for (AppointmentOutcomeRecord record : outcomeRecords) {
-                        if (record.getAppointmentOutcomeRecordID().equals(fields[4])) {
+                        if (record.getUID().equals(fields[0])) {
                             matchingRecord = record;
                             break; // Exit loop once the matching record is found
                         }
@@ -300,6 +304,7 @@ public class RecordsRepository extends Repository {
         setRepoLoaded(false);
         return true;
     }
+
     /**
      * Checks if the repository has been loaded.
      *
@@ -308,6 +313,7 @@ public class RecordsRepository extends Repository {
     public static Boolean isRepoLoaded() {
         return isRepoLoaded;
     }
+
     /**
      * Sets the repository load status.
      *
@@ -315,5 +321,22 @@ public class RecordsRepository extends Repository {
      */
     public static void setRepoLoaded(Boolean isRepoLoaded) {
         RecordsRepository.isRepoLoaded = isRepoLoaded;
+    }
+
+    /**
+     * Updates the doctor ID in the specified medical record.
+     *
+     * @param medicalRecordID the ID of the medical record to update
+     * @param newDoctorID     the new doctor ID to set
+     * @return true if the update was successful, false otherwise
+     */
+    public static boolean updateDoctorIDInMedicalRecord(String medicalRecordID, String newDoctorID) {
+        MedicalRecord medicalRecord = MEDICAL_RECORDS.get(medicalRecordID);
+        if (medicalRecord != null) {
+            medicalRecord.setDoctorID(newDoctorID); // Assuming you have a setter for doctorID
+            saveAllRecordFiles(); // Save changes to the CSV
+            return true;
+        }
+        return false;
     }
 }
