@@ -1,7 +1,2 @@
 ID,FullName,Username,Email,PhoneNo,PasswordHash,DoB,Gender,Role,DateJoin
-D003,rocky,rocky,rocky@gmail.ccom,098908,password,2022-02-02T00:00,M,Doctors,2022-02-02T00:00
-D002,penis,penis,penis@gmail.com,098908,penis,2022-02-02T00:00,M,Doctors,2022-02-02T00:00
-D001,dallas,dallas,dallas@gmial.com,098908,dallas,2022-02-02T00:00,M,Doctors,2022-02-02T00:00
-D000,yanyox,yanyox,yanyox@gmail.com,098908,yanyox,2022-02-02T00:00,F,Doctors,2020-02-02T00:00
-D005,test,test,test@gmail.com,81238123,Testtest1!,2024-11-17T00:00,F,Doctors,2024-11-17T15:17:27.893561
-D004,smiski,smi,smi@gmail.com,90989089,password,2002-02-02T00:00,M,Doctors,2024-11-16T21:15:57.425790500
+D000,yanyox,yanyox,yanyox@gmail.ocm,90909090,Yanyoxyanyox1!,2001-01-01T00:00,M,Doctors,2024-11-17T20:21:57.035461

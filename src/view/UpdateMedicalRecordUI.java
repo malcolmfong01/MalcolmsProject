@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import controller.PrescribedMedicineController;
 import enums.AppointmentOutcomeStatus;
 import enums.AppointmentStatus;
 import enums.PrescriptionStatus;
@@ -188,7 +189,8 @@ public class UpdateMedicalRecordUI {
 
             // Add the prescribed medication
             String medicineID = medicine.getMedicineID();
-            PrescribedMedication prescribedMedication = new PrescribedMedication(newDiagnosis.getDiagnosisID(),
+            String prescribedmedicationID = PrescribedMedicineController.generateRecordID(RecordFileType.PRESCRIBED_RECORDS);
+            PrescribedMedication prescribedMedication = new PrescribedMedication(prescribedmedicationID,newDiagnosis.getDiagnosisID(),
                     medicineID,
                     quantity, periodDays, PrescriptionStatus.PENDING, dosage);
             Prescription prescription = addPrescription(newDiagnosis, prescribedMedication);

@@ -12,6 +12,8 @@ import model.Prescription;
 import repository.AppointmentOutcomeRecordRepository;
 import view.PharmacistUI;
 
+import java.util.List;
+
 /**
  * The ViewAppointmentOutcomeRecordUI class provides a user interface for
  * viewing
@@ -48,14 +50,20 @@ public class ViewAppointmentOutcomeRecordUI extends MainUI {
         System.out.print("Enter Patient ID to view appointment outcome records: ");
         String patientID = Helper.readString();
 
-        if (AppointmentOutcomeRecordRepository.patientOutcomeRecords.containsKey(patientID)) {
-            for (AppointmentOutcomeRecord record : AppointmentOutcomeRecordRepository.patientOutcomeRecords
-                    .get(patientID)) {
-                displayAppointmentOutcomeRecord(record);
+        boolean found = false;
+        for (List<AppointmentOutcomeRecord> records : AppointmentOutcomeRecordRepository.patientOutcomeRecords.values()) {
+            for (AppointmentOutcomeRecord record : records) {
+                if (record.getPatientID().equals(patientID)) {
+                    displayAppointmentOutcomeRecord(record);
+                    found = true;
+                }
             }
-        } else {
+        }
+
+        if (!found) {
             printWarning("No appointment outcome records found for patient ID: " + patientID);
         }
+
 
         // Print options for user navigation
         printChoice();

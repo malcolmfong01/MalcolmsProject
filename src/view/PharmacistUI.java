@@ -92,8 +92,6 @@ public class PharmacistUI extends MainUI{
                 System.out.println("Invalid choice! Please try again.");
         }
     } while(choice != 5);
-
-        
         sc.close(); // Close the Scanner
     }
 }

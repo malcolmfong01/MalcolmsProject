@@ -1,12 +1,18 @@
 package view;
 
+import controller.DoctorController;
+import controller.MedicineController;
+import controller.PatientController;
+import enums.AppointmentOutcomeStatus;
 import helper.Helper;
 import model.AppointmentOutcomeRecord;
+import model.Medicine;
 import model.PrescribedMedication;
 import repository.AppointmentOutcomeRecordRepository;
 import repository.PrescribedMedicationRepository;
 import enums.PrescriptionStatus;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import controller.PharmacistController;
@@ -42,30 +48,47 @@ public class UpdatePrescriptionStatusUI extends MainUI {
         // Step 1: Verify Patient ID
         System.out.print("Enter Patient ID for appointment outcome record: ");
         String patientID = Helper.readString();
-        ArrayList<AppointmentOutcomeRecord> records = AppointmentOutcomeRecordRepository.patientOutcomeRecords
-                .get(patientID);
-
+        int index = 1;
+        ArrayList<AppointmentOutcomeRecord> records = new ArrayList<>();
+        for (ArrayList<AppointmentOutcomeRecord> appointments : AppointmentOutcomeRecordRepository.patientOutcomeRecords
+                .values()) {
+            for (AppointmentOutcomeRecord appointment : appointments) {
+                if (appointment.getPatientID().equals(patientID)) {
+                    records.add(appointment);
+                    System.out.printf("%d. Appointment Outcome %s for Doctor %s with Patient ID: %s%n",
+                            index,
+                            appointment.getUID(),
+                            DoctorController.getDoctorNameById(appointment.getDoctorID()),
+                            PatientController.getPatientNameById(appointment.getPatientID()));
+                    // Display all medicine IDs in the prescription if present
+                    if (appointment.getPrescription() != null && !appointment.getPrescription().getMedications().isEmpty()) {
+                        System.out.print("   Medicine IDs: ");
+                        for (PrescribedMedication medication : appointment.getPrescription().getMedications()) {
+                            System.out.print(medication.getMedicineID() + " ");
+                        }
+                        System.out.println(); // New line after listing all medicine IDs
+                    } else {
+                        System.out.println("   No prescribed medications found.");
+                    }
+                    index++;
+                }
+            }
+        }
         if (records == null) {
             printWarning("Error: No appointment outcome records found for patient ID " + patientID);
             returnToMenu();
             return;
         }
-
+        // Prompt the user to select an appointment
         // Step 2: Verify Appointment Outcome Record ID
-        System.out.print("Enter Appointment Outcome Record ID to update: ");
-        String appointmentOutcomeRecordID = Helper.readString();
-        AppointmentOutcomeRecord selectedRecord = null;
-
-        for (AppointmentOutcomeRecord record : records) {
-            if (record.getUID().equals(appointmentOutcomeRecordID)) {
-                selectedRecord = record;
-                break;
-            }
+        int selectedIndex = Helper.readInt("\nEnter Appointment Outcome Record ID to update: ");
+        if (selectedIndex < 1 || selectedIndex > records.size()) {
+            System.out.println("Invalid selection.");
+            return;
         }
 
-        if (selectedRecord == null) {
-            printWarning("Error: Appointment Outcome Record ID " + appointmentOutcomeRecordID
-                    + " not found for patient ID " + patientID);
+        if (records.get(selectedIndex-1) == null) {
+            printWarning("Error: Appointment Outcome Record ID ");
             returnToMenu();
             return;
         }
@@ -73,42 +96,67 @@ public class UpdatePrescriptionStatusUI extends MainUI {
         // Step 3: Verify Medicine ID
         System.out.print("Enter Medicine ID to update: ");
         String medicineID = Helper.readString();
-        PrescribedMedication selectedMedication = null;
-
-        // Check if the prescription is null
-        if (selectedRecord.getPrescription() == null) {
-            printWarning("Error: No prescription found in the appointment outcome record.");
-            returnToMenu();
-            return;
-        }
 
         // If the prescription is not null, proceed to find the medication
-        for (PrescribedMedication medication : selectedRecord.getPrescription().getMedications()) {
+        ArrayList<PrescribedMedication> selectedMedication = records.get(selectedIndex - 1).getPrescription().getMedications();
+        PrescribedMedication foundMedication = null;
+        //looping through each medication in the list
+        for (PrescribedMedication medication : selectedMedication) {
             if (medication.getMedicineID().equals(medicineID)) {
-                selectedMedication = medication;
+                foundMedication = medication;
                 break;
             }
         }
 
-        if (selectedMedication == null) {
+        if (foundMedication == null) {
             printWarning("Error: Prescription for medicine ID " + medicineID + " not found in appointment record.");
             returnToMenu();
             return;
         }
+            //Exception Handling
+            // Step 4: Update Prescription Status
+            System.out.print("Enter New Status (e.g., DISPENSED): ");
+            PrescriptionStatus newStatus;
+            try {
+                newStatus = PrescriptionStatus.valueOf(Helper.readString().toUpperCase());
+            } catch (IllegalArgumentException e) {
+                printWarning("Invalid status entered. Please try again.");
+                returnToMenu();
+                return;
+            }
 
-        // Step 4: Update Prescription Status
-        System.out.print("Enter New Status (e.g., DISPENSED): ");
-        PrescriptionStatus newStatus;
-        try {
-            newStatus = PrescriptionStatus.valueOf(Helper.readString().toUpperCase());
-        } catch (IllegalArgumentException e) {
-            printWarning("Invalid status entered. Please try again.");
-            returnToMenu();
-            return;
-        }
+            // Step 5: If status is DISPENSED, reduce the inventory using MedicineController
+            if (newStatus == PrescriptionStatus.DISPENSED) {
+                Medicine medicine = MedicineController.getMedicineByUID(medicineID);
+                if (medicine != null) {
+                    int quantity = foundMedication.getMedicineQuantity();
+                    if (medicine.getInventoryStock() >= quantity) {
+                        // Reduce inventory
+                        medicine.setInventoryStock(medicine.getInventoryStock() - quantity);
+                        System.out.println("Reduced inventory for Medicine ID " + medicineID + " by " + quantity);
+                        // Step 7: Call MedicineController to update the medicine's data
+                        if (!MedicineController.updateMedicine(medicineID,medicine)) {
+                            printWarning("Error updating the medicine inventory.");
+                            returnToMenu();
+                            return;
+                        }
+                    } else {
+                        System.out.println("Not enough stock to dispense " + quantity + " of Medicine ID " + medicineID);
+                        returnToMenu();
+                        return;
+                    }
+                } else {
+                    System.out.println("Error: Medicine not found for ID " + medicineID);
+                    returnToMenu();
+                    return;
+                }
+            }
 
-        selectedMedication.setPrescriptionStatus(newStatus);
-        System.out.println("Updated status for medicine " + medicineID + " to " + newStatus);
+            foundMedication.setPrescriptionStatus(newStatus);
+            //decrease the inventory amount
+
+            System.out.println("Updated status for medicine " + medicineID + " to " + newStatus);
+
 
         PharmacistController.updatePrescribedMedicationRepository();
 

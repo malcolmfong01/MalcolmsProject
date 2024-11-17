@@ -213,10 +213,9 @@ public class RecordsController {
      * @param patientID the ID of the patient whose medical record is to be retrieved
      * @return the medical record for the given patient ID, or null if not found
      */
-    public MedicalRecord getMedicalRecordsByPatientID(String patientID) {
+    public static MedicalRecord getMedicalRecordsByPatientID(String patientID) {
         if (RecordsRepository.isRepoLoad()) {
             for (MedicalRecord record : RecordsRepository.MEDICAL_RECORDS.values()) {
-                System.out.println(record.getPatientID());
                 if (record.getPatientID().equals(patientID)) {
                     return record;
                 }

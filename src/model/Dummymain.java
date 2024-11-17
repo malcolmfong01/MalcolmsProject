@@ -83,13 +83,13 @@ public class Dummymain {
 
                 // 2. Create sample prescribed medications
                 ArrayList<PrescribedMedication> medications1 = new ArrayList<>();
-                medications1.add(new PrescribedMedication("D001", "M001", 10, 7, PrescriptionStatus.PENDING,
+                medications1.add(new PrescribedMedication("P001","D001", "M001", 10, 7, PrescriptionStatus.PENDING,
                                 "1 tablet daily"));
-                medications1.add(new PrescribedMedication("D001", "M002", 5, 5, PrescriptionStatus.PENDING,
+                medications1.add(new PrescribedMedication("P001","D001", "M002", 5, 5, PrescriptionStatus.PENDING,
                                 "2 tablets daily"));
 
                 ArrayList<PrescribedMedication> medications2 = new ArrayList<>();
-                medications2.add(new PrescribedMedication("D002", "M003", 15, 10, PrescriptionStatus.PENDING,
+                medications2.add(new PrescribedMedication("P001","D002", "M003", 15, 10, PrescriptionStatus.PENDING,
                                 "1 tablet twice daily"));
 
                 // 3. Save prescribed medications to repository

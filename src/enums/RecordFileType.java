@@ -8,7 +8,8 @@ public enum RecordFileType {
     APPOINTMENT_RECORDS("appointmentRecords"),
     PAYMENT_RECORDS("paymentRecords"),
 	APPOINTMENT_OUTCOME_RECORDS("appointmentOutcomeRecords"),
-	DIAGNOSIS_RECORDS("diagnosisRecords"), 
+	DIAGNOSIS_RECORDS("diagnosisRecords"),
+    PRESCRIBED_RECORDS("prescribedRecords"),
 	MEDICINE_RECORDS("medicineRecords");
     /**
      * The file name associated with the record type.
