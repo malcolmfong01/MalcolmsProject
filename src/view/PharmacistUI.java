@@ -17,14 +17,24 @@ import enums.PersonnelFileType;
 import enums.ReplenishStatus;
 import helper.Helper;
 
-
+/**
+ * Represents the user interface for a pharmacist in the Health Management System (HMS).
+ * This UI provides pharmacists with functionalities such as viewing appointment outcome records,
+ * updating prescription statuses, viewing and managing inventory, and submitting replenishment requests.
+ */
 public class PharmacistUI extends MainUI{
 	private Pharmacist pharmacist;
-	
+    /**
+     * Constructs a new PharmacistUI instance and initializes the pharmacist object
+     * using the UID of the currently authenticated user.
+     */
     public PharmacistUI() {
     	this.pharmacist = (Pharmacist) HMSPersonnelController.getPersonnelByUID(AuthenticationController.cookie.getUid(), PersonnelFileType.PHARMACISTS);
     }
-    
+    /**
+     * Prints the menu options available to the pharmacist.
+     * Displays the pharmacist's name and the list of available actions.
+     */
 	@Override
 	protected void printChoice() {
 		System.out.printf("Welcome! Pharmacist --- %s ---\n", pharmacist.getFullName());
@@ -38,11 +48,19 @@ public class PharmacistUI extends MainUI{
 
 		
 	}
-
+    /**
+     * Starts the main interaction loop for the pharmacist UI.
+     * Displays the menu and handles user input for each menu option.
+     */
 	@Override
 	public void start() {
 		showPharmacistDashboard();
 	}
+    /**
+     * Displays the pharmacist's dashboard and handles user interaction.
+     * Provides options to view appointment records, update prescriptions,
+     * monitor inventory, submit replenishment requests, or log out.
+     */
     public void showPharmacistDashboard() {
         Scanner sc = new Scanner(System.in);
         int choice = 0;

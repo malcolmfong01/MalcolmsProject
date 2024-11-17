@@ -12,13 +12,22 @@ import model.*;
 import repository.*;
 import controller.AppointmentController;
 import controller.MedicineController;
-
+/**
+ * This class provides a UI to update the medical records of a patient during a doctor's appointment.
+ * It allows adding diagnoses, treatment plans, and prescriptions.
+ */
 public class UpdateMedicalRecordUI {
     private Doctor doctor;
     private MedicalRecord medicalRecord;
     private AppointmentRecord currentAppointmentRecord;
     private Scanner sc;
-
+    /**
+     * Constructor to initialize the UI with the doctor, medical record, and the current appointment.
+     *
+     * @param doctor                 The doctor updating the medical record.
+     * @param medicalRecord          The medical record to be updated.
+     * @param currentAppointmentRecord The current appointment record being worked on.
+     */
     // Constructor to initialize with the doctor and medical record to be updated
     public UpdateMedicalRecordUI(Doctor doctor, MedicalRecord medicalRecord,AppointmentRecord currentAppointmentRecord) {
         this.doctor = doctor;
@@ -26,7 +35,10 @@ public class UpdateMedicalRecordUI {
         this.currentAppointmentRecord = currentAppointmentRecord;
         this.sc = new Scanner(System.in);
     }
-
+    /**
+     * Starts the UI, displaying the current appointment details and guiding the doctor
+     * through adding new diagnoses, treatment plans, and prescriptions.
+     */
     public void start() {
         // displaying currentAppointmentRecord that the doctor is working on
 
@@ -74,7 +86,12 @@ public class UpdateMedicalRecordUI {
 
     }
     
-
+    /**
+     * Generates an appointment outcome record when the appointment status is completed.
+     *
+     * @param prescription The prescription associated with the appointment.
+     * @param diagnosis    The diagnosis associated with the appointment.
+     */
     private void generateAppointmentOutcome(Prescription prescription,Diagnosis diagnosis ) {
     	if (currentAppointmentRecord.getAppointmentStatus() == AppointmentStatus.COMPLETED)
         {
@@ -97,7 +114,13 @@ public class UpdateMedicalRecordUI {
     	
     }
     
-
+    /**
+     * Adds a new diagnosis for the given patient.
+     *
+     * @param patientId              The ID of the patient.
+     * @param diagnosisDescription   The description of the diagnosis.
+     * @return The newly created Diagnosis object.
+     */
     private Diagnosis addNewDiagnosis(String patientId, String diagnosisDescription) {
         String diagnosisID = AppointmentController.generateRecordID(RecordFileType.DIAGNOSIS_RECORDS);
         Diagnosis diagnosis = new Diagnosis(patientId, diagnosisID, doctor.getUID(),
@@ -109,7 +132,11 @@ public class UpdateMedicalRecordUI {
         DiagnosisRepository.saveAlltoCSV();
         return diagnosis;
     }
-
+    /**
+     * Adds a treatment plan for the given diagnosis.
+     *
+     * @param diagnosis The diagnosis to which the treatment plan will be added.
+     */
     private void addTreatmentPlan(Diagnosis diagnosis) {
         System.out.println("Enter Treatment Description:");
         String treatmentDescription = sc.nextLine();
@@ -121,7 +148,11 @@ public class UpdateMedicalRecordUI {
         //RecordsRepository.saveAllRecordFiles(); // Save changes
         System.out.println("Treatment plan added successfully for Diagnosis ID: " + diagnosis.getDiagnosisID());
     }
-
+    /**
+     * Adds prescriptions for the given diagnosis, allowing the doctor to specify multiple medications.
+     *
+     * @param newDiagnosis The diagnosis for which prescriptions will be added.
+     */
     private void addPrescriptions(Diagnosis newDiagnosis) {
         boolean addMore = true;
         while (addMore) {
@@ -161,7 +192,13 @@ public class UpdateMedicalRecordUI {
 
         System.out.println("Finished adding prescribed medications for Diagnosis ID: " + newDiagnosis.getDiagnosisID());
     }
-
+    /**
+     * Adds a prescription for the given diagnosis and prescribed medication.
+     *
+     * @param diagnosis           The diagnosis for which the prescription is created.
+     * @param prescribedMedication The prescribed medication details.
+     * @return The created Prescription object.
+     */
     private Prescription addPrescription(Diagnosis diagnosis, PrescribedMedication prescribedMedication) {
         Prescription prescription = diagnosis.getPrescription();
         if (prescription == null) {

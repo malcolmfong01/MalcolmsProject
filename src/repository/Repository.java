@@ -1,6 +1,14 @@
+/**
+ * Abstract class representing a repository.
+ * Provides a framework for managing repository data, including loading data
+ * from a CSV file, checking the load status, and clearing repository data.
+ */
 package repository;
 
 public abstract class Repository {
+    /**
+     * A static flag indicating whether the repository data has been loaded.
+     */
     private static boolean isRepoLoad = false;
 
     /**

@@ -1,4 +1,8 @@
 package repository;
+/**
+ * Enum representing different types of record files within the system.
+ * Each enum value is associated with a specific file name for record management.
+ */
 
 public enum PersonnelFileType {
     DOCTORS("doctors"),
@@ -6,13 +10,27 @@ public enum PersonnelFileType {
     PHARMACISTS("pharmacists"),
     ADMINS("admins");
 
+    /**
+     * The file name associated with this personnel file type.
+     */
     public final String fileName;
 
+    /**
+     * Constructs a PersonnelFileType with the specified file name.
+     *
+     * @param fileName the file name associated with the personnel type
+     */
     PersonnelFileType(String fileName) {
         this.fileName = fileName;
     }
 
-    // Static method to convert a string to the corresponding enum constant
+    /**
+     * Converts a file name string to the corresponding PersonnelFileType enum constant.
+     *
+     * @param fileName the file name to match with an enum constant
+     * @return the matching PersonnelFileType enum constant
+     * @throws IllegalArgumentException if no matching enum constant is found
+     */
     public static PersonnelFileType toEnum(String fileName) {
         for (PersonnelFileType type : PersonnelFileType.values()) {
             if (type.fileName.equalsIgnoreCase(fileName)) {

@@ -14,22 +14,35 @@ import model.Doctor;
 import model.Patient;
 import repository.PersonnelRepository;
 import repository.RecordsRepository;
-
+/**
+ * The RescheduleAppointmentUI class provides functionality to reschedule
+ * appointments for a patient. It allows users to view confirmed appointments
+ * and select available slots for rescheduling.
+ */
 public class RescheduleAppointmentUI extends MainUI {
 
 	private Patient patient;
-
+    /**
+     * Constructs a RescheduleAppointmentUI instance with the given patient.
+     *
+     * @param patient The patient using this UI to reschedule appointments.
+     */
 	public RescheduleAppointmentUI(Patient patient) {
 		this.patient = patient;
 	}
-
+	 /**
+     * Prints the reschedule appointment menu options.
+     */
 	@Override
 	protected void printChoice() {
 		System.out.println("Reschedule Appointment Menu:");
 		System.out.println("1. Reschedule Availability for Appointments");
 		System.out.println("2. Back to Patient Dashboard");
 	}
-
+	   /**
+     * Starts the rescheduling interface, allowing the user to make a selection
+     * from the menu options.
+     */
 	@Override
 	public void start() {
 		int choice;
@@ -43,7 +56,11 @@ public class RescheduleAppointmentUI extends MainUI {
 			}
 		} while (choice != 2);
 	}
-
+    /**
+     * Handles the logic for rescheduling an appointment. It allows the patient to
+     * select a confirmed appointment and choose a new available slot for
+     * rescheduling.
+     */
 	public void rescheduleAppointment() {
 		System.out.println("Enter your availability. Type 'done' when finished.");
 
@@ -92,7 +109,11 @@ public class RescheduleAppointmentUI extends MainUI {
 			}
 		}
 	}
-
+    /**
+     * Displays the list of confirmed appointments for the patient.
+     *
+     * @param confirmedAppointments The list of confirmed appointments.
+     */
 	private void displayConfirmedAppointments(List<AppointmentRecord> confirmedAppointments) {
 		System.out.println("\n--- Confirmed Appointments ---");
 		int index = 1;
@@ -111,7 +132,11 @@ public class RescheduleAppointmentUI extends MainUI {
 		}
 
 	}
-
+    /**
+     * Displays the list of available appointment slots for rescheduling.
+     *
+     * @param availableSlots The list of available appointment slots.
+     */
 	private void displayAvailableSlots(List<AppointmentRecord> availableSlots) {
 		System.out.println("\n--- Available Slots for Rescheduling ---");
 		int index = 1;

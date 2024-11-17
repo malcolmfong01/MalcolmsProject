@@ -12,11 +12,21 @@ import enums.RecordFileType;
 import model.*;
 import repository.AppointmentOutcomeRecordRepository;
 import repository.RecordsRepository;
-
+import java.util.Comparator;
+/**
+ * The AppointmentController class provides methods to handle appointment records,
+ * such as retrieving, filtering, and modifying appointments for doctors and patients.
+ */
 public class AppointmentController {
 
 	private static final System.Logger logger = System.getLogger(RecordsController.class.getName());
 	// Map to keep track of the next ID for each record type
+	/**
+	 * Generates a unique record ID for a specific record type using UUID.
+	 *
+	 * @param recType The type of the record for which the ID is generated.
+	 * @return A unique record ID string.
+	 */
 	private static final Map<RecordFileType, Integer> recordCounters = new HashMap<>();
 
 	static {
@@ -45,7 +55,14 @@ public class AppointmentController {
 		// Return the formatted ID
 		return String.format("%s%03d", prefix, nextId);
 	}
-
+    /**
+     * Retrieves appointments filtered by doctor ID, patient ID, and appointment status.
+     *
+     * @param doctorID The ID of the doctor.
+     * @param patientID The ID of the patient.
+     * @param status The status of the appointment to filter by.
+     * @return A list of filtered appointment records.
+     */
 	public static ArrayList<AppointmentRecord> getAppointmentsByDoctorAndPatient(String doctorID, String patientID,
 			AppointmentStatus status) {
 		ArrayList<AppointmentRecord> filteredAppointments = new ArrayList<>();
@@ -66,7 +83,12 @@ public class AppointmentController {
 
 		// If no appointments match the criteria
 	}
-
+    /**
+     * Retrieves the earliest appointment from a list of appointments based on appointment time.
+     *
+     * @param appointments A list of appointment records.
+     * @return The earliest appointment record, or null if no appointments are provided.
+     */
 	public static AppointmentRecord getEarliestAppointment(ArrayList<AppointmentRecord> appointments) {
 		if (appointments.isEmpty()) {
 			return null; // Return null if there are no pending appointments
@@ -78,7 +100,13 @@ public class AppointmentController {
 		// Return the first (earliest) appointment
 		return appointments.get(0);
 	}
-
+    /**
+     * Retrieves the earliest confirmed appointment record for a specific doctor and patient.
+     *
+     * @param doctorID The ID of the doctor.
+     * @param patientID The ID of the patient.
+     * @return The earliest confirmed appointment record, or null if none are found.
+     */
 	public static AppointmentRecord retrieveEarliestConfirmedAppointmentRecord(String doctorID, String patientID) {
 		ArrayList<AppointmentRecord> pendingAppointments;
 		pendingAppointments = AppointmentController.getAppointmentsByDoctorAndPatient(doctorID, patientID,
@@ -87,7 +115,12 @@ public class AppointmentController {
 		AppointmentRecord currentAppointmentRecord = AppointmentController.getEarliestAppointment(pendingAppointments);
 		return currentAppointmentRecord;
 	}
-
+    /**
+     * Retrieves all confirmed appointments for a given patient ID.
+     *
+     * @param patientID The ID of the patient.
+     * @return A list of confirmed appointment records for the specified patient.
+     */
 	public static List<AppointmentRecord> getConfirmedAppointments(String patientID) {
 		List<AppointmentRecord> confirmedAppointments = new ArrayList<>();
 		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
@@ -98,7 +131,12 @@ public class AppointmentController {
 		}
 		return confirmedAppointments;
 	}
-
+    /**
+     * Retrieves all appointments (regardless of status) for a given patient ID.
+     *
+     * @param patientID The ID of the patient.
+     * @return A list of all appointment records for the specified patient.
+     */
 	public static List<AppointmentRecord> getAllAppointments(String patientID) {
 		List<AppointmentRecord> confirmedAppointments = new ArrayList<>();
 		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
@@ -108,7 +146,11 @@ public class AppointmentController {
 		}
 		return confirmedAppointments;
 	}
-
+	   /**
+     * Retrieves all available appointment slots from all doctors.
+     *
+     * @return A list of available appointment records.
+     */
 	public static List<AppointmentRecord> getAvailableAppointmentSlotsFromAllDoctor() {
 		List<AppointmentRecord> availableSlots = new ArrayList<>();
 		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
@@ -118,7 +160,12 @@ public class AppointmentController {
 		}
 		return availableSlots;
 	}
-
+    /**
+     * Retrieves all canceled appointment slots for a given patient ID.
+     *
+     * @param patientID The ID of the patient.
+     * @return A list of canceled appointment records for the specified patient.
+     */
 	public static List<AppointmentRecord> getCancelledAppointmentSlots(String patientID) {
 		List<AppointmentRecord> canceledSlots = new ArrayList<>();
 		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
@@ -129,7 +176,13 @@ public class AppointmentController {
 		}
 		return canceledSlots;
 	}
-
+    /**
+     * Cancels an appointment from the confirmed appointments list based on the user's choice.
+     *
+     * @param choice The index of the appointment to be canceled.
+     * @param confirmedAppointments A list of confirmed appointment records.
+     * @return true if the appointment was successfully canceled, false otherwise.
+     */
 	public static boolean cancelAppointment(int choice, List<AppointmentRecord> confirmedAppointments) {
 		if (choice >= 1 && choice <= confirmedAppointments.size()) {
 			AppointmentRecord selectedAppointment = confirmedAppointments.get(choice - 1);

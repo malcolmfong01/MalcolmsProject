@@ -13,22 +13,35 @@ import model.Doctor;
 import model.Patient;
 import repository.PersonnelRepository;
 import repository.RecordsRepository;
-
+/**
+ * The ScheduleAppointmentUI class provides an interface for patients to schedule
+ * appointments with doctors, offering functionality to input availability and
+ * display scheduled appointments.
+ */
 public class ScheduleAppointmentUI extends MainUI {
 
 	private Patient patient;
-
+    /**
+     * Constructor to initialize the ScheduleAppointmentUI with the given patient.
+     *
+     * @param patient The patient using this UI.
+     */
 	public ScheduleAppointmentUI(Patient patient) {
 		this.patient = patient;
 	}
-
+    /**
+     * Prints the menu options available in the Schedule Appointment UI.
+     */
 	@Override
 	protected void printChoice() {
 		System.out.println("Schedule Appointment Menu:");
 		System.out.println("1. Schedule Availability for Appointments");
 		System.out.println("2. Back to Patient Dashboard");
 	}
-
+    /**
+     * Starts the Schedule Appointment UI interaction loop,
+     * allowing the user to make a choice.
+     */
 	@Override
 	public void start() {
 		int choice;
@@ -42,7 +55,11 @@ public class ScheduleAppointmentUI extends MainUI {
 			}
 		} while (choice != 2);
 	}
-
+    /**
+     * Schedules an appointment for the patient by allowing input for doctor ID,
+     * date, and time. If an appointment slot is available, it is reserved and
+     * updated accordingly.
+     */
 	public void scheduleAppointment() {
 		System.out.println("Enter your availability. Type 'done' when finished.");
 
@@ -93,7 +110,11 @@ public class ScheduleAppointmentUI extends MainUI {
 
 		}
 	}
-
+    /**
+     * Displays a summary of the scheduled availability.
+     *
+     * @param existingAppointment The appointment record to display.
+     */
 	private void displayScheduledSummary(AppointmentRecord existingAppointment) {
 		String doctorName = DoctorController.getDoctorNameById(existingAppointment.getDoctorID());
 		System.out.println("\n--- Scheduled Availability Summary ---");
