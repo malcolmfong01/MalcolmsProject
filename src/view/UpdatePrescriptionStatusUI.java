@@ -15,7 +15,8 @@ import controller.PharmacistController;
  * UpdatePrescriptionStatusUI handles the user interface for updating the status
  * of a specific prescription in an appointment outcome record.
  * <p>
- * This class verifies the patient ID, appointment record ID, and medicine ID before
+ * This class verifies the patient ID, appointment record ID, and medicine ID
+ * before
  * allowing a pharmacist to update the prescription status.
  * </p>
  */
@@ -41,7 +42,8 @@ public class UpdatePrescriptionStatusUI extends MainUI {
         // Step 1: Verify Patient ID
         System.out.print("Enter Patient ID for appointment outcome record: ");
         String patientID = Helper.readString();
-        ArrayList<AppointmentOutcomeRecord> records = AppointmentOutcomeRecordRepository.patientOutcomeRecords.get(patientID);
+        ArrayList<AppointmentOutcomeRecord> records = AppointmentOutcomeRecordRepository.patientOutcomeRecords
+                .get(patientID);
 
         if (records == null) {
             printWarning("Error: No appointment outcome records found for patient ID " + patientID);
@@ -55,14 +57,15 @@ public class UpdatePrescriptionStatusUI extends MainUI {
         AppointmentOutcomeRecord selectedRecord = null;
 
         for (AppointmentOutcomeRecord record : records) {
-            if (record.getAppointmentOutcomeRecordID().equals(appointmentOutcomeRecordID)) {
+            if (record.getUID().equals(appointmentOutcomeRecordID)) {
                 selectedRecord = record;
                 break;
             }
         }
 
         if (selectedRecord == null) {
-            printWarning("Error: Appointment Outcome Record ID " + appointmentOutcomeRecordID + " not found for patient ID " + patientID);
+            printWarning("Error: Appointment Outcome Record ID " + appointmentOutcomeRecordID
+                    + " not found for patient ID " + patientID);
             returnToMenu();
             return;
         }
@@ -93,7 +96,6 @@ public class UpdatePrescriptionStatusUI extends MainUI {
             return;
         }
 
-
         // Step 4: Update Prescription Status
         System.out.print("Enter New Status (e.g., DISPENSED): ");
         PrescriptionStatus newStatus;
@@ -116,7 +118,8 @@ public class UpdatePrescriptionStatusUI extends MainUI {
     }
 
     /**
-     * Handles user navigation choice for updating another prescription or returning to the main menu.
+     * Handles user navigation choice for updating another prescription or returning
+     * to the main menu.
      */
     private void handleUserChoice() {
         int choice = getUserChoice(2);

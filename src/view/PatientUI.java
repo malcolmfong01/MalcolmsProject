@@ -29,26 +29,30 @@ import repository.PersonnelRepository;
 import repository.PrescribedMedicationRepository;
 import repository.RecordsRepository;
 import repository.TreatmentPlansRepository;
+
 /**
- * PatientUI class represents the user interface for a patient in the HMS system.
- * This class handles patient-specific interactions such as viewing medical records,
+ * PatientUI class represents the user interface for a patient in the HMS
+ * system.
+ * This class handles patient-specific interactions such as viewing medical
+ * records,
  * scheduling appointments, and updating personal information.
  */
 public class PatientUI extends MainUI {
 
 	private static Patient patient;
-	   /**
-     * Constructor for PatientUI.
-     *
-     * @param patient The patient using this user interface.
-     */
+
+	/**
+	 * Constructor for PatientUI.
+	 *
+	 * @param patient The patient using this user interface.
+	 */
 	public PatientUI(Patient patient) {
 		this.patient = patient;
 	}
 
-    /**
-     * Displays the patient menu options.
-     */
+	/**
+	 * Displays the patient menu options.
+	 */
 	@Override
 	public void printChoice() {
 		System.out.println("Patient Menu:");
@@ -64,15 +68,17 @@ public class PatientUI extends MainUI {
 		System.out.println("10. Logout");
 		System.out.print("Enter your choice: ");
 	}
-    /**
-     * Starts the patient dashboard by displaying the menu and handling user input.
-     */
+
+	/**
+	 * Starts the patient dashboard by displaying the menu and handling user input.
+	 */
 	public void start() {
 		showPatientDashboard();
 	}
-    /**
-     * Displays the patient dashboard and handles user input for menu choices.
-     */
+
+	/**
+	 * Displays the patient dashboard and handles user input for menu choices.
+	 */
 	public void showPatientDashboard() {
 		Scanner sc = new Scanner(System.in);
 		int choice = 0;
@@ -80,29 +86,52 @@ public class PatientUI extends MainUI {
 			printChoice();
 			choice = Helper.readInt("");
 			switch (choice) {
-			case 1 : viewPatientMedicalRecord(patient.getUID());break;
-			case 2 : updatePatientPrivateInfo(patient.getUID());break;
-			case 3 : viewAvailableAppointmentSlots();break;
-			case 4 : scheduleAppointment();break;
-			case 5 : rescheduleAppointment();break;
-			case 6 : cancelAppointment();break;
-			case 7 : viewScheduledAppointments();break;
-			case 8 : viewPastAppointmentOutcomes();break;
-			case 9 : acknowledgeRejectedAppointments();break;
-			case 10 : System.out.println("Logging out...");
+				case 1:
+					viewPatientMedicalRecord(patient.getUID());
+					break;
+				case 2:
+					updatePatientPrivateInfo(patient.getUID());
+					break;
+				case 3:
+					viewAvailableAppointmentSlots();
+					break;
+				case 4:
+					scheduleAppointment();
+					break;
+				case 5:
+					rescheduleAppointment();
+					break;
+				case 6:
+					cancelAppointment();
+					break;
+				case 7:
+					viewScheduledAppointments();
+					break;
+				case 8:
+					viewPastAppointmentOutcomes();
+					break;
+				case 9:
+					acknowledgeRejectedAppointments();
+					break;
+				case 10:
+					System.out.println("Logging out...");
 					HMSMain.main(null);
 					break;// Return to the main application
-			default : System.out.println("Invalid choice!");break;
+				default:
+					System.out.println("Invalid choice!");
+					break;
 			}
 		} while (choice != 10);
 
 		sc.close();
 	}
-    /**
-     * Displays the medical records for the given patient ID.
-     *
-     * @param patientID The unique ID of the patient whose medical records are to be viewed.
-     */
+
+	/**
+	 * Displays the medical records for the given patient ID.
+	 *
+	 * @param patientID The unique ID of the patient whose medical records are to be
+	 *                  viewed.
+	 */
 	// 1. viewPatientMedicalRecordUI
 	public void viewPatientMedicalRecord(String patientID) {
 		System.out.println("\n--- Patient Medical Records for Patient ID: " + patientID + " ---");
@@ -119,11 +148,13 @@ public class PatientUI extends MainUI {
 		}
 		System.out.println("---------------------------------------");
 	}
-	  /**
-     * Updates the personal information of the patient.
-     *
-     * @param patientId The unique ID of the patient whose information is to be updated.
-     */
+
+	/**
+	 * Updates the personal information of the patient.
+	 *
+	 * @param patientId The unique ID of the patient whose information is to be
+	 *                  updated.
+	 */
 	// 2. updatePatientContactInfo
 	public void updatePatientPrivateInfo(String patientId) {
 		System.out.println("\n--- Patient Personal Information for Patient ID: " + patientId + " ---");
@@ -140,9 +171,10 @@ public class PatientUI extends MainUI {
 		}
 		System.out.println("---------------------------------------");
 	}
-    /**
-     * Displays all available appointment slots from all doctors.
-     */
+
+	/**
+	 * Displays all available appointment slots from all doctors.
+	 */
 	// 3. viewAvailableAppointmentSlots
 	public static void viewAvailableAppointmentSlots() {
 		System.out.println("\n--- Available Appointment Slots ---");
@@ -167,9 +199,10 @@ public class PatientUI extends MainUI {
 			System.out.println("---------------------------------------");
 		}
 	}
-    /**
-     * Schedules a new appointment for the patient.
-     */
+
+	/**
+	 * Schedules a new appointment for the patient.
+	 */
 	// 4. scheduleAppointment
 	public void scheduleAppointment() {
 		viewAvailableAppointmentSlots();
@@ -177,9 +210,10 @@ public class PatientUI extends MainUI {
 		ScheduleAppointmentUI scheduleAppointmentUI = new ScheduleAppointmentUI(patient);
 		scheduleAppointmentUI.start();
 	}
-    /**
-     * Reschedules an existing appointment for the patient.
-     */
+
+	/**
+	 * Reschedules an existing appointment for the patient.
+	 */
 	// 5. rescheduleAppointment
 	public void rescheduleAppointment() {
 		viewAvailableAppointmentSlots();
@@ -187,9 +221,10 @@ public class PatientUI extends MainUI {
 		RescheduleAppointmentUI rescheduleAppointmentUI = new RescheduleAppointmentUI(patient);
 		rescheduleAppointmentUI.start();
 	}
-    /**
-     * Cancels an existing confirmed appointment for the patient.
-     */
+
+	/**
+	 * Cancels an existing confirmed appointment for the patient.
+	 */
 	// 6. cancelAppointment
 	public void cancelAppointment() {
 		System.out.println("\n--- Scheduled Appointments ---");
@@ -232,9 +267,10 @@ public class PatientUI extends MainUI {
 		System.out.println("----------------------------------");
 
 	}
-    /**
-     * Displays the scheduled appointments for the patient.
-     */
+
+	/**
+	 * Displays the scheduled appointments for the patient.
+	 */
 	// 7. viewScheduledAppointments
 	public static void viewScheduledAppointments() {
 		System.out.println("\n--- Scheduled Appointments ---");
@@ -261,9 +297,10 @@ public class PatientUI extends MainUI {
 			System.out.println("---------------------------------------");
 		}
 	}
-	 /**
-     * Displays past appointment outcome records for the patient.
-     */
+
+	/**
+	 * Displays past appointment outcome records for the patient.
+	 */
 	// 8. viewPastAppointmentOutcomes
 	public void viewPastAppointmentOutcomes() {
 		System.out.println("\n--- Past Appointment Outcomes ---");
@@ -279,7 +316,7 @@ public class PatientUI extends MainUI {
 		}
 
 		for (AppointmentOutcomeRecord outcome : pastOutcomes) {
-			System.out.println("Appointment Outcome ID: " + outcome.getAppointmentOutcomeRecordID());
+			System.out.println("Appointment Outcome ID: " + outcome.getUID());
 			System.out.println("Patient ID: " + outcome.getPatientID());
 			System.out.println("Doctor ID: " + outcome.getDoctorID());
 			System.out.println("Appointment Time: "
@@ -306,6 +343,7 @@ public class PatientUI extends MainUI {
 			System.out.println("---------------------------------------");
 		}
 	}
+
 	/**
 	 * Allows the patient to acknowledge rejected appointment slots.
 	 */
