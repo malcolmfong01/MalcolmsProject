@@ -3,16 +3,13 @@ package view;
 import controller.DoctorController;
 import controller.MedicineController;
 import controller.PatientController;
-import enums.AppointmentOutcomeStatus;
 import helper.Helper;
 import model.AppointmentOutcomeRecord;
 import model.Medicine;
 import model.PrescribedMedication;
 import repository.AppointmentOutcomeRecordRepository;
-import repository.PrescribedMedicationRepository;
 import enums.PrescriptionStatus;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import controller.PharmacistController;

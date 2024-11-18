@@ -3,7 +3,7 @@ package controller;
 import model.Patient;
 import repository.PersonnelRepository;
 /**
- * The PatientController class provides methods to access and retrieve patient-related information
+ * The PatientController class that provides methods to access and retrieve patient-related information
  * from the PersonnelRepository.
  */
 public class PatientController {

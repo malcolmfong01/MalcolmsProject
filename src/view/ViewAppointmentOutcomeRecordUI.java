@@ -10,7 +10,6 @@ import model.Pharmacist;
 import model.PrescribedMedication;
 import model.Prescription;
 import repository.AppointmentOutcomeRecordRepository;
-import view.PharmacistUI;
 
 import java.util.List;
 

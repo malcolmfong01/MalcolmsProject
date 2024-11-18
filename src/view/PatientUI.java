@@ -1,34 +1,22 @@
 package view;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import HMSApp.HMSMain;
 import controller.AppointmentController;
-import controller.AuthenticationController;
 import controller.DoctorController;
-import controller.HMSPersonnelController;
-import controller.PatientController;
-import controller.RecordsController;
 import enums.AppointmentStatus;
 import helper.Helper;
 import model.AppointmentOutcomeRecord;
 import model.AppointmentRecord;
-import model.Diagnosis;
-import model.Doctor;
 import model.MedicalRecord;
 import model.Patient;
 import model.PrescribedMedication;
 import model.Prescription;
-import model.TreatmentPlans;
-import repository.DiagnosisRepository;
 import repository.PersonnelRepository;
-import repository.PrescribedMedicationRepository;
 import repository.RecordsRepository;
-import repository.TreatmentPlansRepository;
 
 
 import static repository.AppointmentOutcomeRecordRepository.deleteAppointmentOutcomeRecord;

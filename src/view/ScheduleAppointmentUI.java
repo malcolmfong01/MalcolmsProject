@@ -2,9 +2,6 @@ package view;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Scanner;
-
 import controller.DoctorController;
 import enums.AppointmentStatus;
 import helper.Helper;

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import controller.RecordsController;
 import enums.RecordFileType;
+import enums.RecordStatusType;
 
 /**
  * Represents a medical record for a patient, containing personal information, blood type,

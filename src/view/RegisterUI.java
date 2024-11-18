@@ -2,7 +2,7 @@ package view;
 
 import helper.Helper;
 import model.MedicalRecord;
-import model.RecordStatusType;
+import enums.RecordStatusType;
 import repository.PersonnelRepository;
 import repository.RecordsRepository;
 import controller.AuthenticationController;

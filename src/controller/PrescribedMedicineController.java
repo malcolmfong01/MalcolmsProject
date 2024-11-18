@@ -1,16 +1,16 @@
 package controller;
 
 import enums.RecordFileType;
-import model.AppointmentOutcomeRecord;
-import model.Diagnosis;
 import model.PrescribedMedication;
-import repository.AppointmentOutcomeRecordRepository;
-import repository.DiagnosisRepository;
 import repository.PrescribedMedicationRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * The PrescribedMedicineController class that provides methods to access and retrieve information regarding prescribed medications
+ * from the PrescribedMedicationRepository.
+ */
 public class PrescribedMedicineController {
     public static String generateRecordID(RecordFileType recType) {
         String prefix = "";

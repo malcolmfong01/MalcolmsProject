@@ -28,10 +28,10 @@ public class AppointmentOutcomeRecord {
     /**
      * Constructs an AppointmentOutcomeRecord with the provided details.
      *
+     * @param UID                        the unique ID of the appointment outcome
      * @param patientID                  the ID of the patient
      * @param doctorID                   the ID of the doctor
      * @param diagnosisID                the ID of the diagnosis
-     * @param appointmentOutcomeRecordID the unique ID of the appointment outcome
      *                                   record
      * @param appointmentTime            the date and time of the appointment
      * @param prescription               the prescription given during the

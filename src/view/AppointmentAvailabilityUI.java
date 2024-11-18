@@ -17,7 +17,7 @@ import helper.DateTimePicker;
 import helper.Helper;
 import model.AppointmentRecord;
 import model.Doctor;
-import model.RecordStatusType;
+import enums.RecordStatusType;
 import repository.RecordsRepository;
 
 public class AppointmentAvailabilityUI extends MainUI {

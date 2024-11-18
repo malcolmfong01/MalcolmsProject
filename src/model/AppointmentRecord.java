@@ -1,13 +1,9 @@
 package model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Scanner;
 
-import controller.RecordsController;
 import enums.AppointmentStatus;
-import enums.RecordFileType;
-import repository.AppointmentOutcomeRecordRepository;
+import enums.RecordStatusType;
 
 /**
  * Represents an appointment record, containing patient details, appointment time, status,
@@ -190,4 +186,3 @@ public class AppointmentRecord extends HMSRecords {
 
 }
 
-// Constructor when generating a new AppointmentRecord

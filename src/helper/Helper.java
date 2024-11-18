@@ -1,8 +1,3 @@
-/**
- * Utility class providing various helper methods for input reading, validation,
- * formatting, and general utilities for console applications.
- * Includes methods for reading and validating user input, formatting dates, and more.
- */
 package helper;
 
 import java.util.HashMap;
@@ -12,8 +7,12 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.temporal.ChronoUnit;
 
+/**
+ * This Helper class provides various helper methods for input reading, validation,
+ * formatting, and general utilities for console applications.
+ * Includes methods for reading and validating user input, formatting dates, and more.
+ */
 public class Helper {
     /**
      * Shared Scanner instance for user input.
@@ -246,19 +245,6 @@ public class Helper {
      */
     public static String getCurrentDateTime() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-    }
-
-    /**
-     * Checks if the specified date is on a weekend (Saturday or Sunday).
-     *
-     * @param date The date string in "yyyy-MM-dd HH:mm" format.
-     * @return true if the date is on a weekend; false otherwise.
-     */
-    public static boolean isWeekend(String date) {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(date, format);
-        DayOfWeek dayOfWeek = dateTime.getDayOfWeek();
-        return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
     }
 
     /**

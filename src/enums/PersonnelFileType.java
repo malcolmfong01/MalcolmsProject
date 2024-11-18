@@ -1,9 +1,8 @@
+package enums;
 /**
  * Enum representing different types of personnel files, each associated with a
  * specific file name for personnel data (e.g., doctors, patients, pharmacists, admins).
  */
-package enums;
-
 public enum PersonnelFileType {
     DOCTORS("doctors"),
     PATIENTS("patients"),

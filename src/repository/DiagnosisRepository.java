@@ -1,8 +1,3 @@
-/**
- * Repository class for managing Diagnosis data, including loading and saving
- * data to a CSV file. This repository maintains a HashMap where each key is a
- * patient ID, and the corresponding value is a list of Diagnosis records for that patient.
- */
 package repository;
 
 import java.io.BufferedReader;
@@ -21,6 +16,11 @@ import model.Diagnosis;
 import model.Prescription;
 import model.TreatmentPlans;
 
+/**
+ * Repository class for managing Diagnosis data, including loading and saving
+ * data to a CSV file. This repository maintains a HashMap where each key is a
+ * patient ID, and the corresponding value is a list of Diagnosis records for that patient.
+ */
 public class DiagnosisRepository extends Repository {
     /**
      * Folder location for storing repository files.

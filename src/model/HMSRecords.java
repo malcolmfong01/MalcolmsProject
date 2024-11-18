@@ -1,9 +1,9 @@
 package model;
 
+import enums.RecordStatusType;
+
 import java.time.LocalDateTime;
 
-import controller.RecordsController;
-import enums.RecordFileType;
 /**
  * Abstract class representing a generic record in the Hospital Management System (HMS).
  * This class contains common fields such as record ID, creation date, update date, and status
