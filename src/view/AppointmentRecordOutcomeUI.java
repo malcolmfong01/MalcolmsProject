@@ -16,7 +16,6 @@ import enums.AppointmentOutcomeStatus;
 import enums.RecordFileType;
 import model.*;
 import repository.*;
-import controller.MedicineController;
 import enums.AppointmentStatus;
 import enums.PrescriptionStatus;
 import helper.Helper;
@@ -44,7 +43,6 @@ public class AppointmentRecordOutcomeUI extends MainUI {
         System.out.println("Appointment Outcome Menu:");
         System.out.println("1. Record Appointment Outcome");
         System.out.println("2. Back to Doctor Dashboard");
-        System.out.print("Enter your choice: ");
     }
 
     /**

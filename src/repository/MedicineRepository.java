@@ -1,9 +1,3 @@
-/**
- * Repository class for managing Medicine data, including loading and saving
- * data to a CSV file. This repository maintains a HashMap where each key is a
- * medicine ID, and the corresponding value is a Medicine object representing details
- * about the medicine.
- */
 package repository;
 
 import model.Medicine;
@@ -11,10 +5,15 @@ import model.Medicine;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.Objects;
 
 import enums.ReplenishStatus;
 
+/**
+ * Repository class for managing Medicine data, including loading and saving
+ * data to a CSV file. This repository maintains a HashMap where each key is a
+ * medicine ID, and the corresponding value is a Medicine object representing details
+ * about the medicine.
+ */
 public class MedicineRepository extends Repository {
     /**
      * Folder location for storing repository files.

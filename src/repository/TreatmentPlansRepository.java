@@ -1,12 +1,5 @@
-/**
- * Repository class for managing TreatmentPlans data, including loading and saving
- * data to a CSV file. This repository maintains a HashMap where each key is a
- * diagnosis ID, and the corresponding value is a TreatmentPlans object associated with that diagnosis.
- */
 package repository;
 
-import model.AppointmentOutcomeRecord;
-import model.Diagnosis;
 import model.TreatmentPlans;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,10 +8,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
+/**
+ * Repository class for managing TreatmentPlans data, including loading and saving
+ * data to a CSV file. This repository maintains a HashMap where each key is a
+ * diagnosis ID, and the corresponding value is a TreatmentPlans object associated with that diagnosis.
+ */
 public class TreatmentPlansRepository extends Repository {
     /**
      * Directory for storing treatment plans CSV files.

@@ -10,6 +10,10 @@ import java.util.UUID;
 
 import enums.PersonnelFileType;
 
+/**
+ * The HMSPersonnelConteroller class is a super class that provides methods to access and retrieve staff-related information
+ * from the PersonnelRepository.
+ */
 public class HMSPersonnelController {
     /**
      * Generates a unique ID (UID) for the personnel based on their type.

@@ -1,8 +1,3 @@
-/**
- * Repository class for managing AppointmentOutcomeRecord data, including loading and saving
- * data to a CSV file. This repository maintains a HashMap where each key is a patient ID,
- * and the corresponding value is a list of appointment outcome records for that patient.
- */
 package repository;
 
 import java.io.BufferedReader;
@@ -21,6 +16,11 @@ import enums.AppointmentOutcomeStatus;
 import model.AppointmentOutcomeRecord;
 import model.Prescription;
 
+/**
+ * Repository class for managing AppointmentOutcomeRecord data, including loading and saving
+ * data to a CSV file. This repository maintains a HashMap where each key is a patient ID,
+ * and the corresponding value is a list of appointment outcome records for that patient.
+ */
 public class AppointmentOutcomeRecordRepository extends Repository {
     /**
      * Indicates the data folder location for storing repository files.

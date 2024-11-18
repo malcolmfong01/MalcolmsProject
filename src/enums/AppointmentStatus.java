@@ -1,6 +1,5 @@
 package enums;
 
-import model.RecordStatusType;
 /**
  * Enum representing the status of an appointment.
  * It has multiple possible values: CONFIRMED, CANCELED, COMPLETED, AVAILABLE, and PENDING.

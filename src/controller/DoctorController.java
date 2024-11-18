@@ -1,9 +1,7 @@
 package controller;
 
 import model.Doctor;
-import model.Patient;
 import repository.PersonnelRepository;
-import repository.RecordsRepository;
 /**
  * The DoctorController class provides methods for retrieving doctor-related information
  * from the PersonnelRepository.

@@ -1,9 +1,5 @@
 package controller;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import enums.AppointmentOutcomeStatus;
@@ -12,7 +8,6 @@ import enums.RecordFileType;
 import model.*;
 import repository.AppointmentOutcomeRecordRepository;
 import repository.DiagnosisRepository;
-import repository.MedicineRepository;
 import repository.RecordsRepository;
 
 /**

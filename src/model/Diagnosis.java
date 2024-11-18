@@ -1,6 +1,5 @@
 package model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 /**
  * Represents a Diagnosis made for a patient, which includes details such as the diagnosis description,

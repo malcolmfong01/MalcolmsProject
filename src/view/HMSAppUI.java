@@ -7,6 +7,7 @@ package view;
 
 import java.util.Scanner;
 
+import helper.Helper;
 import repository.AppointmentOutcomeRecordRepository;
 import repository.DiagnosisRepository;
 import repository.MedicineRepository;
@@ -56,8 +57,7 @@ public class HMSAppUI extends MainUI {
 		while (true) {
 			printChoice();
 
-			int role = sc.nextInt();
-			sc.nextLine(); // Clear the newline character
+			int role = Helper.readInt("");
 
 			switch (role) {
 				case 1:

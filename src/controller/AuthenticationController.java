@@ -1,18 +1,15 @@
 package controller;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 import enums.PersonnelFileType;
-import enums.RecordFileType;
-import helper.Helper;
 import model.*;
 import repository.PersonnelRepository;
 
 public class AuthenticationController {
-    public static SessionCookie cookie = new SessionCookie(null, null);
+    public static UserSessionTracker cookie = new UserSessionTracker(null, null);
     /**
      * Authenticates a user based on username, password, and role.
      * @param username the username of the personnel

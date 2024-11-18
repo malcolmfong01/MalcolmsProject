@@ -1,8 +1,6 @@
 package view;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import controller.AppointmentController;
@@ -10,9 +8,7 @@ import controller.DoctorController;
 import enums.AppointmentStatus;
 import helper.Helper;
 import model.AppointmentRecord;
-import model.Doctor;
 import model.Patient;
-import repository.PersonnelRepository;
 import repository.RecordsRepository;
 /**
  * The RescheduleAppointmentUI class provides functionality to reschedule

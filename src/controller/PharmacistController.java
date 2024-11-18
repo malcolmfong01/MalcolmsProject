@@ -1,22 +1,16 @@
 package controller;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-import enums.PrescriptionStatus;
-import enums.ReplenishStatus;
-import helper.Helper;
-import model.AppointmentOutcomeRecord;
-import model.Prescription;
-import model.PrescribedMedication;
-import model.Medicine;
 import repository.AppointmentOutcomeRecordRepository;
-import repository.MedicineRepository;
 import repository.PrescribedMedicationRepository;
 import view.ViewAppointmentOutcomeRecordUI;
 import view.MonitorInventoryUI;
 import view.SubmitReplenishmentRequestUI;
 import view.UpdatePrescriptionStatusUI;
+
+/**
+ * The PharmacistController class that provides methods to access and retrieve pharmacist-related information
+ * from the AppointmentOutcomeRecord and PrescribedMedication Repositories.
+ */
 
 public class PharmacistController{
 

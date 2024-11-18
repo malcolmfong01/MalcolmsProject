@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import controller.RecordsController;
 import enums.RecordFileType;
+import enums.RecordStatusType;
 
 /**
  * Represents a payment record in the system. Inherits from the HMSRecords class to include

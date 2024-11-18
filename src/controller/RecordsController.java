@@ -2,17 +2,17 @@ package controller;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.UUID;
 
 import enums.RecordFileType;
 
 import java.util.ArrayList;
 
+import enums.RecordStatusType;
 import model.*;
 import repository.RecordsRepository;
 import repository.AppointmentOutcomeRecordRepository;
 /**
- * Controller class responsible for managing and handling various records (Medical, Appointment, Payment) in the system.
+ * This Records Controller class  is responsible for managing and handling various records (Medical, Appointment, Payment) in the system.
  * This class provides functionality to generate record IDs, add, update, delete, and retrieve records from the repository.
  */
 public class RecordsController {

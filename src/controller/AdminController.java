@@ -5,29 +5,18 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import enums.AppointmentStatus;
 import enums.PersonnelFileType;
-import enums.ReplenishStatus;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
-import helper.Helper; // Ensure this import exists
-import model.*; // Make sure these models are correctly imported
+import model.*;
 import repository.*;
 
 /**
- * This class provides administrative functionalities related to medical
- * records, personnel management,
- * medicine management, and appointment handling in a healthcare system.
- * <p>
- * It includes methods for listing, adding, updating, removing medicines,
- * managing appointments,
- * and displaying personnel details based on roles and gender.
- * </p>
+ * The AdministratorController class that provides methods to access and retrieve staff-related information
+ * from the PersonnelRepository.
  */
 public class AdminController extends HMSPersonnelController {
 

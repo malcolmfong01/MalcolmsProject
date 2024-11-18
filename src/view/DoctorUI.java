@@ -50,11 +50,6 @@ public class DoctorUI extends MainUI {
 
 	}
 
-	/**
-	 * Constructs a DoctorUI for the specified doctor.
-	 *
-	 * @param doctor the doctor interacting with the UI
-	 */
 	@Override
 	protected void printChoice() {
 		System.out.printf("Welcome! Dr. --- %s ---\n", doctor.getFullName());
@@ -170,7 +165,7 @@ public class DoctorUI extends MainUI {
 
 				List<AppointmentRecord> currentAppointmentRecord = AppointmentController.getCompletedAppointmentsByDoctorID(medicalRecord.getDoctorID());
 				if (currentAppointmentRecord == null || currentAppointmentRecord.isEmpty()) {
-					System.out.println("Error: There are no pending appointments for the current patient.");
+					System.out.println("Error: There are no completed appointments for the current patient.");
 					System.out.println("You cannot update the medical record");
 					return;
 				}
@@ -275,8 +270,7 @@ public class DoctorUI extends MainUI {
 
 						// Assuming you have a way to get the diagnosis ID, type of service, and
 						// consultation notes
-						String diagnosisID = ""; // Retrieve the diagnosis ID (you may need to implement a way to get
-													// this)
+						String diagnosisID = ""; // Retrieve the diagnosis ID (you may need to implement a way to get this)
 						String typeOfService = ""; // Define the type of service provided
 						String consultationNotes = ""; // Get consultation notes from the doctor
 
@@ -394,7 +388,6 @@ public class DoctorUI extends MainUI {
 	 * Searches through records in the repository to find the one that matches
 	 * the doctor and patient IDs.
 	 *
-	 * @param doctorID  the ID of the doctor
 	 * @param patientID the ID of the patient
 	 * @return the ID of the medical record matching the doctor and patient, or null
 	 *         if none found

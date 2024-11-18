@@ -1,10 +1,12 @@
 package controller;
 
-import java.time.LocalDateTime;
 import model.Medicine;
 import repository.MedicineRepository;
-import enums.ReplenishStatus;
 
+/**
+ * The MedicineController class that provides methods to access and retrieve information regarding medicine
+ * from the MedicineRepository.
+ */
 public class MedicineController {
 
 
