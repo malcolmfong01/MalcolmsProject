@@ -134,12 +134,9 @@ public class DoctorBoundary extends MainUI {
 			if (record.getDoctorID().equals(doctorID)) {
 				recordsFound = true;
 				System.out.println("Enter Patient ID to select medical record:");
-				System.out.println("debug");
 				String patientId = Validator.readString();
-				System.out.println("debug");
 				// Retrieve the medical record by the doctor and patient ID
 				String medicalRecordID = retrieveMedicalRecordID(patientId);
-				System.out.println("debug");
 				if (medicalRecordID == null) {
 					System.out.println("No medical record found for the specified patient.");
 					return;
