@@ -64,6 +64,7 @@ public class PharmacistController{
     
     public static void updatePrescribedMedicationRepository() {
         // Save changes to repositories
+
         PrescribedMedicationRepository.saveAlltoCSV();
         AppointmentOutcomeRecordRepository.saveAppointmentOutcomeRecordRepository();
     }

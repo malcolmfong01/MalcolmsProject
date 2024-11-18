@@ -164,13 +164,13 @@ public class DiagnosisRepository extends Repository {
     /**
      * Adds a diagnosis record to the HashMap for the specified patient ID.
      *
-     * @param patientID the patient ID associated with the diagnosis
+     * @param diagnosisID the patient ID associated with the diagnosis
      * @param diagnosis the Diagnosis to add
      */
-    public static void addDiagnosis(String patientID, Diagnosis diagnosis) {
-        ArrayList<Diagnosis> diagnoses = patientDiagnosisRecords.getOrDefault(patientID, new ArrayList<>());
+    public static void addDiagnosis(String diagnosisID, Diagnosis diagnosis) {
+        ArrayList<Diagnosis> diagnoses = patientDiagnosisRecords.getOrDefault(diagnosisID, new ArrayList<>());
         diagnoses.add(diagnosis);
-        patientDiagnosisRecords.put(patientID, diagnoses);
+        patientDiagnosisRecords.put(diagnosisID, diagnoses);
 
     }
     /**

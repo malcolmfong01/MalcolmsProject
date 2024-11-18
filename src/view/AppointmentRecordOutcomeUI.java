@@ -9,7 +9,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import controller.AppointmentController;
+import controller.PrescribedMedicineController;
+import controller.RecordsController;
 import enums.AppointmentOutcomeStatus;
+import enums.RecordFileType;
 import model.*;
 import repository.*;
 import controller.MedicineController;
@@ -114,15 +118,68 @@ public class AppointmentRecordOutcomeUI extends MainUI {
      * @param appointment the AppointmentOutcomeRecord to process
      */
     private void processOutcome(AppointmentOutcomeRecord appointment) {
-        System.out.println("\n--- Select Diagnosis for Patient (ID: " + appointment.getPatientID() + ") ---");
+
+        String diagnosisDescription = Helper.readString("\n--- Enter Diagnosis for Patient (ID: " + appointment.getPatientID() + ") ---");
+        String diagnosisID = AppointmentController.generateRecordID(RecordFileType.DIAGNOSIS_RECORDS);
+
+        System.out.println("Diagnosis ID: " + diagnosisID);
+        appointment.setDiagnosisID(diagnosisID);
+
+        String medicine = Helper.readString("\n--- Enter Medicine ID for Patient (ID: " + appointment.getPatientID() + ")(Separate by ,)---");
+        // Split the string by commas
+        String[] medicineIDs = medicine.split(",");
+
+        ArrayList<PrescribedMedication> medications1 = new ArrayList<>();
+        for (String medicineID : medicineIDs) {
+            medicineID = medicineID.trim(); // Remove any leading or trailing spaces
+
+            if (!medicineID.isEmpty()) {
+                // Gather additional details for each prescribed medication
+                int quantity = Helper.readInt("Enter quantity for medicine ID " + medicineID + ": ");
+                int periodDays = Helper.readInt("Enter period (days) for medicine ID " + medicineID + ": ");
+                String dosage = Helper.readString("Enter dosage for medicine ID " + medicineID + ": ");
+                String prescribedmedicationID = PrescribedMedicineController.generateRecordID(RecordFileType.PRESCRIBED_RECORDS);
+                // Create and add a new PrescribedMedication object to the list
+                PrescribedMedication medication = new PrescribedMedication(prescribedmedicationID,diagnosisID, medicineID, quantity, periodDays, PrescriptionStatus.PENDING, dosage);
+                medications1.add(medication);
+                PrescribedMedicationRepository.addMedication(medication.getPrescribedMedID(), medication);
+
+
+            }
+
+        }
+        PrescribedMedicationRepository.saveAlltoCSV();
+
+        // Create a Prescription object with the list of medications
+        Prescription prescription1 = new Prescription(diagnosisID, LocalDateTime.now(), medications1);
+        PrescriptionRepository.addPrescriptionRecord(prescription1);
+        PrescriptionRepository.saveAlltoCSV();
+        // Create a Diagnosis object that includes the prescription
+        String MRecord = RecordsController.getMedicalRecordsByPatientID(appointment.getPatientID()).getRecordID();
+
+        Diagnosis diagnosis = new Diagnosis(
+                appointment.getPatientID(), diagnosisID, appointment.getDoctorID(), MRecord,
+                LocalDateTime.now(), null,
+                diagnosisDescription, prescription1);
+        //say something need controller
+        DiagnosisRepository.addDiagnosis(diagnosisID, diagnosis);
+        DiagnosisRepository.saveAlltoCSV();
+
 
         String typeOfService = Helper.readString("Enter the type of service: ");
         String consultationNotes = Helper.readString("Enter your consultation notes: ");
-
+        appointment.setPrescription(prescription1);
         appointment.setTypeOfService(typeOfService);
         appointment.setConsultationNotes(consultationNotes);
         appointment.setAppointmentOutcomeStatus(AppointmentOutcomeStatus.COMPLETED);
 
+        for (AppointmentRecord app : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+
+            if (app.getAppointmentOutcomeRecordID().equals(appointment.getUID())){
+                app.setAppointmentStatus(AppointmentStatus.COMPLETED);
+
+            }}
+        RecordsRepository.saveAllRecordFiles();
         AppointmentOutcomeRecordRepository.saveAppointmentOutcomeRecordRepository();
         System.out.println("Appointment outcome recorded and saved successfully.");
     }

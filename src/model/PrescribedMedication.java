@@ -13,6 +13,7 @@ public class PrescribedMedication {
     private int periodDays;
     private PrescriptionStatus PrescriptionStatus;
     private String dosage;
+    private String prescribedMedID;
 
     /**
      * Constructs a new PrescribedMedication with the provided details.
@@ -24,14 +25,16 @@ public class PrescribedMedication {
      * @param prescriptionStatus the current status of the prescription (e.g., active, completed)
      * @param dosage the dosage instructions for the prescribed medication
      */
-    public PrescribedMedication(String diagnosisID, String medicineID, int medicineQuantity, int periodDays, enums.PrescriptionStatus prescriptionStatus, String dosage) {
+    public PrescribedMedication(String prescribedMedID,String diagnosisID, String medicineID, int medicineQuantity, int periodDays, enums.PrescriptionStatus prescriptionStatus, String dosage) {
         this.diagnosisID = diagnosisID;
         this.medicineID = medicineID;
         this.medicineQuantity = medicineQuantity;
         this.periodDays = periodDays;
         PrescriptionStatus = prescriptionStatus;
         this.dosage = dosage;
+        this.prescribedMedID = prescribedMedID;
     }
+
 
     /**
      * Gets the diagnosis ID associated with the prescribed medication.
@@ -141,5 +144,12 @@ public class PrescribedMedication {
         this.dosage = dosage;
     }
 
+    public String getPrescribedMedID() {
+        return prescribedMedID;
+    }
+
+    public void setPrescribedMedID(String prescribedMedID) {
+        this.prescribedMedID = prescribedMedID;
+    }
 }
 

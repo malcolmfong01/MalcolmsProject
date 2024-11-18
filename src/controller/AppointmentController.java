@@ -59,24 +59,47 @@ public class AppointmentController {
 				break;
 		}
 
-		// Find the highest ID currently in the repository
-		if (recType == RecordFileType.APPOINTMENT_OUTCOME_RECORDS) {
-			HashMap<String, ArrayList<AppointmentOutcomeRecord>> repository = AppointmentOutcomeRecordRepository.patientOutcomeRecords;
-
-			for (ArrayList<AppointmentOutcomeRecord> records : repository.values()) {
-				for (AppointmentOutcomeRecord record : records) {
-					String id = record.getUID();
-					if (id.startsWith(prefix)) {
-						try {
-							// Extract the numeric part after the prefix and parse it
-							int currentId = Integer.parseInt(id.substring(prefix.length()));
-							nextId = Math.max(nextId, currentId + 1); // Increment for the next ID
-						} catch (NumberFormatException e) {
-							System.out.println("Invalid ID format: " + id);
+		// Find the highest ID currently in the repository based on the record type
+		switch (recType) {
+			case APPOINTMENT_OUTCOME_RECORDS:
+				HashMap<String, ArrayList<AppointmentOutcomeRecord>> outcomeRepository = AppointmentOutcomeRecordRepository.patientOutcomeRecords;
+				for (ArrayList<AppointmentOutcomeRecord> records : outcomeRepository.values()) {
+					for (AppointmentOutcomeRecord record : records) {
+						String id = record.getUID();
+						if (id.startsWith(prefix)) {
+							try {
+								// Extract the numeric part after the prefix and parse it
+								int currentId = Integer.parseInt(id.substring(prefix.length()));
+								nextId = Math.max(nextId, currentId + 1); // Increment for the next ID
+							} catch (NumberFormatException e) {
+								System.out.println("Invalid ID format: " + id);
+							}
 						}
 					}
 				}
-			}
+				break;
+
+			case DIAGNOSIS_RECORDS:
+				HashMap<String, ArrayList<Diagnosis>> diagnosisRepository = DiagnosisRepository.patientDiagnosisRecords;
+				for (ArrayList<Diagnosis> records : diagnosisRepository.values()) {
+					for (Diagnosis record : records) {
+						String id = record.getDiagnosisID();
+						if (id.startsWith(prefix)) {
+							try {
+								// Extract the numeric part after the prefix and parse it
+								int currentId = Integer.parseInt(id.substring(prefix.length()));
+								nextId = Math.max(nextId, currentId + 1); // Increment for the next ID
+							} catch (NumberFormatException e) {
+								System.out.println("Invalid ID format: " + id);
+							}
+						}
+					}
+				}
+				break;
+
+			default:
+				System.out.println("Invalid record type.");
+				break;
 		}
 
 		// Format the next ID with leading zeros (e.g., "AO001")
@@ -161,6 +184,22 @@ public class AppointmentController {
 		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
 			if (patientID.equals(appointment.getPatientID())
 					&& appointment.getAppointmentStatus() == AppointmentStatus.CONFIRMED) {
+				confirmedAppointments.add(appointment);
+			}
+		}
+		return confirmedAppointments;
+	}
+	/**
+	 * Retrieves all confirmed appointments for a given patient ID.
+	 *
+	 * @param doctorID The ID of the doctor.
+	 * @return A list of confirmed appointment records for the specified patient.
+	 */
+	public static List<AppointmentRecord> getCompletedAppointmentsByDoctorID(String doctorID) {
+		List<AppointmentRecord> confirmedAppointments = new ArrayList<>();
+		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+			if (doctorID.equals(appointment.getDoctorID())
+					&& appointment.getAppointmentStatus() == AppointmentStatus.COMPLETED) {
 				confirmedAppointments.add(appointment);
 			}
 		}

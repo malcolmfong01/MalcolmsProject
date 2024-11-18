@@ -308,7 +308,7 @@ public class AppointmentOutcomeRecordRepository extends Repository {
                 Iterator<AppointmentOutcomeRecord> iterator = records.iterator();
                 while (iterator.hasNext()) {
                     AppointmentOutcomeRecord record = iterator.next();
-                    if (record.getAppointmentOutcomeRecordID().equals(recordID)) {
+                    if (record.getUID().equals(recordID)) {
                         // Remove the record
                         iterator.remove();
 

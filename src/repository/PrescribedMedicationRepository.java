@@ -54,16 +54,16 @@ public class PrescribedMedicationRepository extends Repository {
     public static void saveMedicationsToCSV(String fileName, HashMap<String, ArrayList<PrescribedMedication>> diagnosisToMedicationsMap) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
-        // Ensure the directory exists
-        File directory = new File("./src/repository/" + folder);
-        if (!directory.exists()) {
-            directory.mkdirs();  // Create the directory if it doesn't exist
-        }
+//        // Ensure the directory exists
+//        File directory = new File("./src/repository/" + folder);
+//        if (!directory.exists()) {
+//            directory.mkdirs();  // Create the directory if it doesn't exist
+//        }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            for (String diagnosisID : diagnosisToMedicationsMap.keySet()) {
-                for (PrescribedMedication medication : diagnosisToMedicationsMap.get(diagnosisID)) {
-                    writer.write(medicationToCSV(diagnosisID, medication));
+            for (String prescribedMedID : diagnosisToMedicationsMap.keySet()) {
+                for (PrescribedMedication medication : diagnosisToMedicationsMap.get(prescribedMedID)) {
+                    writer.write(medicationToCSV(prescribedMedID, medication));
                     writer.newLine();
                 }
             }
@@ -76,12 +76,13 @@ public class PrescribedMedicationRepository extends Repository {
     /**
      * Converts a prescribed medication to a CSV-formatted string.
      *
-     * @param diagnosisID the ID of the diagnosis associated with the medication
+     * @param prescribedMedID the ID of the diagnosis associated with the medication
      * @param medication the PrescribedMedication object to convert
      * @return a CSV-formatted string representing the prescribed medication
      */
-    private static String medicationToCSV(String diagnosisID, PrescribedMedication medication) {
+    private static String medicationToCSV(String prescribedMedID, PrescribedMedication medication) {
         return String.join(",",
+                medication.getPrescribedMedID(),
                 medication.getDiagnosisID(),
                 medication.getMedicineID(),
                 String.valueOf(medication.getMedicineQuantity()),
@@ -136,13 +137,13 @@ public class PrescribedMedicationRepository extends Repository {
     /**
      * Adds a prescribed medication to the map for the specified diagnosis ID.
      *
-     * @param diagnosisID the ID of the diagnosis associated with the medication
+     * @param prescribedMedID the ID of the Prescribed Medication associated with the medication
      * @param medication the PrescribedMedication to add
      */
-    public static void addMedication(String diagnosisID, PrescribedMedication medication) {
-        ArrayList<PrescribedMedication> medications = diagnosisToMedicationsMap.getOrDefault(diagnosisID, new ArrayList<>());
+    public static void addMedication(String prescribedMedID, PrescribedMedication medication) {
+        ArrayList<PrescribedMedication> medications = diagnosisToMedicationsMap.getOrDefault(prescribedMedID, new ArrayList<>());
         medications.add(medication);
-        diagnosisToMedicationsMap.put(diagnosisID, medications);
+        diagnosisToMedicationsMap.put(prescribedMedID, medications);
     }
     /**
      * Extracts the diagnosis ID from a CSV-formatted string.
@@ -152,7 +153,7 @@ public class PrescribedMedicationRepository extends Repository {
      */
     private static String getDiagnosisIDFromCSV(String csv) {
         String[] fields = csv.split(",");
-        return fields[0];
+        return fields[1];
     }
     /**
      * Converts a CSV-formatted string to a PrescribedMedication object.
@@ -163,14 +164,15 @@ public class PrescribedMedicationRepository extends Repository {
     private static PrescribedMedication csvToMedication(String csv) {
         String[] fields = csv.split(",");
         try {
-            String diagnosisID = fields[0];
-            String medicineID = fields[1];
-            int medicineQuantity = Integer.parseInt(fields[2]);
-            int periodDays = Integer.parseInt(fields[3]);
-            PrescriptionStatus prescriptionStatus = PrescriptionStatus.toEnumPrescriptionStatus(fields[4]);
-            String dosage = fields[5].replace("\"", "");
+            String prescribedMedID = fields[0];
+            String diagnosisID = fields[1];
+            String medicineID = fields[2];
+            int medicineQuantity = Integer.parseInt(fields[3]);
+            int periodDays = Integer.parseInt(fields[4]);
+            PrescriptionStatus prescriptionStatus = PrescriptionStatus.toEnumPrescriptionStatus(fields[5]);
+            String dosage = fields[6].replace("\"", "");
 
-            return new PrescribedMedication(diagnosisID,medicineID, medicineQuantity, periodDays, prescriptionStatus, dosage);
+            return new PrescribedMedication(prescribedMedID,diagnosisID,medicineID, medicineQuantity, periodDays, prescriptionStatus, dosage);
         } catch (Exception e) {
             System.out.println("Error parsing medication data: " + e.getMessage());
         }
