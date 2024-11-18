@@ -1,6 +1,6 @@
 /**
  * Repository class for managing various types of records, including MedicalRecord, 
- * AppointmentRecord, and PaymentRecord. This class provides functionality for loading
+ * Appointment, and PaymentRecord. This class provides functionality for loading
  * and saving these records to and from CSV files, as well as clearing and managing
  * records in memory.
  */
@@ -36,7 +36,7 @@ public class RecordsRepository extends Repository {
 
     // key value = recordID
     public static HashMap<String, MedicalRecord> MEDICAL_RECORDS = new HashMap<>();
-    public static HashMap<String, AppointmentRecord> APPOINTMENT_RECORDS = new HashMap<>();
+    public static HashMap<String, Appointment> APPOINTMENT_RECORDS = new HashMap<>();
     public static HashMap<String, PaymentRecord> PAYMENT_RECORDS = new HashMap<>();
 
     /**
@@ -49,7 +49,7 @@ public class RecordsRepository extends Repository {
     public boolean loadFromCSV() {
         try {
             loadRecordsFromCSV(medicalFileName, MEDICAL_RECORDS, MedicalRecord.class);
-            loadRecordsFromCSV(appointmentFileName, APPOINTMENT_RECORDS, AppointmentRecord.class);
+            loadRecordsFromCSV(appointmentFileName, APPOINTMENT_RECORDS, Appointment.class);
             loadRecordsFromCSV(paymentFileName, PAYMENT_RECORDS, PaymentRecord.class);
             setRepoLoaded(true);
             return true;
@@ -134,8 +134,8 @@ public class RecordsRepository extends Repository {
                     medRecord.getPatientID(),
                     medRecord.getDoctorID(),
                     medRecord.getBloodType());
-        } else if (record instanceof AppointmentRecord) {
-            AppointmentRecord appRecord = (AppointmentRecord) record;
+        } else if (record instanceof Appointment) {
+            Appointment appRecord = (Appointment) record;
             AppointmentOutcomeRecord outcome = appRecord.getAppointmentOutcomeRecord();
             return String.join(",",
                     appRecord.getRecordID(),
@@ -169,7 +169,7 @@ public class RecordsRepository extends Repository {
      * @param fileName           the name of the CSV file to load from
      * @param recordsMapRecordID the map to store the loaded records
      * @param type               the class type of record to load (e.g.,
-     *                           MedicalRecord, AppointmentRecord)
+     *                           MedicalRecord, Appointment)
      * @param <T>                a type parameter extending HMSRecords
      */
     private static <T extends HMSRecords> void loadRecordsFromCSV(String fileName,
@@ -226,7 +226,7 @@ public class RecordsRepository extends Repository {
      *
      * @param csv  the CSV string representing the record
      * @param type the class type of record to create (e.g., MedicalRecord,
-     *             AppointmentRecord)
+     *             Appointment)
      * @param <T>  a type parameter extending HMSRecords
      * @return a record object of the specified type, or null if parsing fails
      */
@@ -247,7 +247,7 @@ public class RecordsRepository extends Repository {
                         fields[8], // doctorID
                         fields[9], // bloodType
                         DiagnosisRepository.patientDiagnosisRecords.getOrDefault(fields[7], new ArrayList<>())));
-            } else if (type == AppointmentRecord.class) {
+            } else if (type == Appointment.class) {
                 ArrayList<AppointmentOutcomeRecord> outcomeRecords = AppointmentOutcomeRecordRepository.patientOutcomeRecords
                         .get(fields[8]);
                 AppointmentOutcomeRecord matchingRecord = null;
@@ -259,7 +259,7 @@ public class RecordsRepository extends Repository {
                         }
                     }
                 }
-                return type.cast(new AppointmentRecord(
+                return type.cast(new Appointment(
                         fields[0], // recordID (MRID)
                         LocalDateTime.parse(fields[1]), // createdDate
                         LocalDateTime.parse(fields[2]), // updatedDate

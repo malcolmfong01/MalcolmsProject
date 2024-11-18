@@ -2,10 +2,10 @@ package controller;
 
 import repository.AppointmentOutcomeRecordRepository;
 import repository.PrescribedMedicationRepository;
-import view.ViewAppointmentOutcomeRecordUI;
-import view.MonitorInventoryUI;
-import view.SubmitReplenishmentRequestUI;
-import view.UpdatePrescriptionStatusUI;
+import boundary.ViewAppointmentOutcomeRecordUI;
+import boundary.MonitorInventoryUI;
+import boundary.SubmitReplenishmentRequestUI;
+import boundary.UpdatePrescriptionStatusUI;
 
 /**
  * The PharmacistController class that provides methods to access and retrieve pharmacist-related information
@@ -81,7 +81,7 @@ public class PharmacistController{
 //            System.out.println("4. Submit Replenishment Request");
 //            System.out.println("0. Exit");
 //            
-//            choice = Helper.readInt("");
+//            choice = Validator.readInt("");
 //            
 //            switch (choice) {
 //                case 1:

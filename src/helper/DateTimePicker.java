@@ -20,7 +20,7 @@ public class DateTimePicker {
      * @return a LocalDateTime object representing the selected date and time
      */
     public static LocalDateTime pickDateTime(String title) {
-        Scanner scanner = Helper.sc;
+        Scanner scanner = Validator.sc;
         System.out.println(title);
 
         int year = 0, month = 0, day = 0, hour = 0, minute = 0;

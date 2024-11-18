@@ -1,7 +1,7 @@
 // package model;
 //
 // import repository.*;
-// import view.HMSAppUI;
+// import view.MainPageBoundary;
 // import model.*;
 // import enums.PrescriptionStatus;
 //
@@ -13,7 +13,7 @@
 // public class dummy_main {
 // public static void main(String[] args) {
 //
-// HMSAppUI hms = new HMSAppUI();
+// MainPageBoundary hms = new MainPageBoundary();
 // hms.startTestingEnv();
 //
 // System.out.println(hms.isAllRepoLoaded());
