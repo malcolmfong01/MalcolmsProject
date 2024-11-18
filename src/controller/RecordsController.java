@@ -139,7 +139,7 @@ public class RecordsController {
     }
 
     private Boolean updateAppointmentRecord(String recordID, LocalDateTime updatedDate) {
-        AppointmentRecord record = RecordsRepository.APPOINTMENT_RECORDS.get(recordID);
+        Appointment record = RecordsRepository.APPOINTMENT_RECORDS.get(recordID);
         if (record != null) {
             record.setUpdatedDate(updatedDate);
             RecordsRepository.saveAllRecordFiles();
@@ -256,7 +256,7 @@ public class RecordsController {
      * @param recordID the ID of the appointment record to retrieve
      * @return the appointment record corresponding to the given record ID, or null if not found
      */
-    public AppointmentRecord getDiagnosisRecordbyID(String recordID) {
+    public Appointment getDiagnosisRecordbyID(String recordID) {
         if (RecordsRepository.isRepoLoad())
             return RecordsRepository.APPOINTMENT_RECORDS.get(recordID);
         else

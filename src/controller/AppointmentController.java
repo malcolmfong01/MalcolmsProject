@@ -110,12 +110,12 @@ public class AppointmentController {
 	 * @param status    The status of the appointment to filter by.
 	 * @return A list of filtered appointment records.
 	 */
-	public static ArrayList<AppointmentRecord> getAppointmentsByDoctorAndPatient(String doctorID, String patientID,
-			AppointmentStatus status) {
-		ArrayList<AppointmentRecord> filteredAppointments = new ArrayList<>();
+	public static ArrayList<Appointment> getAppointmentsByDoctorAndPatient(String doctorID, String patientID,
+																		   AppointmentStatus status) {
+		ArrayList<Appointment> filteredAppointments = new ArrayList<>();
 
 		// Loop through all appointment records
-		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+		for (Appointment appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
 			// Check if appointment matches both the doctorID and patientID, and has a
 			// CONFIRMED status
 			if (doctorID.equals(appointment.getDoctorID()) && patientID.equals(appointment.getPatientID())
@@ -139,13 +139,13 @@ public class AppointmentController {
 	 * @return The earliest appointment record, or null if no appointments are
 	 *         provided.
 	 */
-	public static AppointmentRecord getEarliestAppointment(ArrayList<AppointmentRecord> appointments) {
+	public static Appointment getEarliestAppointment(ArrayList<Appointment> appointments) {
 		if (appointments.isEmpty()) {
 			return null; // Return null if there are no pending appointments
 		}
 
 		// Sort appointments by AppointmentTime in ascending order
-		appointments.sort(Comparator.comparing(AppointmentRecord::getAppointmentTime));
+		appointments.sort(Comparator.comparing(Appointment::getAppointmentTime));
 
 		// Return the first (earliest) appointment
 		return appointments.get(0);
@@ -159,13 +159,13 @@ public class AppointmentController {
 	 * @param patientID The ID of the patient.
 	 * @return The earliest confirmed appointment record, or null if none are found.
 	 */
-	public static AppointmentRecord retrieveEarliestConfirmedAppointmentRecord(String doctorID, String patientID) {
-		ArrayList<AppointmentRecord> pendingAppointments;
+	public static Appointment retrieveEarliestConfirmedAppointmentRecord(String doctorID, String patientID) {
+		ArrayList<Appointment> pendingAppointments;
 		pendingAppointments = AppointmentController.getAppointmentsByDoctorAndPatient(doctorID, patientID,
 				AppointmentStatus.CONFIRMED);
 
-		AppointmentRecord currentAppointmentRecord = AppointmentController.getEarliestAppointment(pendingAppointments);
-		return currentAppointmentRecord;
+		Appointment currentAppointment = AppointmentController.getEarliestAppointment(pendingAppointments);
+		return currentAppointment;
 	}
 
 	/**
@@ -174,9 +174,9 @@ public class AppointmentController {
 	 * @param patientID The ID of the patient.
 	 * @return A list of confirmed appointment records for the specified patient.
 	 */
-	public static List<AppointmentRecord> getConfirmedAppointments(String patientID) {
-		List<AppointmentRecord> confirmedAppointments = new ArrayList<>();
-		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+	public static List<Appointment> getConfirmedAppointments(String patientID) {
+		List<Appointment> confirmedAppointments = new ArrayList<>();
+		for (Appointment appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
 			if (patientID.equals(appointment.getPatientID())
 					&& appointment.getAppointmentStatus() == AppointmentStatus.CONFIRMED) {
 				confirmedAppointments.add(appointment);
@@ -190,9 +190,9 @@ public class AppointmentController {
 	 * @param doctorID The ID of the doctor.
 	 * @return A list of confirmed appointment records for the specified patient.
 	 */
-	public static List<AppointmentRecord> getCompletedAppointmentsByDoctorID(String doctorID) {
-		List<AppointmentRecord> confirmedAppointments = new ArrayList<>();
-		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+	public static List<Appointment> getCompletedAppointmentsByDoctorID(String doctorID) {
+		List<Appointment> confirmedAppointments = new ArrayList<>();
+		for (Appointment appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
 			if (doctorID.equals(appointment.getDoctorID())
 					&& appointment.getAppointmentStatus() == AppointmentStatus.COMPLETED) {
 				confirmedAppointments.add(appointment);
@@ -207,9 +207,9 @@ public class AppointmentController {
 	 * @param patientID The ID of the patient.
 	 * @return A list of all appointment records for the specified patient.
 	 */
-	public static List<AppointmentRecord> getAllAppointments(String patientID) {
-		List<AppointmentRecord> confirmedAppointments = new ArrayList<>();
-		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+	public static List<Appointment> getAllAppointments(String patientID) {
+		List<Appointment> confirmedAppointments = new ArrayList<>();
+		for (Appointment appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
 			if (patientID.equals(appointment.getPatientID())) {
 				confirmedAppointments.add(appointment);
 			}
@@ -222,9 +222,9 @@ public class AppointmentController {
 	 *
 	 * @return A list of available appointment records.
 	 */
-	public static List<AppointmentRecord> getAvailableAppointmentSlotsFromAllDoctor() {
-		List<AppointmentRecord> availableSlots = new ArrayList<>();
-		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+	public static List<Appointment> getAvailableAppointmentSlotsFromAllDoctor() {
+		List<Appointment> availableSlots = new ArrayList<>();
+		for (Appointment appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
 			if (appointment.getAppointmentStatus() == AppointmentStatus.AVAILABLE) {
 				availableSlots.add(appointment);
 			}
@@ -238,9 +238,9 @@ public class AppointmentController {
 	 * @param patientID The ID of the patient.
 	 * @return A list of canceled appointment records for the specified patient.
 	 */
-	public static List<AppointmentRecord> getCancelledAppointmentSlots(String patientID) {
-		List<AppointmentRecord> canceledSlots = new ArrayList<>();
-		for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+	public static List<Appointment> getCancelledAppointmentSlots(String patientID) {
+		List<Appointment> canceledSlots = new ArrayList<>();
+		for (Appointment appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
 			if (patientID.equals(appointment.getPatientID())
 					&& appointment.getAppointmentStatus() == AppointmentStatus.CANCELED) {
 				canceledSlots.add(appointment);
@@ -256,10 +256,10 @@ public class AppointmentController {
      * @param confirmedAppointments A list of confirmed appointment records.
      * @return appointmentOutcomeRecordID if the appointment was successfully canceled, null otherwise.
      */
-	public static String cancelAppointment(int choice, List<AppointmentRecord> confirmedAppointments) {
+	public static String cancelAppointment(int choice, List<Appointment> confirmedAppointments) {
 
 		if (choice >= 1 && choice <= confirmedAppointments.size()) {
-			AppointmentRecord selectedAppointment = confirmedAppointments.get(choice - 1);
+			Appointment selectedAppointment = confirmedAppointments.get(choice - 1);
 			selectedAppointment.setAppointmentStatus(AppointmentStatus.AVAILABLE);
 			selectedAppointment.setPatientID(null);
 			String appointmentOutcomeRecordID = selectedAppointment.getAppointmentOutcomeRecordID();

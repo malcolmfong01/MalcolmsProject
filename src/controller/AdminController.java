@@ -40,7 +40,7 @@ public class AdminController extends HMSPersonnelController {
 
         boolean found = false;
 
-        for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+        for (Appointment appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
 
             System.out.println("Appointment ID: " + appointment.getRecordID());
             System.out.println("Patient ID: " + appointment.getPatientID());

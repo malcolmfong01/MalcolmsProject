@@ -1,14 +1,14 @@
 package HMSApp;
 
-import view.*;
+import boundary.*;
 
 /**
  * Main entry point for our Hospital Management System application.
  */
 public class HMSMain {
     public static void main(String[] args) {
-        HMSAppUI hmsAppUI = new HMSAppUI();
-        hmsAppUI.start();
+        MainPageBoundary mainPageBoundary = new MainPageBoundary();
+        mainPageBoundary.start();
     }
 
 }
