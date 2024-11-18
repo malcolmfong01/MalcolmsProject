@@ -164,14 +164,14 @@ public class PatientBoundary extends MainUI {
 	 * Displays all available appointment slots from all doctors.
 	 */
 	// 3. viewAvailableAppointmentSlots
-	public static void viewAvailableAppointmentSlots() {
+	public static boolean viewAvailableAppointmentSlots() {
 		System.out.println("\n--- Available Appointment Slots ---");
 		List<Appointment> availableSlots = AppointmentController.getAvailableAppointmentSlotsFromAllDoctor();
 
 		if (availableSlots.isEmpty()) {
 			System.out.println("No appointments found");
 			System.out.println("---------------------------------------");
-			return;
+			return false;
 		}
 
 		for (Appointment appointment : availableSlots) {
@@ -186,6 +186,8 @@ public class PatientBoundary extends MainUI {
 			System.out.println("Location         : " + appointment.getLocation());
 			System.out.println("---------------------------------------");
 		}
+
+		return true;
 	}
 
 	/**
@@ -193,10 +195,11 @@ public class PatientBoundary extends MainUI {
 	 */
 	// 4. scheduleAppointment
 	public void scheduleAppointment() {
-		viewAvailableAppointmentSlots();
-		System.out.println("\n--- Schedule Appointment for Patient ID: " + patient.getUID() + " ---");
-		ScheduleAppointmentUI scheduleAppointmentUI = new ScheduleAppointmentUI(patient);
-		scheduleAppointmentUI.start();
+		if(viewAvailableAppointmentSlots()) {
+			System.out.println("\n--- Schedule Appointment for Patient ID: " + patient.getUID() + " ---");
+			ScheduleAppointmentUI scheduleAppointmentUI = new ScheduleAppointmentUI(patient);
+			scheduleAppointmentUI.start();
+		}
 	}
 
 	/**
@@ -204,10 +207,11 @@ public class PatientBoundary extends MainUI {
 	 */
 	// 5. rescheduleAppointment
 	public void rescheduleAppointment() {
-		viewAvailableAppointmentSlots();
+		if(viewAvailableAppointmentSlots()) {
 		System.out.println("\n--- Reschedule an Appointment ---");
 		RescheduleAppointmentUI rescheduleAppointmentUI = new RescheduleAppointmentUI(patient);
 		rescheduleAppointmentUI.start();
+		}
 	}
 
 	/**
