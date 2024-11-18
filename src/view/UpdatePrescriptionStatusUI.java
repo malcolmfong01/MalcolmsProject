@@ -151,7 +151,6 @@ public class UpdatePrescriptionStatusUI extends MainUI {
                     return;
                 }
             }
-
             foundMedication.setPrescriptionStatus(newStatus);
             //decrease the inventory amount
 

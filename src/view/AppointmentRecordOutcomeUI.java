@@ -143,11 +143,12 @@ public class AppointmentRecordOutcomeUI extends MainUI {
                 PrescribedMedication medication = new PrescribedMedication(prescribedmedicationID,diagnosisID, medicineID, quantity, periodDays, PrescriptionStatus.PENDING, dosage);
                 medications1.add(medication);
                 PrescribedMedicationRepository.addMedication(medication.getPrescribedMedID(), medication);
-                PrescribedMedicationRepository.saveAlltoCSV();
+
 
             }
 
         }
+        PrescribedMedicationRepository.saveAlltoCSV();
 
         // Create a Prescription object with the list of medications
         Prescription prescription1 = new Prescription(diagnosisID, LocalDateTime.now(), medications1);

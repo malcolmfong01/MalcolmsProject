@@ -5,34 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98aba22b-29be-4861-8ba7-d684834ced75" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/controller/PrescribedMedicineController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/AppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/AppointmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/RecordsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/RecordsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/enums/RecordFileType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/enums/RecordFileType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Dummymain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Dummymain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/PrescribedMedication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/PrescribedMedication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/AppointmentOutcomeRecordRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/AppointmentOutcomeRecordRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/DiagnosisRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/DiagnosisRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/PharmacistController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/PharmacistController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/PrescribedMedicationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/PrescribedMedicationRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/data/admins.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/admins.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/appointment_outcome_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/appointment_outcome_records.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/appointment_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/appointment_records.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/diagnosis_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/diagnosis_records.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/data/doctors.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/doctors.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/data/medical_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/medical_records.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/medicines.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/medicines.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/data/patients.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/patients.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/data/pharmacists.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/pharmacists.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/prescribed_medications.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/prescribed_medications.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/prescriptions_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/prescriptions_records.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/data/treatment_plans_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/treatment_plans_records.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/AppointmentRecordOutcomeUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/AppointmentRecordOutcomeUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/DoctorUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/DoctorUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/PharmacistUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/PharmacistUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/UpdateMedicalRecordUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/UpdateMedicalRecordUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/UpdatePrescriptionStatusUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/UpdatePrescriptionStatusUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/ViewAppointmentOutcomeRecordUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ViewAppointmentOutcomeRecordUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,26 +58,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.HMSMain.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "yanyox2.0",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.HMSMain.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;yanyox2.0&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
+    <configuration name="HMSMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="HMSApp.HMSMain" />
+      <module name="MalcolmsProject-main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="HMSApp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="MalcolmsProject" />
       <method v="2">
@@ -108,6 +104,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.HMSMain" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -129,6 +130,7 @@
       <workItem from="1731762226243" duration="197000" />
       <workItem from="1731762432506" duration="55000" />
       <workItem from="1731762491440" duration="9000000" />
+      <workItem from="1731868635746" duration="3638000" />
     </task>
     <servers />
   </component>
