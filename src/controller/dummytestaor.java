@@ -1,6 +1,6 @@
 package controller;
 
-import model.AppointmentRecord;
+import model.Appointment;
 import repository.*;
 
 import java.time.format.DateTimeFormatter;
@@ -13,7 +13,7 @@ public class dummytestaor {
         boolean found = false;
 
         // Iterate through all appointment records
-        for (AppointmentRecord appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
+        for (Appointment appointment : RecordsRepository.APPOINTMENT_RECORDS.values()) {
 
             // Output appointment details (Doctor, Appointment Time, Location, Status, etc.)
             System.out.println("Appointment ID: " + appointment.getRecordID());
