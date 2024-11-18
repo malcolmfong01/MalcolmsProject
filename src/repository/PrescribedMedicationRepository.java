@@ -7,6 +7,8 @@ import model.PrescribedMedication;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PrescribedMedicationRepository extends Repository {
     private static final String folder = "data";
@@ -14,7 +16,7 @@ public class PrescribedMedicationRepository extends Repository {
     private static boolean isRepoLoaded = false;
     
     
-    // Static data collection for prescribed medications per diagnosis (key = diagnosisID)
+    // Static data collection for prescribed medications per diagnosis (key = PrescribedMedication ID)
     public static HashMap<String, ArrayList<PrescribedMedication>> diagnosisToMedicationsMap = new HashMap<>();
 
     /**
@@ -54,15 +56,29 @@ public class PrescribedMedicationRepository extends Repository {
     public static void saveMedicationsToCSV(String fileName, HashMap<String, ArrayList<PrescribedMedication>> diagnosisToMedicationsMap) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
-//        // Ensure the directory exists
-//        File directory = new File("./src/repository/" + folder);
-//        if (!directory.exists()) {
-//            directory.mkdirs();  // Create the directory if it doesn't exist
-//        }
+        // Ensure the directory exists
+        File directory = new File("./src/repository/" + folder);
+        if (!directory.exists()) {
+            directory.mkdirs();  // Create the directory if it doesn't exist
+        }
 
+        // Use a Set to track existing medication IDs to prevent duplicates
+        Set<String> existingMedicationIDs = new HashSet<>();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            // Iterate over all prescribed medications in the map
             for (String prescribedMedID : diagnosisToMedicationsMap.keySet()) {
                 for (PrescribedMedication medication : diagnosisToMedicationsMap.get(prescribedMedID)) {
+                    String medicineID = medication.getMedicineID();
+
+                    // If this medication ID has already been processed, skip it
+                    if (existingMedicationIDs.contains(medicineID)) {
+                        continue;  // Skip duplicate
+                    }
+
+                    // Add the medication ID to the set of existing IDs
+                    existingMedicationIDs.add(medicineID);
+
+                    // Write the medication to the file
                     writer.write(medicationToCSV(prescribedMedID, medication));
                     writer.newLine();
                 }
@@ -124,9 +140,9 @@ public class PrescribedMedicationRepository extends Repository {
             String line;
             while ((line = reader.readLine()) != null) {
                 PrescribedMedication medication = csvToMedication(line);
-                String diagnosisID = getDiagnosisIDFromCSV(line);
-                if (medication != null && diagnosisID != null) {
-                    addMedication(diagnosisID, medication);
+                String prescribedMedID = getprescribedMedIDFromCSV(line);
+                if (medication != null && prescribedMedID != null) {
+                    addMedication(prescribedMedID, medication);
                 }
             }
             System.out.println("Successfully loaded medications for " + diagnosisToMedicationsMap.size() + " diagnoses from " + fileName);
@@ -146,14 +162,14 @@ public class PrescribedMedicationRepository extends Repository {
         diagnosisToMedicationsMap.put(prescribedMedID, medications);
     }
     /**
-     * Extracts the diagnosis ID from a CSV-formatted string.
+     * Extracts the prescribedMed ID from a CSV-formatted string.
      *
      * @param csv the CSV string containing the diagnosis ID
      * @return the diagnosis ID extracted from the CSV string
      */
-    private static String getDiagnosisIDFromCSV(String csv) {
+    private static String getprescribedMedIDFromCSV(String csv) {
         String[] fields = csv.split(",");
-        return fields[1];
+        return fields[0];
     }
     /**
      * Converts a CSV-formatted string to a PrescribedMedication object.

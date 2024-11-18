@@ -119,9 +119,7 @@ public class AppointmentRecordOutcomeUI extends MainUI {
 
         String diagnosisDescription = Validator.readString("\n--- Enter Diagnosis for Patient (ID: " + appointment.getPatientID() + ") ---");
         String diagnosisID = AppointmentController.generateRecordID(RecordFileType.DIAGNOSIS_RECORDS);
-
         System.out.println("Diagnosis ID: " + diagnosisID);
-        appointment.setDiagnosisID(diagnosisID);
 
         String medicine = Validator.readString("\n--- Enter Medicine ID for Patient (ID: " + appointment.getPatientID() + ")(Separate by ,)---");
         // Split the string by commas
@@ -141,12 +139,12 @@ public class AppointmentRecordOutcomeUI extends MainUI {
                 PrescribedMedication medication = new PrescribedMedication(prescribedmedicationID,diagnosisID, medicineID, quantity, periodDays, PrescriptionStatus.PENDING, dosage);
                 medications1.add(medication);
                 PrescribedMedicationRepository.addMedication(medication.getPrescribedMedID(), medication);
-
+                PrescribedMedicationRepository.saveAlltoCSV();
 
             }
 
         }
-        PrescribedMedicationRepository.saveAlltoCSV();
+
 
         // Create a Prescription object with the list of medications
         Prescription prescription1 = new Prescription(diagnosisID, LocalDateTime.now(), medications1);
@@ -166,7 +164,9 @@ public class AppointmentRecordOutcomeUI extends MainUI {
 
         String typeOfService = Validator.readString("Enter the type of service: ");
         String consultationNotes = Validator.readString("Enter your consultation notes: ");
+        appointment.setDiagnosisID(diagnosisID);
         appointment.setPrescription(prescription1);
+        appointment.getPrescription().setMedications(medications1);
         appointment.setTypeOfService(typeOfService);
         appointment.setConsultationNotes(consultationNotes);
         appointment.setAppointmentOutcomeStatus(AppointmentOutcomeStatus.COMPLETED);

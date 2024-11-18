@@ -46,6 +46,27 @@ public class Validator {
             }
         }
     }
+    /**
+     * Reads an integer from the user with a given prompt.
+     * Continues to prompt until a valid integer is entered.
+     *
+     * @param prompt The prompt message to display to the user.
+     * @return The integer entered by the user.
+     */
+    public static String readMedID() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Medicine ID (e.g., M001, M002): ");
+
+        String medicineID = scanner.nextLine();
+
+        // Validate input
+        while (!medicineID.matches("M\\d{3}")) {
+            System.out.println("Invalid Medicine ID format! Please enter in the format M001, M002, etc.");
+            System.out.print("Enter Medicine ID to update: ");
+            medicineID = scanner.nextLine();
+        }
+        return medicineID;
+    }
 
     /**
      * Reads a LocalDateTime input from the user in the format "yyyy-MM-dd HH:mm".
