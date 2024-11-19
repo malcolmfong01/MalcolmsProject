@@ -12,6 +12,7 @@ import java.util.Map;
 import HMSApp.HMSMain;
 import enums.*;
 import model.*;
+import repository.PrescribedMedicationRepository;
 import repository.RecordsRepository;
 import utility.Validator;
 import repository.MedicineRepository;
@@ -584,15 +585,14 @@ public class AdminBoundary extends Boundary {
     }
 
     /**
+     * Administrator Menu Option 6
      * View billing by patient ID.
-     *
-     * @param patientID The billing of a specific patientID.
      */
     private static ArrayList <PaymentRecord> viewBillingByPatientID() {
 
         // Create a list to store matching records
         ArrayList<PaymentRecord> matchingRecords = new ArrayList<>();
-
+        System.out.println("Enter Patient ID");
         // Read the patient ID
         String patientID = Validator.readID("Patient", "P\\d{3}");
 
@@ -630,11 +630,35 @@ public class AdminBoundary extends Boundary {
      * Prompts the user to enter details for adding a new medicine to the inventory.
      */
     private static void manageBilling() {
+        System.out.println("Enter Patient ID");
         // Read the patient ID
         String patientID = Validator.readID("Patient", "P\\d{3}");
-
         LocalDateTime updateDate = LocalDateTime.now();
-        PaymentStatus paymentStatus =  PaymentStatus.OUTSTANDING;
+        System.out.print("Enter New Status (e.g., CLEARED): ");
+        PaymentStatus paymentStatus;
+        paymentStatus = PaymentStatus.valueOf(Validator.readString().toUpperCase());
+
+        // Create a list to store matching records
+        ArrayList<PaymentRecord> matchingRecords = new ArrayList<>();
+        // Check if the repository is loaded
+        if (RecordsRepository.isRepoLoad()) {
+            for (PaymentRecord record : RecordsRepository.PAYMENT_RECORDS.values()) {
+                // If patient ID matches, add the record to the list
+                if (record.getPatientID().equals(patientID)) {
+                    matchingRecords.add(record);
+                    record.setPaymentStatus(paymentStatus);
+                    record.setUpdatedDate(updateDate);
+                    record.setRecordStatus(RecordStatusType.ARCHIVED);
+                    RecordsRepository.PAYMENT_RECORDS.put(record.getPatientID(), record);
+                    RecordsRepository.saveAllRecordFiles();
+                }
+            }
+            // Display the results if records are found
+            if (matchingRecords.isEmpty()) {
+                System.out.println("No payment records found for Patient ID: " + patientID);
+            }
+
+        }
 
     }
 }

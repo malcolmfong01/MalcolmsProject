@@ -15,7 +15,7 @@ import enums.RecordStatusType;
 public class PaymentRecord extends HMSRecords {
     private double paymentAmount;
     private String patientID;
-    PaymentStatus paymentStatus;
+    private PaymentStatus paymentStatus;
 
 
     /**
@@ -67,6 +67,25 @@ public class PaymentRecord extends HMSRecords {
     }
 
     /**
+     * Constructs an HMSRecords object with the specified details.
+     *
+     * @param recordID     the unique identifier for the record
+     * @param createdDate  the date and time when the record was created
+     * @param updatedDate  the date and time when the record was last updated
+     * @param recordStatus the status of the record (e.g., active, inactive)
+     */
+    public PaymentRecord(String recordID, LocalDateTime createdDate, LocalDateTime updatedDate, RecordStatusType recordStatus) {
+        super(recordID, createdDate, updatedDate, recordStatus);
+    }
+
+    public PaymentRecord(String billingID, LocalDateTime createdDate, LocalDateTime updateDate, RecordStatusType recordStatus, PaymentStatus paymentStatus, String patientID,int paymentAmount) {
+        super(billingID, createdDate, updateDate, recordStatus);
+        this.patientID = patientID;
+        this.paymentAmount = paymentAmount;
+        this.paymentStatus = paymentStatus;
+    }
+
+    /**
      * Gets the payment amount associated with this payment record.
      *
      * @return the payment amount
@@ -101,5 +120,13 @@ public class PaymentRecord extends HMSRecords {
      */
     public void setPatientID(String patientID) {
         this.patientID = patientID;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }
