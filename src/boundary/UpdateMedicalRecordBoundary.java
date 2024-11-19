@@ -151,11 +151,11 @@ public class UpdateMedicalRecordBoundary {
     private void addTreatmentPlan(Diagnosis diagnosis) {
         System.out.println("Enter Treatment Description:");
         String treatmentDescription = sc.nextLine();
-        TreatmentPlans treatmentPlan = new TreatmentPlans(diagnosis.getDiagnosisID(), LocalDateTime.now(),
+        Treatment treatmentPlan = new Treatment(diagnosis.getDiagnosisID(), LocalDateTime.now(),
                 treatmentDescription);
         diagnosis.setTreatmentPlans(treatmentPlan);
-        TreatmentPlansRepository.diagnosisToTreatmentPlansMap.put(diagnosis.getDiagnosisID(), treatmentPlan);
-        TreatmentPlansRepository.saveAlltoCSV();
+        TreatmentRepository.diagnosisToTreatmentPlansMap.put(diagnosis.getDiagnosisID(), treatmentPlan);
+        TreatmentRepository.saveAlltoCSV();
         // RecordsRepository.saveAllRecordFiles(); // Save changes
         System.out.println("Treatment plan added successfully for Diagnosis ID: " + diagnosis.getDiagnosisID());
     }

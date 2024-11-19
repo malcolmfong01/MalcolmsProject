@@ -14,7 +14,7 @@ import java.util.Set;
 
 import model.Diagnosis;
 import model.Prescription;
-import model.TreatmentPlans;
+import model.Treatment;
 
 /**
  * Repository class for managing Diagnosis data, including loading and saving
@@ -187,7 +187,7 @@ public class DiagnosisRepository extends Repository {
             String doctorID = fields[2];
             String medicalRecordID = fields[3];
             LocalDateTime diagnosisDate = LocalDateTime.parse(fields[4]);
-            TreatmentPlans treatmentPlan = TreatmentPlansRepository.diagnosisToTreatmentPlansMap.get(fields[1]);
+            Treatment treatmentPlan = TreatmentRepository.diagnosisToTreatmentPlansMap.get(fields[1]);
             String diagnosisDescription = fields[5].replace("\"", "");
             Prescription prescription = PrescriptionRepository.PRESCRIPTION_MAP.get(fields[1]);
 

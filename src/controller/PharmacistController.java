@@ -1,9 +1,9 @@
 package controller;
 
-import boundary.*;
+import model.Pharmacist;
 import repository.AppointmentOutcomeRecordRepository;
+import repository.PersonnelRepository;
 import repository.PrescribedMedicationRepository;
-import boundary.ViewAppointmentOutcomeRecordBoundary;
 import boundary.UpdatePrescriptionStatusBoundary;
 
 /**
@@ -13,18 +13,32 @@ import boundary.UpdatePrescriptionStatusBoundary;
 
 public class PharmacistController{
 
-	 /**
-	  * Initiates the view for displaying appointment outcome records.
-	  * This method creates an instance of AppointmentOutcomeRecordUI and calls
-	  * its method to display appointment outcome records based on patient ID input.
-	  * 
-	  * <p>Usage: Allows pharmacists to retrieve and view detailed appointment outcomes
-	  * for specified patient records, including prescription details if available.</p>
-	  */
-	public static void viewAppointmentOutcomeRecords() {
-	    ViewAppointmentOutcomeRecordBoundary outcomeRecordUI = new ViewAppointmentOutcomeRecordBoundary();
-	    outcomeRecordUI.viewAppointmentOutcomeRecords();
-	}
+    /**
+     * Retrieves a Pharmacist object based on the provided pharmacist ID.
+     *
+     * @param pharmacistId The unique identifier of the pharmacist.
+     * @return The Pharmacist object if found in the repository, or null if not found or if the repository is not loaded.
+     */
+
+    public static Pharmacist getPharmacistById(String pharmacistId) {
+        if (PersonnelRepository.isRepoLoad())
+            return PersonnelRepository.PHARMACISTS.get(pharmacistId);
+        else
+            return null;
+
+    }
+
+    /**
+     * Retrieves the full name of a doctor based on the provided pharmacist ID.
+     *
+     * @param pharmacistId The unique identifier of the pharmacist.
+     * @return The full name of the pharmacist if found, or "Unknown Pharmacist" if the pharmacist does not exist in the repository.
+     */
+
+    public static String getPharmacistNameById(String pharmacistId) {
+        Pharmacist pharmacist = getPharmacistById(pharmacistId);
+        return pharmacist != null ? pharmacist.getFullName() : "Unknown Pharmacist";
+    }
 
     /**
      * Initiates the UI for updating the status of a specific prescription in an
@@ -32,31 +46,13 @@ public class PharmacistController{
      * UpdatePrescriptionStatusBoundary and calls its method to manage the interaction
      * and update process.
      */
+
     public static void updatePrescriptionStatus() {
         UpdatePrescriptionStatusBoundary updateStatusUI = new UpdatePrescriptionStatusBoundary();
         updateStatusUI.start();
     }
 
-    /**
-     * Initiates the UI for monitoring inventory levels, checking expired medicines,
-     * and displaying medicines below low stock levels.
-     */
-    public static void monitorInventory() {
-        MonitorInventoryBoundary monitorInventoryUI = new MonitorInventoryBoundary();
-        monitorInventoryUI.start();
-	}
-
-    /**
-     * Initiates the UI for submitting replenishment requests and checking the
-     * current status of all requests.
-     */
-    public static void submitReplenishmentRequests() {
-        SubmitReplenishmentRequestBoundary submitRequestUI = new SubmitReplenishmentRequestBoundary();
-        submitRequestUI.start();
-    }
-    
     public static void updatePrescribedMedicationRepository() {
-        // Save changes to repositories
         PrescribedMedicationRepository.saveAlltoCSV();
         AppointmentOutcomeRecordRepository.saveAppointmentOutcomeRecordRepository();
     }

@@ -92,9 +92,9 @@
 // PrescriptionStatus.PENDING,
 // "5 ml twice daily"
 // );
-// TreatmentPlans treatmentPlan1 = new TreatmentPlans("D001",
+// Treatment treatmentPlan1 = new Treatment("D001",
 // LocalDateTime.of(2023, 10, 20, 14, 30), "Wait to die");
-// TreatmentPlans treatmentPlan2 = new TreatmentPlans("D002",
+// Treatment treatmentPlan2 = new Treatment("D002",
 // LocalDateTime.of(2023, 8, 12, 10, 15), "Cannot Cure");
 //
 // // Creating Prescriptions with lists of medications
@@ -294,7 +294,7 @@
 //// }
 ////
 //// System.out.println("| Treatment Plan:");
-//// TreatmentPlans treatmentPlan = record.getTreatmentPlan();
+//// Treatment treatmentPlan = record.getTreatmentPlan();
 //// System.out.println("+------------------------------------------------------------+");
 //// System.out.printf("| %-20s: %-35s |\n", "Description",
 // treatmentPlan.getTreatmentDescription());

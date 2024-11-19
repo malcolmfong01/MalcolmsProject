@@ -16,7 +16,7 @@ import repository.PrescribedMedicationRepository;
 import repository.PrescriptionRepository;
 import repository.RecordsRepository;
 import repository.Repository;
-import repository.TreatmentPlansRepository;
+import repository.TreatmentRepository;
 
 public class PageBoundary extends Boundary {
 
@@ -94,7 +94,7 @@ public class PageBoundary extends Boundary {
 		// MUST BE LOADED IN THIS SEQUENCES RECORDS REPOSITORY LOADED LAST!
 		Repository.loadRepository(new PersonnelRepository());
 		Repository.loadRepository(new PrescribedMedicationRepository());
-		Repository.loadRepository(new TreatmentPlansRepository());
+		Repository.loadRepository(new TreatmentRepository());
 		Repository.loadRepository(new PrescriptionRepository());
 		Repository.loadRepository(new DiagnosisRepository());
 		Repository.loadRepository(new AppointmentOutcomeRecordRepository());
@@ -123,7 +123,7 @@ public class PageBoundary extends Boundary {
 		System.out.println("Prescribed Medication Repository: " +
 				(PrescribedMedicationRepository.isRepoLoaded() ? loadedSymbol : notLoadedSymbol));
 		System.out.println("Treatment Plans Repository: " +
-				(TreatmentPlansRepository.isRepoLoaded() ? loadedSymbol : notLoadedSymbol));
+				(TreatmentRepository.isRepoLoaded() ? loadedSymbol : notLoadedSymbol));
 		System.out.println("Prescription Repository: " +
 				(PrescriptionRepository.isRepoLoaded() ? loadedSymbol : notLoadedSymbol));
 		System.out.println("Diagnosis Repository: " +
@@ -137,7 +137,7 @@ public class PageBoundary extends Boundary {
 		return PersonnelRepository.isRepoLoaded() &&
 				RecordsRepository.isRepoLoaded() &&
 				PrescribedMedicationRepository.isRepoLoaded() &&
-				TreatmentPlansRepository.isRepoLoaded() &&
+				TreatmentRepository.isRepoLoaded() &&
 				PrescriptionRepository.isRepoLoaded() &&
 				DiagnosisRepository.isRepoLoaded() &&
 				AppointmentOutcomeRecordRepository.isRepoLoaded() &&
