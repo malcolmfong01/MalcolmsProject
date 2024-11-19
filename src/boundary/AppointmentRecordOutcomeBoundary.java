@@ -184,6 +184,7 @@ public class AppointmentRecordOutcomeBoundary extends Boundary {
         RecordsRepository.saveAllRecordFiles();
         AppointmentOutcomeRecordRepository.saveAppointmentOutcomeRecordRepository();
         System.out.println("Appointment outcome recorded and saved successfully.");
+
     }
 
 }

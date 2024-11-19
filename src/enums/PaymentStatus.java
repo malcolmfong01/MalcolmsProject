@@ -31,7 +31,7 @@ public enum PaymentStatus {
      * @param status The string representation of the payment status.
      * @return The corresponding PaymentStatus enum value, or null if the input string does not match any status.
      */
-    public static PaymentStatus toEnumPaymentStatus(String status) {
+    public static PaymentStatus toEnumRecordStatusType(String status) {
         switch (status) {
             case "OUTSTANDING":
                 return OUTSTANDING;

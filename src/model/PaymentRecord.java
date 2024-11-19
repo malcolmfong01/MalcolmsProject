@@ -3,6 +3,7 @@ package model;
 import java.time.LocalDateTime;
 
 import controller.RecordsController;
+import enums.PaymentStatus;
 import enums.RecordFileType;
 import enums.RecordStatusType;
 
@@ -14,6 +15,7 @@ import enums.RecordStatusType;
 public class PaymentRecord extends HMSRecords {
     private double paymentAmount;
     private String patientID;
+    PaymentStatus paymentStatus;
 
 
     /**
@@ -56,10 +58,12 @@ public class PaymentRecord extends HMSRecords {
             LocalDateTime updatedDate,
             RecordStatusType recordStatus,
             String patientID,
+            PaymentStatus paymentStatus,
             double paymentAmount) {
         super(recordID, createdDate, updatedDate, recordStatus);
         this.patientID = patientID;
         this.paymentAmount = paymentAmount;
+        this.paymentStatus = paymentStatus;
     }
 
     /**

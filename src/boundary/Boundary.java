@@ -50,17 +50,6 @@ public abstract class Boundary {
      * @return The user's choice as an integer.
      */
     protected int getUserChoice(int maxChoice) {
-//        try {
-//            int choice = Integer.parseInt(System.console().readLine());
-//            if (choice < 1 || choice > maxChoice) {
-//                handleInvalidInput();
-//                return -1;
-//            }
-//            return choice;
-//        } catch (NumberFormatException e) {
-//            handleInvalidInput();
-//            return -1;
-//        }
         // Check if console is available
         if (System.console() != null) {
             try {

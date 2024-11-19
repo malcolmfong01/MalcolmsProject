@@ -6,21 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="98aba22b-29be-4861-8ba7-d684834ced75" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/boundary/AppointmentRecordOutcomeUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boundary/AppointmentRecordOutcomeUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/boundary/UpdatePrescriptionStatusUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boundary/UpdatePrescriptionStatusUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/PharmacistController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/PharmacistController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helper/Validator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/Validator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/PrescribedMedicationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/PrescribedMedicationRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/data/appointment_outcome_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/appointment_outcome_records.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/data/appointment_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/appointment_records.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/data/diagnosis_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/diagnosis_records.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/data/medicines.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/medicines.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boundary/AdminBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boundary/AdminBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boundary/AppointmentRecordOutcomeBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boundary/AppointmentRecordOutcomeBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boundary/Boundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boundary/Boundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/RecordsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/RecordsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/enums/PaymentStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/enums/PaymentStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/HMSRecords.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/HMSRecords.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/PaymentRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/PaymentRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repository/RecordsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/RecordsRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/prescribed_medications.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/prescribed_medications.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/prescriptions_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/prescriptions_records.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/AdminService" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/DoctorService" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/PatientService" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/PharmacistService" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,25 +58,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Application.HMSMain.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;yanyox2.0&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Application.HMSMain.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "yanyox2.0",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="HMSMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="HMSApp.HMSMain" />
@@ -141,5 +136,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge branch 'main' of https://github.com/malcolmfong01/MalcolmsProject into yanyox2.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>

@@ -6,6 +6,7 @@
  */
 package repository;
 
+import enums.PaymentStatus;
 import enums.RecordStatusType;
 import model.*;
 
@@ -280,6 +281,7 @@ public class RecordsRepository extends Repository {
                         LocalDateTime.parse(fields[2]), // updatedDate
                         RecordStatusType.toEnumRecordStatusType(fields[3]), // recordStatus
                         fields[4], // patientID
+                        PaymentStatus.toEnumRecordStatusType(fields[6]), // recordStatus
                         Double.parseDouble(fields[5]) // paymentAmount
                 ));
             }

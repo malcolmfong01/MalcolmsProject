@@ -10,14 +10,13 @@ import java.util.List;
 import java.util.Map;
 
 import HMSApp.HMSMain;
+import enums.*;
 import model.*;
 import repository.RecordsRepository;
 import utility.Validator;
 import repository.MedicineRepository;
 import repository.PersonnelRepository;
 import controller.*;
-import enums.PersonnelFileType;
-import enums.ReplenishStatus;
 import utility.DateTimePicker;
 
 
@@ -47,9 +46,10 @@ public class AdminBoundary extends Boundary {
         System.out.println("Administrator Menu:");
         System.out.println("1. View and Manage Hospital Staff");
         System.out.println("2. View Appointments Details");
-        System.out.println("3. View and Manage Medication Inventory ");
+        System.out.println("3. View and Manage Medication Inventory");
         System.out.println("4. Approve Replenishment Requests");
-        System.out.println("5. Logout");
+        System.out.println("5. View and Manage Billing Information");
+        System.out.println("6. Logout");
     }
     
 	/**
@@ -72,7 +72,8 @@ public class AdminBoundary extends Boundary {
                 case 2 -> listAllAppointments();
                 case 3 -> viewAndManageMedicationInventory();
                 case 4 -> approveReplenishRequest();
-                case 5 -> {
+                case 5 -> viewAndManageBilling();
+                case 6 -> {
                     System.out.println("Logging out...");
                     HMSMain.main(null); // Restart application
                     return; // Exit after logging out
@@ -559,4 +560,81 @@ public class AdminBoundary extends Boundary {
         MedicineController.updateMedicine(medicineID, medicine);
     }
 
+    /**
+     * Administrator Menu Option 5
+     * Displays the options for viewing and managing billing.
+     */
+    private static void viewAndManageBilling() {
+        System.out.println("Enter your choice");
+        System.out.println("1. View Billing Information By Patient ID");
+        System.out.println("2. Manage Billing Information By Patient ID");
+
+        AdminBoundary adminBoundary = new AdminBoundary(null);
+        int choice = adminBoundary.getUserChoice(2);
+
+        switch (choice) {
+            case 1 -> {
+                viewBillingByPatientID();
+            }
+            case 2 -> {
+                manageBilling();
+            }
+            default -> System.out.println("Error: Invalid choice. Please select a valid option.");
+        }
+    }
+
+    /**
+     * View billing by patient ID.
+     *
+     * @param patientID The billing of a specific patientID.
+     */
+    private static ArrayList <PaymentRecord> viewBillingByPatientID() {
+
+        // Create a list to store matching records
+        ArrayList<PaymentRecord> matchingRecords = new ArrayList<>();
+
+        // Read the patient ID
+        String patientID = Validator.readID("Patient", "P\\d{3}");
+
+        // Check if the repository is loaded
+        if (RecordsRepository.isRepoLoad()) {
+            for (PaymentRecord record : RecordsRepository.PAYMENT_RECORDS.values()) {
+                // If patient ID matches, add the record to the list
+                if (record.getPatientID().equals(patientID)) {
+                    matchingRecords.add(record);
+                }
+            }
+            // Display the results if records are found
+            if (!matchingRecords.isEmpty()) {
+                System.out.println("===========================================");
+                System.out.println("Payment Records for Patient ID: " + patientID);
+                for (PaymentRecord record : matchingRecords) {
+                    System.out.println("Payment Amount: " + record.getPaymentAmount());
+                    System.out.println("Payment Status: " + record.getRecordStatus());
+                    System.out.println("Created At: " + record.getCreatedDate());
+                    System.out.println("Updated At: " + record.getUpdatedDate());
+                }
+                System.out.println("===========================================");
+            } else {
+                System.out.println("No payment records found for Patient ID: " + patientID);
+            }
+        } else {
+            System.out.println("Repository is not loaded. Cannot fetch records.");
+        }
+
+        // Return the list of matching records (empty if no matches found)
+        return matchingRecords;
+    }
+
+    /**
+     * Prompts the user to enter details for adding a new medicine to the inventory.
+     */
+    private static void manageBilling() {
+        // Read the patient ID
+        String patientID = Validator.readID("Patient", "P\\d{3}");
+
+        LocalDateTime updateDate = LocalDateTime.now();
+        PaymentStatus paymentStatus =  PaymentStatus.OUTSTANDING;
+
+    }
 }
