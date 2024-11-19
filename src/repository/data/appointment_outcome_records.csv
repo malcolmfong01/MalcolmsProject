@@ -1,3 +1,0 @@
-Appointment Outcome ID,PatientID,DoctorID,DiagnosisID,AppointmentTime,TypeOfService,ConsultationNotes,AppointmentOutcomeStatus
-AO-000,P000,D000,DIAG-000,2021-12-12T12:12,"ifk","ifk",COMPLETED
-AO-001,P000,D000,"",2020-02-02T02:02,"","",INCOMPLETED
