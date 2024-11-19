@@ -2,7 +2,6 @@ package boundary;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Scanner;
 
 import HMSApp.HMSMain;
 import controller.AppointmentController;
@@ -21,13 +20,11 @@ import static repository.AppointmentOutcomeRecordRepository.deleteAppointmentOut
 /**
  * PatientBoundary class represents the user interface for a patient in the HMS
  * system.
- * This class handles patient-specific interactions such as viewing medical
- * records,
- * scheduling appointments, and updating personal information.
+ * This class handles patient-specific interactions.
  */
 public class PatientBoundary extends Boundary {
 
-	private static Patient patient;
+	private Patient patient;
 
 	/**
 	 * Constructor for PatientBoundary.
@@ -37,7 +34,6 @@ public class PatientBoundary extends Boundary {
 	public PatientBoundary(Patient patient) {
 		this.patient = patient;
 	}
-
 	/**
 	 * Displays the patient menu options.
 	 */
@@ -67,61 +63,40 @@ public class PatientBoundary extends Boundary {
 	/**
 	 * Displays the patient dashboard and handles user input for menu choices.
 	 */
+
 	public void showPatientDashboard() {
-		Scanner sc = new Scanner(System.in);
-		int choice = 0;
-		do {
+		while (true) {
 			printChoice();
-			choice = Validator.readInt("");
+			int choice = Validator.readInt("Enter your choice: ");
+
 			switch (choice) {
-				case 1:
-					viewPatientMedicalRecord(patient.getUID());
-					break;
-				case 2:
-					updatePatientPrivateInfo(patient.getUID());
-					break;
-				case 3:
-					viewAvailableAppointmentSlots();
-					break;
-				case 4:
-					scheduleAppointment();
-					break;
-				case 5:
-					rescheduleAppointment();
-					break;
-				case 6:
-					cancelAppointment();
-					break;
-				case 7:
-					viewScheduledAppointments();
-					break;
-				case 8:
-					viewPastAppointmentOutcomes();
-					break;
-				case 9:
-					acknowledgeRejectedAppointments();
-					break;
-				case 10:
+				case 1 -> viewPatientMedicalRecord(patient.getUID());
+				case 2 -> updatePatientPrivateInfo(patient.getUID());
+				case 3 -> viewAvailableAppointmentSlots();
+				case 4 -> scheduleAppointment();
+				case 5 -> rescheduleAppointment();
+				case 6 -> cancelAppointment();
+				case 7 -> viewScheduledAppointments();
+				case 8 -> viewPastAppointmentOutcomes();
+				case 9 -> acknowledgeRejectedAppointments();
+				case 10 -> {
 					System.out.println("Logging out...");
 					HMSMain.main(null);
-					break;// Return to the main application
-				default:
-					System.out.println("Invalid choice!");
-					break;
+					return;
+				}
+				default -> System.out.println("Invalid choice!");
 			}
-		} while (choice != 10);
-
-		sc.close();
+		}
 	}
 
+
 	/**
+	 * Patient Menu Option 1
 	 * Displays the medical records for the given patient ID.
-	 *
 	 * @param patientID The unique ID of the patient whose medical records are to be
 	 *                  viewed.
 	 */
-	// 1. viewPatientMedicalRecordUI
-	public void viewPatientMedicalRecord(String patientID) {
+	private void viewPatientMedicalRecord(String patientID) {
 		System.out.println("\n--- Patient Medical Records for Patient ID: " + patientID + " ---");
 		boolean recordsFound = false;
 		for (MedicalRecord record : RecordsRepository.MEDICAL_RECORDS.values()) {
@@ -138,13 +113,12 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
+	 * Patient Menu Option 2
 	 * Updates the personal information of the patient.
-	 *
 	 * @param patientId The unique ID of the patient whose information is to be
 	 *                  updated.
 	 */
-	// 2. updatePatientContactInfo
-	public void updatePatientPrivateInfo(String patientId) {
+	private void updatePatientPrivateInfo(String patientId) {
 		System.out.println("\n--- Patient Personal Information for Patient ID: " + patientId + " ---");
 		boolean recordsFound = false;
 		for (Patient patient : PersonnelRepository.PATIENTS.values()) {
@@ -161,10 +135,10 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
+	 * Patient Menu Option 3
 	 * Displays all available appointment slots from all doctors.
 	 */
-	// 3. viewAvailableAppointmentSlots
-	public static boolean viewAvailableAppointmentSlots() {
+	private static boolean viewAvailableAppointmentSlots() {
 		System.out.println("\n--- Available Appointment Slots ---");
 		List<Appointment> availableSlots = AppointmentController.getAvailableAppointmentSlotsFromAllDoctor();
 
@@ -191,10 +165,10 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
+	 * Patient Menu Option 4
 	 * Schedules a new appointment for the patient.
 	 */
-	// 4. scheduleAppointment
-	public void scheduleAppointment() {
+	private void scheduleAppointment() {
 		if(viewAvailableAppointmentSlots()) {
 			System.out.println("\n--- Schedule Appointment for Patient ID: " + patient.getUID() + " ---");
 			ScheduleAppointmentBoundary scheduleAppointmentUI = new ScheduleAppointmentBoundary(patient);
@@ -203,10 +177,10 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
+	 * Patient Menu Option 5
 	 * Reschedules an existing appointment for the patient.
 	 */
-	// 5. rescheduleAppointment
-	public void rescheduleAppointment() {
+	private void rescheduleAppointment() {
 		if(viewAvailableAppointmentSlots()) {
 		System.out.println("\n--- Reschedule an Appointment ---");
 		RescheduleAppointmentBoundary rescheduleAppointmentUI = new RescheduleAppointmentBoundary(patient);
@@ -215,10 +189,10 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
+	 * Patient Menu Option 6
 	 * Cancels an existing confirmed appointment for the patient.
 	 */
-	// 6. cancelAppointment
-	public void cancelAppointment() {
+	private void cancelAppointment() {
 		System.out.println("\n--- Scheduled Appointments ---");
 
 		List<Appointment> confirmedAppointments = AppointmentController
@@ -263,10 +237,10 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
+	 * Patient Menu Option 7
 	 * Displays the scheduled appointments for the patient.
 	 */
-	// 7. viewScheduledAppointments
-	public static void viewScheduledAppointments() {
+	private void viewScheduledAppointments() {
 		System.out.println("\n--- Scheduled Appointments ---");
 
 		List<Appointment> scheduledSlots = AppointmentController.getAllAppointments(patient.getUID());
@@ -293,10 +267,10 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
+	 * Patient Menu Option 8
 	 * Displays past appointment outcome records for the patient.
 	 */
-	// 8. viewPastAppointmentOutcomes
-	public void viewPastAppointmentOutcomes() {
+	private void viewPastAppointmentOutcomes() {
 		System.out.println("\n--- Past Appointment Outcomes ---");
 
 		// Get the past appointment outcomes for the patient
@@ -339,10 +313,10 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
+	 * Patient Menu Option 9
 	 * Allows the patient to acknowledge rejected appointment slots.
 	 */
-	// 9. acknowledgeRejectedAppointments
-	public void acknowledgeRejectedAppointments() {
+	private void acknowledgeRejectedAppointments() {
 		System.out.println("\n--- Acknowledge Rejected Appointments ---");
 
 		List<Appointment> canceledAppointments = AppointmentController

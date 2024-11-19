@@ -9,13 +9,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import controller.HMSPersonnelController;
+import model.*;
 import utility.Validator;
-import model.MedicalRecord;
-import model.Patient;
-import model.Diagnosis;
-import model.Prescription;
-import model.TreatmentPlans;
-import model.PrescribedMedication;
+import model.Treatment;
 
 /**
  * A user interface class for displaying a patient's medical record in a formatted view.
@@ -104,7 +100,7 @@ public class MedicalRecordBoundary extends Boundary {
                         System.out.println("| No prescribed medications found |");
                     }
 
-                    TreatmentPlans treatmentPlan = diagnosis.getTreatmentPlans(); // Assuming single TreatmentPlan
+                    Treatment treatmentPlan = diagnosis.getTreatmentPlans(); // Assuming single TreatmentPlan
                     if (treatmentPlan != null) {
                         System.out.println("| Treatment Plan:");
                         System.out.printf("| %-20s: %-20s |\n", "Treatment Date", treatmentPlan.getTreatmentDate());

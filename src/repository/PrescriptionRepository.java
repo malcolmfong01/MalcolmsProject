@@ -6,7 +6,6 @@
 package repository;
 
 import model.Prescription;
-import model.TreatmentPlans;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

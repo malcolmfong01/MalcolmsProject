@@ -1,5 +1,5 @@
 package boundary;
-import java.util.Scanner;
+
 import HMSApp.HMSMain;
 import model.Pharmacist;
 import controller.*;
@@ -7,26 +7,28 @@ import enums.PersonnelFileType;
 import utility.Validator;
 
 /**
- * Represents the user interface for a pharmacist in the Health Management System (HMS).
- * This UI provides pharmacists with functionalities such as viewing appointment outcome records,
- * updating prescription statuses, viewing and managing inventory, and submitting replenishment requests.
+ * PharmacistBoundary class represents the user interface for a pharmacist in the HMS
+ * system.
+ * This class handles pharmacist-specific interactions.
  */
 public class PharmacistBoundary extends Boundary {
-	private Pharmacist pharmacist;
+    private Pharmacist pharmacist;
+
     /**
-     * Constructs a new PharmacistBoundary instance and initializes the pharmacist object
-     * using the UID of the currently authenticated user.
+     * Constructor for PatientBoundary.
+     *
+     * @param //pharmacist The pharmacist using this user interface.
      */
     public PharmacistBoundary() {
-    	this.pharmacist = (Pharmacist) HMSPersonnelController.getPersonnelByUID(AuthenticationController.cookie.getUid(), PersonnelFileType.PHARMACISTS);
+        this.pharmacist = (Pharmacist) HMSPersonnelController.getPersonnelByUID(AuthenticationController.cookie.getUid(), PersonnelFileType.PHARMACISTS);
     }
+
     /**
-     * Prints the menu options available to the pharmacist.
-     * Displays the pharmacist's name and the list of available actions.
+     * Displays the pharmacist menu options.
      */
-	@Override
-	protected void printChoice() {
-		System.out.printf("Welcome! Pharmacist --- %s ---\n", pharmacist.getFullName());
+    @Override
+    protected void printChoice() {
+        System.out.printf("Welcome! Pharmacist --- %s ---\n", pharmacist.getFullName());
         System.out.println("Pharmacist Menu:");
         System.out.println("1. View Appointment Outcome Record");
         System.out.println("2. Update Prescription Status");
@@ -35,53 +37,76 @@ public class PharmacistBoundary extends Boundary {
         System.out.println("5. Logout");
         System.out.print("Enter your choice: ");
 
-		
-	}
-    /**
-     * Starts the main interaction loop for the pharmacist UI.
-     * Displays the menu and handles user input for each menu option.
-     */
-	@Override
-	public void start() {
-		showPharmacistDashboard();
-	}
-    /**
-     * Displays the pharmacist's dashboard and handles user interaction.
-     * Provides options to view appointment records, update prescriptions,
-     * monitor inventory, submit replenishment requests, or log out.
-     */
-    public void showPharmacistDashboard() {
-        Scanner sc = new Scanner(System.in);
-        int choice = 0;
-        do {
-        	printChoice();
-            choice = Validator.readInt("");
-            switch(choice) {
-            case 1:
-        	  // Call the method to view appointment outcome records
-        	  PharmacistController.viewAppointmentOutcomeRecords();
-          		break;
-          	case 2:
-          		// Call the method to update prescription status
-          		PharmacistController.updatePrescriptionStatus();
-          	break;
-            case 3:
-                // Call the method to view medication inventory
-                PharmacistController.monitorInventory();
-                break;
-            case 4:
-                // Call the method to submit replenishment request
-                PharmacistController.submitReplenishmentRequests();
-                break;
-            case 5:
-                System.out.println("Logging out...");
-                HMSMain.main(null); // Return to the main application
-                break;
-            default:
-                System.out.println("Invalid choice! Please try again.");
-        }
-    } while(choice != 5);
-        sc.close(); // Close the Scanner
+
     }
+
+    /**
+     * Starts the Pharmacist UI by showing the Pharmacist Dashboard.
+     */
+    @Override
+    public void start() {
+        showPharmacistDashboard();
+    }
+
+    /**
+     * Displays the Pharmacist Dashboard and handles the Pharmacist menu choices.
+     */
+
+    public void showPharmacistDashboard() {
+        while (true) {
+            printChoice();
+            int choice = Validator.readInt("Enter your choice: ");
+
+            switch (choice) {
+                case 1 -> viewAppointmentOutcomeRecords();
+                case 2 -> updatePrescriptionStatus();
+                case 3 -> monitorInventory();
+                case 4 -> submitReplenishmentRequests();
+                case 5 -> {
+                    System.out.println("Logging out...");
+                    HMSMain.main(null); // Return to the main application
+                    return; // Exit the method
+                }
+                default -> System.out.println("Invalid choice! Please try again.");
+            }
+        }
+    }
+
+    /**
+     * Pharmacist Menu Option 1
+     * To allow the pharmacists to view patient appointment outcome records
+     */
+    public static void viewAppointmentOutcomeRecords() {
+        ViewAppointmentOutcomeRecordBoundary outcomeRecordUI = new ViewAppointmentOutcomeRecordBoundary();
+        outcomeRecordUI.viewAppointmentOutcomeRecords();
+    }
+
+    /**
+     * Pharmacist Menu Option 2
+     * To enable the pharmacist to update the prescriptions when a patient has completed an appointment
+     */
+    public static void updatePrescriptionStatus() {
+        UpdatePrescriptionStatusBoundary updateStatusUI = new UpdatePrescriptionStatusBoundary();
+        updateStatusUI.start();
+    }
+
+    /**
+     * Pharmacist Menu Option 3
+     * To enable the pharmacist to monitor the medication inventory
+     */
+    public static void monitorInventory() {
+        MonitorInventoryBoundary monitorInventoryUI = new MonitorInventoryBoundary();
+        monitorInventoryUI.start();
+    }
+
+    /**
+     * Pharmacist Menu Option 4
+     * For Pharmacists to submit replenishment requests to the administrator for approval
+     */
+    public static void submitReplenishmentRequests() {
+        SubmitReplenishmentRequestBoundary submitRequestUI = new SubmitReplenishmentRequestBoundary();
+        submitRequestUI.start();
+    }
+
 }
 

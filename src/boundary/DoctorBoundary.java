@@ -21,10 +21,12 @@ import repository.AppointmentOutcomeRecordRepository;
 import repository.PrescriptionRepository;
 import repository.RecordsRepository;
 
+/**
+ * DoctorBoundary class represents the user interface for a doctor in the HMS
+ * system.
+ * This class handles doctor-specific interactions.
+ */
 public class DoctorBoundary extends Boundary {
-	/**
-	 * The doctor using this UI.
-	 */
 	private Doctor doctor;
 
 	/**
@@ -34,9 +36,10 @@ public class DoctorBoundary extends Boundary {
 	 */
 	public DoctorBoundary(Doctor doctor) {
 		this.doctor = doctor;
-
 	}
-
+	/**
+	 * Displays the doctor menu options.
+	 */
 	@Override
 	protected void printChoice() {
 		System.out.printf("Welcome! Dr. --- %s ---\n", doctor.getFullName());
@@ -63,12 +66,9 @@ public class DoctorBoundary extends Boundary {
 	 */
 
 	public void showDoctorDashboard() {
-		Scanner sc = new Scanner(System.in);
-		int choice;
-
-		do {
+		while (true) {
 			printChoice();
-			choice = Validator.readInt("Enter your choice:");
+			int choice = Validator.readInt("Enter your choice:");
 
 			switch (choice) {
 				case 1 -> viewPatientMedicalRecord(doctor.getUID());
@@ -81,12 +81,12 @@ public class DoctorBoundary extends Boundary {
 				case 8 -> {
 					System.out.println("Logging out...");
 					HMSMain.main(null);
+					return;
 				}
 				default -> System.out.println("Invalid choice!");
 			}
-		} while (choice != 8);
+		}
 
-		sc.close(); // Close the Scanner
 	}
 
 

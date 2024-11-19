@@ -23,9 +23,9 @@ import utility.DateTimePicker;
 
 
 /**
- * This class represents the User Interface (UI) for the Admin in the Healthcare Management System (HMS).
- * It allows the Admin to manage hospital staff, view appointments, and manage the medication inventory.
- * It also supports the addition, update, removal of hospital staff and medicines.
+ * AdminBoundary class represents the user interface for an administrator in the HMS
+ * system.
+ * This class handles administrator-specific interactions.
  */
 
 public class AdminBoundary extends Boundary {
@@ -38,9 +38,8 @@ public class AdminBoundary extends Boundary {
     public AdminBoundary(Admin admin) {
         this.admin = admin;
     }
-    
     /**
-     * Prints the available menu options for the Admin user.
+     * Displays the administrator menu options.
      */
 	@Override
     protected void printChoice() {
@@ -59,10 +58,11 @@ public class AdminBoundary extends Boundary {
 	public void start() {
 		showAdminDashboard();
 	}
-	
+
 	/**
      * Displays the Admin Dashboard and handles the Admin menu choices.
      */
+
     public void showAdminDashboard() {
         while (true) {
             printChoice();

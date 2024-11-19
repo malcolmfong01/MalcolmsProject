@@ -11,7 +11,7 @@ public class Diagnosis {
     private String doctorID;
     private String medicalRecordID;
     private LocalDateTime diagnosisDate;
-    private TreatmentPlans TreatmentPlans;
+    private Treatment Treatment;
     private String diagnosisDescription;
     private Prescription prescription;
 
@@ -23,17 +23,17 @@ public class Diagnosis {
      * @param doctorID the unique identifier for the doctor who made the diagnosis
      * @param medicalRecordID the medical record ID associated with the diagnosis
      * @param diagnosisDate the date and time when the diagnosis was made
-     * @param TreatmentPlans the treatment plans associated with the diagnosis
+     * @param Treatment the treatment plans associated with the diagnosis
      * @param diagnosisDescription the description of the diagnosis
      * @param prescription the prescription given as part of the diagnosis
      */
-    public Diagnosis(String patientID, String diagnosisID, String doctorID, String medicalRecordID, LocalDateTime diagnosisDate, TreatmentPlans TreatmentPlans,String diagnosisDescription, Prescription prescription) {
+    public Diagnosis(String patientID, String diagnosisID, String doctorID, String medicalRecordID, LocalDateTime diagnosisDate, Treatment Treatment, String diagnosisDescription, Prescription prescription) {
         this.patientID = patientID;
         this.diagnosisID = diagnosisID;
         this.doctorID = doctorID;
         this.medicalRecordID = medicalRecordID;
         this.diagnosisDate = diagnosisDate;
-        this.TreatmentPlans = TreatmentPlans;
+        this.Treatment = Treatment;
         this.diagnosisDescription = diagnosisDescription;
         this.prescription = prescription;
     }
@@ -97,8 +97,8 @@ public class Diagnosis {
      *
      * @return the treatment plans
      */
-    public model.TreatmentPlans getTreatmentPlans() {
-        return TreatmentPlans;
+    public Treatment getTreatmentPlans() {
+        return Treatment;
     }
 
     /**
@@ -106,8 +106,8 @@ public class Diagnosis {
      *
      * @param TreatmentPlans the treatment plans to set
      */
-    public void setTreatmentPlans(model.TreatmentPlans treatmentPlans) {
-        TreatmentPlans = treatmentPlans;
+    public void setTreatmentPlans(Treatment treatment) {
+        Treatment = treatment;
     }
 
     /**
