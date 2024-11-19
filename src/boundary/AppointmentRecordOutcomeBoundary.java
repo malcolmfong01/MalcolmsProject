@@ -12,13 +12,10 @@ import java.util.ArrayList;
 import controller.AppointmentController;
 import controller.PrescribedMedicineController;
 import controller.RecordsController;
-import enums.AppointmentOutcomeStatus;
-import enums.RecordFileType;
+import enums.*;
 import utility.Validator;
 import model.*;
 import repository.*;
-import enums.AppointmentStatus;
-import enums.PrescriptionStatus;
 
 public class AppointmentRecordOutcomeBoundary extends Boundary {
     /**
@@ -184,7 +181,18 @@ public class AppointmentRecordOutcomeBoundary extends Boundary {
         RecordsRepository.saveAllRecordFiles();
         AppointmentOutcomeRecordRepository.saveAppointmentOutcomeRecordRepository();
         System.out.println("Appointment outcome recorded and saved successfully.");
-
+        // Enter amount to be paid
+        int paymentAmount = Validator.readInt("Enter Payment Amount: ");
+        String billingID = RecordsController.generateRecordID(RecordFileType.PAYMENT_RECORDS);
+        LocalDateTime createdDate = LocalDateTime.now();
+        LocalDateTime updateDate = LocalDateTime.now();
+        PaymentStatus paymentStatus =  PaymentStatus.OUTSTANDING;
+        // Generate the next medicine ID
+        PaymentRecord record;
+        System.out.println(appointment.getPatientID());
+        record = new PaymentRecord(billingID,createdDate,updateDate,RecordStatusType.ACTIVE,paymentStatus,appointment.getPatientID(),paymentAmount);
+        RecordsRepository.PAYMENT_RECORDS.put(appointment.getPatientID(), record);
+        RecordsRepository.saveAllRecordFiles();
     }
 
 }
