@@ -47,11 +47,9 @@ public class Validator {
         }
     }
     /**
-     * Reads an integer from the user with a given prompt.
-     * Continues to prompt until a valid integer is entered.
-     *
-     * @param prompt The prompt message to display to the user.
-     * @return The integer entered by the user.
+     * Makes Sure The Medicine ID entered by User is valid and in the appropriate
+     * format of (M---)
+     * @return The Medicine ID entered by the user.
      */
     public static String readMedID() {
         Scanner scanner = new Scanner(System.in);
@@ -68,6 +66,85 @@ public class Validator {
         return medicineID;
     }
 
+    /**
+     * Makes Sure The Patient ID entered by User is valid and in the appropriate
+     * format of (P---)
+     * @return The Patient ID entered by the user.
+     */
+    public static String readPatientID() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Patient ID (e.g., P001, P002): ");
+
+        String patientID = scanner.nextLine();
+
+        // Validate input
+        while (!patientID.matches("P\\d{3}")) {
+            System.out.println("Invalid Patient ID format! Please enter in the format P001, P002, etc.");
+            System.out.print("Enter Patient ID: ");
+            patientID = scanner.nextLine();
+        }
+        return patientID;
+    }
+
+    /**
+     * Makes Sure The Doctor ID entered by User is valid and in the appropriate
+     * format of (D---)
+     * @return The Doctor ID entered by the user.
+     */
+    public static String readDoctorID() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Doctor ID (e.g., D001, D002): ");
+
+        String doctorID = scanner.nextLine();
+
+        // Validate input
+        while (!doctorID.matches("D\\d{3}")) {
+            System.out.println("Invalid Doctor ID format! Please enter in the format D001, D002, etc.");
+            System.out.print("Enter Doctor ID: ");
+            doctorID = scanner.nextLine();
+        }
+        return doctorID;
+    }
+
+    /**
+     * Makes Sure The Administrator ID entered by User is valid and in the appropriate
+     * format of (A---)
+     * @return The Administrator ID entered by the user.
+     */
+    public static String readAdminID() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Administrator ID (e.g., A001, A002): ");
+
+        String adminID = scanner.nextLine();
+
+        // Validate input
+        while (!adminID.matches("A\\d{3}")) {
+            System.out.println("Invalid Administrator ID format! Please enter in the format A001, A002, etc.");
+            System.out.print("Enter Administrator ID: ");
+            adminID = scanner.nextLine();
+        }
+        return adminID;
+    }
+
+    /**
+     * Makes Sure The Pharmacist ID entered by User is valid and in the appropriate
+     * format of (PH---)
+     * @return The Pharmacist ID entered by the user.
+     */
+    public static String readPharmacistID() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Pharmacist ID (e.g., PH001, PH002): ");
+
+        String pharmID = scanner.nextLine();
+
+        // Validate input
+        while (!pharmID.matches("PH\\d{3}")) {
+            System.out.println("Invalid Pharmacist ID format! Please enter in the format PH001, PH002, etc.");
+            System.out.print("Enter Pharmacist ID to update: ");
+            pharmID = scanner.nextLine();
+        }
+        return pharmID;
+    }
     /**
      * Reads a LocalDateTime input from the user in the format "yyyy-MM-dd HH:mm".
      * Continues to prompt until a valid date and time are entered.
@@ -370,4 +447,6 @@ public class Validator {
         String genderRegex = "^[MF]$";
         return gender.toUpperCase().matches(genderRegex);
     }
+
+
 }

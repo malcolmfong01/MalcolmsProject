@@ -176,7 +176,7 @@ public class AdminBoundary extends MainUI {
      * @param role The role of the personnel to be updated (Doctor or Pharmacist).
      */
     public static void updatePersonnel(String role) {
-        String UID = Validator.readString("Enter ID Card: ");
+        String UID = Validator.readString("Enter ID: ");
         Doctor doctor = (Doctor) HMSPersonnelController.getPersonnelByUID(UID, PersonnelFileType.DOCTORS);
         Pharmacist pharmacist = (Pharmacist) HMSPersonnelController.getPersonnelByUID(UID,
                 PersonnelFileType.PHARMACISTS);
@@ -234,13 +234,13 @@ public class AdminBoundary extends MainUI {
      * @param role The role of the personnel to be removed (Doctor or Pharmacist).
      */
     public static void removePersonnel(String role) {
-    	System.out.println("Enter Staff ID Card: ");
+    	System.out.println("Enter Staff ID: ");
     	if(role == "Doctor") {
-    		String uidDoctor = Validator.readString();
+    		String uidDoctor = Validator.readDoctorID();
             AdminController.removePersonnel(uidDoctor, PersonnelFileType.DOCTORS);
     	}
     	else {
-    		String uidPharmacist = Validator.readString();
+    		String uidPharmacist = Validator.readPharmacistID();
             AdminController.removePersonnel(uidPharmacist, PersonnelFileType.PHARMACISTS);
     	}
     }  
@@ -296,7 +296,8 @@ public class AdminBoundary extends MainUI {
      * Prompts the user to update the details of an existing medicine in the inventory.
      */
     public static void updateMedicine() {
-        String medicineID = Validator.readString("Enter Medicine ID: ");
+        System.out.print("Enter Medicine ID to update: ");
+        String medicineID = Validator.readMedID();
         Medicine medicine = MedicineController.getMedicineByUID(medicineID);
         if (medicine == null) {
             updateMedicine();
@@ -317,7 +318,8 @@ public class AdminBoundary extends MainUI {
      * Prompts the user to remove a medicine from the inventory.
      */
     public static void removeMedicine() {
-        String medicineID = Validator.readString("Enter Medicine ID: ");
+        System.out.print("Enter Medicine ID to update: ");
+        String medicineID = Validator.readMedID();
         MedicineController.removeMedicine(medicineID);
     }
 	
@@ -373,12 +375,5 @@ public class AdminBoundary extends MainUI {
         medicine.setApprovedDate(approvedDate);
         AdminController.approveReplenishRequest(medicineID, medicine);
     }
-
-    
-
-   
-    
-   
-    
 
 }
