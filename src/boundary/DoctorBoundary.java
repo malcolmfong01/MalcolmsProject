@@ -37,6 +37,7 @@ public class DoctorBoundary extends Boundary {
 	public DoctorBoundary(Doctor doctor) {
 		this.doctor = doctor;
 	}
+
 	/**
 	 * Displays the doctor menu options.
 	 */
@@ -89,10 +90,10 @@ public class DoctorBoundary extends Boundary {
 
 	}
 
-
 	/**
 	 * Doctor Menu Option 1
 	 * Displays all patient medical records associated with this doctor.
+	 * 
 	 * @param doctorID the ID of the doctor
 	 */
 	public void viewPatientMedicalRecord(String doctorID) {
@@ -116,7 +117,7 @@ public class DoctorBoundary extends Boundary {
 	 * Allows the doctor to select and update a patient's medical record.
 	 */
 	public void updatePatientMedicalRecord(String doctorID) {
-		//check whether the doctor has any medical record to update
+		// check whether the doctor has any medical record to update
 		boolean recordsFound = false;
 		for (MedicalRecord record : RecordsRepository.MEDICAL_RECORDS.values()) {
 			if (record.getDoctorID().equals(doctorID)) {
@@ -136,7 +137,8 @@ public class DoctorBoundary extends Boundary {
 					return;
 				}
 
-				List<Appointment> currentAppointment = AppointmentController.getCompletedAppointmentsByDoctorID(medicalRecord.getDoctorID());
+				List<Appointment> currentAppointment = AppointmentController
+						.getCompletedAppointmentsByDoctorID(medicalRecord.getDoctorID());
 				if (currentAppointment == null || currentAppointment.isEmpty()) {
 					System.out.println("Error: There are no completed appointments for the current patient.");
 					System.out.println("You cannot update the medical record");
@@ -147,10 +149,12 @@ public class DoctorBoundary extends Boundary {
 					// Check if the appointment is relevant (e.g., still pending or needs update)
 					if (appointment.getAppointmentStatus() == AppointmentStatus.COMPLETED) {
 						// Use UpdateMedicalRecordBoundary to handle the updating process
-						UpdateMedicalRecordBoundary updateUI = new UpdateMedicalRecordBoundary(doctor, medicalRecord, appointment);
+						UpdateMedicalRecordBoundary updateUI = new UpdateMedicalRecordBoundary(doctor, medicalRecord,
+								appointment, this);
 						updateUI.start();
 					} else {
-						System.out.println("Appointment with ID " + appointment.getRecordID() + " is not pending and cannot be updated.");
+						System.out.println("Appointment with ID " + appointment.getRecordID()
+								+ " is not pending and cannot be updated.");
 					}
 				}
 
@@ -245,7 +249,8 @@ public class DoctorBoundary extends Boundary {
 
 						// Assuming you have a way to get the diagnosis ID, type of service, and
 						// consultation notes
-						String diagnosisID = ""; // Retrieve the diagnosis ID (you may need to implement a way to get this)
+						String diagnosisID = ""; // Retrieve the diagnosis ID (you may need to implement a way to get
+													// this)
 						String typeOfService = ""; // Define the type of service provided
 						String consultationNotes = ""; // Get consultation notes from the doctor
 
@@ -316,6 +321,7 @@ public class DoctorBoundary extends Boundary {
 		AppointmentRecordOutcomeBoundary outcomeUI = new AppointmentRecordOutcomeBoundary(doctor);
 		outcomeUI.start();
 	}
+
 	/**
 	 * Generates an appointment outcome record for a specific medical record and
 	 * diagnosis.
@@ -342,7 +348,6 @@ public class DoctorBoundary extends Boundary {
 				typeOfService,
 				consultationNotes,
 				AppointmentOutcomeStatus.INCOMPLETED);
-
 
 		AppointmentOutcomeRecordRepository.addAppointmentOutcomeRecord(medicalRecord.getPatientID(), outcomeRecord);
 		// AppointmentOutcomeRecordRepository.saveAppointmentOutcomeRecordRepository();
@@ -380,7 +385,7 @@ public class DoctorBoundary extends Boundary {
 	public String retrieveMedicalRecordID(String patientID) {
 		for (MedicalRecord record : RecordsRepository.MEDICAL_RECORDS.values()) {
 			if (record.getPatientID().equals(patientID)) {
-                return record.getRecordID(); // Return the matching record's ID
+				return record.getRecordID(); // Return the matching record's ID
 			}
 		}
 		return null; // No matching record found
