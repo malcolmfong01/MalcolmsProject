@@ -231,7 +231,6 @@ public class DoctorBoundary extends Boundary {
 				if ("accept".equals(choice)) {
 					String patientID = appointment.getPatientID();
 					String doctorID = appointment.getDoctorID();
-					System.out.println(doctorID);
 					String medicalRecordID = retrieveMedicalRecordID(patientID);
 
 					appointment.setAppointmentStatus(AppointmentStatus.CONFIRMED);
