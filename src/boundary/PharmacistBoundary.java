@@ -20,7 +20,7 @@ public class PharmacistBoundary extends Boundary {
      * @param //pharmacist The pharmacist using this user interface.
      */
     public PharmacistBoundary() {
-        this.pharmacist = (Pharmacist) HMSPersonnelController.getPersonnelByUID(AuthenticationController.cookie.getUid(), PersonnelFileType.PHARMACISTS);
+        this.pharmacist = (Pharmacist) StaffController.getPersonnelByUID(RegisterController.cookie.getUid(), PersonnelFileType.PHARMACISTS);
     }
 
     /**
@@ -77,7 +77,7 @@ public class PharmacistBoundary extends Boundary {
      * To allow the pharmacists to view patient appointment outcome records
      */
     public static void viewAppointmentOutcomeRecords() {
-        ViewAppointmentOutcomeRecordBoundary outcomeRecordUI = new ViewAppointmentOutcomeRecordBoundary();
+        PH_ViewAppointmentOutcomeBoundary outcomeRecordUI = new PH_ViewAppointmentOutcomeBoundary();
         outcomeRecordUI.viewAppointmentOutcomeRecords();
     }
 
@@ -86,7 +86,7 @@ public class PharmacistBoundary extends Boundary {
      * To enable the pharmacist to update the prescriptions when a patient has completed an appointment
      */
     public static void updatePrescriptionStatus() {
-        UpdatePrescriptionStatusBoundary updateStatusUI = new UpdatePrescriptionStatusBoundary();
+        PH_UpdatePrescriptionBoundary updateStatusUI = new PH_UpdatePrescriptionBoundary();
         updateStatusUI.start();
     }
 
@@ -95,7 +95,7 @@ public class PharmacistBoundary extends Boundary {
      * To enable the pharmacist to monitor the medication inventory
      */
     public static void monitorInventory() {
-        MonitorInventoryBoundary monitorInventoryUI = new MonitorInventoryBoundary();
+        PH_MonitorInventoryBoundary monitorInventoryUI = new PH_MonitorInventoryBoundary();
         monitorInventoryUI.start();
     }
 
@@ -104,7 +104,7 @@ public class PharmacistBoundary extends Boundary {
      * For Pharmacists to submit replenishment requests to the administrator for approval
      */
     public static void submitReplenishmentRequests() {
-        SubmitReplenishmentRequestBoundary submitRequestUI = new SubmitReplenishmentRequestBoundary();
+        PH_ReplenishRequestBoundary submitRequestUI = new PH_ReplenishRequestBoundary();
         submitRequestUI.start();
     }
 

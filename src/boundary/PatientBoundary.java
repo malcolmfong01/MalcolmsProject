@@ -48,7 +48,7 @@ public class PatientBoundary extends Boundary {
 		System.out.println("6. Cancel an Appointment");
 		System.out.println("7. View Scheduled Appointments");
 		System.out.println("8. View Past Appointment Outcome Records");
-		System.out.println("9. Acknowledge Rejected Appointment Slots"); // my added
+		System.out.println("9. Acknowledge Rejected Appointment Slots");
 		System.out.println("10. Logout");
 		System.out.print("Enter your choice: ");
 	}
@@ -124,8 +124,8 @@ public class PatientBoundary extends Boundary {
 		for (Patient patient : PersonnelRepository.PATIENTS.values()) {
 			if (patient.getUID().equals(patientId)) {
 				recordsFound = true;
-				UpdatePatientParticularsBoundary updatePatientParticularsBoundary = new UpdatePatientParticularsBoundary(patient);
-				updatePatientParticularsBoundary.start();
+				P_UpdateDetailsBoundary PUpdateDetailsBoundary = new P_UpdateDetailsBoundary(patient);
+				PUpdateDetailsBoundary.start();
 			}
 		}
 		if (!recordsFound) {
@@ -171,7 +171,7 @@ public class PatientBoundary extends Boundary {
 	private void scheduleAppointment() {
 		if(viewAvailableAppointmentSlots()) {
 			System.out.println("\n--- Schedule Appointment for Patient ID: " + patient.getUID() + " ---");
-			ScheduleAppointmentBoundary scheduleAppointmentUI = new ScheduleAppointmentBoundary(patient);
+			P_ScheduleBoundary scheduleAppointmentUI = new P_ScheduleBoundary(patient);
 			scheduleAppointmentUI.start();
 		}
 	}
@@ -183,7 +183,7 @@ public class PatientBoundary extends Boundary {
 	private void rescheduleAppointment() {
 		if(viewAvailableAppointmentSlots()) {
 		System.out.println("\n--- Reschedule an Appointment ---");
-		RescheduleAppointmentBoundary rescheduleAppointmentUI = new RescheduleAppointmentBoundary(patient);
+		P_RescheduleBoundary rescheduleAppointmentUI = new P_RescheduleBoundary(patient);
 		rescheduleAppointmentUI.start();
 		}
 	}

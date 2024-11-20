@@ -2,14 +2,14 @@ package model;
 
 import java.time.LocalDateTime;
 
-import controller.HMSPersonnelController;
+import controller.StaffController;
 import enums.PersonnelFileType;
 
 /**
  * Represents a patient in the healthcare management system, including personal information, insurance details,
  * allergies, and date of admission.
  */
-public class Patient extends HMSPersonnel {
+public class Patient extends Staff {
 
 
 
@@ -32,7 +32,7 @@ public class Patient extends HMSPersonnel {
     // Constructor for creation of Patient
     public Patient(String fullName, String username, String email, String phoneNo,
                    String passwordHash, LocalDateTime DoB, String gender, String allergies, LocalDateTime dateOfAdmission) {
-        super(HMSPersonnelController.generateUID(PersonnelFileType.PATIENTS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Patients");
+        super(StaffController.generateUID(PersonnelFileType.PATIENTS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Patients");
 
 
 

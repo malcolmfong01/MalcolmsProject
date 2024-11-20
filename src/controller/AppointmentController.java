@@ -18,8 +18,7 @@ import repository.RecordsRepository;
  */
 public class AppointmentController {
 
-	// Map to keep track of the next ID for each record type
-	/**
+	/** Map to keep track of the next ID for each record type
 	 * Generates a unique record ID for a specific record type using UUID.
 	 *
 	 * @param recType The type of the record for which the ID is generated.

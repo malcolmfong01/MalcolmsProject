@@ -70,9 +70,9 @@ public class PersonnelRepository extends Repository {
      *
      * @param fileName     the name of the file to save records to
      * @param personnelMap the map of personnel records to save
-     * @param <T>          a type parameter extending HMSPersonnel
+     * @param <T>          a type parameter extending Staff
      */
-    private static <T extends HMSPersonnel> void savePersonnelToCSV(String fileName, HashMap<String, T> personnelMap) {
+    private static <T extends Staff> void savePersonnelToCSV(String fileName, HashMap<String, T> personnelMap) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
@@ -107,12 +107,12 @@ public class PersonnelRepository extends Repository {
     }
 
     /**
-     * Converts an HMSPersonnel object to a CSV-formatted string.
+     * Converts an Staff object to a CSV-formatted string.
      *
      * @param personnel the personnel object to convert
      * @return a CSV-formatted string representing the personnel
      */
-    private static String personnelToCSV(HMSPersonnel personnel) {
+    private static String personnelToCSV(Staff personnel) {
         StringBuilder csvBuilder = new StringBuilder();
 
         // Add common fields
@@ -160,9 +160,9 @@ public class PersonnelRepository extends Repository {
      * @param fileName     the name of the CSV file to load from
      * @param personnelMap the map to store the loaded personnel records
      * @param type         the class type of personnel to load (e.g., Doctor, Patient)
-     * @param <T>          a type parameter extending HMSPersonnel
+     * @param <T>          a type parameter extending Staff
      */
-    private static <T extends HMSPersonnel> void loadPersonnelFromCSV(
+    private static <T extends Staff> void loadPersonnelFromCSV(
             String fileName, HashMap<String, T> personnelMap, Class<T> type) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
@@ -212,10 +212,10 @@ public class PersonnelRepository extends Repository {
      *
      * @param csv  the CSV string representing the personnel
      * @param type the class type of personnel to create (e.g., Doctor, Patient)
-     * @param <T>  a type parameter extending HMSPersonnel
+     * @param <T>  a type parameter extending Staff
      * @return a personnel object of the specified type, or null if parsing fails
      */
-    private static <T extends HMSPersonnel> T csvToPersonnel(String csv, Class<T> type) {
+    private static <T extends Staff> T csvToPersonnel(String csv, Class<T> type) {
         String[] fields = csv.split(",");
 
         try {

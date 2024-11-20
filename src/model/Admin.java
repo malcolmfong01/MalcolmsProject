@@ -2,13 +2,13 @@ package model;
 
 import java.time.LocalDateTime;
 
-import controller.HMSPersonnelController;
+import controller.StaffController;
 import enums.PersonnelFileType;
 /**
- * Represents an Admin in the HMS system, inheriting from the HMSPersonnel class.
+ * Represents an Admin in the HMS system, inheriting from the Staff class.
  * Contains information specific to an Admin, including the date of creation.
  */
-public class Admin extends HMSPersonnel {
+public class Admin extends Staff {
     private LocalDateTime dateOfCreation;
 
     /**
@@ -28,7 +28,7 @@ public class Admin extends HMSPersonnel {
     // Constructor for creation of Admin
     public Admin(String fullName, String username, String email, String phoneNo,
                  String passwordHash, LocalDateTime DoB, String gender, String role, LocalDateTime dateOfCreation) {
-        super(HMSPersonnelController.generateUID(PersonnelFileType.ADMINS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Admins");
+        super(StaffController.generateUID(PersonnelFileType.ADMINS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Admins");
         this.dateOfCreation = dateOfCreation;
     }
     

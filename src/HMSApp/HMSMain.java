@@ -7,8 +7,8 @@ import boundary.*;
  */
 public class HMSMain {
     public static void main(String[] args) {
-        PageBoundary mainPageBoundary = new PageBoundary();
-        mainPageBoundary.start();
+        MainBoundary mainMainBoundary = new MainBoundary();
+        mainMainBoundary.start();
     }
 
 }

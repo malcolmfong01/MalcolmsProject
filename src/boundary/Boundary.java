@@ -34,15 +34,6 @@ public abstract class Boundary {
     }
 
     /**
-     * Method to exit the application.
-     * Can be overridden if needed, but provides a basic exit confirmation.
-     */
-    protected void exitApp() {
-        System.out.println("Exiting the Hospital Management System... Goodbye!");
-        System.exit(0);
-    }
-
-    /**
      * Method to handle user input for navigation in the view.
      * This method can be used by child views to facilitate action selection.
      * 

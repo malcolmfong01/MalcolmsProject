@@ -3,7 +3,6 @@ package model;
 import java.time.LocalDateTime;
 
 import enums.AppointmentOutcomeStatus;
-import enums.AppointmentStatus;
 
 /**
  * Represents the outcome record of a patient's appointment.

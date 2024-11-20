@@ -12,7 +12,6 @@ import java.util.Map;
 import HMSApp.HMSMain;
 import enums.*;
 import model.*;
-import repository.PrescribedMedicationRepository;
 import repository.RecordsRepository;
 import utility.Validator;
 import repository.MedicineRepository;
@@ -159,7 +158,7 @@ public class AdminBoundary extends Boundary {
      */
     private static void updatePersonnel(String role) {
         String UID = Validator.readString("Enter ID: ");
-        HMSPersonnel personnel = HMSPersonnelController.getPersonnelByUID(UID,
+        Staff personnel = StaffController.getPersonnelByUID(UID,
                 role.equals("Doctor") ? PersonnelFileType.DOCTORS : PersonnelFileType.PHARMACISTS);
 
         if (personnel == null) {
@@ -168,7 +167,7 @@ public class AdminBoundary extends Boundary {
         }
 
         String username = Validator.readString("Enter New Username: ");
-        while (AuthenticationController.isUsernameTaken(username,
+        while (RegisterController.isUsernameTaken(username,
                 role.equals("Doctor") ? PersonnelRepository.DOCTORS : PersonnelRepository.PHARMACISTS)) {
             System.out.println("The username '" + username + "' is already taken. Please enter a new username:");
             username = Validator.readString("Enter a new username: ");
@@ -178,7 +177,7 @@ public class AdminBoundary extends Boundary {
         String phoneNo = Validator.readValidPhoneNumber("Enter New Phone No: ");
         String hashedPassword = Validator.readString("Enter New Password: ");
 
-        while (!AuthenticationController.isValidPassword(hashedPassword)) {
+        while (!RegisterController.isValidPassword(hashedPassword)) {
             System.out.println("Password must be at least 8 characters long, contain an uppercase letter, a number, and a special character.");
             hashedPassword = Validator.readString("Enter New Password: ");
         }
@@ -293,7 +292,7 @@ public class AdminBoundary extends Boundary {
      *
      * @param personnel The personnel whose details are to be printed.
      */
-    private static void printPersonnelDetails(HMSPersonnel personnel) {
+    private static void printPersonnelDetails(Staff personnel) {
         System.out.println("--------------------------------------------------");
         System.out.println("Personnel Details:");
         System.out.println("--------------------------------------------------");
@@ -341,7 +340,7 @@ public class AdminBoundary extends Boundary {
      * @param type The type of personnel to list (Doctors or Pharmacists).
      */
     private static void listPersonnelByRole(PersonnelFileType type) {
-        Map<String, ? extends HMSPersonnel> personnelMap;
+        Map<String, ? extends Staff> personnelMap;
 
         switch (type) {
             case DOCTORS:
@@ -358,7 +357,7 @@ public class AdminBoundary extends Boundary {
         if (personnelMap != null && !personnelMap.isEmpty()) {
             System.out.println("\nListing all personnel of type: " + type);
             System.out.println("===========================================");
-            for (HMSPersonnel personnel : personnelMap.values()) {
+            for (Staff personnel : personnelMap.values()) {
                 if (type == PersonnelFileType.DOCTORS) {
                     printDoctorDetails((Doctor) personnel);
                 } else  {
@@ -399,17 +398,17 @@ public class AdminBoundary extends Boundary {
      * Lists all personnel sorted by age from oldest to youngest.
      */
     private static void listPersonnelByAge() {
-        List<HMSPersonnel> combinedList = new ArrayList<>();
+        List<Staff> combinedList = new ArrayList<>();
 
         combinedList.addAll(PersonnelRepository.DOCTORS.values());
         combinedList.addAll(PersonnelRepository.PHARMACISTS.values());
 
         // Sort the combined list by age from oldest to youngest
-        combinedList.sort(Comparator.comparingInt(personnel -> calculateAge((HMSPersonnel) personnel)).reversed());
+        combinedList.sort(Comparator.comparingInt(personnel -> calculateAge((Staff) personnel)).reversed());
 
         System.out.println("\nListing all personnel sorted by age (oldest to youngest):");
         System.out.println("===========================================");
-        for (HMSPersonnel personnel : combinedList) {
+        for (Staff personnel : combinedList) {
             if (personnel instanceof Doctor) {
                 printDoctorDetails((Doctor) personnel);
             } else if (personnel instanceof Pharmacist) {
@@ -425,7 +424,7 @@ public class AdminBoundary extends Boundary {
      * @param personnel The personnel whose age is to be calculated.
      * @return The age in years.
      */
-    private static int calculateAge(HMSPersonnel personnel) {
+    private static int calculateAge(Staff personnel) {
         LocalDate birthDate = personnel.getDoB().toLocalDate(); // Ensure this returns LocalDate
         return Period.between(birthDate, LocalDate.now()).getYears();
     }
@@ -574,18 +573,14 @@ public class AdminBoundary extends Boundary {
         int choice = adminBoundary.getUserChoice(2);
 
         switch (choice) {
-            case 1 -> {
-                viewBillingByPatientID();
-            }
-            case 2 -> {
-                manageBilling();
-            }
+            case 1 -> viewBillingByPatientID();
+            case 2 -> manageBilling();
             default -> System.out.println("Error: Invalid choice. Please select a valid option.");
         }
     }
 
     /**
-     * Administrator Menu Option 6
+     * Administrator Menu Option 5
      * View billing by patient ID.
      */
     private static ArrayList <PaymentRecord> viewBillingByPatientID() {

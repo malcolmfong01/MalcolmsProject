@@ -8,7 +8,7 @@ import repository.PersonnelRepository;
  * from the PersonnelRepository.
  */
 
-public class AdminController extends HMSPersonnelController {
+public class AdminController extends StaffController {
 
     /**
      * Retrieves a Doctor object based on the provided doctor ID.

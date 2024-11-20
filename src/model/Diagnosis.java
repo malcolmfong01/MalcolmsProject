@@ -104,7 +104,7 @@ public class Diagnosis {
     /**
      * Sets the treatment plans associated with the diagnosis.
      *
-     * @param TreatmentPlans the treatment plans to set
+     * @param treatment the treatment plans to set
      */
     public void setTreatmentPlans(Treatment treatment) {
         Treatment = treatment;

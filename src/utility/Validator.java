@@ -1,6 +1,5 @@
 package utility;
 
-import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.time.LocalDateTime;
@@ -35,17 +34,18 @@ public class Validator {
     public static int readInt(String prompt) {
         while (true) {
             try {
-                if (prompt != "")
+                if (!prompt.isEmpty()) // Use isEmpty() for clarity and efficiency
                     System.out.print(prompt);
                 int userInput = sc.nextInt();
                 sc.nextLine(); // Consume newline left-over
                 return userInput;
             } catch (InputMismatchException e) {
-                sc.nextLine();
+                sc.nextLine(); // Clear the invalid input
                 System.out.println("Invalid input. Please enter an integer.");
             }
         }
     }
+
 
     /**
      * Reads and validates an ID entered by the user based on a given type and format.
@@ -59,40 +59,18 @@ public class Validator {
     // System.out.println("Validated Medicine ID: " + medicineID);
     public static String readID(String idType, String regex) {
         Scanner scanner = new Scanner(System.in);
-        System.out.printf("Enter %s ID (e.g., %s001, %s002): ", idType, idType.substring(0, 1), idType.substring(0, 1));
+        char prefix = idType.charAt(0); // Use charAt(0) to get the first character of idType
+        System.out.printf("Enter %s ID (e.g., %c001, %c002): ", idType, prefix, prefix);
 
         String id = scanner.nextLine();
 
         // Validate input
         while (!id.matches(regex)) {
-            System.out.printf("Invalid %s ID format! Please enter in the format %s001, %s002, etc.%n", idType, idType.substring(0, 1), idType.substring(0, 1));
+            System.out.printf("Invalid %s ID format! Please enter in the format %c001, %c002, etc.%n", idType, prefix, prefix);
             System.out.printf("Enter %s ID: ", idType);
             id = scanner.nextLine();
         }
         return id;
-    }
-
-    /**
-     * Reads a LocalDateTime input from the user in the format "yyyy-MM-dd HH:mm".
-     * Continues to prompt until a valid date and time are entered.
-     *
-     * @return LocalDateTime object representing the entered date and time.
-     */
-    public static LocalDateTime readDate() {
-        LocalDateTime date = null;
-        boolean valid = false;
-        while (!valid) {
-            String input = Validator.readString();
-
-            try {
-                // Parse the input into LocalDateTime
-                date = LocalDateTime.parse(input, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-                valid = true; // Input is valid, exit the loop
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format. Please use YYYY-MM-DD HH:MM.");
-            }
-        }
-        return date;
     }
 
     /**
@@ -107,7 +85,7 @@ public class Validator {
      */
     public static int readInt(String prompt, int min, int max) {
         while (true) {
-            if (prompt != "")
+            if (!prompt.isEmpty())
                 System.out.print(prompt);
             try {
                 int userInput = sc.nextInt();
@@ -120,26 +98,6 @@ public class Validator {
             } catch (InputMismatchException e) {
                 sc.nextLine(); // Clear the invalid input
                 System.out.println("Invalid input. Please enter a valid integer.");
-            }
-        }
-    }
-
-    /**
-     * Reads a double from the user with a default prompt message.
-     * Continues to prompt until a valid double is entered.
-     *
-     * @return The double entered by the user.
-     */
-    public static double readDouble() {
-        while (true) {
-            try {
-                System.out.print("Enter a double: ");
-                double userInput = sc.nextDouble();
-                sc.nextLine(); // Consume newline left-over
-                return userInput;
-            } catch (InputMismatchException e) {
-                sc.nextLine();
-                System.out.println("Invalid input. Please enter a decimal number.");
             }
         }
     }
@@ -245,32 +203,19 @@ public class Validator {
      * @return true if the user confirms with "yes"; false otherwise.
      */
     public static boolean promptConfirmation(String message) {
-        System.out.println("Are you sure you want to " + message + "? (yes/no)");
-        String userInput = sc.nextLine().trim().toLowerCase();
+        while (true) {
+            System.out.println("Are you sure you want to " + message + "? (yes/no)");
+            String userInput = sc.nextLine().trim().toLowerCase();
 
-        // Check if the input is either "yes" or "no", otherwise prompt again
-        if (userInput.equals("yes")) {
-            return true;
-        } else if (userInput.equals("no")) {
-            return false;
-        } else {
-            // Handle invalid input by asking again or assuming a default behavior
-            System.out.println("Invalid input. Please enter 'yes' or 'no'.");
-            return promptConfirmation(message);  // Recursively call to get valid input
+            switch (userInput) {
+                case "yes":
+                    return true;
+                case "no":
+                    return false;
+                default:
+                    System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+            }
         }
-    }
-
-
-    /**
-     * Generates a unique ID for a new entry in a HashMap.
-     *
-     * @param database The HashMap to generate a unique ID for.
-     * @param <K>      The type of the HashMap's keys.
-     * @param <V>      The type of the HashMap's values.
-     * @return A unique ID based on the current size of the database.
-     */
-    public static <K, V> int generateUniqueId(HashMap<K, V> database) {
-        return database.isEmpty() ? 1 : database.size() + 1;
     }
 
     /**
@@ -283,22 +228,6 @@ public class Validator {
     }
 
     /**
-     * Prompts the user to press Enter to continue.
-     */
-    public static void pressEnterToContinue() {
-        System.out.println("Press Enter to continue...");
-        sc.nextLine();
-    }
-
-    /**
-     * Clears the console screen (may not work in all environments).
-     */
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
-    /**
      * Reads a date input from the user in the specified format and returns a
      * LocalDateTime object.
      * Continues to prompt until a valid date is entered.
@@ -307,7 +236,6 @@ public class Validator {
      * @return LocalDateTime object representing the entered date and time.
      */
     public static LocalDateTime readDate(String prompt) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         while (true) {
             System.out.println(prompt);
             String userInput = sc.nextLine();
@@ -324,54 +252,13 @@ public class Validator {
     }
 
     /**
-     * Retrieves a field from an array by index, returning null if the index is out of bounds or empty.
-     *
-     * @param fields The array of fields.
-     * @param index  The index to retrieve.
-     * @return The field at the specified index, or null if out of bounds or empty.
-     */
-    public static String getFieldOrNull(String[] fields, int index) {
-        return index < fields.length && !fields[index].isEmpty() ? fields[index] : null;
-    }
-
-    /**
-     * Parses a LocalDateTime from an array by index, returning null if parsing fails or the field is empty.
-     *
-     * @param fields The array of fields.
-     * @param index  The index to parse.
-     * @return The LocalDateTime object or null if parsing fails or field is empty.
-     */
-    public static LocalDateTime parseDateTimeOrNull(String[] fields, int index) {
-        try {
-            return index < fields.length && !fields[index].isEmpty() ? LocalDateTime.parse(fields[index]) : null;
-        } catch (Exception e) {
-            return null; // return null if parsing fails or field is empty
-        }
-    }
-    /**
-     * Parses a Double from an array by index.
-     * Returns null if parsing fails or the field is empty.
-     *
-     * @param fields The array of fields.
-     * @param index  The index to parse.
-     * @return The Double value or null if parsing fails or the field is empty.
-     */
-    public static Double parseDoubleOrNull(String[] fields, int index) {
-        try {
-            return index < fields.length && !fields[index].isEmpty() ? Double.parseDouble(fields[index]) : null;
-        } catch (Exception e) {
-            return null; // return null if parsing fails or field is empty
-        }
-    }
-
-    /**
      * Checks if the provided email matches a valid email format.
      *
      * @param email The email address to validate.
      * @return True if the email is valid, false otherwise.
      */
     public static boolean isValidEmail(String email) {
-        String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        String emailRegex = "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         return email.matches(emailRegex);
     }
 

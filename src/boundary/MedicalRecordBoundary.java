@@ -8,7 +8,7 @@ package boundary;
 import java.util.HashSet;
 import java.util.Set;
 
-import controller.HMSPersonnelController;
+import controller.StaffController;
 import model.*;
 import utility.Validator;
 import model.Treatment;
@@ -33,7 +33,7 @@ public class MedicalRecordBoundary extends Boundary {
      */
     public MedicalRecordBoundary(MedicalRecord medicalRecord) {
         this.medicalRecord = medicalRecord;
-        this.patient = HMSPersonnelController.getPatientById(medicalRecord.getPatientID());
+        this.patient = StaffController.getPatientById(medicalRecord.getPatientID());
     }
 
     /**
@@ -53,7 +53,7 @@ public class MedicalRecordBoundary extends Boundary {
         System.out.printf("| %-20s: %-20s |\n", "Patient DOB", (patient != null ? patient.getDoB() : "Unknown"));
         System.out.printf("| %-20s: %-20s |\n", "Patient Gender", (patient != null ? patient.getGender() : "Unknown"));
         System.out.printf("| %-20s: %-20s |\n", "Blood Type", medicalRecord.getBloodType());
-        System.out.printf("| %-20s: %-20s |\n", "Phone Number", (patient != null ? patient.getPhoneNo(): "Unknown"));
+        System.out.printf("| %-20s: %-20s |\n", "Phone Number", (patient != null ? patient.getPhoneNo() : "Unknown"));
         System.out.printf("| %-20s: %-20s |\n", "Email", (patient != null ? patient.getEmail() : "Unknown"));
         System.out.println(border);
 
@@ -138,17 +138,17 @@ public class MedicalRecordBoundary extends Boundary {
     public void start() {
         displayMedicalRecordInBox(); // Display the medical record
 
-        int choice = 0;
-        do {
+        int choice; // Initialize choice to ensure the loop runs at least once
+        while (true) {
             printChoice();
             choice = Validator.readInt("");
             switch (choice) {
-                case 1:
+                case 1 -> {
                     System.out.println("Returning to previous menu...");
-                    return; // Exits this UI and goes back to the previous one
-                default:
-                    System.out.println("Invalid choice, please try again.");
+                    return; // Exits the method and returns to the previous menu
+                }
+                default -> System.out.println("Invalid choice, please try again.");
             }
-        } while (choice != 1);
+        }
     }
 }

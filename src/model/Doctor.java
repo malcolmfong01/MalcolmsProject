@@ -2,15 +2,15 @@ package model;
 
 import java.time.LocalDateTime;
 
-import controller.HMSPersonnelController;
+import controller.StaffController;
 import enums.PersonnelFileType;
 
 /**
- * Represents a Doctor in the system. Inherits from the HMSPersonnel class to include
+ * Represents a Doctor in the system. Inherits from the Staff class to include
  * basic personnel details such as name, contact information, etc., and adds specific
  * information related to the doctor's specialty, medical license, date of joining, and years of experience.
  */
-public class Doctor extends HMSPersonnel {
+public class Doctor extends Staff {
     private LocalDateTime dateJoin;
 
 
@@ -31,7 +31,7 @@ public class Doctor extends HMSPersonnel {
     			String fullName, String username, String email, String phoneNo,
                   String passwordHash, LocalDateTime DoB, String gender,
                    LocalDateTime dateJoin) {
-        super(HMSPersonnelController.generateUID(PersonnelFileType.DOCTORS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Doctors");
+        super(StaffController.generateUID(PersonnelFileType.DOCTORS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Doctors");
         this.dateJoin = dateJoin;
 
     }

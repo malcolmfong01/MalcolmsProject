@@ -76,7 +76,7 @@ public class DoctorBoundary extends Boundary {
 				case 2 -> updatePatientMedicalRecord(doctor.getUID());
 				case 3 -> viewPersonalSchedule();
 				case 4 -> setavailabilityforAppointments();
-				case 5 -> acceptOrDeclineAppointmentRequests();
+				case 5 -> manageAppointmentRequests();
 				case 6 -> viewUpcomingAppointments();
 				case 7 -> recordAppointmentOutcome();
 				case 8 -> {
@@ -142,17 +142,18 @@ public class DoctorBoundary extends Boundary {
 
 				List<Appointment> currentAppointment = AppointmentController
 						.getCompletedAppointmentsByDoctorID(medicalRecord.getDoctorID());
-				if (currentAppointment == null || currentAppointment.isEmpty()) {
+				// Check if there are no completed appointments for the patient
+				if (currentAppointment.isEmpty()) {
 					System.out.println("Error: There are no completed appointments for the current patient.");
-					System.out.println("You cannot update the medical record");
+					System.out.println("You cannot update the medical record.");
 					return;
 				}
 				// Loop through each appointment record and perform the necessary actions
 				for (Appointment appointment : currentAppointment) {
 					// Check if the appointment is relevant (e.g., still pending or needs update)
 					if (appointment.getAppointmentStatus() == AppointmentStatus.COMPLETED) {
-						// Use UpdateMedicalRecordBoundary to handle the updating process
-						UpdateMedicalRecordBoundary updateUI = new UpdateMedicalRecordBoundary(doctor, medicalRecord,
+						// Use D_UpdateMRBoundary to handle the updating process
+						D_UpdateMRBoundary updateUI = new D_UpdateMRBoundary(doctor, medicalRecord,
 								appointment, this);
 						updateUI.start();
 					} else {
@@ -208,7 +209,7 @@ public class DoctorBoundary extends Boundary {
 	 * Opens the UI for setting the doctor's availability for appointments.
 	 */
 	public void setavailabilityforAppointments() {
-		AppointmentAvailabilityBoundary availabilityUI = new AppointmentAvailabilityBoundary(doctor);
+		D_SetAvailabilityBoundary availabilityUI = new D_SetAvailabilityBoundary(doctor);
 		availabilityUI.start();
 	}
 
@@ -217,7 +218,7 @@ public class DoctorBoundary extends Boundary {
 	 * Allows the doctor to review and either accept or decline pending appointment
 	 * requests.
 	 */
-	public void acceptOrDeclineAppointmentRequests() {
+	public void manageAppointmentRequests() {
 		System.out.println(
 				"\n--- Request Appointments for: " + doctor.getFullName() + " (UID: " + doctor.getUID() + ") ---");
 		Scanner sc = new Scanner(System.in);
@@ -252,8 +253,7 @@ public class DoctorBoundary extends Boundary {
 
 						// Assuming you have a way to get the diagnosis ID, type of service, and
 						// consultation notes
-						String diagnosisID = ""; // Retrieve the diagnosis ID (you may need to implement a way to get
-													// this)
+						String diagnosisID = ""; // Retrieve the diagnosis ID (you may need to implement a way to get this)
 						String typeOfService = ""; // Define the type of service provided
 						String consultationNotes = ""; // Get consultation notes from the doctor
 
@@ -321,7 +321,7 @@ public class DoctorBoundary extends Boundary {
 	 * allowing the doctor to record outcomes for completed appointments.
 	 */
 	public void recordAppointmentOutcome() {
-		AppointmentRecordOutcomeBoundary outcomeUI = new AppointmentRecordOutcomeBoundary(doctor);
+		D_RecordOutcomeBoundary outcomeUI = new D_RecordOutcomeBoundary(doctor);
 		outcomeUI.start();
 	}
 

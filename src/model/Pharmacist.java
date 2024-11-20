@@ -2,13 +2,13 @@ package model;
 
 import java.time.LocalDateTime;
 
-import controller.HMSPersonnelController;
+import controller.StaffController;
 import enums.PersonnelFileType;
 /**
- * Represents a pharmacist in the system, extending the HMSPersonnel class to include specific details
+ * Represents a pharmacist in the system, extending the Staff class to include specific details
  * such as the pharmacist's license number and date of employment.
  */
-public class Pharmacist extends HMSPersonnel {
+public class Pharmacist extends Staff {
     private LocalDateTime dateOfEmployment;
 
     /**
@@ -26,7 +26,7 @@ public class Pharmacist extends HMSPersonnel {
     // Constructor for creation of Pharmacist
     public Pharmacist( String fullName, String username, String email, String phoneNo,
                       String passwordHash, LocalDateTime DoB, String gender, LocalDateTime dateOfEmployment) {
-        super(HMSPersonnelController.generateUID(PersonnelFileType.PHARMACISTS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "PHARMACISTS");
+        super(StaffController.generateUID(PersonnelFileType.PHARMACISTS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "PHARMACISTS");
         this.dateOfEmployment = dateOfEmployment;
     }
     

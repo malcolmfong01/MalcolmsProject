@@ -5,7 +5,7 @@ import model.MedicalRecord;
 import enums.RecordStatusType;
 import repository.PersonnelRepository;
 import repository.RecordsRepository;
-import controller.AuthenticationController;
+import controller.RegisterController;
 import controller.RecordsController;
 import enums.RecordFileType;
 
@@ -68,18 +68,18 @@ public class RegisterBoundary extends Boundary {
         String gender = Validator.readGender("Enter gender (M/F): ");
         String allergies = Validator.readString("Enter allergies (if any): ");
         String bloodType = Validator.readValidBloodType("Enter BloodType: ");
-        bloodType = (bloodType=="") ? null : bloodType;
+        bloodType = (bloodType.isEmpty()) ? null : bloodType;
         LocalDateTime dateOfAdmission = LocalDateTime.now();
         String username = Validator.readString("Enter desired username: ");
         
         // Ensure username is unique
-        while (AuthenticationController.isUsernameTaken(username, PersonnelRepository.PATIENTS)) {
+        while (RegisterController.isUsernameTaken(username, PersonnelRepository.PATIENTS)) {
             System.out.println("The username '" + username + "' is already taken. ");
             username = Validator.readString("Please enter a new username:");
         }
 
         // Register the patient
-        String patientUID = AuthenticationController.registerPatient(fullName, username, email, phoneNo, "password", DoB, gender, allergies, dateOfAdmission);
+        String patientUID = RegisterController.registerPatient(fullName, username, email, phoneNo, "password", DoB, gender, allergies, dateOfAdmission);
         if (patientUID != null) {
             System.out.println("Patient registered successfully!, your default password is: password ");
 
@@ -123,12 +123,12 @@ public class RegisterBoundary extends Boundary {
         LocalDateTime dateJoin = LocalDateTime.now();
         String username = Validator.readString("Enter desired username: ");
         
-		while (AuthenticationController.isUsernameTaken(username, PersonnelRepository.DOCTORS)) {
+		while (RegisterController.isUsernameTaken(username, PersonnelRepository.DOCTORS)) {
 		System.out.println("The username '" + username + "' is already taken. ");
 		username = Validator.readString("Please enter a new username: ");
 		}
 
-        boolean success = AuthenticationController.registerDoctor(fullName, username, email, phoneNo, "password", DoB, gender, dateJoin);
+        boolean success = RegisterController.registerDoctor(fullName, username, email, phoneNo, "password", DoB, gender, dateJoin);
         System.out.println(success ? "Doctor registered successfully!, your default password is: password " : "Registration failed. Username may already exist.");
     }
     /**
@@ -144,12 +144,12 @@ public class RegisterBoundary extends Boundary {
         LocalDateTime dateOfEmployment = LocalDateTime.now();
         String username = Validator.readString("Enter desired username: ");
         
-		while (AuthenticationController.isUsernameTaken(username, PersonnelRepository.PHARMACISTS)) {
+		while (RegisterController.isUsernameTaken(username, PersonnelRepository.PHARMACISTS)) {
 		System.out.println("The username '" + username + "' is already taken.");
 		username = Validator.readString("Please enter a new username: ");
 		}
 
-        boolean success = AuthenticationController.registerPharmacist(fullName, username, email, phoneNo, "password", DoB, gender, dateOfEmployment);
+        boolean success = RegisterController.registerPharmacist(fullName, username, email, phoneNo, "password", DoB, gender, dateOfEmployment);
         System.out.println(success ? "Pharmacist registered successfully!, your default password is: password "  : "Registration failed. Username may already exist.");
     }
     /**
@@ -164,12 +164,12 @@ public class RegisterBoundary extends Boundary {
         String gender = Validator.readGender("Enter gender (M/F):");
         LocalDateTime dateOfCreation = LocalDateTime.now();
         String username = Validator.readString("Enter desired username:");
-		while (AuthenticationController.isUsernameTaken(username, PersonnelRepository.ADMINS)) {
+		while (RegisterController.isUsernameTaken(username, PersonnelRepository.ADMINS)) {
 		System.out.println("The username '" + username + "' is already taken. ");
 		username = Validator.readString("Please enter a new username:");
 		}
 
-        boolean success = AuthenticationController.registerAdmin(fullName, username, email, phoneNo, "password", DoB, gender, dateOfCreation);
+        boolean success = RegisterController.registerAdmin(fullName, username, email, phoneNo, "password", DoB, gender, dateOfCreation);
         System.out.println(success ? "Admin registered successfully!, your default password is: password " : "Registration failed. Username may already exist.");
     }
 }

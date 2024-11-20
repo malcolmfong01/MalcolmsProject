@@ -61,7 +61,7 @@ public class LoginBoundary extends Boundary {
         String passwordHash = Validator.readString("Please enter your password:");
 
         // Call the controller to verify login
-        HMSPersonnel personnel = AuthenticationController.login(username, passwordHash, PersonnelFileType.PATIENTS);
+        Staff personnel = RegisterController.login(username, passwordHash, PersonnelFileType.PATIENTS);
 
         if (personnel != null && personnel instanceof Patient) {
             if ("password".equals(passwordHash)) {
@@ -84,7 +84,7 @@ public class LoginBoundary extends Boundary {
         String username = Validator.readString("Please enter your username:");
         String passwordHash = Validator.readString("Please enter your password:");
 
-        HMSPersonnel personnel = AuthenticationController.login(username, passwordHash, PersonnelFileType.DOCTORS);
+        Staff personnel = RegisterController.login(username, passwordHash, PersonnelFileType.DOCTORS);
 
         if (personnel instanceof Doctor) {
             if ("password".equals(passwordHash)) {
@@ -105,7 +105,7 @@ public class LoginBoundary extends Boundary {
         String username = Validator.readString("Please enter your username:");
         String passwordHash = Validator.readString("Please enter your password:");
 
-        HMSPersonnel personnel = AuthenticationController.login(username, passwordHash, PersonnelFileType.PHARMACISTS);
+        Staff personnel = RegisterController.login(username, passwordHash, PersonnelFileType.PHARMACISTS);
 
         if (personnel instanceof Pharmacist) {
             if ("password".equals(passwordHash)) {
@@ -129,7 +129,7 @@ public class LoginBoundary extends Boundary {
         String username = Validator.readString("Please enter your username:");
         String passwordHash = Validator.readString("Please enter your password:");
 
-        HMSPersonnel personnel = AuthenticationController.login(username, passwordHash, PersonnelFileType.ADMINS);
+        Staff personnel = RegisterController.login(username, passwordHash, PersonnelFileType.ADMINS);
 
         if (personnel instanceof Admin) {
             if ("password".equals(passwordHash)) {
@@ -146,9 +146,9 @@ public class LoginBoundary extends Boundary {
      * Prompts the user to change their password if they are using the default password.
      * Ensures that the new password is confirmed before updating.
      *
-     * @param personnel the HMSPersonnel object representing the user changing their password
+     * @param personnel the Staff object representing the user changing their password
      */
-    public static boolean changePassword(HMSPersonnel personnel, String oldPassword, String newPassword) {
+    public static boolean changePassword(Staff personnel, String oldPassword, String newPassword) {
         // Check if the old password matches the stored one
         if (newPassword.equals(oldPassword)) {
             System.out.println("Please use a new password.");
@@ -189,7 +189,7 @@ public class LoginBoundary extends Boundary {
         return true;
     }
 
-    private void promptChangePassword(HMSPersonnel personnel) {
+    private void promptChangePassword(Staff personnel) {
         System.out.println("It appears that you are using the default password.");
         System.out.println("Please change your password for security reasons.");
 
@@ -200,7 +200,7 @@ public class LoginBoundary extends Boundary {
 
             if (newPassword.equals(confirmPassword) && !newPassword.isEmpty()) {
                 if (changePassword(personnel,oldPassword, newPassword)) {
-                    AuthenticationController.updatePassword(personnel, newPassword);
+                    RegisterController.updatePassword(personnel, newPassword);
                     System.out.println("Password changed successfully!");
                     break;
                 }
