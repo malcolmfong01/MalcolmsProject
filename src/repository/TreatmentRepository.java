@@ -68,7 +68,7 @@ public class TreatmentRepository extends Repository {
                     writer.newLine();
                 }
             }
-            System.out.println("Treatment plans successfully saved to CSV.");
+//            System.out.println("Treatment plans successfully saved to CSV.");
         } catch (IOException e) {
             System.out.println("Error saving treatment plans to CSV: " + e.getMessage());
         }
@@ -136,8 +136,8 @@ public class TreatmentRepository extends Repository {
                     diagnosisTreatmentPlansMap.put(diagnosisID, treatmentPlan);
                 }
             }
-            System.out.println(
-                    "Successfully loaded " + diagnosisTreatmentPlansMap.size() + " treatment plans from " + fileName);
+//            System.out.println(
+//                    "Successfully loaded " + diagnosisTreatmentPlansMap.size() + " treatment plans from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading treatment plans: " + e.getMessage());
         }

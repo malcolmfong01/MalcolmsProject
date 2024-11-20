@@ -201,7 +201,7 @@ public class UserRepository extends Repository {
                     System.out.println("Warning: Failed to parse personnel in file: " + fileName);
                 }
             }
-            System.out.println("Successfully loaded from " + fileName);
+//            System.out.println("Successfully loaded from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading personnel data: " + e.getMessage());
         }

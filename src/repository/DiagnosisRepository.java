@@ -96,7 +96,7 @@ public class DiagnosisRepository extends Repository {
                     }
                 }
             }
-            System.out.println("Diagnosis records successfully saved to CSV.");
+//            System.out.println("Diagnosis records successfully saved to CSV.");
         } catch (IOException e) {
             System.out.println("Error saving diagnosis records to CSV: " + e.getMessage());
         }
@@ -155,8 +155,8 @@ public class DiagnosisRepository extends Repository {
                     addDiagnosis(record.getPatientID(), record);
                 }
             }
-            System.out.println(
-                    "Successfully loaded " + patientDiagnosisRecords.size() + " diagnosis records from " + fileName);
+//            System.out.println(
+//                    "Successfully loaded " + patientDiagnosisRecords.size() + " diagnosis records from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading diagnosis records: " + e.getMessage());
         }

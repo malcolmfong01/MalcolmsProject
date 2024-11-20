@@ -216,7 +216,7 @@ public class RecordsRepository extends Repository {
                     recordsMapRecordID.put(record.getRecordID(), record);
                 }
             }
-            System.out.println("Successfully loaded " + recordsMapRecordID.size() + " records from " + fileName);
+//            System.out.println("Successfully loaded " + recordsMapRecordID.size() + " records from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading record data: " + e.getMessage());
         }

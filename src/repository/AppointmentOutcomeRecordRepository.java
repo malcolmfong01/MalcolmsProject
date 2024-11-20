@@ -90,7 +90,7 @@ public class AppointmentOutcomeRecordRepository extends Repository {
                 }
 
             }
-            System.out.println("Appointment outcome records successfully saved to CSV.");
+//            System.out.println("Appointment outcome records successfully saved to CSV.");
         } catch (IOException e) {
             System.out.println("Error saving appointment outcome records to CSV: " + e.getMessage());
         }
@@ -119,16 +119,14 @@ public class AppointmentOutcomeRecordRepository extends Repository {
     }
 
     /**
-
      * Loads appointment outcome records from the specified CSV file, creating an empty file
-
      * if it does not exist. Records are added to the provided HashMap.
      *
      * @param fileName              the name of the CSV file to load from
      * @param patientOutcomeRecords the HashMap to store the loaded records
      */
     public static void loadAppoinmentOutcomeRecordsFromCSV(String fileName,
-            HashMap<String, ArrayList<AppointmentOutcomeRecord>> patientOutcomeRecords) {
+                                                           HashMap<String, ArrayList<AppointmentOutcomeRecord>> patientOutcomeRecords) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
         // Ensure the directory exists
         File directory = new File("./src/repository/" + folder);
@@ -146,21 +144,29 @@ public class AppointmentOutcomeRecordRepository extends Repository {
             }
             return; // No data to load, as the file was just created
         }
+
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
+            boolean isFirstLine = true; // To skip the header row
+
             while ((line = reader.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue; // Skip the header row
+                }
                 AppointmentOutcomeRecord record = csvToOutcomeRecord(line);
                 String patientID = getPatientIDFromCSV(line);
                 if (record != null && patientID != null) {
                     addAppointmentOutcomeRecordIntoHashMapValue(patientID, record);
                 }
             }
-            System.out.println("Successfully loaded " + patientOutcomeRecords.size()
-                    + " appointment outcome records from " + fileName);
+//            System.out.println("Successfully loaded " + patientOutcomeRecords.size()
+//                    + " appointment outcome records from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading appointment outcome records: " + e.getMessage());
         }
     }
+
 
     /**
      * Extracts the patient ID from a CSV-formatted string.
@@ -260,7 +266,6 @@ public class AppointmentOutcomeRecordRepository extends Repository {
             records.add(record);
             // Update the HashMap with the modified list
             patientOutcomeRecords.put(patientID, records);
-            System.out.println(records);
         }
     }
 

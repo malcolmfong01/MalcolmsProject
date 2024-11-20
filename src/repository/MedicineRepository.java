@@ -72,7 +72,7 @@ public class MedicineRepository extends Repository {
                 writer.write(medicineToCSV(medicine));
                 writer.newLine();
             }
-            System.out.println("Medicines successfully saved to " + fileName);
+//            System.out.println("Medicines successfully saved to " + fileName);
         } catch (IOException e) {
             System.out.println("Error saving medicine data: " + e.getMessage());
         }
@@ -132,17 +132,23 @@ public class MedicineRepository extends Repository {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
+            boolean isFirstLine = true; // To skip the header row
             while ((line = reader.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue; // Skip the header row
+                }
                 Medicine medicine = csvToMedicine(line);
                 if (medicine != null) {
                     medicinesMap.put(medicine.getMedicineID(), medicine);
                 }
             }
-            System.out.println("Successfully loaded " + medicinesMap.size() + " medicines from " + fileName);
+//            System.out.println("Successfully loaded " + medicinesMap.size() + " medicines from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading medicine data: " + e.getMessage());
         }
     }
+
 
     /**
      * Converts a CSV-formatted string to a Medicine object.
