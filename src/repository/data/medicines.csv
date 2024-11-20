@@ -1,3 +1,0 @@
-Medicine ID,Name,Manufacturer,Expiry Date,Stock,Low Level Stock,Replenishment Stock,Status,Request Date,Approved Date
-M000,Paracetomal,NTU,2026-12-12T12:00,66,20,0,NULL,2026-12-12T12:00,2026-12-12T12:00
-M001,CHICKEN,NTU,2026-12-12T12:00,95,20,0,NULL,2026-12-12T12:00,2026-12-12T12:00
