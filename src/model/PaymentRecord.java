@@ -12,6 +12,7 @@ import enums.RecordStatusType;
  * the basic record details and adds specific information related to the payment such as
  * the amount and the associated patient ID.
  */
+
 public class PaymentRecord extends Records {
     private double paymentAmount;
     private String patientID;
@@ -67,7 +68,7 @@ public class PaymentRecord extends Records {
     }
 
     /**
-     * Constructs an Records object with the specified details.
+     * Constructs Records object with the specified details.
      *
      * @param recordID     the unique identifier for the record
      * @param createdDate  the date and time when the record was created

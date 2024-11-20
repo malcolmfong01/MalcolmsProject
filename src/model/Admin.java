@@ -4,12 +4,13 @@ import java.time.LocalDateTime;
 
 import controller.StaffController;
 import enums.PersonnelFileType;
+
 /**
- * Represents an Admin in the HMS system, inheriting from the Staff class.
- * Contains information specific to an Admin, including the date of creation.
+ * Administrator class that extends the User class
  */
-public class Admin extends Staff {
-    private LocalDateTime dateOfCreation;
+
+public class Admin extends User {
+    private final LocalDateTime dateOfCreation;
 
     /**
      * Constructor for creating an Admin instance with the provided details.
@@ -25,7 +26,7 @@ public class Admin extends Staff {
      * @param role the role of the Admin
      * @param dateOfCreation the date the Admin account was created
      */
-    // Constructor for creation of Admin
+
     public Admin(String fullName, String username, String email, String phoneNo,
                  String passwordHash, LocalDateTime DoB, String gender, String role, LocalDateTime dateOfCreation) {
         super(StaffController.generateUID(PersonnelFileType.ADMINS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Admins");
@@ -47,7 +48,7 @@ public class Admin extends Staff {
      * @param role the role of the Admin
      * @param dateOfCreation the date the Admin account was created
      */
-    // Constructor for creation of Admin from CSV
+
     public Admin(String UID, String fullName,  String username, String email, String phoneNo,
                  String passwordHash, LocalDateTime DoB, String gender, String role, LocalDateTime dateOfCreation) {
         super(UID, fullName, username, email, phoneNo, passwordHash, DoB, gender, role);
@@ -59,17 +60,9 @@ public class Admin extends Staff {
      *
      * @return the date of creation of the Admin account
      */
-    // Getter and Setter for dateOfCreation
+
     public LocalDateTime getDateOfCreation() {
         return dateOfCreation;
     }
 
-    /**
-     * Sets the date when the Admin account was created.
-     *
-     * @param dateOfCreation the new date of creation for the Admin account
-     */
-    public void setDateOfCreation(LocalDateTime dateOfCreation) {
-        this.dateOfCreation = dateOfCreation;
-    }
 }

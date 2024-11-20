@@ -4,12 +4,13 @@ import java.time.LocalDateTime;
 
 import controller.StaffController;
 import enums.PersonnelFileType;
+
 /**
- * Represents a pharmacist in the system, extending the Staff class to include specific details
- * such as the pharmacist's license number and date of employment.
+ * Pharmacist class that extends the User class
  */
-public class Pharmacist extends Staff {
-    private LocalDateTime dateOfEmployment;
+
+public class Pharmacist extends User {
+    private final LocalDateTime dateOfEmployment;
 
     /**
      * Constructs a Pharmacist object with the specified details.
@@ -23,7 +24,7 @@ public class Pharmacist extends Staff {
      * @param gender the gender of the pharmacist
      * @param dateOfEmployment the date the pharmacist was employed
      */
-    // Constructor for creation of Pharmacist
+
     public Pharmacist( String fullName, String username, String email, String phoneNo,
                       String passwordHash, LocalDateTime DoB, String gender, LocalDateTime dateOfEmployment) {
         super(StaffController.generateUID(PersonnelFileType.PHARMACISTS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "PHARMACISTS");
@@ -44,7 +45,7 @@ public class Pharmacist extends Staff {
      * @param role the role of the pharmacist
      * @param dateOfEmployment the date the pharmacist was employed
      */
- // Constructor for creation of Pharmacist from csv
+
     public Pharmacist(String UID, String fullName, String username, String email, String phoneNo,
             String passwordHash, LocalDateTime DoB, String gender, String role, LocalDateTime dateOfEmployment) {
 		super(UID, fullName, username, email, phoneNo, passwordHash, DoB, gender, role);
@@ -61,12 +62,4 @@ public class Pharmacist extends Staff {
         return dateOfEmployment;
     }
 
-    /**
-     * Sets the date of employment for the pharmacist.
-     *
-     * @param dateOfEmployment the date of employment to set
-     */
-    public void setDateOfEmployment(LocalDateTime dateOfEmployment) {
-        this.dateOfEmployment = dateOfEmployment;
-    }
 }

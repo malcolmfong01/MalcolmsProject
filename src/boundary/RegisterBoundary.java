@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class RegisterBoundary extends Boundary {
 	
 //  public static void main (String[]args) {
-//  // Creating and starting AdminBoundary with the dummy admin
+//  // Creating and starting AdministratorBoundary with the dummy admin
 //	  RegisterBoundary testing = new RegisterBoundary();
 //	  testing.start();
 //}

@@ -1,16 +1,15 @@
 package model;
-
-import java.time.LocalDateTime;
-
 import enums.PersonnelFileType;
+
 /**
- * Represents a session cookie for a user in the system.
+ * UserSessionTracker Class
+ * Tracks the User currently in the system
  * Contains the user ID, role, and the start time of the session.
  */
+
 public class UserSessionTracker {
 	private String uid;
 	private PersonnelFileType role;
-	private LocalDateTime startSession;
 
     /**
      * Constructor for creating a UserSessionTracker instance.
@@ -23,7 +22,6 @@ public class UserSessionTracker {
 	public UserSessionTracker(String uid, PersonnelFileType role) {
 		this.uid = uid;
 		this.role = role;
-		this.startSession = LocalDateTime.now(); // Sets startSession to the current time
 	}
 
     /**
@@ -60,23 +58,5 @@ public class UserSessionTracker {
      */
 	public void setRole(PersonnelFileType role) {
 		this.role = role;
-	}
-
-    /**
-     * Gets the start time of the session.
-     *
-     * @return the start time of the session
-     */
-	public LocalDateTime getStartSession() {
-		return startSession;
-	}
-
-    /**
-     * Sets the start time of the session.
-     *
-     * @param startSession the new start time of the session
-     */
-	public void setStartSession(LocalDateTime startSession) {
-		this.startSession = startSession;
 	}
 }

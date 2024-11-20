@@ -6,13 +6,10 @@ import controller.StaffController;
 import enums.PersonnelFileType;
 
 /**
- * Represents a patient in the healthcare management system, including personal information, insurance details,
- * allergies, and date of admission.
+ * Patient class that extends the User class
  */
-public class Patient extends Staff {
 
-
-
+public class Patient extends User {
     private String allergies;
     private LocalDateTime dateOfAdmission;
 
@@ -29,7 +26,7 @@ public class Patient extends Staff {
      * @param allergies any known allergies of the patient
      * @param dateOfAdmission the date when the patient was admitted to the healthcare system
      */
-    // Constructor for creation of Patient
+
     public Patient(String fullName, String username, String email, String phoneNo,
                    String passwordHash, LocalDateTime DoB, String gender, String allergies, LocalDateTime dateOfAdmission) {
         super(StaffController.generateUID(PersonnelFileType.PATIENTS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Patients");
@@ -55,7 +52,7 @@ public class Patient extends Staff {
      * @param allergies any known allergies of the patient
      * @param dateOfAdmission the date when the patient was admitted to the healthcare system
      */
-    // Constructor for creation of Patient from CSV
+
     public Patient(String UID, String fullName, String username, String email, String phoneNo,
                    String passwordHash, LocalDateTime DoB, String gender, String role, String allergies, LocalDateTime dateOfAdmission) {
         super(UID, fullName, username, email, phoneNo, passwordHash, DoB, gender, role);
@@ -65,10 +62,6 @@ public class Patient extends Staff {
         this.allergies = allergies;
         this.dateOfAdmission = dateOfAdmission;
     }
-
-    // Getters and Setters
-
-
 
     /**
      * Gets the allergies of the patient.
