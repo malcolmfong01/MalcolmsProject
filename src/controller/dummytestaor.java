@@ -52,7 +52,7 @@ public class dummytestaor {
     }
 
     public static void main(String[] args) {
-        Repository.loadRepository(new PersonnelRepository());
+        Repository.loadRepository(new UserRepository());
         Repository.loadRepository(new PrescribedMedicationRepository());
         Repository.loadRepository(new TreatmentRepository());
         Repository.loadRepository(new PrescriptionRepository());

@@ -13,9 +13,9 @@ import HMSApp.HMSMain;
 import enums.*;
 import model.*;
 import repository.RecordsRepository;
+import repository.UserRepository;
 import utility.Validator;
 import repository.MedicineRepository;
-import repository.PersonnelRepository;
 import controller.*;
 import utility.DateTimePicker;
 
@@ -168,7 +168,7 @@ public class AdminBoundary extends Boundary {
 
         String username = Validator.readString("Enter New Username: ");
         while (RegisterController.isUsernameTaken(username,
-                role.equals("Doctor") ? PersonnelRepository.DOCTORS : PersonnelRepository.PHARMACISTS)) {
+                role.equals("Doctor") ? UserRepository.DOCTORS : UserRepository.PHARMACISTS)) {
             System.out.println("The username '" + username + "' is already taken. Please enter a new username:");
             username = Validator.readString("Enter a new username: ");
         }
@@ -344,10 +344,10 @@ public class AdminBoundary extends Boundary {
 
         switch (type) {
             case DOCTORS:
-                personnelMap = PersonnelRepository.DOCTORS;
+                personnelMap = UserRepository.DOCTORS;
                 break;
             case PHARMACISTS:
-                personnelMap = PersonnelRepository.PHARMACISTS;
+                personnelMap = UserRepository.PHARMACISTS;
                 break;
             default:
                 System.out.println("Error: Unsupported personnel type.");
@@ -380,13 +380,13 @@ public class AdminBoundary extends Boundary {
         System.out.println("\nListing staff filtered by gender: " + gender);
         System.out.println("===========================================");
 
-        for (Doctor doctor : PersonnelRepository.DOCTORS.values()) {
+        for (Doctor doctor : UserRepository.DOCTORS.values()) {
             if (doctor.getGender().trim().equalsIgnoreCase(gender)) {
                 printDoctorDetails(doctor);
             }
         }
 
-        for (Pharmacist pharmacist : PersonnelRepository.PHARMACISTS.values()) {
+        for (Pharmacist pharmacist : UserRepository.PHARMACISTS.values()) {
             if (pharmacist.getGender().trim().equalsIgnoreCase(gender)) {
                 printPharmacistDetails(pharmacist);
             }
@@ -400,8 +400,8 @@ public class AdminBoundary extends Boundary {
     private static void listPersonnelByAge() {
         List<Staff> combinedList = new ArrayList<>();
 
-        combinedList.addAll(PersonnelRepository.DOCTORS.values());
-        combinedList.addAll(PersonnelRepository.PHARMACISTS.values());
+        combinedList.addAll(UserRepository.DOCTORS.values());
+        combinedList.addAll(UserRepository.PHARMACISTS.values());
 
         // Sort the combined list by age from oldest to youngest
         combinedList.sort(Comparator.comparingInt(personnel -> calculateAge((Staff) personnel)).reversed());

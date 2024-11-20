@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import controller.DoctorController;
 import enums.AppointmentStatus;
+import repository.UserRepository;
 import utility.Validator;
 import model.Appointment;
 import model.Doctor;
 import model.Patient;
-import repository.PersonnelRepository;
 import repository.RecordsRepository;
 /**
  * The P_ScheduleBoundary class provides an interface for patients to schedule
@@ -58,7 +58,7 @@ public class P_ScheduleBoundary extends Boundary {
      * updated accordingly.
      */
 	public void scheduleAppointment() {
-		System.out.println("Enter your availability. Type 'done' when finished.");
+		System.out.println("Enter your availability. Type 'no' when finished.");
 
 		while (true) {
 			// Check if the user wants to continue rescheduling
@@ -71,7 +71,7 @@ public class P_ScheduleBoundary extends Boundary {
 			System.out.println("Enter the Doctor ID you want to schedule an appointment with:");
 			String doctorId = Validator.readID("Doctor", "D\\d{3}");
 			System.out.println("Validated Doctor ID: " + doctorId);
-			Doctor doctor = PersonnelRepository.DOCTORS.get(doctorId);
+			Doctor doctor = UserRepository.DOCTORS.get(doctorId);
 			if (doctor == null) {
 				System.out.println("Doctor not found. Please enter a valid Doctor ID.");
 				continue;

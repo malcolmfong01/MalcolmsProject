@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import enums.PersonnelFileType;
 import model.*;
-import repository.PersonnelRepository;
+import repository.UserRepository;
 
 public class RegisterController {
     public static UserSessionTracker cookie = new UserSessionTracker(null, null);
@@ -23,16 +23,16 @@ public class RegisterController {
 
         switch (role.toString().toLowerCase()) {
             case "admins":
-                personnelMap = PersonnelRepository.ADMINS;
+                personnelMap = UserRepository.ADMINS;
                 break;
             case "doctors":
-                personnelMap = PersonnelRepository.DOCTORS;
+                personnelMap = UserRepository.DOCTORS;
                 break;
             case "pharmacists":
-                personnelMap = PersonnelRepository.PHARMACISTS;
+                personnelMap = UserRepository.PHARMACISTS;
                 break;
             case "patients":
-                personnelMap = PersonnelRepository.PATIENTS;
+                personnelMap = UserRepository.PATIENTS;
                 break;
             default:
                 System.out.println("Login failed: Invalid role provided.");
@@ -81,16 +81,16 @@ public class RegisterController {
 
         switch (PersonnelFileType.toEnum(personnel.getRole())) {
             case ADMINS:
-                personnelMap = PersonnelRepository.ADMINS;
+                personnelMap = UserRepository.ADMINS;
                 break;
             case DOCTORS:
-                personnelMap = PersonnelRepository.DOCTORS;
+                personnelMap = UserRepository.DOCTORS;
                 break;
             case PHARMACISTS:
-                personnelMap = PersonnelRepository.PHARMACISTS;
+                personnelMap = UserRepository.PHARMACISTS;
                 break;
             case PATIENTS:
-                personnelMap = PersonnelRepository.PATIENTS;
+                personnelMap = UserRepository.PATIENTS;
                 break;
             default:
                 System.out.println("Password update failed: Invalid role provided.");
@@ -99,7 +99,7 @@ public class RegisterController {
 
         if (personnelMap != null && personnelMap.containsKey(uid)) {
             ((Map<String, Staff>) personnelMap).put(uid, personnel);
-            PersonnelRepository.saveAllPersonnelFiles();
+            UserRepository.saveAllPersonnelFiles();
             System.out.println("Password updated successfully for " + personnel.getFullName());
             return true;
         } else {
@@ -128,8 +128,8 @@ public class RegisterController {
 
         // Register patient
         Patient patient = new Patient(fullName, username, email, phoneNo, passwordHash, DoB, gender, allergies, dateOfAdmission);
-        PersonnelRepository.PATIENTS.put(patient.getUID(), patient);
-        PersonnelRepository.saveAllPersonnelFiles();
+        UserRepository.PATIENTS.put(patient.getUID(), patient);
+        UserRepository.saveAllPersonnelFiles();
         System.out.println("Patient registered successfully with username: " + username);
         return patient.getUID();
     }
@@ -152,8 +152,8 @@ public class RegisterController {
             LocalDateTime dateJoin) {
         // Register doctor
         Doctor doctor = new Doctor(fullName, username, email, phoneNo, passwordHash, DoB, gender, dateJoin );
-        PersonnelRepository.DOCTORS.put(doctor.getUID(), doctor);
-        PersonnelRepository.saveAllPersonnelFiles();
+        UserRepository.DOCTORS.put(doctor.getUID(), doctor);
+        UserRepository.saveAllPersonnelFiles();
         System.out.println("Doctor registered successfully with username: " + username);
         return true;
     }
@@ -177,8 +177,8 @@ public class RegisterController {
         // Register pharmacist
         Pharmacist pharmacist = new Pharmacist(fullName, username, email, phoneNo, passwordHash, DoB, gender,
                  dateOfEmployment);
-        PersonnelRepository.PHARMACISTS.put(pharmacist.getUID(), pharmacist);
-        PersonnelRepository.saveAllPersonnelFiles();
+        UserRepository.PHARMACISTS.put(pharmacist.getUID(), pharmacist);
+        UserRepository.saveAllPersonnelFiles();
         System.out.println("Pharmacist registered successfully with username: " + username);
         return true;
     }
@@ -201,8 +201,8 @@ public class RegisterController {
         // Register admin
         Admin admin = new Admin(fullName, username, email, phoneNo, passwordHash, DoB, gender, "Admins",
                 dateOfCreation);
-        PersonnelRepository.ADMINS.put(admin.getUID(), admin);
-        PersonnelRepository.saveAllPersonnelFiles();
+        UserRepository.ADMINS.put(admin.getUID(), admin);
+        UserRepository.saveAllPersonnelFiles();
         System.out.println("Admin registered successfully with username: " + username);
         return true;
     }

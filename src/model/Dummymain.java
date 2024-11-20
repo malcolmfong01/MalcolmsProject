@@ -8,13 +8,8 @@ import controller.PharmacistController;
 import enums.PrescriptionStatus;
 import enums.ReplenishStatus;
 import enums.AppointmentOutcomeStatus;
-import repository.AppointmentOutcomeRecordRepository;
-import repository.DiagnosisRepository;
-import repository.MedicineRepository;
-import repository.PersonnelRepository;
-import repository.PrescribedMedicationRepository;
-import repository.PrescriptionRepository;
-import repository.Repository;
+import repository.*;
+import repository.UserRepository;
 
 public class Dummymain {
 
@@ -62,22 +57,22 @@ public class Dummymain {
                                 "Male", "Pharmacists", LocalDateTime.of(2015, 11, 5, 0, 0));
 
                 // Add these pharmacists to the repository's in-memory collection
-                PersonnelRepository.PHARMACISTS.put(pharm1.getUID(), pharm1);
-                PersonnelRepository.PHARMACISTS.put(pharm2.getUID(), pharm2);
-                PersonnelRepository.PHARMACISTS.put(pharm3.getUID(), pharm3);
+                UserRepository.PHARMACISTS.put(pharm1.getUID(), pharm1);
+                UserRepository.PHARMACISTS.put(pharm2.getUID(), pharm2);
+                UserRepository.PHARMACISTS.put(pharm3.getUID(), pharm3);
 
                 // Step 2: Save all personnel data, including pharmacists, to CSV
                 System.out.println("Saving pharmacists to CSV...");
-                PersonnelRepository.saveAllPersonnelFiles();
+                UserRepository.saveAllPersonnelFiles();
 
                 // Step 3: Clear in-memory pharmacist data to simulate a fresh load
                 System.out.println("Clearing in-memory pharmacist data...");
-                PersonnelRepository.PHARMACISTS.clear();
+                UserRepository.PHARMACISTS.clear();
 
                 // Step 4: Load pharmacists from CSV to verify persistence
                 System.out.println("Loading pharmacists from CSV...");
-                PersonnelRepository personnelRepository = new PersonnelRepository();
-                personnelRepository.loadFromCSV();
+                UserRepository userRepository = new UserRepository();
+                userRepository.loadFromCSV();
 
                 System.out.println("---- Pharmacist Repository Test Complete ----");
 

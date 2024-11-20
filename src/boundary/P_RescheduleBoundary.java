@@ -64,7 +64,7 @@ public class P_RescheduleBoundary extends Boundary {
      * rescheduling.
      */
 	public void rescheduleAppointment() {
-		System.out.println("Enter your availability. Type 'done' when finished.");
+		System.out.println("Enter your availability. Type 'no' when finished.");
 
 		while (true) {
 			// Check if the user wants to continue rescheduling

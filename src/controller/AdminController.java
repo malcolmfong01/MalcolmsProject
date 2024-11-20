@@ -1,11 +1,11 @@
 package controller;
 
 import model.Admin;
-import repository.PersonnelRepository;
+import repository.UserRepository;
 
 /**
  * The AdministratorController class that provides methods to access and retrieve staff-related information
- * from the PersonnelRepository.
+ * from the UserRepository.
  */
 
 public class AdminController extends StaffController {
@@ -18,8 +18,8 @@ public class AdminController extends StaffController {
      */
 
     public static Admin getAdminById(String adminId) {
-        if (PersonnelRepository.isRepoLoad())
-            return PersonnelRepository.ADMINS.get(adminId);
+        if (UserRepository.isRepoLoad())
+            return UserRepository.ADMINS.get(adminId);
         else
             return null;
 

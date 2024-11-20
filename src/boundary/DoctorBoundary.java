@@ -69,7 +69,7 @@ public class DoctorBoundary extends Boundary {
 	public void showDoctorDashboard() {
 		while (true) {
 			printChoice();
-			int choice = Validator.readInt("Enter your choice:");
+			int choice = Validator.readInt("Enter your choice: ");
 
 			switch (choice) {
 				case 1 -> viewPatientMedicalRecord(doctor.getUID());

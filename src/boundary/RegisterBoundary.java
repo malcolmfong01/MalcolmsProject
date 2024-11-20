@@ -1,9 +1,9 @@
 package boundary;
 
+import repository.UserRepository;
 import utility.Validator;
 import model.MedicalRecord;
 import enums.RecordStatusType;
-import repository.PersonnelRepository;
 import repository.RecordsRepository;
 import controller.RegisterController;
 import controller.RecordsController;
@@ -73,7 +73,7 @@ public class RegisterBoundary extends Boundary {
         String username = Validator.readString("Enter desired username: ");
         
         // Ensure username is unique
-        while (RegisterController.isUsernameTaken(username, PersonnelRepository.PATIENTS)) {
+        while (RegisterController.isUsernameTaken(username, UserRepository.PATIENTS)) {
             System.out.println("The username '" + username + "' is already taken. ");
             username = Validator.readString("Please enter a new username:");
         }
@@ -123,7 +123,7 @@ public class RegisterBoundary extends Boundary {
         LocalDateTime dateJoin = LocalDateTime.now();
         String username = Validator.readString("Enter desired username: ");
         
-		while (RegisterController.isUsernameTaken(username, PersonnelRepository.DOCTORS)) {
+		while (RegisterController.isUsernameTaken(username, UserRepository.DOCTORS)) {
 		System.out.println("The username '" + username + "' is already taken. ");
 		username = Validator.readString("Please enter a new username: ");
 		}
@@ -144,7 +144,7 @@ public class RegisterBoundary extends Boundary {
         LocalDateTime dateOfEmployment = LocalDateTime.now();
         String username = Validator.readString("Enter desired username: ");
         
-		while (RegisterController.isUsernameTaken(username, PersonnelRepository.PHARMACISTS)) {
+		while (RegisterController.isUsernameTaken(username, UserRepository.PHARMACISTS)) {
 		System.out.println("The username '" + username + "' is already taken.");
 		username = Validator.readString("Please enter a new username: ");
 		}
@@ -164,7 +164,7 @@ public class RegisterBoundary extends Boundary {
         String gender = Validator.readGender("Enter gender (M/F):");
         LocalDateTime dateOfCreation = LocalDateTime.now();
         String username = Validator.readString("Enter desired username:");
-		while (RegisterController.isUsernameTaken(username, PersonnelRepository.ADMINS)) {
+		while (RegisterController.isUsernameTaken(username, UserRepository.ADMINS)) {
 		System.out.println("The username '" + username + "' is already taken. ");
 		username = Validator.readString("Please enter a new username:");
 		}
