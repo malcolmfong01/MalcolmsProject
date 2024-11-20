@@ -6,9 +6,12 @@
 package boundary;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import controller.AppointmentController;
 import controller.StaffController;
+import enums.AppointmentStatus;
 import model.*;
 import utility.Validator;
 import model.Treatment;
@@ -119,6 +122,16 @@ public class MedicalRecordBoundary extends Boundary {
 
         System.out.println(border);
     }
+
+    public void displayMedicalRecordInBoxForDoctor() {
+        List<Appointment> currentAppointment = AppointmentController
+                .getAppointmentsByDoctorAndPatient(medicalRecord.getDoctorID(), medicalRecord.getPatientID(), AppointmentStatus.COMPLETED);
+        // Check if there are no completed appointments for the patient
+        if (!currentAppointment.isEmpty()) {
+            displayMedicalRecordInBox();
+        }
+    }
+
 
     /**
      * Prints the available options for the MedicalRecordBoundary.

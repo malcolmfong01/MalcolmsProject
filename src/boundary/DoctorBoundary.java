@@ -101,12 +101,9 @@ public class DoctorBoundary extends Boundary {
 		boolean recordsFound = false;
 		for (MedicalRecord record : RecordsRepository.MEDICAL_RECORDS.values()) {
 			if (record.getDoctorID().equals(doctorID)) {
-				if(record.getDiagnosis().isEmpty()) {
-					continue;
-				}
 				recordsFound = true;
 				MedicalRecordBoundary medicalRecordUI = new MedicalRecordBoundary(record);
-				medicalRecordUI.displayMedicalRecordInBox();
+				medicalRecordUI.displayMedicalRecordInBoxForDoctor();
 			}
 		}
 		if (!recordsFound) {
