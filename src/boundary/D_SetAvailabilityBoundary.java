@@ -55,7 +55,7 @@ public class D_SetAvailabilityBoundary extends Boundary {
         int choice;
         while (true) {
             printChoice();
-            choice = Validator.readInt("Enter your choice: ");
+            choice = Validator.readInt("");
             switch (choice) {
                 case 1 -> setAvailabilityForAppointments();
                 case 2 -> {
