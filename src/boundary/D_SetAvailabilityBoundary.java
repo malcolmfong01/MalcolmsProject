@@ -20,6 +20,8 @@ import model.Doctor;
 import enums.RecordStatusType;
 import repository.RecordsRepository;
 
+import static utility.Validator.sc;
+
 public class D_SetAvailabilityBoundary extends Boundary {
     /**
      * The doctor for whom appointment availability is being managed.
@@ -75,16 +77,21 @@ public class D_SetAvailabilityBoundary extends Boundary {
     public void setAvailabilityForAppointments() {
         List<Appointment> availableAppointments = new ArrayList<>();
         AppointmentStatus status = AppointmentStatus.AVAILABLE;
-
         System.out.println("Enter your availability. Type 'done' when finished.");
 
-        while (true) {
-            // Ask user if they want to add another available time slot
-            boolean addMoreAppointments = Validator.promptConfirmation("add another available time slot");
+        boolean addavailability = true; // Flag to handle the first run of the loop
 
-            if (!addMoreAppointments) {
-                break; // Exit the loop if the user doesn't want to add more appointments
+        while (true) {
+            if (!addavailability) { // Skip the confirmation prompt on the first iteration
+                System.out.flush(); // Clear any stray output
+                sc.nextLine(); // Clear residual input from the stream
+
+                boolean addMoreAppointments = Validator.promptConfirmation("add another available time slot");
+                if (!addMoreAppointments) {
+                    break; // Exit the loop if the user doesn't want to add more appointments
+                }
             }
+            addavailability = false; // Reset flag after the first iteration
 
             // Prompt for location
             String location = Validator.readString("Enter the location (e.g., 'Level 2 - Heart Clinic'): ");

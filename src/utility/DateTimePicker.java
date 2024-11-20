@@ -26,7 +26,7 @@ public class DateTimePicker {
         // Variables to hold date and time components
         int year = getValidInput(scanner, "Enter year (e.g., 2024): ",
                 input -> input > 0,
-                "Year cannot be negative.");
+                "Please input a valid year (e.g., 2024).");
         int month = getValidInput(scanner, "Enter month (1-12): ",
                 input -> input >= 1 && input <= 12,
                 "Month must be between 1 and 12.");

@@ -5,16 +5,9 @@
  */
 package boundary;
 
+import repository.*;
 import utility.Validator;
-import repository.AppointmentOutcomeRecordRepository;
-import repository.DiagnosisRepository;
-import repository.MedicineRepository;
-import repository.PersonnelRepository;
-import repository.PrescribedMedicationRepository;
-import repository.PrescriptionRepository;
-import repository.RecordsRepository;
-import repository.Repository;
-import repository.TreatmentRepository;
+import repository.UserRepository;
 
 public class MainBoundary extends Boundary {
 
@@ -79,7 +72,7 @@ public class MainBoundary extends Boundary {
      */
 	public static void loadHMSRepository() {
 		// MUST BE LOADED IN THIS SEQUENCE, RECORDS REPOSITORY LOADED LAST!
-		Repository.loadRepository(new PersonnelRepository());
+		Repository.loadRepository(new UserRepository());
 		Repository.loadRepository(new PrescribedMedicationRepository());
 		Repository.loadRepository(new TreatmentRepository());
 		Repository.loadRepository(new PrescriptionRepository());

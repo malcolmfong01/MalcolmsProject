@@ -10,7 +10,7 @@ import enums.AppointmentStatus;
 import utility.Validator;
 import model.*;
 import model.Appointment;
-import repository.PersonnelRepository;
+import repository.UserRepository;
 import repository.RecordsRepository;
 
 
@@ -50,7 +50,6 @@ public class PatientBoundary extends Boundary {
 		System.out.println("8. View Past Appointment Outcome Records");
 		System.out.println("9. Acknowledge Rejected Appointment Slots");
 		System.out.println("10. Logout");
-		System.out.print("Enter your choice: ");
 	}
 
 	/**
@@ -121,7 +120,7 @@ public class PatientBoundary extends Boundary {
 	private void updatePatientPrivateInfo(String patientId) {
 		System.out.println("\n--- Patient Personal Information for Patient ID: " + patientId + " ---");
 		boolean recordsFound = false;
-		for (Patient patient : PersonnelRepository.PATIENTS.values()) {
+		for (Patient patient : UserRepository.PATIENTS.values()) {
 			if (patient.getUID().equals(patientId)) {
 				recordsFound = true;
 				P_UpdateDetailsBoundary PUpdateDetailsBoundary = new P_UpdateDetailsBoundary(patient);

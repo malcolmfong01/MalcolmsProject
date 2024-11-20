@@ -8,7 +8,7 @@ import enums.PersonnelFileType;
 
 /**
  * The StaffController class is a super class that provides methods to access and retrieve staff-related information
- * from the PersonnelRepository.
+ * from the UserRepository.
  */
 public class StaffController {
     /**
@@ -24,19 +24,19 @@ public class StaffController {
         switch (personnelFileType) {
             case ADMINS:
                 prefix = "A";
-                repository = PersonnelRepository.ADMINS;
+                repository = UserRepository.ADMINS;
                 break;
             case DOCTORS:
                 prefix = "D";
-                repository = PersonnelRepository.DOCTORS;
+                repository = UserRepository.DOCTORS;
                 break;
             case PATIENTS:
                 prefix = "P";
-                repository = PersonnelRepository.PATIENTS;
+                repository = UserRepository.PATIENTS;
                 break;
             case PHARMACISTS:
                 prefix = "PH";
-                repository = PersonnelRepository.PHARMACISTS;
+                repository = UserRepository.PHARMACISTS;
                 break;
             default:
                 return "";
@@ -78,16 +78,16 @@ public class StaffController {
 
         // Determine the type of personnel and add it to the appropriate collection
         if (personnel instanceof Doctor) {
-            PersonnelRepository.DOCTORS.put(personnel.getUID(), (Doctor) personnel);
+            UserRepository.DOCTORS.put(personnel.getUID(), (Doctor) personnel);
             System.out.println("Doctor added: " + personnel.getFullName());
         } else if (personnel instanceof Patient) {
-            PersonnelRepository.PATIENTS.put(personnel.getUID(), (Patient) personnel);
+            UserRepository.PATIENTS.put(personnel.getUID(), (Patient) personnel);
             System.out.println("Patient added: " + personnel.getFullName());
         } else if (personnel instanceof Pharmacist) {
-            PersonnelRepository.PHARMACISTS.put(personnel.getUID(), (Pharmacist) personnel);
+            UserRepository.PHARMACISTS.put(personnel.getUID(), (Pharmacist) personnel);
             System.out.println("Pharmacist added: " + personnel.getFullName());
         } else if (personnel instanceof Admin) {
-            PersonnelRepository.ADMINS.put(personnel.getUID(), (Admin) personnel);
+            UserRepository.ADMINS.put(personnel.getUID(), (Admin) personnel);
             System.out.println("Admin added: " + personnel.getFullName());
         } else {
             System.out.println("Error: Unsupported personnel type.");
@@ -95,7 +95,7 @@ public class StaffController {
         }
 
         // Save the updated personnel to the file
-        PersonnelRepository.saveAllPersonnelFiles();
+        UserRepository.saveAllPersonnelFiles();
         return true;
     }
 
@@ -128,34 +128,34 @@ public class StaffController {
 
         switch (type) {
             case DOCTORS:
-                Doctor removedDoctor = PersonnelRepository.DOCTORS.remove(UID);
+                Doctor removedDoctor = UserRepository.DOCTORS.remove(UID);
                 if (removedDoctor != null) {
                     System.out.println("Doctor removed: " + removedDoctor.getFullName());
-                    PersonnelRepository.saveAllPersonnelFiles();
+                    UserRepository.saveAllPersonnelFiles();
                     return true;
                 }
                 break;
             case PATIENTS:
-                Patient removedPatient = PersonnelRepository.PATIENTS.remove(UID);
+                Patient removedPatient = UserRepository.PATIENTS.remove(UID);
                 if (removedPatient != null) {
                     System.out.println("Patient removed: " + removedPatient.getFullName());
-                    PersonnelRepository.saveAllPersonnelFiles();
+                    UserRepository.saveAllPersonnelFiles();
                     return true;
                 }
                 break;
             case PHARMACISTS:
-                Pharmacist removedPharmacist = PersonnelRepository.PHARMACISTS.remove(UID);
+                Pharmacist removedPharmacist = UserRepository.PHARMACISTS.remove(UID);
                 if (removedPharmacist != null) {
                     System.out.println("Pharmacist removed: " + removedPharmacist.getFullName());
-                    PersonnelRepository.saveAllPersonnelFiles();
+                    UserRepository.saveAllPersonnelFiles();
                     return true;
                 }
                 break;
             case ADMINS:
-                Admin removedAdmin = PersonnelRepository.ADMINS.remove(UID);
+                Admin removedAdmin = UserRepository.ADMINS.remove(UID);
                 if (removedAdmin != null) {
                     System.out.println("Admin removed: " + removedAdmin.getFullName());
-                    PersonnelRepository.saveAllPersonnelFiles();
+                    UserRepository.saveAllPersonnelFiles();
                     return true;
                 }
                 break;
@@ -182,13 +182,13 @@ public class StaffController {
 
         switch (type) {
             case DOCTORS:
-                return PersonnelRepository.DOCTORS.get(UID);
+                return UserRepository.DOCTORS.get(UID);
             case PATIENTS:
-                return PersonnelRepository.PATIENTS.get(UID);
+                return UserRepository.PATIENTS.get(UID);
             case PHARMACISTS:
-                return PersonnelRepository.PHARMACISTS.get(UID);
+                return UserRepository.PHARMACISTS.get(UID);
             case ADMINS:
-                return PersonnelRepository.ADMINS.get(UID);
+                return UserRepository.ADMINS.get(UID);
             default:
                 System.out.println("Error: Unsupported personnel type.");
                 return null;
@@ -208,17 +208,17 @@ public class StaffController {
         }
 
         // Determine the type of personnel and update the record
-        if (updatedPersonnel instanceof Doctor && PersonnelRepository.DOCTORS.containsKey(UID)) {
-            PersonnelRepository.DOCTORS.put(UID, (Doctor) updatedPersonnel);
+        if (updatedPersonnel instanceof Doctor && UserRepository.DOCTORS.containsKey(UID)) {
+            UserRepository.DOCTORS.put(UID, (Doctor) updatedPersonnel);
             System.out.println("Doctor updated: " + updatedPersonnel.getFullName());
-        } else if (updatedPersonnel instanceof Patient && PersonnelRepository.PATIENTS.containsKey(UID)) {
-            PersonnelRepository.PATIENTS.put(UID, (Patient) updatedPersonnel);
+        } else if (updatedPersonnel instanceof Patient && UserRepository.PATIENTS.containsKey(UID)) {
+            UserRepository.PATIENTS.put(UID, (Patient) updatedPersonnel);
             System.out.println("Patient updated: " + updatedPersonnel.getFullName());
-        } else if (updatedPersonnel instanceof Pharmacist && PersonnelRepository.PHARMACISTS.containsKey(UID)) {
-            PersonnelRepository.PHARMACISTS.put(UID, (Pharmacist) updatedPersonnel);
+        } else if (updatedPersonnel instanceof Pharmacist && UserRepository.PHARMACISTS.containsKey(UID)) {
+            UserRepository.PHARMACISTS.put(UID, (Pharmacist) updatedPersonnel);
             System.out.println("Pharmacist updated: " + updatedPersonnel.getFullName());
-        } else if (updatedPersonnel instanceof Admin && PersonnelRepository.ADMINS.containsKey(UID)) {
-            PersonnelRepository.ADMINS.put(UID, (Admin) updatedPersonnel);
+        } else if (updatedPersonnel instanceof Admin && UserRepository.ADMINS.containsKey(UID)) {
+            UserRepository.ADMINS.put(UID, (Admin) updatedPersonnel);
             System.out.println("Admin updated: " + updatedPersonnel.getFullName());
         } else {
             System.out.println("Error: Personnel not found for update.");
@@ -226,7 +226,7 @@ public class StaffController {
         }
 
         // Save the updated data
-        PersonnelRepository.saveAllPersonnelFiles();
+        UserRepository.saveAllPersonnelFiles();
         return true;
     }
     /**
@@ -239,16 +239,16 @@ public class StaffController {
 
         switch (type) {
             case DOCTORS:
-                personnelMap = PersonnelRepository.DOCTORS;
+                personnelMap = UserRepository.DOCTORS;
                 break;
             case PATIENTS:
-                personnelMap = PersonnelRepository.PATIENTS;
+                personnelMap = UserRepository.PATIENTS;
                 break;
             case PHARMACISTS:
-                personnelMap = PersonnelRepository.PHARMACISTS;
+                personnelMap = UserRepository.PHARMACISTS;
                 break;
             case ADMINS:
-                personnelMap = PersonnelRepository.ADMINS;
+                personnelMap = UserRepository.ADMINS;
                 break;
             default:
                 System.out.println("Error: Unsupported personnel type.");
@@ -276,7 +276,7 @@ public class StaffController {
             return null;
         }
 
-        Patient patient = PersonnelRepository.PATIENTS.get(UID);
+        Patient patient = UserRepository.PATIENTS.get(UID);
         if (patient == null) {
             System.out.println("Error: Patient not found with ID Card: " + UID);
         }
@@ -297,7 +297,7 @@ public class StaffController {
         }
 
         // Retrieve the existing patient
-        Patient existingPatient = PersonnelRepository.PATIENTS.get(UID);
+        Patient existingPatient = UserRepository.PATIENTS.get(UID);
 
         if (existingPatient == null) {
             System.out.println("Error: Patient not found with ID Card: " + UID);
@@ -318,8 +318,8 @@ public class StaffController {
         existingPatient.setDateOfAdmission(updatedPatient.getDateOfAdmission());
 
         // Save changes to repository
-        PersonnelRepository.PATIENTS.put(UID, existingPatient);
-        PersonnelRepository.saveAllPersonnelFiles();
+        UserRepository.PATIENTS.put(UID, existingPatient);
+        UserRepository.saveAllPersonnelFiles();
 
         System.out.println("Patient details updated successfully for ID Card: " + UID);
         return true;

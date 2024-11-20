@@ -1,11 +1,11 @@
 package controller;
 
 import model.Doctor;
-import repository.PersonnelRepository;
+import repository.UserRepository;
 
 /**
  * The DoctorController class provides methods for retrieving doctor-related information
- * from the PersonnelRepository.
+ * from the UserRepository.
  */
 
 public class DoctorController {
@@ -18,8 +18,8 @@ public class DoctorController {
      */
 
 	public static Doctor getDoctorById(String doctorId) {
-		if (PersonnelRepository.isRepoLoad())
-			return PersonnelRepository.DOCTORS.get(doctorId);
+		if (UserRepository.isRepoLoad())
+			return UserRepository.DOCTORS.get(doctorId);
 		else
 			return null;
 

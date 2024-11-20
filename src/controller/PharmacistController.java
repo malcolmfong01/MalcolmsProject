@@ -3,7 +3,7 @@ package controller;
 import boundary.PH_UpdatePrescriptionBoundary;
 import model.Pharmacist;
 import repository.AppointmentOutcomeRecordRepository;
-import repository.PersonnelRepository;
+import repository.UserRepository;
 import repository.PrescribedMedicationRepository;
 
 /**
@@ -21,8 +21,8 @@ public class PharmacistController{
      */
 
     public static Pharmacist getPharmacistById(String pharmacistId) {
-        if (PersonnelRepository.isRepoLoad())
-            return PersonnelRepository.PHARMACISTS.get(pharmacistId);
+        if (UserRepository.isRepoLoad())
+            return UserRepository.PHARMACISTS.get(pharmacistId);
         else
             return null;
 

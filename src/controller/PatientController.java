@@ -1,11 +1,11 @@
 package controller;
 
 import model.Patient;
-import repository.PersonnelRepository;
+import repository.UserRepository;
 
 /**
  * The PatientController class that provides methods to access and retrieve patient-related information
- * from the PersonnelRepository.
+ * from the UserRepository.
  */
 
 public class PatientController {
@@ -18,7 +18,7 @@ public class PatientController {
      */
 
 	public static Patient getPatientById(String patientId) {
-		return PersonnelRepository.PATIENTS.get(patientId);
+		return UserRepository.PATIENTS.get(patientId);
 	}
 
     /**

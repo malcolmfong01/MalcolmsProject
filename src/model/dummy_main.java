@@ -180,14 +180,14 @@
 // );
 //
 // // Add patients to storage
-// PersonnelRepository.PATIENTS.put(patient1.getUID(), patient1);
-// PersonnelRepository.PATIENTS.put(patient2.getUID(), patient2);
-// PersonnelRepository.PATIENTS.put(patient3.getUID(), patient3);
-// PersonnelRepository.DOCTORS.put(doctor1.getUID(), doctor1);
-// PersonnelRepository.DOCTORS.put(doctor2.getUID(), doctor2);
-// PersonnelRepository.DOCTORS.put(doctor3.getUID(), doctor3);
+// UserRepository.PATIENTS.put(patient1.getUID(), patient1);
+// UserRepository.PATIENTS.put(patient2.getUID(), patient2);
+// UserRepository.PATIENTS.put(patient3.getUID(), patient3);
+// UserRepository.DOCTORS.put(doctor1.getUID(), doctor1);
+// UserRepository.DOCTORS.put(doctor2.getUID(), doctor2);
+// UserRepository.DOCTORS.put(doctor3.getUID(), doctor3);
 ////
-// PersonnelRepository.saveAllPersonnelFiles();
+// UserRepository.saveAllPersonnelFiles();
 //// PrescribedMedicationRepository.diagnosisToMedicationsMap.put(medsList1.getFirst().getDiagnosisID(),
 // medsList1);
 //// PrescribedMedicationRepository.diagnosisToMedicationsMap.put(medsList2.getFirst().getDiagnosisID(),
