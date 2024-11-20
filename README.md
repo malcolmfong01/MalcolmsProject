@@ -1,5 +1,5 @@
 # HMS Application 🏥  
-### **Lab Group: **  
+### **Lab Group: SCSJ**  
 ### **Group 3**
 
 
