@@ -15,6 +15,7 @@ import enums.AppointmentStatus;
 import model.*;
 import utility.Validator;
 import model.Treatment;
+import boundary.MainBoundary;
 
 /**
  * A user interface class for displaying a patient's medical record in a formatted view.
@@ -59,7 +60,6 @@ public class MedicalRecordBoundary extends Boundary {
         System.out.printf("| %-20s: %-20s |\n", "Phone Number", (patient != null ? patient.getPhoneNo() : "Unknown"));
         System.out.printf("| %-20s: %-20s |\n", "Email", (patient != null ? patient.getEmail() : "Unknown"));
         System.out.println(border);
-
         // Diagnosis Section
         System.out.println("| Diagnoses:");
         if (medicalRecord.getDiagnosis() != null && !medicalRecord.getDiagnosis().isEmpty()) {

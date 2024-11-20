@@ -77,7 +77,7 @@ public class MainBoundary extends Boundary {
      * Loads all repositories necessary for the HMS application in a specified order.
      * Ensures that data is loaded correctly before use in the application.
      */
-	public void loadHMSRepository() {
+	public static void loadHMSRepository() {
 		// MUST BE LOADED IN THIS SEQUENCE, RECORDS REPOSITORY LOADED LAST!
 		Repository.loadRepository(new PersonnelRepository());
 		Repository.loadRepository(new PrescribedMedicationRepository());

@@ -97,6 +97,7 @@ public class DoctorBoundary extends Boundary {
 	 * @param doctorID the ID of the doctor
 	 */
 	public void viewPatientMedicalRecord(String doctorID) {
+		MainBoundary.loadHMSRepository();
 		System.out.println("\n--- All Patients' Medical Records for Doctor ID: " + doctorID + " ---");
 		boolean recordsFound = false;
 		for (MedicalRecord record : RecordsRepository.MEDICAL_RECORDS.values()) {
