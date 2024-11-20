@@ -20,9 +20,6 @@ public class AppointmentController {
 
 	/** Map to keep track of the next ID for each record type
 	 * Generates a unique record ID for a specific record type using UUID.
-	 *
-	 * @param recType The type of the record for which the ID is generated.
-	 * @return A unique record ID string.
 	 */
 	private static final Map<RecordFileType, Integer> recordCounters = new HashMap<>();
 
@@ -34,7 +31,7 @@ public class AppointmentController {
 	}
 
 	public static String generateRecordID(RecordFileType recType) {
-		String prefix = "";
+		String prefix;
 		int nextId = 0;
 
 		// Set the prefix based on the record type

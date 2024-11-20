@@ -164,7 +164,6 @@ public class MedicineController {
      * @param medicineName The name of the medicine to retrieve.
      * @return The {@link Medicine} object if found; {@code null} otherwise.
      */
-    //for doctor purpose ,ck
     public static Medicine getMedicineByName(String medicineName) {
         if (medicineName == null || medicineName.isEmpty()) {
             System.out.println("Error: Invalid medicine name.");

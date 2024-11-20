@@ -17,7 +17,7 @@ import repository.RecordsRepository;
  */
 public class P_ScheduleBoundary extends Boundary {
 
-	private Patient patient;
+	private final Patient patient;
     /**
      * Constructor to initialize the P_ScheduleBoundary with the given patient.
      *

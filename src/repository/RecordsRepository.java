@@ -90,10 +90,10 @@ public class RecordsRepository extends Repository {
      *
      * @param fileName           the name of the file to save records to
      * @param recordsMapRecordID the map of records to save
-     * @param <T>                a type parameter extending HMSRecords
+     * @param <T>                a type parameter extending Records
      */
-    private static <T extends HMSRecords> void saveRecordsToCSV(String fileName,
-            HashMap<String, T> recordsMapRecordID) {
+    private static <T extends Records> void saveRecordsToCSV(String fileName,
+                                                             HashMap<String, T> recordsMapRecordID) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
         // Ensure the directory exists
@@ -121,7 +121,7 @@ public class RecordsRepository extends Repository {
      * @param record the record object to convert
      * @return a CSV-formatted string representing the record
      */
-    private static String recordToCSV(HMSRecords record) {
+    private static String recordToCSV(Records record) {
         if (record instanceof MedicalRecord) {
             MedicalRecord medRecord = (MedicalRecord) record;
             return String.join(",",
@@ -171,11 +171,11 @@ public class RecordsRepository extends Repository {
      * @param recordsMapRecordID the map to store the loaded records
      * @param type               the class type of record to load (e.g.,
      *                           MedicalRecord, Appointment)
-     * @param <T>                a type parameter extending HMSRecords
+     * @param <T>                a type parameter extending Records
      */
-    private static <T extends HMSRecords> void loadRecordsFromCSV(String fileName,
-            HashMap<String, T> recordsMapRecordID,
-            Class<T> type) {
+    private static <T extends Records> void loadRecordsFromCSV(String fileName,
+                                                               HashMap<String, T> recordsMapRecordID,
+                                                               Class<T> type) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
         // Ensure the directory exists
@@ -228,10 +228,10 @@ public class RecordsRepository extends Repository {
      * @param csv  the CSV string representing the record
      * @param type the class type of record to create (e.g., MedicalRecord,
      *             Appointment)
-     * @param <T>  a type parameter extending HMSRecords
+     * @param <T>  a type parameter extending Records
      * @return a record object of the specified type, or null if parsing fails
      */
-    private static <T extends HMSRecords> T csvToRecord(String csv, Class<T> type) {
+    private static <T extends Records> T csvToRecord(String csv, Class<T> type) {
         String[] fields = csv.split(",");
         // RecordsController rc = new RecordsController();
         try {

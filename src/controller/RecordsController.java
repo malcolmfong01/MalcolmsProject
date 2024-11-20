@@ -26,7 +26,7 @@ public class RecordsController {
     public static String generateRecordID(RecordFileType recType) {
         String prefix = "";
         int nextId = 0;
-        Map<String, ? extends HMSRecords> repository = null;
+        Map<String, ? extends Records> repository = null;
         switch (recType) {
             case APPOINTMENT_RECORDS:
                 prefix = "A-";

@@ -65,7 +65,6 @@ public class StaffController {
      * @param personnel the personnel to be added
      * @return true if personnel is successfully added, false if the data is invalid
      */
-    // Add a new personnel (e.g., Doctor, Patient, etc.)
     public static boolean addPersonnel(Staff personnel) {
         if (personnel == null) {
             System.out.println("Error: Invalid personnel data.");
@@ -76,28 +75,34 @@ public class StaffController {
             personnel.setUID(generateUID(determinePersonnelType(personnel)));
         }
 
-        // Determine the type of personnel and add it to the appropriate collection
-        if (personnel instanceof Doctor) {
-            UserRepository.DOCTORS.put(personnel.getUID(), (Doctor) personnel);
-            System.out.println("Doctor added: " + personnel.getFullName());
-        } else if (personnel instanceof Patient) {
-            UserRepository.PATIENTS.put(personnel.getUID(), (Patient) personnel);
-            System.out.println("Patient added: " + personnel.getFullName());
-        } else if (personnel instanceof Pharmacist) {
-            UserRepository.PHARMACISTS.put(personnel.getUID(), (Pharmacist) personnel);
-            System.out.println("Pharmacist added: " + personnel.getFullName());
-        } else if (personnel instanceof Admin) {
-            UserRepository.ADMINS.put(personnel.getUID(), (Admin) personnel);
-            System.out.println("Admin added: " + personnel.getFullName());
-        } else {
-            System.out.println("Error: Unsupported personnel type.");
-            return false;
+        // Determine the type of personnel and add it to the appropriate collection using a switch statement
+        switch (personnel) {
+            case Doctor doc -> {
+                UserRepository.DOCTORS.put(doc.getUID(), doc);
+                System.out.println("Doctor added: " + doc.getFullName());
+            }
+            case Patient pat -> {
+                UserRepository.PATIENTS.put(pat.getUID(), pat);
+                System.out.println("Patient added: " + pat.getFullName());
+            }
+            case Pharmacist pharm -> {
+                UserRepository.PHARMACISTS.put(pharm.getUID(), pharm);
+                System.out.println("Pharmacist added: " + pharm.getFullName());
+            }
+            case Admin admin -> {
+                UserRepository.ADMINS.put(admin.getUID(), admin);
+                System.out.println("Admin added: " + admin.getFullName());
+            }
+            default -> {
+                System.out.println("Error: Unsupported personnel type.");
+                return false;
+            }
         }
-
         // Save the updated personnel to the file
         UserRepository.saveAllPersonnelFiles();
         return true;
     }
+
 
     // Determine personnel type based on the class of personnel
     private static PersonnelFileType determinePersonnelType(Staff personnel) {

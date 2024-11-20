@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import enums.AppointmentOutcomeStatus;
 
 /**
- * Represents the outcome record of a patient's appointment.
+ * Represents the appointment outcome record of a patient's appointment.
  * This class captures details such as the diagnosis, appointment time,
  * prescription,
  * type of service, consultation notes, and the status of the appointment

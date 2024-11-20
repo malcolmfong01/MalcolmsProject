@@ -17,7 +17,7 @@ import repository.UserRepository;
 import utility.Validator;
 import repository.MedicineRepository;
 import controller.*;
-import utility.DateTimePicker;
+import utility.DateTime;
 
 
 
@@ -28,7 +28,7 @@ import utility.DateTimePicker;
  */
 
 public class AdminBoundary extends Boundary {
-	private Admin admin;
+	private final Admin admin;
 	/**
      * Constructs an AdminBoundary instance for the given Admin.
      * 
@@ -461,7 +461,7 @@ public class AdminBoundary extends Boundary {
         String medicineID = MedicineController.getNextMedicineID();
         String name = Validator.readString("Enter Medicine Name: ");
         String manufacturer = Validator.readString("Enter Manufacturer: ");
-        LocalDateTime expiryDate = DateTimePicker.pickDateTime("Enter Expiry Date: ");
+        LocalDateTime expiryDate = DateTime.pickDateTime("Enter Expiry Date: ");
         int inventoryStock = Validator.readInt("Enter Inventory Stock: ");
         int lowStockLevel = Validator.readInt("Enter Low Stock Level: ");
         int replenishStock = 0;
@@ -490,7 +490,7 @@ public class AdminBoundary extends Boundary {
         }
         String manufacturer = Validator.readString("Enter New Manufacturer: ");
         medicine.setManufacturer(manufacturer);
-        LocalDateTime expiryDate = DateTimePicker.pickDateTime("Enter New Expiry Date (YYYY-MM-DD HH:MM:): ");
+        LocalDateTime expiryDate = DateTime.pickDateTime("Enter New Expiry Date (YYYY-MM-DD HH:MM:): ");
         medicine.setExpiryDate(expiryDate);
         int inventoryStock = Validator.readInt("Enter New Inventory Stock: ");
         medicine.setInventoryStock(inventoryStock);
@@ -543,7 +543,7 @@ public class AdminBoundary extends Boundary {
         	System.out.println("No Replenish Request For This Medicine!");
         	return;
         }
-        LocalDateTime expiryDate = DateTimePicker.pickDateTime("Enter New Expiry Date (YYYY-MM-DD HH:MM:): ");
+        LocalDateTime expiryDate = DateTime.pickDateTime("Enter New Expiry Date (YYYY-MM-DD HH:MM:): ");
         medicine.setExpiryDate(expiryDate);
 
         medicine.setInventoryStock(medicine.getInventoryStock()+medicine.getReplenishmentStock());

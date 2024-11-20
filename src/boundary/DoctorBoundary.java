@@ -27,7 +27,7 @@ import repository.RecordsRepository;
  * This class handles doctor-specific interactions.
  */
 public class DoctorBoundary extends Boundary {
-	private Doctor doctor;
+	private final Doctor doctor;
 
 	/**
 	 * Constructs a DoctorBoundary for the specified doctor.

@@ -24,7 +24,7 @@ import static repository.AppointmentOutcomeRecordRepository.deleteAppointmentOut
  */
 public class PatientBoundary extends Boundary {
 
-	private Patient patient;
+	private final Patient patient;
 
 	/**
 	 * Constructor for PatientBoundary.

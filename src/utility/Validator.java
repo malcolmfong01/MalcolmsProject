@@ -13,16 +13,14 @@ import java.time.format.DateTimeParseException;
  */
 public class Validator {
     /**
-     * Shared Scanner instance for user input.
+     * Scanner instance for user input.
      */
     public static final Scanner sc = new Scanner(System.in);
 
     /**
      * Private constructor to prevent instantiation of this utility class.
      */
-    private Validator() {
-        // Private constructor to prevent instantiation
-    }
+    private Validator() {}
 
     /**
      * Reads an integer from the user with a given prompt.
@@ -219,15 +217,6 @@ public class Validator {
     }
 
     /**
-     * Returns the current date and time in "yyyy-MM-dd HH:mm" format.
-     *
-     * @return The current date and time as a formatted string.
-     */
-    public static String getCurrentDateTime() {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-    }
-
-    /**
      * Reads a date input from the user in the specified format and returns a
      * LocalDateTime object.
      * Continues to prompt until a valid date is entered.
@@ -240,11 +229,7 @@ public class Validator {
             System.out.println(prompt);
             String userInput = sc.nextLine();
             try {
-                return LocalDateTime.parse(userInput + "T00:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME); // Time set
-                                                                                                            // to
-                                                                                                            // midnight
-                                                                                                            // by
-                                                                                                            // default
+                return LocalDateTime.parse(userInput + "T00:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
             } catch (DateTimeParseException e) {
                 System.out.println("Invalid date format. Please enter the date in yyyy-MM-dd format.");
             }
