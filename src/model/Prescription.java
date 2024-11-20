@@ -1,10 +1,12 @@
 package model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
 /**
  * Represents a prescription for a patient, including the diagnosis ID, prescription date,
  * and the medications prescribed as part of the treatment.
  */
+
 public class Prescription {
     private String diagnosisID;
     private LocalDateTime prescriptionDate;
@@ -18,6 +20,7 @@ public class Prescription {
      * @param prescriptionDate the date when the prescription was issued
      * @param medications a list of medications prescribed to the patient
      */
+
     public Prescription(String diagnosisID, LocalDateTime prescriptionDate, ArrayList<PrescribedMedication> medications) {
         this.diagnosisID = diagnosisID;
         this.prescriptionDate = prescriptionDate;
@@ -29,6 +32,7 @@ public class Prescription {
      *
      * @return the diagnosis ID
      */
+
     public String getDiagnosisID() {
         return diagnosisID;
     }
@@ -38,6 +42,7 @@ public class Prescription {
      *
      * @param diagnosisID the diagnosis ID to set
      */
+
     public void setDiagnosisID(String diagnosisID) {
         this.diagnosisID = diagnosisID;
     }
@@ -47,6 +52,7 @@ public class Prescription {
      *
      * @return the prescription date
      */
+
     public LocalDateTime getPrescriptionDate() {
         return prescriptionDate;
     }
@@ -56,6 +62,7 @@ public class Prescription {
      *
      * @param prescriptionDate the prescription date to set
      */
+
     public void setPrescriptionDate(LocalDateTime prescriptionDate) {
         this.prescriptionDate = prescriptionDate;
     }
@@ -65,6 +72,7 @@ public class Prescription {
      *
      * @return the list of prescribed medications
      */
+
     public ArrayList<PrescribedMedication> getMedications() {
         return medications;
     }
@@ -74,6 +82,7 @@ public class Prescription {
      *
      * @param medications the list of prescribed medications to set
      */
+
     public void setMedications(ArrayList<PrescribedMedication> medications) {
         this.medications = medications;
     }
@@ -83,6 +92,7 @@ public class Prescription {
      *
      * @param newPrescribedMedication the medication to add to the prescription
      */
+
     public void addPrescribedMedication(model.PrescribedMedication newPrescribedMedication) {
         this.medications.add(newPrescribedMedication);
     }

@@ -19,7 +19,7 @@ public class StaffController {
     public static String generateUID(PersonnelFileType personnelFileType) {
         String prefix = "";
         int nextId = 0;
-        Map<String, ? extends Staff> repository = null;
+        Map<String, ? extends User> repository = null;
 
         switch (personnelFileType) {
             case ADMINS:
@@ -65,7 +65,7 @@ public class StaffController {
      * @param personnel the personnel to be added
      * @return true if personnel is successfully added, false if the data is invalid
      */
-    public static boolean addPersonnel(Staff personnel) {
+    public static boolean addPersonnel(User personnel) {
         if (personnel == null) {
             System.out.println("Error: Invalid personnel data.");
             return false;
@@ -105,7 +105,7 @@ public class StaffController {
 
 
     // Determine personnel type based on the class of personnel
-    private static PersonnelFileType determinePersonnelType(Staff personnel) {
+    private static PersonnelFileType determinePersonnelType(User personnel) {
         if (personnel instanceof Doctor) {
             return PersonnelFileType.DOCTORS;
         } else if (personnel instanceof Patient) {
@@ -179,7 +179,7 @@ public class StaffController {
      * @return the personnel object if found, or null if not found
      */
     // Retrieve personnel by UID
-    public static Staff getPersonnelByUID(String UID, PersonnelFileType type) {
+    public static User getPersonnelByUID(String UID, PersonnelFileType type) {
         if (UID == null || UID.isEmpty()) {
             System.out.println("Error: Invalid ID Card.");
             return null;
@@ -206,7 +206,7 @@ public class StaffController {
      * @return true if the personnel is successfully updated, false otherwise
      */
     // Update personnel details
-    public static boolean updatePersonnel(String UID, Staff updatedPersonnel) {
+    public static boolean updatePersonnel(String UID, User updatedPersonnel) {
         if (UID == null || UID.isEmpty() || updatedPersonnel == null) {
             System.out.println("Error: Invalid update request.");
             return false;
@@ -240,7 +240,7 @@ public class StaffController {
      */
     // List all personnel of a specific type
     public static void listAllPersonnel(PersonnelFileType type) {
-        Map<String, ? extends Staff> personnelMap = null;
+        Map<String, ? extends User> personnelMap = null;
 
         switch (type) {
             case DOCTORS:
@@ -262,7 +262,7 @@ public class StaffController {
 
         if (personnelMap != null && !personnelMap.isEmpty()) {
             System.out.println("Listing all personnel of type: " + type);
-            for (Staff personnel : personnelMap.values()) {
+            for (User personnel : personnelMap.values()) {
                 System.out.println("UID: " + personnel.getUID() + ", Name: " + personnel.getFullName());
             }
         } else {
@@ -309,7 +309,7 @@ public class StaffController {
             return false;
         }
 
-        // Update fields from Staff class
+        // Update fields from User class
         existingPatient.setFullName(updatedPatient.getFullName());
         existingPatient.setUsername(updatedPatient.getUsername());
         existingPatient.setEmail(updatedPatient.getEmail());

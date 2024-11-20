@@ -2,9 +2,10 @@ package model;
 import enums.PrescriptionStatus;
 
 /**
- * Represents a prescribed medication for a patient, including information about the diagnosis,
+ * Prescribed Medication class for a patient, including information about the diagnosis,
  * medicine, dosage, and treatment duration.
  */
+
 public class PrescribedMedication {
     private String diagnosisID;
     private String medicineID;
@@ -130,6 +131,7 @@ public class PrescribedMedication {
      *
      * @return the dosage instructions
      */
+
     public String getDosage() {
         return dosage;
     }
@@ -139,9 +141,16 @@ public class PrescribedMedication {
      *
      * @param dosage the dosage instructions to set
      */
+
     public void setDosage(String dosage) {
         this.dosage = dosage;
     }
+
+    /**
+     * Gets the prescribed medication ID.
+     *
+     * @return the dosage instructions
+     */
 
     public String getPrescribedMedID() {
         return prescribedMedID;

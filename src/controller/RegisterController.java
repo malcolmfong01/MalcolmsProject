@@ -15,11 +15,11 @@ public class RegisterController {
      * @param username the username of the personnel
      * @param password the password of the personnel
      * @param role the role of the personnel (admin, doctor, pharmacist, or patient)
-     * @return the authenticated Staff object if successful, otherwise null
+     * @return the authenticated User object if successful, otherwise null
      */
     // Method to authenticate a user based on username and password
-    public static Staff login(String username, String password, PersonnelFileType role) {
-        Map<String, ? extends Staff> personnelMap = null;
+    public static User login(String username, String password, PersonnelFileType role) {
+        Map<String, ? extends User> personnelMap = null;
 
         switch (role.toString().toLowerCase()) {
             case "admins":
@@ -39,7 +39,7 @@ public class RegisterController {
                 return null;
         }
 
-        for (Staff personnel : personnelMap.values()) {
+        for (User personnel : personnelMap.values()) {
             if (personnel.getUsername().equals(username) && verifyPassword(personnel, password)) {
                 System.out.println(role + " " + personnel.getFullName() + " logged in successfully.");
                 cookie.setRole(PersonnelFileType.toEnum(personnel.getRole()));
@@ -58,7 +58,7 @@ public class RegisterController {
      * @return true if the password matches the stored password hash, false otherwise
      */
     // Method to verify if the password matches the stored password hash
-    private static boolean verifyPassword(Staff personnel, String password) {
+    private static boolean verifyPassword(User personnel, String password) {
         return personnel.getPasswordHash().equals(password);
     }
     /**
@@ -68,7 +68,7 @@ public class RegisterController {
      * @return true if the password is updated successfully, false otherwise
      */
     // Method to update the password for a given personnel
-    public static boolean updatePassword(Staff personnel, String newPassword) {
+    public static boolean updatePassword(User personnel, String newPassword) {
         if (newPassword == null || newPassword.isEmpty()) {
             System.out.println("Password update failed: New password cannot be empty.");
             return false;
@@ -76,7 +76,7 @@ public class RegisterController {
 
         personnel.setPasswordHash(newPassword);
 
-        Map<String, ? extends Staff> personnelMap = null;
+        Map<String, ? extends User> personnelMap = null;
         String uid = personnel.getUID();
 
         switch (PersonnelFileType.toEnum(personnel.getRole())) {
@@ -98,7 +98,7 @@ public class RegisterController {
         }
 
         if (personnelMap != null && personnelMap.containsKey(uid)) {
-            ((Map<String, Staff>) personnelMap).put(uid, personnel);
+            ((Map<String, User>) personnelMap).put(uid, personnel);
             UserRepository.saveAllPersonnelFiles();
             System.out.println("Password updated successfully for " + personnel.getFullName());
             return true;
@@ -211,7 +211,7 @@ public class RegisterController {
      * @param personnel the personnel to log out
      */
     // Optional: Implement a logout method if needed
-    public static void logout(Staff personnel) {
+    public static void logout(User personnel) {
         System.out.println(personnel.getFullName() + " has been logged out.");
     }
     /**
@@ -220,7 +220,7 @@ public class RegisterController {
      * @param personnelMap the map of personnel to check the username against
      * @return true if the username is taken, false otherwise
      */
-    public static boolean isUsernameTaken(String username, Map<String, ? extends Staff> personnelMap) {
+    public static boolean isUsernameTaken(String username, Map<String, ? extends User> personnelMap) {
         return personnelMap.values().stream().anyMatch(personnel -> personnel.getUsername().equals(username));
     }
     public static boolean isValidPassword(String password) {

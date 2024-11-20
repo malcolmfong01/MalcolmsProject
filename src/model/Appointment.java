@@ -6,9 +6,7 @@ import enums.AppointmentStatus;
 import enums.RecordStatusType;
 
 /**
- * Represents an appointment record, containing patient details, appointment time, status,
- * location, and associated appointment outcome.
- * This class extends Records.
+ * Appointment class extends Records
  */
 public class Appointment extends Records {
 	private String appointmentOutcomeRecordID;
@@ -18,9 +16,6 @@ public class Appointment extends Records {
 	private String location;
 	private AppointmentStatus appointmentStatus;
 	private AppointmentOutcomeRecord appointmentOutcomeRecord;
-
-	// Constructor when retrieving CSV to an object
-	// delete kc constructor dy
 
     /**
      * Constructor when retrieving CSV data to an object.
@@ -37,6 +32,7 @@ public class Appointment extends Records {
      * @param appointmentStatus the status of the appointment
      * @param appointmentOutcomeRecord the associated appointment outcome record
      */
+
 	public Appointment(String recordID,
 					   LocalDateTime createdDate,
 					   LocalDateTime updatedDate,
@@ -63,6 +59,7 @@ public class Appointment extends Records {
      *
      * @return the appointment outcome record ID
      */
+
 	public String getAppointmentOutcomeRecordID() {
 		return appointmentOutcomeRecordID;
 	}
@@ -72,6 +69,7 @@ public class Appointment extends Records {
      *
      * @param appointmentOutcomeRecordID the appointment outcome record ID to set
      */
+
 	public void setAppointmentOutcomeRecordID(String appointmentOutcomeRecordID) {
 		this.appointmentOutcomeRecordID = appointmentOutcomeRecordID;
 	}
@@ -81,6 +79,7 @@ public class Appointment extends Records {
      *
      * @return the patient ID
      */
+
 	public String getPatientID() {
 		return patientID;
 	}
@@ -90,6 +89,7 @@ public class Appointment extends Records {
      *
      * @param patientID the patient ID to set
      */
+
 	public void setPatientID(String patientID) {
 		this.patientID = patientID;
 	}
@@ -99,6 +99,7 @@ public class Appointment extends Records {
      *
      * @return the doctor ID
      */
+
 	public String getDoctorID() {
 		return doctorID;
 	}
@@ -108,6 +109,7 @@ public class Appointment extends Records {
      *
      * @param doctorID the doctor ID to set
      */
+
 	public void setDoctorID(String doctorID) {
 		this.doctorID = doctorID;
 	}
@@ -117,6 +119,7 @@ public class Appointment extends Records {
      *
      * @return the appointment time
      */
+
 	public LocalDateTime getAppointmentTime() {
 		return appointmentTime;
 	}
@@ -126,6 +129,7 @@ public class Appointment extends Records {
      *
      * @param appointmentTime the appointment time to set
      */
+
 	public void setAppointmentTime(LocalDateTime appointmentTime) {
 		this.appointmentTime = appointmentTime;
 	}
@@ -135,6 +139,7 @@ public class Appointment extends Records {
      *
      * @return the appointment location
      */
+
 	public String getLocation() {
 		return location;
 	}
@@ -144,6 +149,7 @@ public class Appointment extends Records {
      *
      * @param location the location to set
      */
+
 	public void setLocation(String location) {
 		this.location = location;
 	}
@@ -153,6 +159,7 @@ public class Appointment extends Records {
      *
      * @return the appointment status
      */
+
 	public AppointmentStatus getAppointmentStatus() {
 		return appointmentStatus;
 	}
@@ -162,6 +169,7 @@ public class Appointment extends Records {
      *
      * @param appointmentStatus the status to set
      */
+
 	public void setAppointmentStatus(AppointmentStatus appointmentStatus) {
 		this.appointmentStatus = appointmentStatus;
 	}
@@ -171,6 +179,7 @@ public class Appointment extends Records {
      *
      * @return the appointment outcome record
      */
+
 	public AppointmentOutcomeRecord getAppointmentOutcomeRecord() {
 		return appointmentOutcomeRecord;
 	}
@@ -180,6 +189,7 @@ public class Appointment extends Records {
      *
      * @param appointmentOutcomeRecord the appointment outcome record to set
      */
+
 	public void setAppointmentOutcomeRecord(AppointmentOutcomeRecord appointmentOutcomeRecord) {
 		this.appointmentOutcomeRecord = appointmentOutcomeRecord;
 	}
