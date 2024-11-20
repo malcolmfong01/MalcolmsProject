@@ -21,7 +21,7 @@ public class D_RecordOutcomeBoundary extends Boundary {
     /**
      * The doctor recording appointment outcomes.
      */
-    private Doctor doctor;
+    private final Doctor doctor;
 
     /**
      * Constructs an D_RecordOutcomeBoundary for the specified doctor.

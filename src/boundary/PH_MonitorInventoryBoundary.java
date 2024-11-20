@@ -42,7 +42,7 @@ public class PH_MonitorInventoryBoundary extends Boundary {
             displayMedicineDetails(medicine);
         }
 
-        printSeparator();
+        printline();
 
         // Step 1: Check for expired medicines
         System.out.println("Expired Medicines:");
@@ -64,7 +64,7 @@ public class PH_MonitorInventoryBoundary extends Boundary {
             promptToRemoveExpiredMedicines(now);
         }
 
-        printSeparator();
+        printline();
 
         // Step 4: Check for medicines below the low stock level
         System.out.println("Medicines Below Low Stock Level:");

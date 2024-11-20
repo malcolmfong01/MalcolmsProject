@@ -9,9 +9,9 @@ import enums.RecordStatusType;
 
 /**
  * Represents a medical record for a patient, containing personal information, blood type,
- * allergies, and a list of diagnoses. This class extends from HMSRecords.
+ * allergies, and a list of diagnoses. This class extends from Records.
  */
-public class MedicalRecord extends HMSRecords {
+public class MedicalRecord extends Records {
     private String patientName;
     private String patientPhoneNumber;
     private String patientEmail;

@@ -20,11 +20,11 @@ import controller.MedicineController;
  * It allows adding diagnoses, treatment plans, and prescriptions.
  */
 public class D_UpdateMRBoundary {
-    private Doctor doctor;
-    private MedicalRecord medicalRecord;
-    private Appointment currentAppointment;
-    private Scanner sc;
-    private DoctorBoundary doctorBoundary;
+    private final Doctor doctor;
+    private final MedicalRecord medicalRecord;
+    private final Appointment currentAppointment;
+    private final Scanner sc;
+    private final DoctorBoundary doctorBoundary;
 
     /**
      * Constructor to initialize the UI with the doctor, medical record, and the

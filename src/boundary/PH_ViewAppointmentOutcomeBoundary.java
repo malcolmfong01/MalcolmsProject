@@ -77,7 +77,7 @@ public class PH_ViewAppointmentOutcomeBoundary extends Boundary {
      * @param record The AppointmentOutcomeRecord to be displayed.
      */
     private void displayAppointmentOutcomeRecord(AppointmentOutcomeRecord record) {
-        printSeparator();
+        printline();
         System.out.println("Appointment Outcome for Record ID: " + record.getUID());
         System.out.println("Patient ID: " + record.getPatientID());
         System.out.println("Doctor ID: " + record.getDoctorID());
@@ -101,7 +101,7 @@ public class PH_ViewAppointmentOutcomeBoundary extends Boundary {
         } else {
             System.out.println("No prescription details available for this appointment outcome record.");
         }
-        printSeparator();
+        printline();
     }
 
     /**

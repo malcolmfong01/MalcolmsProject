@@ -12,7 +12,7 @@ import utility.Validator;
  * This class handles pharmacist-specific interactions.
  */
 public class PharmacistBoundary extends Boundary {
-    private Pharmacist pharmacist;
+    private final Pharmacist pharmacist;
 
     /**
      * Constructor for PatientBoundary.

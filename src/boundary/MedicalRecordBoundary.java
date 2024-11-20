@@ -15,7 +15,6 @@ import enums.AppointmentStatus;
 import model.*;
 import utility.Validator;
 import model.Treatment;
-import boundary.MainBoundary;
 
 /**
  * A user interface class for displaying a patient's medical record in a formatted view.
@@ -27,8 +26,8 @@ public class MedicalRecordBoundary extends Boundary {
     /**
      * The medical record to be displayed.
      */
-    private MedicalRecord medicalRecord;
-    private Patient patient;
+    private final MedicalRecord medicalRecord;
+    private final Patient patient;
 
     /**
      * Constructs a MedicalRecordBoundary with the specified medical record.

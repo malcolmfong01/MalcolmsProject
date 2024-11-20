@@ -8,11 +8,11 @@ import enums.RecordFileType;
 import enums.RecordStatusType;
 
 /**
- * Represents a payment record in the system. Inherits from the HMSRecords class to include
+ * Represents a payment record in the system. Inherits from the Records class to include
  * the basic record details and adds specific information related to the payment such as
  * the amount and the associated patient ID.
  */
-public class PaymentRecord extends HMSRecords {
+public class PaymentRecord extends Records {
     private double paymentAmount;
     private String patientID;
     private PaymentStatus paymentStatus;
@@ -67,7 +67,7 @@ public class PaymentRecord extends HMSRecords {
     }
 
     /**
-     * Constructs an HMSRecords object with the specified details.
+     * Constructs an Records object with the specified details.
      *
      * @param recordID     the unique identifier for the record
      * @param createdDate  the date and time when the record was created

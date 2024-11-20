@@ -13,7 +13,7 @@ import java.util.List;
 import controller.RecordsController;
 import enums.AppointmentStatus;
 import enums.RecordFileType;
-import utility.DateTimePicker;
+import utility.DateTime;
 import utility.Validator;
 import model.Appointment;
 import model.Doctor;
@@ -26,7 +26,7 @@ public class D_SetAvailabilityBoundary extends Boundary {
     /**
      * The doctor for whom appointment availability is being managed.
      */
-	private Doctor doctor;
+	private final Doctor doctor;
 
     /**
      * Constructs an D_SetAvailabilityBoundary with the specified doctor.
@@ -97,7 +97,7 @@ public class D_SetAvailabilityBoundary extends Boundary {
             String location = Validator.readString("Enter the location (e.g., 'Level 2 - Heart Clinic'): ");
 
             // Prompt for appointment date and time
-            LocalDateTime appointmentDateTime = DateTimePicker.pickDateTime("Enter the appointment date and time:");
+            LocalDateTime appointmentDateTime = DateTime.pickDateTime("Enter the appointment date and time:");
 
             // Create appointment record
             Appointment appointment = new Appointment(

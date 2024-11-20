@@ -11,9 +11,9 @@ public abstract class Boundary {
     public Boundary() {
     }
 
-    public void printWarning(String breadcrumb) {
-        String spaces = String.format("%" + (105 - breadcrumb.length()) + "s", "");
-        System.out.println("[ERROR !!! " + breadcrumb + spaces + "!!!]");
+    public void printWarning(String warning) {
+        String spaces = String.format("%" + (105 - warning.length()) + "s", "");
+        System.out.println( warning + spaces );
     }
 
     /**
@@ -28,7 +28,7 @@ public abstract class Boundary {
      * Method to display a simple horizontal separator between sections.
      * Adds structure to the console output for readability.
      */
-    protected void printSeparator() {
+    protected void printline() {
         System.out
                 .println("===========================================================================================");
     }

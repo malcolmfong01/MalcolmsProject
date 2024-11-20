@@ -12,7 +12,7 @@ import model.Patient;
  */
 public class P_UpdateDetailsBoundary {
     
-    private Patient patient;
+    private final Patient patient;
     /**
      * Constructor to initialize the UI with a specific patient object.
      *

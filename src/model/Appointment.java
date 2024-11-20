@@ -8,9 +8,9 @@ import enums.RecordStatusType;
 /**
  * Represents an appointment record, containing patient details, appointment time, status,
  * location, and associated appointment outcome.
- * This class extends HMSRecords.
+ * This class extends Records.
  */
-public class Appointment extends HMSRecords {
+public class Appointment extends Records {
 	private String appointmentOutcomeRecordID;
 	private String patientID;
 	private String doctorID;
