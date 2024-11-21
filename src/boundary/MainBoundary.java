@@ -64,6 +64,10 @@ public class MainBoundary extends Boundary {
 		}
 	}
 
+	/**
+	 * Method to
+	 * @param title print title of the app
+	 */
 	private static void printHeader(String title) {
 		System.out.println("=".repeat(37));
 		System.out.printf("  %s%n", title);

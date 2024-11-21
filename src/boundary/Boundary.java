@@ -30,10 +30,16 @@ public abstract class Boundary {
         System.out.println("===========================================================================================");
     }
 
+    /**
+     * Method to display a single line
+     */
     protected static void singleline(){
         System.out.println("---------------------------------------");
     }
 
+    /**
+     * Method to print header lines
+     */
     protected static void headerline(){
         System.out.println("--------------------------------------------------");
     }

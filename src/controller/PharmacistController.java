@@ -1,6 +1,5 @@
 package controller;
 
-import boundary.UpdatePrescriptionBoundary;
 import model.Pharmacist;
 import repository.AppointmentOutcomeRecordRepository;
 import repository.UserRepository;
@@ -29,10 +28,10 @@ public class PharmacistController{
     }
 
     /**
-     * Retrieves the full name of a doctor based on the provided pharmacist ID.
+     * Retrieves the full name of a doctor based on the provided doctor ID.
      *
-     * @param pharmacistId The unique identifier of the pharmacist.
-     * @return The full name of the pharmacist if found, or "Unknown Pharmacist" if the pharmacist does not exist in the repository.
+     * @param pharmacistId The unique identifier of the doctor.
+     * @return The full name of the doctor if found, or "Unknown Doctor" if the doctor does not exist in the repository.
      */
 
     public static String getPharmacistNameById(String pharmacistId) {
@@ -41,17 +40,8 @@ public class PharmacistController{
     }
 
     /**
-     * Initiates the UI for updating the status of a specific prescription in an
-     * appointment outcome record. This method creates an instance of
-     * UpdatePrescriptionBoundary and calls its method to manage the interaction
-     * and update process.
+     * method to update the prescribed Medication Repository
      */
-
-    public static void updatePrescriptionStatus() {
-        UpdatePrescriptionBoundary updateStatusUI = new UpdatePrescriptionBoundary();
-        updateStatusUI.start();
-    }
-
     public static void updatePrescribedMedicationRepository() {
         PrescribedMedicationRepository.saveAlltoCSV();
         AppointmentOutcomeRecordRepository.saveAppointmentOutcomeRecordRepository();

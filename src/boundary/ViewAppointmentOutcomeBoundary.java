@@ -24,7 +24,7 @@ import static repository.PrescribedMedicationRepository.diagnosisToMedicationsMa
  */
 public class ViewAppointmentOutcomeBoundary extends Boundary {
     /**
-     * Starts the UI for viewing appointment outcome records and displays the
+     * Starts the menu for viewing appointment outcome records and displays the
      * appropriate breadcrumbs.
      */
     @Override

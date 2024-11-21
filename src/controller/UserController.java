@@ -172,6 +172,13 @@ public class UserController {
         System.out.println("Error: Personnel not found with ID Card: " + UID);
         return false;
     }
+
+    /**
+     * Generates an ID for User
+     * @param UID
+     * @param type
+     * @return
+     */
     public static model.User getUserbyUID(String UID, User type) {
         if (UID == null || UID.isEmpty()) {
             System.out.println("Error: Invalid ID Card.");

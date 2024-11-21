@@ -78,7 +78,6 @@ public class PrescribedMedicationRepository extends Repository {
                     writer.newLine();
                 }
             }
-//        System.out.println("Medications successfully saved to CSV.");
         } catch (IOException e) {
             System.out.println("Error saving medications to CSV: " + e.getMessage());
         }
@@ -150,8 +149,6 @@ public class PrescribedMedicationRepository extends Repository {
                     addMedication(diagnosisID, medication);
                 }
             }
-            // Optionally, log the successful loading of data
-            // System.out.println("Successfully loaded medications for " + diagnosisToMedicationsMap.size() + " diagnoses from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading medications: " + e.getMessage());
         }

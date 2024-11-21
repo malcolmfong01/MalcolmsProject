@@ -52,9 +52,6 @@ public class Validator {
      * @param regex The regular expression to validate the ID format.
      * @return The validated ID entered by the user.
      */
-    // Example usage
-    //String medicineID = readID("Medicine", "M\\d{3}");
-    // System.out.println("Validated Medicine ID: " + medicineID);
     public static String readID(String idType, String regex) {
         Scanner scanner = new Scanner(System.in);
         char prefix = idType.charAt(0); // Use charAt(0) to get the first character of idType

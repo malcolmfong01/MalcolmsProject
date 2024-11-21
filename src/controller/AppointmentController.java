@@ -128,43 +128,6 @@ public class AppointmentController {
 	}
 
 	/**
-	 * Retrieves the earliest appointment from a list of appointments based on
-	 * appointment time.
-	 *
-	 * @param appointments A list of appointment records.
-	 * @return The earliest appointment record, or null if no appointments are
-	 *         provided.
-	 */
-	public static Appointment getEarliestAppointment(ArrayList<Appointment> appointments) {
-		if (appointments.isEmpty()) {
-			return null; // Return null if there are no pending appointments
-		}
-
-		// Sort appointments by AppointmentTime in ascending order
-		appointments.sort(Comparator.comparing(Appointment::getAppointmentTime));
-
-		// Return the first (earliest) appointment
-		return appointments.get(0);
-	}
-
-	/**
-	 * Retrieves the earliest confirmed appointment record for a specific doctor and
-	 * patient.
-	 *
-	 * @param doctorID  The ID of the doctor.
-	 * @param patientID The ID of the patient.
-	 * @return The earliest confirmed appointment record, or null if none are found.
-	 */
-	public static Appointment retrieveEarliestConfirmedAppointmentRecord(String doctorID, String patientID) {
-		ArrayList<Appointment> pendingAppointments;
-		pendingAppointments = AppointmentController.getAppointmentsByDoctorAndPatient(doctorID, patientID,
-				AppointmentStatus.CONFIRMED);
-
-		Appointment currentAppointment = AppointmentController.getEarliestAppointment(pendingAppointments);
-		return currentAppointment;
-	}
-
-	/**
 	 * Retrieves all confirmed appointments for a given patient ID.
 	 *
 	 * @param patientID The ID of the patient.
@@ -267,6 +230,11 @@ public class AppointmentController {
 		}
 	}
 
+	/**
+	 * Gets the list of Past Appointment Outcomes as specific patient has
+	 * @param patientId the current patient
+	 * @return the list
+	 */
 	public static List<AppointmentOutcomeRecord> getPastAppointmentOutcomes(String patientId) {
 		List<AppointmentOutcomeRecord> pastOutcomes = new ArrayList<>();
 		// Retrieve past appointment outcomes for the given patient ID

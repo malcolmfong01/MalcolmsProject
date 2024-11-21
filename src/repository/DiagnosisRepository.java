@@ -232,15 +232,11 @@ public class DiagnosisRepository extends Repository {
 
     public static ArrayList<Diagnosis> getDiagnosesByPatientID(String patientID) {
         ArrayList<Diagnosis> diagnosesForPatient = new ArrayList<>();
-        Set<String> addedDiagnosisIDs = new HashSet<>(); // Set to track unique DiagnosisIDs
+        
         for (ArrayList<Diagnosis> diagnoses : patientDiagnosisRecords.values()) {
             for (Diagnosis diagnosis : diagnoses) {
                 if (diagnosis.getPatientID().equals(patientID)) {
-                    // Check if this DiagnosisID is already in the set
-                    if (!addedDiagnosisIDs.contains(diagnosis.getDiagnosisID())) {
-                        diagnosesForPatient.add(diagnosis); // Add diagnosis if it's not a duplicate
-                        addedDiagnosisIDs.add(diagnosis.getDiagnosisID()); // Mark this DiagnosisID as added
-                    }
+                    diagnosesForPatient.add(diagnosis);
                 }
             }
         }

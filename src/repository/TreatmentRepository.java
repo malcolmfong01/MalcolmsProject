@@ -199,36 +199,4 @@ public class TreatmentRepository extends Repository {
         TreatmentRepository.isRepoLoaded = isRepoLoaded;
     }
 
-    /**
-     * Retrieves the Treatment object for the specified diagnosis ID.
-     *
-     * @param diagnosisID the diagnosis ID for which the treatment plan is requested
-     * @return the Treatment object for the specified diagnosis ID, or null if not found
-     */
-
-    public static Treatment getTreatmentPlansByDiagnosisID(String diagnosisID) {
-        // Retrieve the treatment plan for the given diagnosisID
-        Treatment treatmentPlan = diagnosisToTreatmentPlansMap.get(diagnosisID);
-
-        if (treatmentPlan != null) {
-            return treatmentPlan; // Return the treatment plan if found
-        } else {
-            System.out.println("No treatment plan found for Diagnosis ID: " + diagnosisID);
-            return null; // Return null if no treatment plan exists for the given diagnosis ID
-        }
-    }
-
-    /**
-     * Adds a new Treatment record to the repository.
-     *
-     * @param treatmentplans the Treatment object to add
-     */
-
-    public static void addTreatmentPlansRecord(Treatment treatmentplans) {
-        // Add the record to the repository
-        diagnosisToTreatmentPlansMap.put(treatmentplans.getDiagnosisID(), treatmentplans);
-
-        // saveAlltoCSV();
-    }
-
 }

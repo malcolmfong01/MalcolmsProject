@@ -11,6 +11,10 @@ import repository.MedicineRepository;
 public class MedicineController {
 
 
+    /**
+     * Method used to generate a new Medicine ID
+     * @return the new ID
+     */
     private static String generateNextMedicineID() {
         int maxID = -1;
 
