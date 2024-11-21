@@ -1,7 +1,7 @@
 package boundary;
 
-import HMSApp.HMSMain;
-import enums.UserType;
+import Main.Main;
+import enums.User;
 import model.Pharmacist;
 import controller.*;
 import utility.Validator;
@@ -22,7 +22,7 @@ public class PharmacistBoundary extends Boundary {
      */
 
     public PharmacistBoundary() {
-        this.pharmacist = (Pharmacist) UserController.getUserbyUID(RegisterController.cookie.getUid(), UserType.PHARMACISTS);
+        this.pharmacist = (Pharmacist) UserController.getUserbyUID(RegisterController.cookie.getUid(), User.PHARMACISTS);
     }
 
     /**
@@ -65,7 +65,7 @@ public class PharmacistBoundary extends Boundary {
                 case 4 -> submitReplenishmentRequests();
                 case 5 -> {
                     System.out.println("Logging out...");
-                    HMSMain.main(null); // Return to the main application
+                    Main.main(null); // Return to the main application
                     return; // Exit the method
                 }
                 default -> System.out.println("Invalid choice! Please try again.");

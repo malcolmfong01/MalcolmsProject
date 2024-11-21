@@ -13,6 +13,7 @@ import controller.AppointmentController;
 import controller.PrescribedMedicineController;
 import controller.RecordsController;
 import enums.*;
+import enums.Record;
 import utility.Validator;
 import model.*;
 import repository.*;
@@ -118,7 +119,7 @@ public class RecordOutcomeBoundary extends Boundary {
     private void processOutcome(AppointmentOutcomeRecord appointment) {
 
         String diagnosisDescription = Validator.readString("\n--- Enter Diagnosis for Patient (ID: " + appointment.getPatientID() + ") ---");
-        String diagnosisID = AppointmentController.generateRecordID(RecordFileType.DIAGNOSIS_RECORDS);
+        String diagnosisID = AppointmentController.generateRecordID(Record.DIAGNOSIS_RECORDS);
         System.out.println("Diagnosis ID: " + diagnosisID);
 
         String medicine = Validator.readString("\n--- Enter Medicine ID for Patient (ID: " + appointment.getPatientID() + ")(Separate by ,: e.g M000,M001)---");
@@ -134,7 +135,7 @@ public class RecordOutcomeBoundary extends Boundary {
                 int quantity = Validator.readInt("Enter quantity for medicine ID " + medicineID + ": ");
                 int periodDays = Validator.readInt("Enter period (days) for medicine ID " + medicineID + ": ");
                 String dosage = Validator.readString("Enter dosage for medicine ID " + medicineID + ": ");
-                String prescribedmedicationID = PrescribedMedicineController.generateRecordID(RecordFileType.PRESCRIBED_RECORDS);
+                String prescribedmedicationID = PrescribedMedicineController.generateRecordID(Record.PRESCRIBED_RECORDS);
                 // Create and add a new PrescribedMedication object to the list
                 PrescribedMedication medication = new PrescribedMedication(prescribedmedicationID,diagnosisID, medicineID, quantity, periodDays, PrescriptionStatus.PENDING, dosage);
                 medications1.add(medication);
@@ -194,14 +195,14 @@ public class RecordOutcomeBoundary extends Boundary {
         System.out.println("Appointment outcome recorded and saved successfully.");
         // Enter amount to be paid
         int paymentAmount = Validator.readInt("Enter Payment Amount: ");
-        String billingID = RecordsController.generateRecordID(RecordFileType.PAYMENT_RECORDS);
+        String billingID = RecordsController.generateRecordID(Record.PAYMENT_RECORDS);
         LocalDateTime createdDate = LocalDateTime.now();
         LocalDateTime updateDate = LocalDateTime.now();
         PaymentStatus paymentStatus =  PaymentStatus.OUTSTANDING;
         // Generate the next medicine ID
         PaymentRecord record;
         System.out.println(appointment.getPatientID());
-        record = new PaymentRecord(billingID,createdDate,updateDate,RecordStatusType.ACTIVE,paymentStatus,appointment.getPatientID(),paymentAmount);
+        record = new PaymentRecord(billingID,createdDate,updateDate, RecordStatus.ACTIVE,paymentStatus,appointment.getPatientID(),paymentAmount);
         RecordsRepository.PAYMENT_RECORDS.put(appointment.getPatientID(), record);
         RecordsRepository.saveAllRecordFiles();
     }

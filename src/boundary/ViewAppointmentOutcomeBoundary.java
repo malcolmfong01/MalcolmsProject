@@ -1,9 +1,9 @@
 package boundary;
 
-import HMSApp.HMSMain;
+import Main.Main;
 import controller.RegisterController;
 import controller.UserController;
-import enums.UserType;
+import enums.User;
 import model.AppointmentOutcomeRecord;
 import model.Pharmacist;
 import model.PrescribedMedication;
@@ -123,14 +123,14 @@ public class ViewAppointmentOutcomeBoundary extends Boundary {
      */
     private void returnToPharmacistMenu() {
         Pharmacist pharmacist = (Pharmacist) UserController.getUserbyUID(
-                RegisterController.cookie.getUid(), UserType.PHARMACISTS);
+                RegisterController.cookie.getUid(), User.PHARMACISTS);
         if (pharmacist != null) {
             PharmacistBoundary pharmacistBoundary = new PharmacistBoundary();
             pharmacistBoundary.start();
         } else {
             //This will handle the case if pharmacist is null and return the user back to the main menu
             System.out.println("Error: Invalid pharmacist ID. Returning to main menu.");
-            HMSMain.main(null);
+            Main.main(null);
         }
     }
 

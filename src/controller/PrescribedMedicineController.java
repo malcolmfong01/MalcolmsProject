@@ -1,6 +1,6 @@
 package controller;
 
-import enums.RecordFileType;
+import enums.Record;
 import model.PrescribedMedication;
 import repository.PrescribedMedicationRepository;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
  * from the PrescribedMedicationRepository.
  */
 public class PrescribedMedicineController {
-    public static String generateRecordID(RecordFileType recType) {
+    public static String generateRecordID(Record recType) {
         String prefix = "";
         int nextId = 0;
         // Set the prefix based on the record type

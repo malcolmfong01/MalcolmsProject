@@ -1,6 +1,6 @@
 package boundary;
 
-import enums.UserType;
+import enums.User;
 import utility.Validator;
 import model.*;
 import controller.*;
@@ -61,7 +61,7 @@ public class LoginBoundary extends Boundary {
         String passwordHash = Validator.readString("Please enter your password:");
 
         // Call the controller to verify login
-        User personnel = RegisterController.login(username, passwordHash, UserType.PATIENTS);
+        model.User personnel = RegisterController.login(username, passwordHash, User.PATIENTS);
 
         if (personnel != null && personnel instanceof Patient) {
             if ("password".equals(passwordHash)) {
@@ -84,7 +84,7 @@ public class LoginBoundary extends Boundary {
         String username = Validator.readString("Please enter your username:");
         String passwordHash = Validator.readString("Please enter your password:");
 
-        User personnel = RegisterController.login(username, passwordHash, UserType.DOCTORS);
+        model.User personnel = RegisterController.login(username, passwordHash, User.DOCTORS);
 
         if (personnel instanceof Doctor) {
             if ("password".equals(passwordHash)) {
@@ -105,7 +105,7 @@ public class LoginBoundary extends Boundary {
         String username = Validator.readString("Please enter your username:");
         String passwordHash = Validator.readString("Please enter your password:");
 
-        User personnel = RegisterController.login(username, passwordHash, UserType.PHARMACISTS);
+        model.User personnel = RegisterController.login(username, passwordHash, User.PHARMACISTS);
 
         if (personnel instanceof Pharmacist) {
             if ("password".equals(passwordHash)) {
@@ -129,7 +129,7 @@ public class LoginBoundary extends Boundary {
         String username = Validator.readString("Please enter your username:");
         String passwordHash = Validator.readString("Please enter your password:");
 
-        User personnel = RegisterController.login(username, passwordHash, UserType.ADMINS);
+        model.User personnel = RegisterController.login(username, passwordHash, User.ADMINS);
 
         if (personnel instanceof Administrator) {
             if ("password".equals(passwordHash)) {
@@ -148,7 +148,7 @@ public class LoginBoundary extends Boundary {
      *
      * @param personnel the User object representing the user changing their password
      */
-    public static boolean changePassword(User personnel, String oldPassword, String newPassword) {
+    public static boolean changePassword(model.User personnel, String oldPassword, String newPassword) {
         // Check if the old password matches the stored one
         if (newPassword.equals(oldPassword)) {
             System.out.println("Please use a new password.");
@@ -189,7 +189,7 @@ public class LoginBoundary extends Boundary {
         return true;
     }
 
-    private void promptChangePassword(User personnel) {
+    private void promptChangePassword(model.User personnel) {
         System.out.println("It appears that you are using the default password.");
         System.out.println("Please change your password for security reasons.");
 

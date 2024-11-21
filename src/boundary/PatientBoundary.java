@@ -3,7 +3,7 @@ package boundary;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import HMSApp.HMSMain;
+import Main.Main;
 import controller.AppointmentController;
 import controller.DoctorController;
 import enums.AppointmentStatus;
@@ -84,7 +84,7 @@ public class PatientBoundary extends Boundary {
 				case 9 -> acknowledgeRejectedAppointments();
 				case 10 -> {
 					System.out.println("Logging out...");
-					HMSMain.main(null);
+					Main.main(null);
 					return;
 				}
 				default -> System.out.println("Invalid choice!");

@@ -107,47 +107,47 @@ public class UserRepository extends Repository {
     }
 
     /**
-     * Converts an User object to a CSV-formatted string.
+     * Converts User object to a CSV-formatted string.
      *
-     * @param personnel the personnel object to convert
-     * @return a CSV-formatted string representing the personnel
+     * @param user the user object to convert
+     * @return a CSV-formatted string representing the user
      */
-    private static String personnelToCSV(User personnel) {
+    private static String personnelToCSV(User user) {
         StringBuilder csvBuilder = new StringBuilder();
 
         // Add common fields
-        csvBuilder.append(personnel.getUID()).append(",");
-        csvBuilder.append(personnel.getFullName()).append(",");
-        csvBuilder.append(personnel.getUsername()).append(",");
-        csvBuilder.append(personnel.getEmail()).append(",");
-        csvBuilder.append(personnel.getPhoneNo()).append(",");
-        csvBuilder.append(personnel.getPasswordHash()).append(",");
-        csvBuilder.append(personnel.getDoB().toString()).append(",");
-        csvBuilder.append(personnel.getGender()).append(",");
-        csvBuilder.append(personnel.getRole()).append(",");
+        csvBuilder.append(user.getUID()).append(",");
+        csvBuilder.append(user.getFullName()).append(",");
+        csvBuilder.append(user.getUsername()).append(",");
+        csvBuilder.append(user.getEmail()).append(",");
+        csvBuilder.append(user.getPhoneNo()).append(",");
+        csvBuilder.append(user.getPasswordHash()).append(",");
+        csvBuilder.append(user.getDoB().toString()).append(",");
+        csvBuilder.append(user.getGender()).append(",");
+        csvBuilder.append(user.getRole()).append(",");
 
         // Add Doctor-specific fields or empty placeholders
-        if (personnel instanceof Doctor) {
-            Doctor doctor = (Doctor) personnel;
+        if (user instanceof Doctor) {
+            Doctor doctor = (Doctor) user;
             csvBuilder.append(doctor.getDateJoin().toString());
         }
 
         // Add Patient-specific fields or empty placeholders
-        if (personnel instanceof Patient) {
-            Patient patient = (Patient) personnel;
+        if (user instanceof Patient) {
+            Patient patient = (Patient) user;
             csvBuilder.append(patient.getAllergies()).append(",");
             csvBuilder.append(patient.getDateOfAdmission().toString());
         }
 
         // Add Pharmacist-specific fields or empty placeholders
-        if (personnel instanceof Pharmacist) {
-            Pharmacist pharmacist = (Pharmacist) personnel;
+        if (user instanceof Pharmacist) {
+            Pharmacist pharmacist = (Pharmacist) user;
             csvBuilder.append(pharmacist.getDateOfEmployment().toString());
         }
 
         // Add Administrator-specific fields or empty placeholder
-        if (personnel instanceof Administrator) {
-            Administrator administrator = (Administrator) personnel;
+        if (user instanceof Administrator) {
+            Administrator administrator = (Administrator) user;
             csvBuilder.append(administrator.getDateOfCreation().toString());
         }
 

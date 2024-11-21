@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import controller.RecordsController;
-import enums.RecordFileType;
-import enums.RecordStatusType;
+import enums.Record;
+import enums.RecordStatus;
 
 /**
  * Represents a medical record for a patient, containing personal information, blood type,
@@ -39,14 +39,14 @@ public class MedicalRecord extends Records {
             String patientEmail,
             LocalDateTime createdDate,
             LocalDateTime updatedDate,
-            RecordStatusType recordStatus,
+            RecordStatus recordStatus,
             String patientID,
             String doctorID,
             String bloodType,
             ArrayList<model.Diagnosis> diagnosis,
             String allergies) {
 
-        super(RecordsController.generateRecordID(RecordFileType.MEDICAL_RECORDS), createdDate, updatedDate,
+        super(RecordsController.generateRecordID(Record.MEDICAL_RECORDS), createdDate, updatedDate,
                 recordStatus);
         this.patientName = patientName;
         this.patientPhoneNumber = patientPhoneNumber;
@@ -76,7 +76,7 @@ public class MedicalRecord extends Records {
             String patientEmail,
             LocalDateTime createdDate,
             LocalDateTime updatedDate,
-            RecordStatusType recordStatus,
+            RecordStatus recordStatus,
             String patientID,
             String doctorID,
             String bloodType,

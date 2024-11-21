@@ -3,11 +3,11 @@ package controller;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import enums.RecordFileType;
+import enums.Record;
 
 import java.util.ArrayList;
 
-import enums.RecordStatusType;
+import enums.RecordStatus;
 import model.*;
 import repository.RecordsRepository;
 import repository.AppointmentOutcomeRecordRepository;
@@ -23,7 +23,7 @@ public class RecordsController {
      * @param recType the type of record (Appointment, Payment, or Medical)
      * @return a unique record ID as a string
      */
-    public static String generateRecordID(RecordFileType recType) {
+    public static String generateRecordID(Record recType) {
         String prefix = "";
         int nextId = 0;
         Map<String, ? extends Records> repository = null;
@@ -69,7 +69,7 @@ public class RecordsController {
      * @param recType the type of record to check (Appointment, Payment, or Medical)
      * @return true if a record exists for the given UID, otherwise false
      */
-    public Boolean checkRecordsDuplication(String UID, RecordFileType recType) {
+    public Boolean checkRecordsDuplication(String UID, Record recType) {
         switch (recType) {
             case MEDICAL_RECORDS:
                 return RecordsRepository.MEDICAL_RECORDS.get(UID) != null;
@@ -98,8 +98,8 @@ public class RecordsController {
      * @param updatedDate the date and time when the record was updated
      * @return true if the record was successfully updated, otherwise false
      */
-    public Boolean updateRecord(String recordID, RecordFileType recType, String status, String doctorID,
-            String patientID, LocalDateTime updatedDate) {
+    public Boolean updateRecord(String recordID, Record recType, String status, String doctorID,
+                                String patientID, LocalDateTime updatedDate) {
         if (!RecordsRepository.isRepoLoad()) {
             logger.log(System.Logger.Level.WARNING, "Repository not loaded. Cannot update record.");
             return false;
@@ -123,7 +123,7 @@ public class RecordsController {
         MedicalRecord record = RecordsRepository.MEDICAL_RECORDS.get(recordID);
         if (record != null) {
             if (status != null)
-                record.setRecordStatus(RecordStatusType.valueOf(status));
+                record.setRecordStatus(RecordStatus.valueOf(status));
             if (doctorID != null)
                 record.setDoctorID(doctorID);
             if (patientID != null)

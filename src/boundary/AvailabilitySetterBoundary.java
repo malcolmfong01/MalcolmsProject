@@ -12,12 +12,12 @@ import java.util.List;
 
 import controller.RecordsController;
 import enums.AppointmentStatus;
-import enums.RecordFileType;
+import enums.Record;
+import enums.RecordStatus;
 import utility.DateTime;
 import utility.Validator;
 import model.Appointment;
 import model.Doctor;
-import enums.RecordStatusType;
 import repository.RecordsRepository;
 
 import static utility.Validator.sc;
@@ -101,10 +101,10 @@ public class AvailabilitySetterBoundary extends Boundary {
 
             // Create appointment record
             Appointment appointment = new Appointment(
-                    RecordsController.generateRecordID(RecordFileType.APPOINTMENT_RECORDS),
+                    RecordsController.generateRecordID(Record.APPOINTMENT_RECORDS),
                     LocalDateTime.now(),
                     LocalDateTime.now(),
-                    RecordStatusType.ACTIVE,
+                    RecordStatus.ACTIVE,
                     null,
                     null,
                     doctor.getUID(),

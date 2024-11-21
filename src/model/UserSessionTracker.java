@@ -1,5 +1,5 @@
 package model;
-import enums.UserType;
+import enums.User;
 
 /**
  * UserSessionTracker Class
@@ -9,7 +9,7 @@ import enums.UserType;
 
 public class UserSessionTracker {
 	private String uid;
-	private UserType role;
+	private User role;
 
     /**
      * Constructor for creating a UserSessionTracker instance.
@@ -19,7 +19,7 @@ public class UserSessionTracker {
      * @param role the role of the user in the system (e.g., Doctor, Patient, Administrator)
      */
 	// Constructor with parameters
-	public UserSessionTracker(String uid, UserType role) {
+	public UserSessionTracker(String uid, User role) {
 		this.uid = uid;
 		this.role = role;
 	}
@@ -47,7 +47,7 @@ public class UserSessionTracker {
      *
      * @return the role of the user
      */
-	public UserType getRole() {
+	public User getRole() {
 		return role;
 	}
 
@@ -56,7 +56,7 @@ public class UserSessionTracker {
      *
      * @param role the new role of the user
      */
-	public void setRole(UserType role) {
+	public void setRole(User role) {
 		this.role = role;
 	}
 }

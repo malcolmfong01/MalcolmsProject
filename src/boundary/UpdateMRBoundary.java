@@ -8,7 +8,7 @@ import controller.PrescribedMedicineController;
 import enums.AppointmentOutcomeStatus;
 import enums.AppointmentStatus;
 import enums.PrescriptionStatus;
-import enums.RecordFileType;
+import enums.Record;
 import model.*;
 import repository.*;
 import controller.AppointmentController;
@@ -123,7 +123,7 @@ public class UpdateMRBoundary {
      * @param diagnosis    The diagnosis associated with the appointment.
      */
     private void generateAppointmentOutcome(Prescription prescription, Diagnosis diagnosis) {
-        String UID = AppointmentController.generateRecordID(RecordFileType.APPOINTMENT_OUTCOME_RECORDS);
+        String UID = AppointmentController.generateRecordID(Record.APPOINTMENT_OUTCOME_RECORDS);
         if (currentAppointment.getAppointmentStatus() == AppointmentStatus.COMPLETED) {
             AppointmentOutcomeRecord outcomeRecord = new AppointmentOutcomeRecord(
                     UID,
@@ -152,7 +152,7 @@ public class UpdateMRBoundary {
      * @return The newly created Diagnosis object.
      */
     private Diagnosis addNewDiagnosis(String patientId, String diagnosisDescription) {
-        String diagnosisID = AppointmentController.generateRecordID(RecordFileType.DIAGNOSIS_RECORDS);
+        String diagnosisID = AppointmentController.generateRecordID(Record.DIAGNOSIS_RECORDS);
         Diagnosis diagnosis = new Diagnosis(patientId, diagnosisID, doctor.getUID(),
                 medicalRecord.getRecordID(), LocalDateTime.now(), null,
                 diagnosisDescription, null);
@@ -210,7 +210,7 @@ public class UpdateMRBoundary {
             // Add the prescribed medication
             String medicineID = medicine.getMedicineID();
             String prescribedmedicationID = PrescribedMedicineController
-                    .generateRecordID(RecordFileType.PRESCRIBED_RECORDS);
+                    .generateRecordID(Record.PRESCRIBED_RECORDS);
             PrescribedMedication prescribedMedication = new PrescribedMedication(prescribedmedicationID,
                     newDiagnosis.getDiagnosisID(),
                     medicineID,

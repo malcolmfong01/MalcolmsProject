@@ -2,7 +2,7 @@ package controller;
 
 import java.util.Map;
 
-import enums.UserType;
+import enums.User;
 import model.*;
 import repository.*;
 
@@ -13,15 +13,15 @@ import repository.*;
 public class UserController {
     /**
      * Generates a unique ID (UID) for the personnel based on their type.
-     * @param userType the type of personnel (Administrator, Doctor, Patient, Pharmacist)
+     * @param user the type of personnel (Administrator, Doctor, Patient, Pharmacist)
      * @return a unique UID string for the personnel
      */
-    public static String generateUID(UserType userType) {
+    public static String generateUID(User user) {
         String prefix = "";
         int nextId = 0;
-        Map<String, ? extends User> repository = null;
+        Map<String, ? extends model.User> repository = null;
 
-        switch (userType) {
+        switch (user) {
             case ADMINS:
                 prefix = "A";
                 repository = UserRepository.ADMINS;
@@ -65,7 +65,7 @@ public class UserController {
      * @param user the user to be added
      * @return true if user is successfully added, false if the data is invalid
      */
-    public static boolean addUser(User user) {
+    public static boolean addUser(model.User user) {
         if (user == null) {
             System.out.println("Error: Invalid user data.");
             return false;
@@ -105,15 +105,15 @@ public class UserController {
 
 
     // Determine personnel type based on the class of personnel
-    private static UserType determinePersonnelType(User personnel) {
+    private static User determinePersonnelType(model.User personnel) {
         if (personnel instanceof Doctor) {
-            return UserType.DOCTORS;
+            return User.DOCTORS;
         } else if (personnel instanceof Patient) {
-            return UserType.PATIENTS;
+            return User.PATIENTS;
         } else if (personnel instanceof Pharmacist) {
-            return UserType.PHARMACISTS;
+            return User.PHARMACISTS;
         } else if (personnel instanceof Administrator) {
-            return UserType.ADMINS;
+            return User.ADMINS;
         }
         return null;
     }
@@ -125,7 +125,7 @@ public class UserController {
      * @return true if user is successfully removed, false if UID is invalid or user not found
      */
     // Remove personnel by UID
-    public static boolean removeUser(String UID, UserType type) {
+    public static boolean removeUser(String UID, User type) {
         if (UID == null || UID.isEmpty()) {
             System.out.println("Error: Invalid ID Card.");
             return false;
@@ -179,7 +179,7 @@ public class UserController {
      * @return the user object if found, or null if not found
      */
     // Retrieve personnel by UID
-    public static User getUserbyUID(String UID, UserType type) {
+    public static model.User getUserbyUID(String UID, User type) {
         if (UID == null || UID.isEmpty()) {
             System.out.println("Error: Invalid ID Card.");
             return null;
@@ -206,7 +206,7 @@ public class UserController {
      * @return true if the personnel is successfully updated, false otherwise
      */
     // Update personnel details
-    public static boolean updatePersonnel(String UID, User updatedPersonnel) {
+    public static boolean updatePersonnel(String UID, model.User updatedPersonnel) {
         if (UID == null || UID.isEmpty() || updatedPersonnel == null) {
             System.out.println("Error: Invalid update request.");
             return false;

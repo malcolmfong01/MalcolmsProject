@@ -1,13 +1,13 @@
 package boundary;
 
+import enums.Record;
 import repository.UserRepository;
 import utility.Validator;
 import model.MedicalRecord;
-import enums.RecordStatusType;
+import enums.RecordStatus;
 import repository.RecordsRepository;
 import controller.RegisterController;
 import controller.RecordsController;
-import enums.RecordFileType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -83,14 +83,14 @@ public class RegisterBoundary extends Boundary {
             System.out.println("Patient registered successfully!, your default password is: password ");
 
             // Additional logic to add a new medical record for a new patient
-            String recordID = RecordsController.generateRecordID(RecordFileType.MEDICAL_RECORDS);
+            String recordID = RecordsController.generateRecordID(Record.MEDICAL_RECORDS);
             MedicalRecord mr = new MedicalRecord(
                     fullName, // patient name
                     phoneNo, //  patient phone number
                     email,   // patient email
                     LocalDateTime.now(), // Created date
                     LocalDateTime.now(), // Updated date
-                    RecordStatusType.ACTIVE,// Record status
+                    RecordStatus.ACTIVE,// Record status
                     patientUID,              // patientID
                     null,                // doctorID (can be assigned later)
                     bloodType,

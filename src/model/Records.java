@@ -1,6 +1,6 @@
 package model;
 
-import enums.RecordStatusType;
+import enums.RecordStatus;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +13,7 @@ public abstract class Records {
     private String recordID;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
-    private RecordStatusType recordStatus;
+    private RecordStatus recordStatus;
 
     /**
      * Constructs an Records object with the specified details.
@@ -24,7 +24,7 @@ public abstract class Records {
      * @param recordStatus the status of the record (e.g., active, inactive)
      */
     public Records(String recordID, LocalDateTime createdDate, LocalDateTime updatedDate,
-                   RecordStatusType recordStatus) {
+                   RecordStatus recordStatus) {
         this.recordID = recordID;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
@@ -90,7 +90,7 @@ public abstract class Records {
      *
      * @return the record status
      */
-    public RecordStatusType getRecordStatus() {
+    public RecordStatus getRecordStatus() {
         return recordStatus;
     }
 
@@ -99,7 +99,7 @@ public abstract class Records {
      *
      * @param recordStatus the status to set
      */
-    public void setRecordStatus(RecordStatusType recordStatus) {
+    public void setRecordStatus(RecordStatus recordStatus) {
         this.recordStatus = recordStatus;
     }
 
