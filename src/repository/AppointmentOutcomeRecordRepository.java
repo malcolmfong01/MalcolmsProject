@@ -69,13 +69,17 @@ public class AppointmentOutcomeRecordRepository extends Repository {
      * @param patientOutcomeRecords the records to save
      */
     public static void saveAppoinmentOutcomeRecordsToCSV(String fileName,
-            HashMap<String, ArrayList<AppointmentOutcomeRecord>> patientOutcomeRecords) {
+                                                         HashMap<String, ArrayList<AppointmentOutcomeRecord>> patientOutcomeRecords) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
         // Ensure the directory exists
         File directory = new File("./src/repository/" + folder);
         if (!directory.exists()) {
-            directory.mkdirs(); // Create the directory if it doesn't exist
+            boolean dirsCreated = directory.mkdirs(); // Create the directory if it doesn't exist
+            if (!dirsCreated) {
+                System.out.println("Error: Failed to create directory: " + directory.getAbsolutePath());
+                return; // Exit if directory creation fails
+            }
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
@@ -88,13 +92,13 @@ public class AppointmentOutcomeRecordRepository extends Repository {
                         writer.newLine();
                     }
                 }
-
             }
-//            System.out.println("Appointment outcome records successfully saved to CSV.");
+            System.out.println("Appointment outcome records successfully saved to CSV.");
         } catch (IOException e) {
             System.out.println("Error saving appointment outcome records to CSV: " + e.getMessage());
         }
     }
+
 
     private static String getCsvHeader() {
         return "Appointment Outcome ID,PatientID,DoctorID,DiagnosisID,AppointmentTime,TypeOfService,ConsultationNotes,AppointmentOutcomeStatus";
@@ -131,18 +135,27 @@ public class AppointmentOutcomeRecordRepository extends Repository {
         // Ensure the directory exists
         File directory = new File("./src/repository/" + folder);
         if (!directory.exists()) {
-            directory.mkdirs(); // Create the directory if it doesn't exist
+            boolean dirsCreated = directory.mkdirs(); // Create the directory if it doesn't exist
+            if (!dirsCreated) {
+                System.out.println("Error: Failed to create directory: " + directory.getAbsolutePath());
+                return; // Exit if directory creation fails
+            }
         }
+
         File file = new File(filePath);
 
         if (!file.exists()) {
             try {
-                file.createNewFile(); // Create an empty file if it doesn't exist
+                boolean fileCreated = file.createNewFile(); // Create an empty file if it doesn't exist
+                if (!fileCreated) {
+                    System.out.println("Error: Failed to create file: " + filePath);
+                    return; // Exit if file creation fails
+                }
                 System.out.println("Created empty file: " + filePath);
             } catch (IOException e) {
                 System.out.println("Error creating file: " + e.getMessage());
+                return; // Exit if file creation throws an exception
             }
-            return; // No data to load, as the file was just created
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -160,12 +173,11 @@ public class AppointmentOutcomeRecordRepository extends Repository {
                     addAppointmentOutcomeRecordIntoHashMapValue(patientID, record);
                 }
             }
-//            System.out.println("Successfully loaded " + patientOutcomeRecords.size()
-//                    + " appointment outcome records from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading appointment outcome records: " + e.getMessage());
         }
     }
+
 
 
     /**
@@ -212,27 +224,6 @@ public class AppointmentOutcomeRecordRepository extends Repository {
             System.out.println("Error parsing appointment outcome record data: " + e.getMessage());
         }
         return null;
-    }
-
-    /**
-     * Clears all data in the appointment outcome record repository and saves an
-     * empty file.
-     *
-     * @return true if the operation is successful
-     */
-    public static boolean clearOutcomeRecordDatabase() {
-        patientOutcomeRecords.clear();
-        saveAppoinmentOutcomeRecordsToCSV("appointment_outcome_records.csv", patientOutcomeRecords);
-        return true;
-    }
-
-    /**
-     * Checks if the repository has been loaded.
-     *
-     * @return true if the repository is loaded; false otherwise
-     */
-    public static boolean isRepoLoaded() {
-        return isRepoLoaded;
     }
 
     /**

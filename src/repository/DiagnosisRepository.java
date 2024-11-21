@@ -73,13 +73,17 @@ public class DiagnosisRepository extends Repository {
      * @param patientDiagnosisRecords the records to save
      */
     public static void saveDiagnosisRecordsToCSV(String fileName,
-            HashMap<String, ArrayList<Diagnosis>> patientDiagnosisRecords) {
+                                                 HashMap<String, ArrayList<Diagnosis>> patientDiagnosisRecords) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
         // Ensure the directory exists
         File directory = new File("./src/repository/" + folder);
         if (!directory.exists()) {
-            directory.mkdirs(); // Create the directory if it doesn't exist
+            boolean dirsCreated = directory.mkdirs(); // Create the directory if it doesn't exist
+            if (!dirsCreated) {
+                System.out.println("Error: Failed to create directory: " + directory.getAbsolutePath());
+                return; // Exit if directory creation fails
+            }
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
@@ -96,11 +100,12 @@ public class DiagnosisRepository extends Repository {
                     }
                 }
             }
-//            System.out.println("Diagnosis records successfully saved to CSV.");
+            System.out.println("Diagnosis records successfully saved to " + filePath);
         } catch (IOException e) {
             System.out.println("Error saving diagnosis records to CSV: " + e.getMessage());
         }
     }
+
     /**
      * Converts a Diagnosis object to a CSV-formatted string.
      *
@@ -127,26 +132,36 @@ public class DiagnosisRepository extends Repository {
      * @param patientDiagnosisRecords the HashMap to store the loaded records
      */
     public static void loadDiagnosisRecordsFromCSV(String fileName,
-            HashMap<String, ArrayList<Diagnosis>> patientDiagnosisRecords) {
+                                                   HashMap<String, ArrayList<Diagnosis>> patientDiagnosisRecords) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
+        // Ensure the directory exists
         File directory = new File("./src/repository/" + folder);
         if (!directory.exists()) {
-            directory.mkdirs(); // Create the directory if it doesn't exist
+            boolean dirsCreated = directory.mkdirs(); // Create the directory if it doesn't exist
+            if (!dirsCreated) {
+                System.out.println("Error: Failed to create directory: " + directory.getAbsolutePath());
+                return; // Exit if directory creation fails
+            }
         }
 
         File file = new File(filePath);
 
         if (!file.exists()) {
             try {
-                file.createNewFile(); // Create an empty file if it doesn't exist
+                boolean fileCreated = file.createNewFile(); // Create an empty file if it doesn't exist
+                if (!fileCreated) {
+                    System.out.println("Error: Failed to create the file: " + filePath);
+                    return; // Exit if file creation fails
+                }
                 System.out.println("Created empty file: " + filePath);
             } catch (IOException e) {
                 System.out.println("Error creating file: " + e.getMessage());
+                return; // Exit on file creation failure
             }
-            return; // No data to load, as the file was just created
         }
 
+        // Read the data from the CSV file
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -155,12 +170,11 @@ public class DiagnosisRepository extends Repository {
                     addDiagnosis(record.getPatientID(), record);
                 }
             }
-//            System.out.println(
-//                    "Successfully loaded " + patientDiagnosisRecords.size() + " diagnosis records from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading diagnosis records: " + e.getMessage());
         }
     }
+
     /**
      * Adds a diagnosis record to the HashMap for the specified patient ID.
      *
@@ -198,28 +212,24 @@ public class DiagnosisRepository extends Repository {
         }
         return null;
     }
-    /**
-     * Checks if the repository has been loaded.
-     *
-     * @return true if the repository is loaded; false otherwise
-     */
-    public static boolean isRepoLoaded() {
-        return isRepoLoaded;
-    }
+
     /**
      * Sets the repository load status.
      *
      * @param isRepoLoaded true to set the repository as loaded, false otherwise
      */
+
     public static void setRepoLoaded(boolean isRepoLoaded) {
         DiagnosisRepository.isRepoLoaded = isRepoLoaded;
     }
+
     /**
      * Retrieves a list of diagnoses for the specified patient ID.
      *
      * @param patientID the patient ID for which diagnoses are requested
      * @return an ArrayList of Diagnosis objects for the specified patient ID
      */
+
     public static ArrayList<Diagnosis> getDiagnosesByPatientID(String patientID) {
         ArrayList<Diagnosis> diagnosesForPatient = new ArrayList<>();
         

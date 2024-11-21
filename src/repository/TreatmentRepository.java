@@ -52,14 +52,19 @@ public class TreatmentRepository extends Repository {
      * @param diagnosisTreatmentPlansMap the map of treatment plans records to save
      */
     public static void saveTreatmentPlansToCSV(String fileName,
-            HashMap<String, Treatment> diagnosisTreatmentPlansMap) {
+                                               HashMap<String, Treatment> diagnosisTreatmentPlansMap) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
         // Ensure the directory exists
         File directory = new File("./src/repository/" + folder);
         if (!directory.exists()) {
-            directory.mkdirs(); // Create the directory if it doesn't exist
+            boolean dirsCreated = directory.mkdirs(); // Create the directory if it doesn't exist
+            if (!dirsCreated) {
+                System.out.println("Error: Failed to create directory: " + directory.getAbsolutePath());
+                return; // Exit if directory creation fails
+            }
         }
+
         // Use a HashSet to track unique treatments
         HashSet<Treatment> uniqueTreatments = new HashSet<>();
 
@@ -72,11 +77,11 @@ public class TreatmentRepository extends Repository {
                     writer.newLine();
                 }
             }
-//            System.out.println("Treatment plans successfully saved to CSV.");
         } catch (IOException e) {
             System.out.println("Error saving treatment plans to CSV: " + e.getMessage());
         }
     }
+
     /**
      * Saves all treatment plans records in the repository to the CSV file.
      *
@@ -110,25 +115,33 @@ public class TreatmentRepository extends Repository {
      * @param diagnosisTreatmentPlansMap the map to store the loaded treatment plans
      */
     private static void loadTreatmentPlansFromCSV(String fileName,
-            HashMap<String, Treatment> diagnosisTreatmentPlansMap) {
+                                                  HashMap<String, Treatment> diagnosisTreatmentPlansMap) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
         // Ensure the directory exists
         File directory = new File("./src/repository/" + folder);
         if (!directory.exists()) {
-            directory.mkdirs(); // Create the directory if it doesn't exist
+            boolean dirsCreated = directory.mkdirs(); // Create the directory if it doesn't exist
+            if (!dirsCreated) {
+                System.out.println("Error: Failed to create directory: " + directory.getAbsolutePath());
+                return; // Exit if directory creation fails
+            }
         }
 
         File file = new File(filePath);
 
         if (!file.exists()) {
             try {
-                file.createNewFile(); // Create an empty file if it doesn't exist
+                boolean fileCreated = file.createNewFile(); // Create an empty file if it doesn't exist
+                if (!fileCreated) {
+                    System.out.println("Error: Failed to create file: " + filePath);
+                    return; // Exit if file creation fails
+                }
                 System.out.println("Created empty file: " + filePath);
             } catch (IOException e) {
                 System.out.println("Error creating file: " + e.getMessage());
+                return; // Exit if there is an error during file creation
             }
-            return; // No data to load, as the file was just created
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -140,8 +153,6 @@ public class TreatmentRepository extends Repository {
                     diagnosisTreatmentPlansMap.put(diagnosisID, treatmentPlan);
                 }
             }
-//            System.out.println(
-//                    "Successfully loaded " + diagnosisTreatmentPlansMap.size() + " treatment plans from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading treatment plans: " + e.getMessage());
         }
@@ -179,54 +190,22 @@ public class TreatmentRepository extends Repository {
     }
 
     /**
-     * Clears all treatment plan data in the repository and saves an empty file.
-     *
-     * @return true if the operation is successful
-     */
-    public static boolean clearTreatmentPlanDatabase() {
-        diagnosisToTreatmentPlansMap.clear();
-        saveTreatmentPlansToCSV(fileName, diagnosisToTreatmentPlansMap);
-        setRepoLoaded(false);
-        return true;
-    }
-    /**
-     * Checks if the repository has been loaded.
-     *
-     * @return true if the repository is loaded; false otherwise
-     */
-    public static boolean isRepoLoaded() {
-        return isRepoLoaded;
-    }
-    /**
      * Sets the repository load status.
      *
      * @param isRepoLoaded true to set the repository as loaded, false otherwise
      */
+
     public static void setRepoLoaded(boolean isRepoLoaded) {
         TreatmentRepository.isRepoLoaded = isRepoLoaded;
     }
 
-    // public static Treatment getTreatmentPlansByDiagnosisID(String
-    // diagnosisID) {
-    // // Retrieve the treatment plan for the given diagnosisID
-    // Treatment treatmentPlan = diagnosisToTreatmentPlansMap.get(diagnosisID);
-    //
-    // if (treatmentPlan != null) {
-    // return treatmentPlan; // Return the treatment plan if found
-    // } else {
-    // System.out.println("No treatment plan found for Diagnosis ID: " +
-    // diagnosisID);
-    // return null; // Return null if no treatment plan exists for the given
-    // diagnosis ID
-    // }
-    // }
-    
     /**
      * Retrieves the Treatment object for the specified diagnosis ID.
      *
      * @param diagnosisID the diagnosis ID for which the treatment plan is requested
      * @return the Treatment object for the specified diagnosis ID, or null if not found
      */
+
     public static Treatment getTreatmentPlansByDiagnosisID(String diagnosisID) {
         // Retrieve the treatment plan for the given diagnosisID
         Treatment treatmentPlan = diagnosisToTreatmentPlansMap.get(diagnosisID);
@@ -244,6 +223,7 @@ public class TreatmentRepository extends Repository {
      *
      * @param treatmentplans the Treatment object to add
      */
+
     public static void addTreatmentPlansRecord(Treatment treatmentplans) {
         // Add the record to the repository
         diagnosisToTreatmentPlansMap.put(treatmentplans.getDiagnosisID(), treatmentplans);

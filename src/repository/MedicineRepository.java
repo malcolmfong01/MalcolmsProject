@@ -109,27 +109,35 @@ public class MedicineRepository extends Repository {
      * @param medicinesMap the HashMap to store the loaded records
      */
     private static void loadMedicinesFromCSV(String fileName, HashMap<String, Medicine> medicinesMap) {
-
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
         // Ensure the directory exists
         File directory = new File("./src/repository/" + folder);
         if (!directory.exists()) {
-            directory.mkdirs(); // Create the directory if it doesn't exist
+            boolean dirsCreated = directory.mkdirs(); // Create the directory if it doesn't exist
+            if (!dirsCreated) {
+                System.out.println("Error: Failed to create directory: " + directory.getAbsolutePath());
+                return; // Exit if directory creation fails
+            }
         }
 
         File file = new File(filePath);
 
         if (!file.exists()) {
             try {
-                file.createNewFile(); // Create an empty file if it doesn't exist
+                boolean fileCreated = file.createNewFile(); // Create an empty file if it doesn't exist
+                if (!fileCreated) {
+                    System.out.println("Error: Failed to create the file: " + filePath);
+                    return; // Exit if file creation fails
+                }
                 System.out.println("Created empty file: " + filePath);
             } catch (IOException e) {
                 System.out.println("Error creating file: " + e.getMessage());
+                return; // Exit on file creation failure
             }
-            return; // No data to load, as the file was just created
         }
 
+        // Read the data from the CSV file
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             boolean isFirstLine = true; // To skip the header row
@@ -143,12 +151,10 @@ public class MedicineRepository extends Repository {
                     medicinesMap.put(medicine.getMedicineID(), medicine);
                 }
             }
-//            System.out.println("Successfully loaded " + medicinesMap.size() + " medicines from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading medicine data: " + e.getMessage());
         }
     }
-
 
     /**
      * Converts a CSV-formatted string to a Medicine object.
@@ -156,6 +162,7 @@ public class MedicineRepository extends Repository {
      * @param csv the CSV string representing the Medicine
      * @return a Medicine object, or null if parsing fails
      */
+
     private static Medicine csvToMedicine(String csv) {
         String[] fields = csv.split(",");
         try {
@@ -183,6 +190,7 @@ public class MedicineRepository extends Repository {
      * @param status the string representation of the ReplenishStatus
      * @return the ReplenishStatus enum value, or null if invalid
      */
+
     private static ReplenishStatus safeValueOf(String status) {
         try {
             return ReplenishStatus.valueOf(status.trim().toUpperCase());
