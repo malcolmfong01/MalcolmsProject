@@ -15,7 +15,7 @@ import enums.RecordStatus;
 
 public class PaymentRecord extends Records {
     private double paymentAmount;
-    private String patientID;
+    private static String patientID;
     private PaymentStatus paymentStatus;
 
 
@@ -110,7 +110,7 @@ public class PaymentRecord extends Records {
      *
      * @return the patient ID
      */
-    public String getPatientID() {
+    public static String getPatientID() {
         return patientID;
     }
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import Main.Main;
 import enums.*;
@@ -640,32 +641,45 @@ public class AdministratorBoundary extends Boundary {
         System.out.println("Enter Patient ID");
         // Read the patient ID
         String patientID = Validator.readID("Patient", "P\\d{3}");
+
+        List<PaymentRecord> patientPaymentRecords = RecordsRepository.PAYMENT_RECORDS.values().stream()
+                .filter(record -> record.getPatientID().equals(patientID) && record.getPaymentStatus().equals(PaymentStatus.OUTSTANDING))
+                .toList();
+        if (patientPaymentRecords.isEmpty()) {
+            System.out.println("No outstanding payment records found for Patient ID: " + patientID);
+        return;
+        }
         LocalDateTime updateDate = LocalDateTime.now();
         System.out.print("Enter New Status (e.g., CLEARED): ");
         PaymentStatus paymentStatus;
         paymentStatus = PaymentStatus.valueOf(Validator.readString().toUpperCase());
 
-        // Create a list to store matching records
-        ArrayList<PaymentRecord> matchingRecords = new ArrayList<>();
         // Check if the repository is loaded
         if (RecordsRepository.isRepoLoad()) {
+            boolean recordFound = false;
             for (PaymentRecord record : RecordsRepository.PAYMENT_RECORDS.values()) {
                 // If patient ID matches, add the record to the list
-                if (record.getPatientID().equals(patientID)) {
-                    matchingRecords.add(record);
+                if (PaymentRecord.getPatientID().equals(patientID) && record.getPaymentStatus().equals(PaymentStatus.OUTSTANDING)) {
                     record.setPaymentStatus(paymentStatus);
                     record.setUpdatedDate(updateDate);
                     record.setRecordStatus(RecordStatus.ARCHIVED);
-                    RecordsRepository.PAYMENT_RECORDS.put(record.getPatientID(), record);
-                    RecordsRepository.saveAllRecordFiles();
+                    recordFound = true; // Set flag to true as record was updated
+                    break; // Exit the loop since we found and updated the record
+
                 }
             }
-            // Display the results if records are found
-            if (matchingRecords.isEmpty()) {
+            // Save changes to the repository if a record was updated
+            if (recordFound) {
+                RecordsRepository.saveAllRecordFiles();
+                System.out.println("Payment record updated successfully for Patient ID: " + patientID);
+            } else {
                 System.out.println("No payment records found for Patient ID: " + patientID);
             }
-
+        } else {
+            System.out.println("Error: Payment records repository is not loaded.");
         }
+
+
 
     }
 }

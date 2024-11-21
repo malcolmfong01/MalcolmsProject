@@ -45,15 +45,16 @@ public class PatientBoundary extends Boundary {
 	public void printChoice() {
 		System.out.println("Patient Menu:");
 		System.out.println("1. View Medical Record");
-		System.out.println("2. Update Personal Information");
-		System.out.println("3. View Available Appointment Slots");
-		System.out.println("4. Schedule an Appointment");
-		System.out.println("5. Reschedule an Appointment");
-		System.out.println("6. Cancel an Appointment");
-		System.out.println("7. View Scheduled Appointments");
-		System.out.println("8. View Past Appointment Outcome Records");
-		System.out.println("9. Acknowledge Rejected Appointment Slots");
-		System.out.println("10. Logout");
+		System.out.println("2. View Payment Record");
+		System.out.println("3. Update Personal Information");
+		System.out.println("4. View Available Appointment Slots");
+		System.out.println("5. Schedule an Appointment");
+		System.out.println("6. Reschedule an Appointment");
+		System.out.println("7. Cancel an Appointment");
+		System.out.println("8. View Scheduled Appointments");
+		System.out.println("9. View Past Appointment Outcome Records");
+		System.out.println("10. Acknowledge Rejected Appointment Slots");
+		System.out.println("11. Logout");
 	}
 
 	/**
@@ -74,15 +75,16 @@ public class PatientBoundary extends Boundary {
 
 			switch (choice) {
 				case 1 -> viewPatientMedicalRecord(patient.getUID());
-				case 2 -> updatePatientPrivateInfo(patient.getUID());
-				case 3 -> viewAvailableAppointmentSlots();
-				case 4 -> scheduleAppointment();
-				case 5 -> rescheduleAppointment();
-				case 6 -> cancelAppointment();
-				case 7 -> viewScheduledAppointments();
-				case 8 -> viewPastAppointmentOutcomes();
-				case 9 -> acknowledgeRejectedAppointments();
-				case 10 -> {
+				case 2 -> viewPatientPaymentRecord(patient.getUID());
+				case 3 -> updatePatientPrivateInfo(patient.getUID());
+				case 4 -> viewAvailableAppointmentSlots();
+				case 5 -> scheduleAppointment();
+				case 6 -> rescheduleAppointment();
+				case 7 -> cancelAppointment();
+				case 8 -> viewScheduledAppointments();
+				case 9 -> viewPastAppointmentOutcomes();
+				case 10 -> acknowledgeRejectedAppointments();
+				case 11 -> {
 					System.out.println("Logging out...");
 					Main.main(null);
 					return;
@@ -117,6 +119,28 @@ public class PatientBoundary extends Boundary {
 
 	/**
 	 * Patient Menu Option 2
+	 * Displays the payment records for the given patient ID.
+	 * @param patientID The unique ID of the patient whose payment records are to be
+	 *                  viewed.
+	 */
+	private void viewPatientPaymentRecord(String patientID) {
+		//System.out.println("\n--- Patient Payment Records for Patient ID: " + patientID + " ---");
+		boolean recordsFound = false;
+		for (PaymentRecord record : RecordsRepository.PAYMENT_RECORDS.values()) {
+			if (PaymentRecord.getPatientID().equals(patientID)) {
+				recordsFound = true;
+				PaymentRecordBoundary paymentRecordUI = new PaymentRecordBoundary(record);
+				paymentRecordUI.displayPaymentRecordInBox();
+			}
+		}
+		if (!recordsFound) {
+			System.out.println("No Payment records found for Patient ID: " + patientID);
+		}
+		System.out.println("---------------------------------------");
+	}
+
+	/**
+	 * Patient Menu Option 3
 	 * Updates the personal information of the patient.
 	 * @param patientId The unique ID of the patient whose information is to be
 	 *                  updated.
@@ -138,7 +162,7 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
-	 * Patient Menu Option 3
+	 * Patient Menu Option 4
 	 * Displays all available appointment slots from all doctors.
 	 */
 	private static boolean viewAvailableAppointmentSlots() {
@@ -168,7 +192,7 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
-	 * Patient Menu Option 4
+	 * Patient Menu Option 5
 	 * Schedules a new appointment for the patient.
 	 */
 	private void scheduleAppointment() {
@@ -180,7 +204,7 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
-	 * Patient Menu Option 5
+	 * Patient Menu Option 6
 	 * Reschedules an existing appointment for the patient.
 	 */
 	private void rescheduleAppointment() {
@@ -192,7 +216,7 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
-	 * Patient Menu Option 6
+	 * Patient Menu Option 7
 	 * Cancels an existing confirmed appointment for the patient.
 	 */
 	private void cancelAppointment() {
@@ -240,7 +264,7 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
-	 * Patient Menu Option 7
+	 * Patient Menu Option 8
 	 * Displays the scheduled appointments for the patient.
 	 */
 	private void viewScheduledAppointments() {
@@ -270,7 +294,7 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
-	 * Patient Menu Option 8
+	 * Patient Menu Option 9
 	 * Displays past appointment outcome records for the patient.
 	 */
 	private void viewPastAppointmentOutcomes() {
@@ -316,7 +340,7 @@ public class PatientBoundary extends Boundary {
 	}
 
 	/**
-	 * Patient Menu Option 9
+	 * Patient Menu Option 10
 	 * Allows the patient to acknowledge rejected appointment slots.
 	 */
 	private void acknowledgeRejectedAppointments() {

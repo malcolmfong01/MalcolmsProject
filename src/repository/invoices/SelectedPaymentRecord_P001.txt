@@ -1,0 +1,10 @@
++------------------------------------------+
+Selected Payment Record for Patient ID: P001
++------------------------------------------+
+| Patient Name        : poop                 |
+| Patient DOB         : 1990-02-15T00:00     |
+| Phone Number        : 82880798             |
+| Email               : poop@gmail.com       |
+| Payment Amount      : 1000.0               |
+| Payment Status      : CLEARED              |
++------------------------------------------+

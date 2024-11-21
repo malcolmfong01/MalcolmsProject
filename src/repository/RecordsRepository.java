@@ -82,7 +82,7 @@ public class RecordsRepository extends Repository {
         } else if (Objects.equals(fileName, appointmentFileName)) {
             return "Record ID,Created Date,Updated Date,Record status,Appointment Outcome Record ID, Patient ID,Doctor ID,Appointment Time, Location, Appointment Status";
         }
-        return "Record ID,Created Date,Updated Date,Record Status,Patient ID,Payment Amount";
+        return "Record ID,Created Date,Updated Date,Record Status,Patient ID,Payment Status,Payment Amount";
     }
 
     /**
@@ -122,8 +122,7 @@ public class RecordsRepository extends Repository {
      * @return a CSV-formatted string representing the record
      */
     private static String recordToCSV(Records record) {
-        if (record instanceof MedicalRecord) {
-            MedicalRecord medRecord = (MedicalRecord) record;
+        if (record instanceof MedicalRecord medRecord) {
             return String.join(",",
                     medRecord.getRecordID(),
                     medRecord.getPatientName(),
@@ -135,9 +134,7 @@ public class RecordsRepository extends Repository {
                     medRecord.getPatientID(),
                     medRecord.getDoctorID(),
                     medRecord.getBloodType());
-        } else if (record instanceof Appointment) {
-            Appointment appRecord = (Appointment) record;
-            AppointmentOutcomeRecord outcome = appRecord.getAppointmentOutcomeRecord();
+        } else if (record instanceof Appointment appRecord) {
             return String.join(",",
                     appRecord.getRecordID(),
                     appRecord.getCreatedDate().toString(),
@@ -150,14 +147,14 @@ public class RecordsRepository extends Repository {
                     appRecord.getLocation(),
                     appRecord.getAppointmentStatus().toString());
             // AppointmentOutcomeRecord appointmentOutcomeRecord,
-        } else if (record instanceof PaymentRecord) {
-            PaymentRecord payRecord = (PaymentRecord) record;
+        } else if (record instanceof PaymentRecord payRecord) {
             return String.join(",",
                     payRecord.getRecordID(),
                     payRecord.getCreatedDate().toString(),
                     payRecord.getUpdatedDate().toString(),
                     payRecord.getRecordStatus().toString(),
-                    payRecord.getPatientID(),
+                    PaymentRecord.getPatientID(),
+                    payRecord.getPaymentStatus().toString(),
                     String.valueOf(payRecord.getPaymentAmount()) // Payment Amount
             );
         }
@@ -281,8 +278,8 @@ public class RecordsRepository extends Repository {
                         LocalDateTime.parse(fields[2]), // updatedDate
                         RecordStatus.toEnumRecordStatusType(fields[3]), // recordStatus
                         fields[4], // patientID
-                        PaymentStatus.toEnumRecordStatusType(fields[6]), // recordStatus
-                        Double.parseDouble(fields[5]) // paymentAmount
+                        PaymentStatus.toEnumRecordStatusType(fields[5]), // recordStatus
+                        Double.parseDouble(fields[6]) // paymentAmount
                 ));
             }
         } catch (Exception e) {

@@ -5,14 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98aba22b-29be-4861-8ba7-d684834ced75" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/boundary/P_PaymentRecordBoundary.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/boundary/AdminBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boundary/AdminBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/boundary/AppointmentRecordOutcomeBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boundary/AppointmentRecordOutcomeBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boundary/AdministratorBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boundary/AdministratorBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boundary/PatientBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boundary/PatientBoundary.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/PaymentRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/PaymentRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repository/RecordsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/RecordsRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/appointment_outcome_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/appointment_outcome_records.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/appointment_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/appointment_records.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/diagnosis_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/diagnosis_records.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repository/data/prescribed_medications.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/prescribed_medications.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repository/data/doctors.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/doctors.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repository/data/medical_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/medical_records.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repository/data/patients.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/patients.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repository/data/payment_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/payment_records.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/prescriptions_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/prescriptions_records.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,6 +67,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Application.HMSMain.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "yanyox2.0",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
@@ -75,6 +82,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="boundary" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="HMSMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="HMSApp.HMSMain" />
@@ -138,5 +150,16 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Merge branch 'main' of https://github.com/malcolmfong01/MalcolmsProject into yanyox2.0" />
     <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/repository/RecordsRepository.java</url>
+          <line>149</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
