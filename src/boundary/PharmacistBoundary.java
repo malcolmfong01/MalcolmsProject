@@ -17,7 +17,7 @@ public class PharmacistBoundary extends Boundary {
 
     /**
      * Constructor for Pharmacist Boundary.
-     * @param pharmacist this user interface.
+     * pharmacist means the current pharamcist for this user interface.
      */
 
     public PharmacistBoundary() {

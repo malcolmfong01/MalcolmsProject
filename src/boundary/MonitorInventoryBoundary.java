@@ -91,7 +91,7 @@ public class MonitorInventoryBoundary extends Boundary {
     /**
      * Displays detailed information for a given medicine.
      * 
-     * @param medicine
+     * @param medicine details
      */
 
     private void displayMedicineDetails(Medicine medicine) {

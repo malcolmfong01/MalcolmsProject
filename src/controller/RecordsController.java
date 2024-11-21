@@ -118,6 +118,15 @@ public class RecordsController {
         }
     }
 
+    /**
+     * Updates an existing Medical record based on the record type and provided details.
+     * @param recordID the ID of the record to be updated
+     * @param status the status to be set for the record
+     * @param doctorID the doctor ID to be set for the record
+     * @param patientID the patient ID to be set for the record
+     * @param updatedDate the date and time when the record was updated
+     * @return true if the record was successfully updated, otherwise false
+     */
     private Boolean updateMedicalRecord(String recordID, String status, String doctorID, String patientID,
             LocalDateTime updatedDate) {
         MedicalRecord record = RecordsRepository.MEDICAL_RECORDS.get(recordID);
@@ -138,6 +147,12 @@ public class RecordsController {
         return false;
     }
 
+    /**
+     * Updates an existing Appointment record based on the record type and provided details.
+     * @param recordID the ID of the record to be updated
+     * @param updatedDate the date and time when the record was updated
+     * @return true if the record was successfully updated, otherwise false
+     */
     private Boolean updateAppointmentRecord(String recordID, LocalDateTime updatedDate) {
         Appointment record = RecordsRepository.APPOINTMENT_RECORDS.get(recordID);
         if (record != null) {
@@ -150,6 +165,12 @@ public class RecordsController {
         return false;
     }
 
+    /**
+     * Updates an existing Payment record based on the record type and provided details.
+     * @param recordID the ID of the record to be updated
+     * @param updatedDate the date and time when the record was updated
+     * @return true if the record was successfully updated, otherwise false
+     */
     private Boolean updatePaymentRecord(String recordID, LocalDateTime updatedDate) {
         PaymentRecord record = RecordsRepository.PAYMENT_RECORDS.get(recordID);
         if (record != null) {
@@ -179,6 +200,11 @@ public class RecordsController {
         }
     }
 
+    /**
+     * Deletes a Medical record based on the Medical record ID.
+     * @param recordID the ID of the record to be deleted
+     * @return true if the record was successfully deleted, otherwise false
+     */
     private Boolean deleteMedicalRecord(String recordID) {
         if (RecordsRepository.MEDICAL_RECORDS.containsKey(recordID)) {
             RecordsRepository.MEDICAL_RECORDS.remove(recordID);
@@ -189,6 +215,11 @@ public class RecordsController {
         return false;
     }
 
+    /**
+     * Deletes an Appointment record based on the Appointment record ID.
+     * @param recordID the ID of the record to be deleted
+     * @return true if the record was successfully deleted, otherwise false
+     */
     private Boolean deleteAppointmentRecord(String recordID) {
         if (RecordsRepository.APPOINTMENT_RECORDS.containsKey(recordID)) {
             RecordsRepository.APPOINTMENT_RECORDS.remove(recordID);
@@ -199,6 +230,11 @@ public class RecordsController {
         return false;
     }
 
+    /**
+     * Deletes a Payment record based on the Payment record ID.
+     * @param recordID the ID of the record to be deleted
+     * @return true if the record was successfully deleted, otherwise false
+     */
     private Boolean deletePaymentRecord(String recordID) {
         if (RecordsRepository.PAYMENT_RECORDS.containsKey(recordID)) {
             RecordsRepository.PAYMENT_RECORDS.remove(recordID);
@@ -274,20 +310,6 @@ public class RecordsController {
             return null;
     }
 
-    // public ArrayList<AppointmentOutcomeRecord>
-    // getAppointmentOutcomeRecordByPatientId(String patientID) {
-    // ArrayList<AppointmentOutcomeRecord> records = new ArrayList<>();
-    //
-    // // Iterate over the patientOutcomeRecords map and collect matching records
-    // for (String id :
-    // AppointmentOutcomeRecordRepository.patientOutcomeRecords.keySet()) {
-    // if (id.equals(patientID)) {
-    // records.add(AppointmentOutcomeRecordRepository.patientOutcomeRecords.get(id));
-    // }
-    // }
-    //
-    // return records;
-    // }
     /**
      * Retrieves a list of appointment outcome records for a given patient ID.
      * This method retrieves all appointment outcome records related to the patient.

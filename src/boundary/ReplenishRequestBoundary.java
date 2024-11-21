@@ -99,7 +99,7 @@ public class ReplenishRequestBoundary extends Boundary {
     }
 
     /**
-     * Returns to the Pharmacist UI main menu.
+     * Returns to the Pharmacist main menu.
      */
     private void returnToPharmacistMenu() {
         PharmacistBoundary pharmacistBoundary = new PharmacistBoundary();

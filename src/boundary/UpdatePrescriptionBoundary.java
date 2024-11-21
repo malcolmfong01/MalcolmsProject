@@ -28,6 +28,9 @@ import static repository.PrescribedMedicationRepository.diagnosisToMedicationsMa
  */
 public class UpdatePrescriptionBoundary extends Boundary {
 
+    /**
+     * Starts the user menu
+     */
     @Override
     public void start() {
         updatePrescriptionStatus();

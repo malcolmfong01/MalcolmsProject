@@ -5,13 +5,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import controller.PrescribedMedicineController;
-import enums.AppointmentOutcomeStatus;
 import enums.AppointmentStatus;
 import enums.PrescriptionStatus;
 import enums.Record;
 import model.*;
 import repository.*;
-import controller.AppointmentController;
 import controller.MedicineController;
 
 /**
@@ -46,17 +44,11 @@ public class UpdateMRBoundary {
     }
 
     /**
-     * Starts the UI, displaying the current appointment details and guiding the
+     * Starts the Menu, displaying the current appointment details and guiding the
      * doctor
      * through adding new diagnoses, treatment plans, and prescriptions.
      */
     public void start() {
-        // displaying currentAppointment that the doctor is working on
-
-        // currentAppointment =
-        // AppointmentController.retrieveEarliestConfirmedAppointmentRecord(doctor.getUID(),
-        // medicalRecord.getPatientID());
-
         System.out.println("\n-- Current Appointment Details --");
         System.out.println("Patient ID: " + medicalRecord.getPatientID());
         System.out.println("Appointment DateTime: " +
@@ -110,57 +102,8 @@ public class UpdateMRBoundary {
         // Save updated medical record back to repository
         RecordsRepository.MEDICAL_RECORDS.put(medicalRecord.getRecordID(), medicalRecord);
         currentAppointment.setAppointmentStatus(AppointmentStatus.COMPLETED);
-        //generateAppointmentOutcome(selectedDiagnosis.getPrescription(), selectedDiagnosis);
         RecordsRepository.saveAllRecordFiles();
 
-    }
-
-    /**
-     * Generates an appointment outcome record when the appointment status is
-     * completed.
-     *
-     * @param prescription The prescription associated with the appointment.
-     * @param diagnosis    The diagnosis associated with the appointment.
-     */
-    private void generateAppointmentOutcome(Prescription prescription, Diagnosis diagnosis) {
-        String UID = AppointmentController.generateRecordID(Record.APPOINTMENT_OUTCOME_RECORDS);
-        if (currentAppointment.getAppointmentStatus() == AppointmentStatus.COMPLETED) {
-            AppointmentOutcomeRecord outcomeRecord = new AppointmentOutcomeRecord(
-                    UID,
-                    currentAppointment.getPatientID(),
-                    currentAppointment.getDoctorID(),
-                    diagnosis.getDiagnosisID(),
-                    LocalDateTime.now(),
-                    prescription,
-                    null, // type of service
-                    null, // consultation notes
-                    AppointmentOutcomeStatus.INCOMPLETED);
-
-            AppointmentOutcomeRecordRepository.addAppointmentOutcomeRecord(currentAppointment.getPatientID(),
-                    outcomeRecord);
-            AppointmentOutcomeRecordRepository.saveAppointmentOutcomeRecordRepository();
-
-        }
-
-    }
-
-    /**
-     * Adds a new diagnosis for the given patient.
-     *
-     * @param patientId            The ID of the patient.
-     * @param diagnosisDescription The description of the diagnosis.
-     * @return The newly created Diagnosis object.
-     */
-    private Diagnosis addNewDiagnosis(String patientId, String diagnosisDescription) {
-        String diagnosisID = AppointmentController.generateRecordID(Record.DIAGNOSIS_RECORDS);
-        Diagnosis diagnosis = new Diagnosis(patientId, diagnosisID, doctor.getUID(),
-                medicalRecord.getRecordID(), LocalDateTime.now(), null,
-                diagnosisDescription, null);
-
-        DiagnosisRepository.addDiagnosis(patientId, diagnosis); // Add to the Diagnosis Repository
-        medicalRecord.addDiagnosis(diagnosis); // Add the diagnosis to the current medical record
-        DiagnosisRepository.saveAlltoCSV();
-        return diagnosis;
     }
 
     /**
@@ -168,6 +111,7 @@ public class UpdateMRBoundary {
      *
      * @param diagnosis The diagnosis to which the treatment plan will be added.
      */
+
     private void addTreatmentPlan(String appointmentOutcome,Diagnosis diagnosis) {
         System.out.println("Enter Treatment Description:");
         String treatmentDescription = sc.nextLine();
@@ -239,7 +183,6 @@ public class UpdateMRBoundary {
             addMore = sc.nextLine().trim().equalsIgnoreCase("yes");
         }
         PrescriptionRepository.saveAlltoCSV();
-        // RecordsRepository.saveAllRecordFiles();
 
         System.out.println("Finished adding prescribed medications for Diagnosis ID: " + newDiagnosis.getDiagnosisID());
     }
@@ -262,7 +205,6 @@ public class UpdateMRBoundary {
         prescription.addPrescribedMedication(prescribedMedication);
         PrescribedMedicationRepository.addMedication(diagnosis.getDiagnosisID(), prescribedMedication);
         PrescribedMedicationRepository.saveAlltoCSV();
-        // RecordsRepository.saveAllRecordFiles();
         return prescription;
     }
 }

@@ -151,7 +151,6 @@ public class RecordsRepository extends Repository {
                     appRecord.getAppointmentTime().toString(),
                     appRecord.getLocation(),
                     appRecord.getAppointmentStatus().toString());
-            // AppointmentOutcomeRecord appointmentOutcomeRecord,
         } else if (record instanceof PaymentRecord payRecord) {
             return String.join(",",
                     payRecord.getRecordID(),

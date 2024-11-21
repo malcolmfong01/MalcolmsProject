@@ -143,12 +143,10 @@ public class LoginBoundary extends Boundary {
     }
 
     /**
-     * Prompts the user to change their password if they are using the default password.
-     * Ensures that the new password is confirmed before updating.
-     *
-     * @param personnel the User object representing the user changing their password
+     * Change Password Method
+     * @param user the User object representing the user changing their password
      */
-    public static boolean changePassword(model.User personnel, String oldPassword, String newPassword) {
+    public static boolean changePassword(model.User user, String oldPassword, String newPassword) {
         // Check if the old password matches the stored one
         if (newPassword.equals(oldPassword)) {
             System.out.println("Please use a new password.");
@@ -164,6 +162,11 @@ public class LoginBoundary extends Boundary {
 
         return true;
     }
+
+    /**
+     * Method to check
+     * @param password  if the password set by the user is a strong password
+     */
 
     private static boolean isValidPassword(String password) {
         // Check password length
@@ -189,18 +192,25 @@ public class LoginBoundary extends Boundary {
         return true;
     }
 
-    private void promptChangePassword(model.User personnel) {
+    /**
+     * Prompts the user to change their password if they are using the default password.
+     * Ensures that the new password is confirmed before updating.
+     *
+     * @param user the User object representing the user changing their password
+     */
+
+    private void promptChangePassword(model.User user) {
         System.out.println("It appears that you are using the default password.");
         System.out.println("Please change your password for security reasons.");
 
         while (true) {
-            String oldPassword = personnel.getPasswordHash();
+            String oldPassword = user.getPasswordHash();
             String newPassword = Validator.readString("Enter new password:");
             String confirmPassword = Validator.readString("Confirm new password:");
 
             if (newPassword.equals(confirmPassword) && !newPassword.isEmpty()) {
-                if (changePassword(personnel,oldPassword, newPassword)) {
-                    RegisterController.updatePassword(personnel, newPassword);
+                if (changePassword(user,oldPassword, newPassword)) {
+                    RegisterController.updatePassword(user, newPassword);
                     System.out.println("Password changed successfully!");
                     break;
                 }
