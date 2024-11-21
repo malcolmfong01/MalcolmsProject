@@ -109,7 +109,7 @@ public class RecordsRepository extends Repository {
                 writer.write(recordToCSV(record));
                 writer.newLine();
             }
-            //System.out.println("Records successfully saved to " + fileName);
+            System.out.println("Records successfully saved to " + fileName);
         } catch (IOException e) {
             System.out.println("Error saving record data: " + e.getMessage());
         }
@@ -202,18 +202,13 @@ public class RecordsRepository extends Repository {
                     isFirstLine = false;
                     continue; // Skip the header row
                 }
-
                 T record = csvToRecord(line, type);
-                // MedicalRecord medicalrecord = csvToRecord(line, type);
-                // String[] fields = line.split(",");
-
                 if (record != null) {
-                    // recordsMapPatientID.put(fields[4], record);
-                    // recordsMapDoctorID.put(fields[4], record);
+
                     recordsMapRecordID.put(record.getRecordID(), record);
                 }
             }
-//            System.out.println("Successfully loaded " + recordsMapRecordID.size() + " records from " + fileName);
+
         } catch (IOException e) {
             System.out.println("Error reading record data: " + e.getMessage());
         }
@@ -228,6 +223,7 @@ public class RecordsRepository extends Repository {
      * @param <T>  a type parameter extending Records
      * @return a record object of the specified type, or null if parsing fails
      */
+
     private static <T extends Records> T csvToRecord(String csv, Class<T> type) {
         String[] fields = csv.split(",");
         // RecordsController rc = new RecordsController();
@@ -290,24 +286,11 @@ public class RecordsRepository extends Repository {
     }
 
     /**
-     * Clears all records in the repository and saves empty files.
-     *
-     * @return true if the operation is successful
-     */
-    public static boolean clearRecordDatabase() {
-        MEDICAL_RECORDS.clear();
-        APPOINTMENT_RECORDS.clear();
-        PAYMENT_RECORDS.clear();
-        saveAllRecordFiles();
-        setRepoLoaded(false);
-        return true;
-    }
-
-    /**
      * Checks if the repository has been loaded.
      *
      * @return true if the repository is loaded; false otherwise
      */
+
     public static Boolean isRepoLoaded() {
         return isRepoLoaded;
     }
@@ -317,6 +300,7 @@ public class RecordsRepository extends Repository {
      *
      * @param isRepoLoaded true to set the repository as loaded, false otherwise
      */
+
     public static void setRepoLoaded(Boolean isRepoLoaded) {
         RecordsRepository.isRepoLoaded = isRepoLoaded;
     }
@@ -328,6 +312,7 @@ public class RecordsRepository extends Repository {
      * @param newDoctorID     the new doctor ID to set
      * @return true if the update was successful, false otherwise
      */
+
     public static boolean updateDoctorIDInMedicalRecord(String medicalRecordID, String newDoctorID) {
         MedicalRecord medicalRecord = MEDICAL_RECORDS.get(medicalRecordID);
         if (medicalRecord != null) {
