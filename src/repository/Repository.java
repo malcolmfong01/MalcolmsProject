@@ -43,11 +43,4 @@ public abstract class Repository {
      */
     public abstract boolean loadFromCSV();
 
-    /**
-     * Clears repository data.
-     */
-    public void clearRepository() {
-        isRepoLoad = false;
-        System.out.println("Repository cleared.");
-    }
 }

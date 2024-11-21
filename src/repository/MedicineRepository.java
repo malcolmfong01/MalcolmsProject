@@ -192,33 +192,4 @@ public class MedicineRepository extends Repository {
         }
     }
 
-    /**
-     * Clears all medicine data in the repository and saves an empty file.
-     *
-     * @return true if the operation is successful
-     */
-    public static boolean clearMedicineDatabase() {
-        MEDICINES.clear();
-        saveAllMedicinesToCSV();
-        isRepoLoaded = false;
-        return true;
-    }
-    
-    /**
-     * Checks if the repository has been loaded.
-     *
-     * @return true if the repository is loaded; false otherwise
-     */
-    public static boolean isRepoLoaded() {
-        return isRepoLoaded;
-    }
-
-    /**
-     * Sets the repository load status.
-     *
-     * @param isRepoLoaded true to set the repository as loaded, false otherwise
-     */
-    public static void setRepoLoaded(boolean isRepoLoaded) {
-        MedicineRepository.isRepoLoaded = isRepoLoaded;
-    }
 }

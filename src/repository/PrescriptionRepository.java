@@ -18,9 +18,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PrescriptionRepository extends Repository {
+
     /**
      * Directory for storing prescribed Prescription CSV files.
      */
+
 	private static final String folder = "data";
 	
     private static final String fileName = "prescriptions_records.csv";
@@ -105,6 +107,7 @@ public class PrescriptionRepository extends Repository {
      * @param fileName              the name of the CSV file to load from
      * @param diagnosisPrescriptionMap the map to store the loaded prescriptions
      */
+
     private static void loadPrescriptionsFromCSV(String fileName, HashMap<String, Prescription> diagnosisPrescriptionMap) {
         String filePath = "./src/repository/" + folder + "/" + fileName;
 
@@ -147,6 +150,7 @@ public class PrescriptionRepository extends Repository {
      * @param csv the CSV string containing the diagnosis ID
      * @return the diagnosis ID extracted from the CSV string
      */
+
     private static String getDiagnosisIDFromCSV(String csv) {
         String[] fields = csv.split(",");
         return fields[0];
@@ -158,6 +162,7 @@ public class PrescriptionRepository extends Repository {
      * @param csv the CSV string representing the Prescription
      * @return a Prescription object, or null if parsing fails
      */
+
     private static Prescription csvToPrescription(String csv) {
         String[] fields = csv.split(",");
         try {
@@ -172,40 +177,23 @@ public class PrescriptionRepository extends Repository {
         return null;
     }
 
-
-    /**
-     * Clears all prescription data in the repository and saves an empty file.
-     *
-     * @return true if the operation is successful
-     */
-    public static boolean clearPrescriptionDatabase() {
-    	PRESCRIPTION_MAP.clear();
-        savePrescriptionsToCSV(fileName, PRESCRIPTION_MAP);
-        setRepoLoaded(false);
-        return true;
-    }
-    /**
-     * Checks if the repository has been loaded.
-     *
-     * @return true if the repository is loaded; false otherwise
-     */
-	public static boolean isRepoLoaded() {
-		return isRepoLoaded;
-	}
     /**
      * Sets the repository load status.
      *
      * @param isRepoLoaded true to set the repository as loaded, false otherwise
      */
+
 	public static void setRepoLoaded(boolean isRepoLoaded) {
 		PrescriptionRepository.isRepoLoaded = isRepoLoaded;
 	}
+
     /**
      * Adds a new Prescription record to the repository and immediately saves the repository
      * state to the CSV file.
      *
      * @param prescription the Prescription object to add
      */
+
     public static void addPrescriptionRecord(Prescription prescription) {
         // Add the record to the repository
     	PRESCRIPTION_MAP.put(prescription.getDiagnosisID(), prescription);

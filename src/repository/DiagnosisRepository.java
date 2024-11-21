@@ -198,28 +198,24 @@ public class DiagnosisRepository extends Repository {
         }
         return null;
     }
-    /**
-     * Checks if the repository has been loaded.
-     *
-     * @return true if the repository is loaded; false otherwise
-     */
-    public static boolean isRepoLoaded() {
-        return isRepoLoaded;
-    }
+
     /**
      * Sets the repository load status.
      *
      * @param isRepoLoaded true to set the repository as loaded, false otherwise
      */
+
     public static void setRepoLoaded(boolean isRepoLoaded) {
         DiagnosisRepository.isRepoLoaded = isRepoLoaded;
     }
+
     /**
      * Retrieves a list of diagnoses for the specified patient ID.
      *
      * @param patientID the patient ID for which diagnoses are requested
      * @return an ArrayList of Diagnosis objects for the specified patient ID
      */
+
     public static ArrayList<Diagnosis> getDiagnosesByPatientID(String patientID) {
         ArrayList<Diagnosis> diagnosesForPatient = new ArrayList<>();
         
