@@ -1,27 +1,27 @@
 package controller;
 
 import java.util.Map;
+
+import enums.UserType;
 import model.*;
 import repository.*;
 
-import enums.PersonnelFileType;
-
 /**
- * The StaffController class is a super class that provides methods to access and retrieve staff-related information
+ * The UserController class is a super class that provides methods to access and retrieve staff-related information
  * from the UserRepository.
  */
-public class StaffController {
+public class UserController {
     /**
      * Generates a unique ID (UID) for the personnel based on their type.
-     * @param personnelFileType the type of personnel (Admin, Doctor, Patient, Pharmacist)
+     * @param userType the type of personnel (Administrator, Doctor, Patient, Pharmacist)
      * @return a unique UID string for the personnel
      */
-    public static String generateUID(PersonnelFileType personnelFileType) {
+    public static String generateUID(UserType userType) {
         String prefix = "";
         int nextId = 0;
         Map<String, ? extends User> repository = null;
 
-        switch (personnelFileType) {
+        switch (userType) {
             case ADMINS:
                 prefix = "A";
                 repository = UserRepository.ADMINS;
@@ -61,22 +61,22 @@ public class StaffController {
         return String.format("%s%03d", prefix, nextId);
     }
     /**
-     * Adds a new personnel (e.g., Doctor, Patient, etc.) to the system.
-     * @param personnel the personnel to be added
-     * @return true if personnel is successfully added, false if the data is invalid
+     * Adds a new user (e.g., Doctor, Patient, etc.) to the system.
+     * @param user the user to be added
+     * @return true if user is successfully added, false if the data is invalid
      */
-    public static boolean addPersonnel(User personnel) {
-        if (personnel == null) {
-            System.out.println("Error: Invalid personnel data.");
+    public static boolean addUser(User user) {
+        if (user == null) {
+            System.out.println("Error: Invalid user data.");
             return false;
         }
         // Automatically generate UID if not provided
-        if (personnel.getUID() == null || personnel.getUID().isEmpty()) {
-            personnel.setUID(generateUID(determinePersonnelType(personnel)));
+        if (user.getUID() == null || user.getUID().isEmpty()) {
+            user.setUID(generateUID(determinePersonnelType(user)));
         }
 
-        // Determine the type of personnel and add it to the appropriate collection using a switch statement
-        switch (personnel) {
+        // Determine the type of user and add it to the appropriate collection using a switch statement
+        switch (user) {
             case Doctor doc -> {
                 UserRepository.DOCTORS.put(doc.getUID(), doc);
                 System.out.println("Doctor added: " + doc.getFullName());
@@ -89,43 +89,43 @@ public class StaffController {
                 UserRepository.PHARMACISTS.put(pharm.getUID(), pharm);
                 System.out.println("Pharmacist added: " + pharm.getFullName());
             }
-            case Admin admin -> {
-                UserRepository.ADMINS.put(admin.getUID(), admin);
-                System.out.println("Admin added: " + admin.getFullName());
+            case Administrator administrator -> {
+                UserRepository.ADMINS.put(administrator.getUID(), administrator);
+                System.out.println("Administrator added: " + administrator.getFullName());
             }
             default -> {
-                System.out.println("Error: Unsupported personnel type.");
+                System.out.println("Error: Unsupported user type.");
                 return false;
             }
         }
-        // Save the updated personnel to the file
+        // Save the updated user to the file
         UserRepository.saveAllPersonnelFiles();
         return true;
     }
 
 
     // Determine personnel type based on the class of personnel
-    private static PersonnelFileType determinePersonnelType(User personnel) {
+    private static UserType determinePersonnelType(User personnel) {
         if (personnel instanceof Doctor) {
-            return PersonnelFileType.DOCTORS;
+            return UserType.DOCTORS;
         } else if (personnel instanceof Patient) {
-            return PersonnelFileType.PATIENTS;
+            return UserType.PATIENTS;
         } else if (personnel instanceof Pharmacist) {
-            return PersonnelFileType.PHARMACISTS;
-        } else if (personnel instanceof Admin) {
-            return PersonnelFileType.ADMINS;
+            return UserType.PHARMACISTS;
+        } else if (personnel instanceof Administrator) {
+            return UserType.ADMINS;
         }
         return null;
     }
 
     /**
-     * Removes a personnel member from the system based on their UID and type.
-     * @param UID the UID of the personnel to be removed
-     * @param type the type of personnel (Admin, Doctor, Patient, Pharmacist)
-     * @return true if personnel is successfully removed, false if UID is invalid or personnel not found
+     * Removes a user from the system based on their UID and type.
+     * @param UID the UID of the user to be removed
+     * @param type the type of user (Administrator, Doctor, Patient, Pharmacist)
+     * @return true if user is successfully removed, false if UID is invalid or user not found
      */
     // Remove personnel by UID
-    public static boolean removePersonnel(String UID, PersonnelFileType type) {
+    public static boolean removeUser(String UID, UserType type) {
         if (UID == null || UID.isEmpty()) {
             System.out.println("Error: Invalid ID Card.");
             return false;
@@ -157,9 +157,9 @@ public class StaffController {
                 }
                 break;
             case ADMINS:
-                Admin removedAdmin = UserRepository.ADMINS.remove(UID);
-                if (removedAdmin != null) {
-                    System.out.println("Admin removed: " + removedAdmin.getFullName());
+                Administrator removedAdministrator = UserRepository.ADMINS.remove(UID);
+                if (removedAdministrator != null) {
+                    System.out.println("Administrator removed: " + removedAdministrator.getFullName());
                     UserRepository.saveAllPersonnelFiles();
                     return true;
                 }
@@ -175,11 +175,11 @@ public class StaffController {
     /**
      * Retrieves a personnel member based on their UID and type.
      * @param UID the UID of the personnel to retrieve
-     * @param type the type of personnel (Admin, Doctor, Patient, Pharmacist)
-     * @return the personnel object if found, or null if not found
+     * @param type the type of personnel (Administrator, Doctor, Patient, Pharmacist)
+     * @return the user object if found, or null if not found
      */
     // Retrieve personnel by UID
-    public static User getPersonnelByUID(String UID, PersonnelFileType type) {
+    public static User getUserbyUID(String UID, UserType type) {
         if (UID == null || UID.isEmpty()) {
             System.out.println("Error: Invalid ID Card.");
             return null;
@@ -222,9 +222,9 @@ public class StaffController {
         } else if (updatedPersonnel instanceof Pharmacist && UserRepository.PHARMACISTS.containsKey(UID)) {
             UserRepository.PHARMACISTS.put(UID, (Pharmacist) updatedPersonnel);
             System.out.println("Pharmacist updated: " + updatedPersonnel.getFullName());
-        } else if (updatedPersonnel instanceof Admin && UserRepository.ADMINS.containsKey(UID)) {
-            UserRepository.ADMINS.put(UID, (Admin) updatedPersonnel);
-            System.out.println("Admin updated: " + updatedPersonnel.getFullName());
+        } else if (updatedPersonnel instanceof Administrator && UserRepository.ADMINS.containsKey(UID)) {
+            UserRepository.ADMINS.put(UID, (Administrator) updatedPersonnel);
+            System.out.println("Administrator updated: " + updatedPersonnel.getFullName());
         } else {
             System.out.println("Error: Personnel not found for update.");
             return false;
@@ -234,41 +234,7 @@ public class StaffController {
         UserRepository.saveAllPersonnelFiles();
         return true;
     }
-    /**
-     * Lists all personnel of a specific type.
-     * @param type the type of personnel to list (Admin, Doctor, Patient, Pharmacist)
-     */
-    // List all personnel of a specific type
-    public static void listAllPersonnel(PersonnelFileType type) {
-        Map<String, ? extends User> personnelMap = null;
 
-        switch (type) {
-            case DOCTORS:
-                personnelMap = UserRepository.DOCTORS;
-                break;
-            case PATIENTS:
-                personnelMap = UserRepository.PATIENTS;
-                break;
-            case PHARMACISTS:
-                personnelMap = UserRepository.PHARMACISTS;
-                break;
-            case ADMINS:
-                personnelMap = UserRepository.ADMINS;
-                break;
-            default:
-                System.out.println("Error: Unsupported personnel type.");
-                return;
-        }
-
-        if (personnelMap != null && !personnelMap.isEmpty()) {
-            System.out.println("Listing all personnel of type: " + type);
-            for (User personnel : personnelMap.values()) {
-                System.out.println("UID: " + personnel.getUID() + ", Name: " + personnel.getFullName());
-            }
-        } else {
-            System.out.println("No personnel found for type: " + type);
-        }
-    }
     /**
      * Retrieves a patient by their UID.
      * @param UID the UID of the patient to retrieve

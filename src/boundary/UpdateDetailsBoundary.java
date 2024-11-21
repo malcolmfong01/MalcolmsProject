@@ -3,14 +3,14 @@ package boundary;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import controller.StaffController;
+import controller.UserController;
 import utility.Validator;
 import model.Patient;
 /**
  * This class provides a user interface to view and update the particulars of a Patient.
  * It displays current information about the patient and offers options to modify specific fields.
  */
-public class P_UpdateDetailsBoundary {
+public class UpdateDetailsBoundary {
     
     private final Patient patient;
     /**
@@ -19,7 +19,7 @@ public class P_UpdateDetailsBoundary {
      * @param patient The Patient object whose details are to be viewed and updated.
      */
     // Constructor to initialize with the current patient object
-    public P_UpdateDetailsBoundary(Patient patient) {
+    public UpdateDetailsBoundary(Patient patient) {
         this.patient = patient;
     }
     /**
@@ -91,7 +91,7 @@ public class P_UpdateDetailsBoundary {
                     break;
                 case 6:
                     // Save all updates
-                    if (StaffController.updatePatientParticulars(patient.getUID(), patient)) {
+                    if (UserController.updatePatientParticulars(patient.getUID(), patient)) {
                         System.out.println("All changes saved successfully.");
                     } else {
                         System.out.println("Failed to save changes.");

@@ -1,16 +1,17 @@
 package boundary;
 
 import HMSApp.HMSMain;
+import enums.UserType;
 import model.Pharmacist;
 import controller.*;
-import enums.PersonnelFileType;
 import utility.Validator;
 
 /**
  * PharmacistBoundary class represents the user interface for a pharmacist in the HMS
- * system.
- * This class handles pharmacist-specific interactions.
+ * system
+ * This class handles pharmacist-specific interactions
  */
+
 public class PharmacistBoundary extends Boundary {
     private final Pharmacist pharmacist;
 
@@ -19,13 +20,15 @@ public class PharmacistBoundary extends Boundary {
      *
      * @param //pharmacist The pharmacist using this user interface.
      */
+
     public PharmacistBoundary() {
-        this.pharmacist = (Pharmacist) StaffController.getPersonnelByUID(RegisterController.cookie.getUid(), PersonnelFileType.PHARMACISTS);
+        this.pharmacist = (Pharmacist) UserController.getUserbyUID(RegisterController.cookie.getUid(), UserType.PHARMACISTS);
     }
 
     /**
      * Displays the pharmacist menu options.
      */
+
     @Override
     protected void printChoice() {
         System.out.printf("Welcome! Pharmacist --- %s ---\n", pharmacist.getFullName());
@@ -75,7 +78,7 @@ public class PharmacistBoundary extends Boundary {
      * To allow the pharmacists to view patient appointment outcome records
      */
     public static void viewAppointmentOutcomeRecords() {
-        PH_ViewAppointmentOutcomeBoundary outcomeRecordUI = new PH_ViewAppointmentOutcomeBoundary();
+        ViewAppointmentOutcomeBoundary outcomeRecordUI = new ViewAppointmentOutcomeBoundary();
         outcomeRecordUI.viewAppointmentOutcomeRecords();
     }
 
@@ -84,7 +87,7 @@ public class PharmacistBoundary extends Boundary {
      * To enable the pharmacist to update the prescriptions when a patient has completed an appointment
      */
     public static void updatePrescriptionStatus() {
-        PH_UpdatePrescriptionBoundary updateStatusUI = new PH_UpdatePrescriptionBoundary();
+        UpdatePrescriptionBoundary updateStatusUI = new UpdatePrescriptionBoundary();
         updateStatusUI.start();
     }
 
@@ -93,7 +96,7 @@ public class PharmacistBoundary extends Boundary {
      * To enable the pharmacist to monitor the medication inventory
      */
     public static void monitorInventory() {
-        PH_MonitorInventoryBoundary monitorInventoryUI = new PH_MonitorInventoryBoundary();
+        MonitorInventoryBoundary monitorInventoryUI = new MonitorInventoryBoundary();
         monitorInventoryUI.start();
     }
 
@@ -102,7 +105,7 @@ public class PharmacistBoundary extends Boundary {
      * For Pharmacists to submit replenishment requests to the administrator for approval
      */
     public static void submitReplenishmentRequests() {
-        PH_ReplenishRequestBoundary submitRequestUI = new PH_ReplenishRequestBoundary();
+        ReplenishRequestBoundary submitRequestUI = new ReplenishRequestBoundary();
         submitRequestUI.start();
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import controller.AppointmentController;
-import controller.StaffController;
+import controller.UserController;
 import enums.AppointmentStatus;
 import model.*;
 import utility.Validator;
@@ -21,7 +21,7 @@ import model.Treatment;
  * This class allows the user to view detailed information about a patient's diagnoses,
  * prescriptions, medications, and treatment plans.
  */
-public class MedicalRecordBoundary extends Boundary {
+public class MRBoundary extends Boundary {
 
     /**
      * The medical record to be displayed.
@@ -30,13 +30,13 @@ public class MedicalRecordBoundary extends Boundary {
     private final Patient patient;
 
     /**
-     * Constructs a MedicalRecordBoundary with the specified medical record.
+     * Constructs a MRBoundary with the specified medical record.
      *
      * @param medicalRecord the medical record to be displayed
      */
-    public MedicalRecordBoundary(MedicalRecord medicalRecord) {
+    public MRBoundary(MedicalRecord medicalRecord) {
         this.medicalRecord = medicalRecord;
-        this.patient = StaffController.getPatientById(medicalRecord.getPatientID());
+        this.patient = UserController.getPatientById(medicalRecord.getPatientID());
     }
 
     /**
@@ -133,7 +133,7 @@ public class MedicalRecordBoundary extends Boundary {
 
 
     /**
-     * Prints the available options for the MedicalRecordBoundary.
+     * Prints the available options for the MRBoundary.
      */
     @Override
     protected void printChoice() {
@@ -143,7 +143,7 @@ public class MedicalRecordBoundary extends Boundary {
     }
 
     /**
-     * Starts the MedicalRecordBoundary, displaying the medical record and allowing
+     * Starts the MRBoundary, displaying the medical record and allowing
      * the user to navigate back to the previous menu.
      */
     @Override

@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import enums.PersonnelFileType;
+import enums.UserType;
 import model.*;
 import repository.UserRepository;
 
@@ -18,7 +18,7 @@ public class RegisterController {
      * @return the authenticated User object if successful, otherwise null
      */
     // Method to authenticate a user based on username and password
-    public static User login(String username, String password, PersonnelFileType role) {
+    public static User login(String username, String password, UserType role) {
         Map<String, ? extends User> personnelMap = null;
 
         switch (role.toString().toLowerCase()) {
@@ -42,7 +42,7 @@ public class RegisterController {
         for (User personnel : personnelMap.values()) {
             if (personnel.getUsername().equals(username) && verifyPassword(personnel, password)) {
                 System.out.println(role + " " + personnel.getFullName() + " logged in successfully.");
-                cookie.setRole(PersonnelFileType.toEnum(personnel.getRole()));
+                cookie.setRole(UserType.toEnum(personnel.getRole()));
                 cookie.setUid(personnel.getUID());
                 return personnel;
             }
@@ -79,7 +79,7 @@ public class RegisterController {
         Map<String, ? extends User> personnelMap = null;
         String uid = personnel.getUID();
 
-        switch (PersonnelFileType.toEnum(personnel.getRole())) {
+        switch (UserType.toEnum(personnel.getRole())) {
             case ADMINS:
                 personnelMap = UserRepository.ADMINS;
                 break;
@@ -194,16 +194,16 @@ public class RegisterController {
      * @param dateOfCreation the date the admin account was created
      * @return true if the admin is registered successfully, false otherwise
      */
-    // Register Admin
+    // Register Administrator
     public static boolean registerAdmin(String fullName, String username, String email,
             String phoneNo, String passwordHash, LocalDateTime DoB,
             String gender, LocalDateTime dateOfCreation) {
-        // Register admin
-        Admin admin = new Admin(fullName, username, email, phoneNo, passwordHash, DoB, gender, "Admins",
+        // Register administrator
+        Administrator administrator = new Administrator(fullName, username, email, phoneNo, passwordHash, DoB, gender, "Admins",
                 dateOfCreation);
-        UserRepository.ADMINS.put(admin.getUID(), admin);
+        UserRepository.ADMINS.put(administrator.getUID(), administrator);
         UserRepository.saveAllPersonnelFiles();
-        System.out.println("Admin registered successfully with username: " + username);
+        System.out.println("Administrator registered successfully with username: " + username);
         return true;
     }
     /**

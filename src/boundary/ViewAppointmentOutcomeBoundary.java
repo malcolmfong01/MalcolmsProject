@@ -2,8 +2,8 @@ package boundary;
 
 import HMSApp.HMSMain;
 import controller.RegisterController;
-import controller.StaffController;
-import enums.PersonnelFileType;
+import controller.UserController;
+import enums.UserType;
 import model.AppointmentOutcomeRecord;
 import model.Pharmacist;
 import model.PrescribedMedication;
@@ -14,12 +14,12 @@ import utility.Validator;
 import java.util.List;
 
 /**
- * The PH_ViewAppointmentOutcomeBoundary class provides a user interface for
+ * The ViewAppointmentOutcomeBoundary class provides a user interface for
  * viewing
  * appointment outcome records for patients within the Hospital Management
  * System.
  */
-public class PH_ViewAppointmentOutcomeBoundary extends Boundary {
+public class ViewAppointmentOutcomeBoundary extends Boundary {
     /**
      * Starts the UI for viewing appointment outcome records and displays the
      * appropriate breadcrumbs.
@@ -67,7 +67,7 @@ public class PH_ViewAppointmentOutcomeBoundary extends Boundary {
 
         // Print options for user navigation
         printChoice();
-        handleUserChoice();
+        viewmoreOrexit();
     }
 
     /**
@@ -108,23 +108,22 @@ public class PH_ViewAppointmentOutcomeBoundary extends Boundary {
      * Handles the user's choice to view another appointment outcome record or
      * return to the Pharmacist UI.
      */
-    private void handleUserChoice() {
-        int choice = getUserChoice(2);
+    private void viewmoreOrexit() {
+        int choice = Validator.readInt("");
         switch (choice) {
             case 1 -> viewAppointmentOutcomeRecords(); // View another record
-            case 2 -> returnToPharmacistUI(); // Return to Pharmacist UI
-            // case 2 -> exitApp(); // Return to main menu or exit
+            case 2 -> returnToPharmacistMenu();
             default -> handleInvalidInput();
         }
     }
 
     /**
-     * Returns the user to the Pharmacist UI menu. If the authenticated user is not
-     * a valid pharmacist, it redirects to the main menu.
+     * Returns the user to the Pharmacist menu. If the authenticated user is not
+     * a valid, it returns to the main menu.
      */
-    private void returnToPharmacistUI() {
-        Pharmacist pharmacist = (Pharmacist) StaffController.getPersonnelByUID(
-                RegisterController.cookie.getUid(), PersonnelFileType.PHARMACISTS);
+    private void returnToPharmacistMenu() {
+        Pharmacist pharmacist = (Pharmacist) UserController.getUserbyUID(
+                RegisterController.cookie.getUid(), UserType.PHARMACISTS);
         if (pharmacist != null) {
             PharmacistBoundary pharmacistBoundary = new PharmacistBoundary();
             pharmacistBoundary.start();

@@ -19,7 +19,7 @@ import controller.MedicineController;
  * doctor's appointment.
  * It allows adding diagnoses, treatment plans, and prescriptions.
  */
-public class D_UpdateMRBoundary {
+public class UpdateMRBoundary {
     private final Doctor doctor;
     private final MedicalRecord medicalRecord;
     private final Appointment currentAppointment;
@@ -36,8 +36,8 @@ public class D_UpdateMRBoundary {
      *                           on.
      */
     // Constructor to initialize with the doctor and medical record to be updated
-    public D_UpdateMRBoundary(Doctor doctor, MedicalRecord medicalRecord,
-                              Appointment currentAppointment, DoctorBoundary doctorBoundary) {
+    public UpdateMRBoundary(Doctor doctor, MedicalRecord medicalRecord,
+                            Appointment currentAppointment, DoctorBoundary doctorBoundary) {
         this.doctor = doctor;
         this.medicalRecord = medicalRecord;
         this.currentAppointment = currentAppointment;

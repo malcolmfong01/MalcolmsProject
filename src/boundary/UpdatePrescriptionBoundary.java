@@ -15,7 +15,7 @@ import repository.AppointmentOutcomeRecordRepository;
 import java.util.ArrayList;
 
 /**
- * PH_UpdatePrescriptionBoundary handles the user interface for updating the status
+ * UpdatePrescriptionBoundary handles the user interface for updating the status
  * of a specific prescription in an appointment outcome record.
  * <p>
  * This class verifies the patient ID, appointment record ID, and medicine ID
@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * allowing a pharmacist to update the prescription status.
  * </p>
  */
-public class PH_UpdatePrescriptionBoundary extends Boundary {
+public class UpdatePrescriptionBoundary extends Boundary {
 
     @Override
     public void start() {
@@ -159,26 +159,26 @@ public class PH_UpdatePrescriptionBoundary extends Boundary {
 
         // Provide navigation options
         printChoice();
-        handleUserChoice();
+        viewmoreOrexit();
     }
 
     /**
      * Handles user navigation choice for updating another prescription or returning
      * to the main menu.
      */
-    private void handleUserChoice() {
-        int choice = getUserChoice(2);
+    private void viewmoreOrexit() {
+        int choice = Validator.readInt("");
         switch (choice) {
-            case 1 -> updatePrescriptionStatus(); // Try another update
-            case 2 -> returnToPharmacistUI(); // Return to main menu
+            case 1 -> updatePrescriptionStatus(); // Make another prescription
+            case 2 -> returnToPharmacistMenu();
             default -> handleInvalidInput();
         }
     }
 
     /**
-     * Returns to the main Pharmacist UI menu.
+     * Returns to the main Pharmacist Boundary Menu
      */
-    private void returnToPharmacistUI() {
+    private void returnToPharmacistMenu() {
         PharmacistBoundary pharmacistBoundary = new PharmacistBoundary();
         pharmacistBoundary.start();
     }
@@ -188,6 +188,6 @@ public class PH_UpdatePrescriptionBoundary extends Boundary {
      */
     private void returnToMenu() {
         printChoice();
-        handleUserChoice();
+        viewmoreOrexit();
     }
 }

@@ -11,19 +11,19 @@ import model.Doctor;
 import model.Patient;
 import repository.RecordsRepository;
 /**
- * The P_ScheduleBoundary class provides an interface for patients to schedule
+ * The SchedulerBoundary class provides an interface for patients to schedule
  * appointments with doctors, offering functionality to input availability and
  * display scheduled appointments.
  */
-public class P_ScheduleBoundary extends Boundary {
+public class SchedulerBoundary extends Boundary {
 
 	private final Patient patient;
     /**
-     * Constructor to initialize the P_ScheduleBoundary with the given patient.
+     * Constructor to initialize the SchedulerBoundary with the given patient.
      *
      * @param patient The patient using this UI.
      */
-	public P_ScheduleBoundary(Patient patient) {
+	public SchedulerBoundary(Patient patient) {
 		this.patient = patient;
 	}
     /**

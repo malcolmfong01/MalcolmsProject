@@ -1,54 +1,49 @@
 package enums;
+
 /**
- * Enum representing the different statuses of a record.
- * This is used to track the lifecycle state of records in the system.
+ * Represents the different statuses a record can have in the system.
+ * This enum defines the following statuses:
+ * <ul>
+ *     <li><b>ACTIVE:</b> The record is currently in use and operational.</li>
+ *     <li><b>INACTIVE:</b> The record is not actively used but remains available for reference.</li>
+ *     <li><b>ARCHIVED:</b> The record is stored for long-term reference and is not part of active operations.</li>
+ *     <li><b>DELETED:</b> The record is marked as deleted (soft delete) and is no longer accessible in normal operations.</li>
+ * </ul>
  */
 public enum RecordStatusType {
-    ACTIVE,     // Record is actively in use
-    INACTIVE,   // Record is not in use but available
-    ARCHIVED,   // Record is archived for future reference
-    DELETED;    // Record is marked as deleted (soft delete)
+    ACTIVE,
+    INACTIVE,
+    ARCHIVED,
+    DELETED;
 
     /**
-     * Converts the enum value to a string representation.
+     * Provides a user-friendly string representation of the record status.
      *
-     * @return a string representing the status of the record
+     * @return A string representation of the status, such as "ACTIVE" or "DELETED".
      */
-    // Optional: You can define methods to return more information about the status
     @Override
     public String toString() {
-        switch (this) {
-            case ACTIVE:
-                return "ACTIVE";
-            case INACTIVE:
-                return "INACTIVE";
-            case ARCHIVED:
-                return "ARCHIVED";
-            case DELETED:
-                return "DELETED";
-            default:
-                return "Unknown";
-        }
+        return switch (this) {
+            case ACTIVE -> "ACTIVE";
+            case INACTIVE -> "INACTIVE";
+            case ARCHIVED -> "ARCHIVED";
+            case DELETED -> "DELETED";
+        };
     }
 
     /**
-     * Converts a string to its corresponding RecordStatusType enum value.
+     * Converts a string representation of a record status to its corresponding enum value.
      *
-     * @param status the string representation of the status
-     * @return the corresponding RecordStatusType enum value, or null if the input is invalid
+     * @param status A string representing the status, such as "ACTIVE" or "DELETED".
+     * @return The corresponding {@code RecordStatusType} enum value, or {@code null} if the input is invalid.
      */
-    public static RecordStatusType toEnumRecordStatusType(String status) {
-        switch (status.toUpperCase()) {
-            case "ACTIVE":
-                return ACTIVE;
-            case "INACTIVE":
-                return INACTIVE;
-            case "ARCHIVED":
-                return ARCHIVED;
-            case "DELETED":
-                return DELETED;
-            default:
-                return null;  // or throw an exception if you want to handle invalid inputs differently
-        }
+    public static RecordStatusType toEnumRecordStatusType (String status) {
+        return switch (status.toUpperCase()) {
+            case "ACTIVE" -> ACTIVE;
+            case "INACTIVE" -> INACTIVE;
+            case "ARCHIVED" -> ARCHIVED;
+            case "DELETED" -> DELETED;
+            default -> null; // Returns null for unrecognized statuses
+        };
     }
 }

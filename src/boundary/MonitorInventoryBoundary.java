@@ -7,14 +7,15 @@ import repository.MedicineRepository;
 import java.time.LocalDateTime;
 
 /**
- * PH_MonitorInventoryBoundary manages the user interface for monitoring and managing
+ * MonitorInventoryBoundary manages the user interface for monitoring and managing
  * inventory levels of medicines, including checking for expired and low-stock items.
  * <p>
  * Provides options to remove expired medicines from stock and lists items below the
  * low-stock threshold.
  * </p>
  */
-public class PH_MonitorInventoryBoundary extends Boundary {
+
+public class MonitorInventoryBoundary extends Boundary {
 
     @Override
     public void start() {
@@ -30,6 +31,7 @@ public class PH_MonitorInventoryBoundary extends Boundary {
      * Monitors the full inventory, displaying stock levels, expired items,
      * and low-stock items with options for removal.
      */
+
     public void monitorInventory() {
         if (MedicineRepository.MEDICINES.isEmpty()) {
             System.out.println("No medicines available in the inventory.");
@@ -89,8 +91,9 @@ public class PH_MonitorInventoryBoundary extends Boundary {
     /**
      * Displays detailed information for a given medicine.
      * 
-     * @param medicine The {@link Medicine} object to display.
+     * @param medicine
      */
+
     private void displayMedicineDetails(Medicine medicine) {
         System.out.println("Medicine ID: " + medicine.getMedicineID());
         System.out.println("Name: " + medicine.getName());
@@ -104,6 +107,7 @@ public class PH_MonitorInventoryBoundary extends Boundary {
      * 
      * @param now The current date and time used to compare expiry dates.
      */
+
     private void promptToRemoveExpiredMedicines(LocalDateTime now) {
         int response;
         do {
@@ -141,18 +145,19 @@ public class PH_MonitorInventoryBoundary extends Boundary {
      */
     private void returnToMenu() {
         printChoice();
-        int choice = getUserChoice(1);
+        int choice = Validator.readInt("");
         if (choice == 1) {
-            returnToPharmacistUI();
+            returntoPharmacistMenu();
         } else {
             handleInvalidInput();
         }
     }
 
     /**
-     * Returns to the Pharmacist UI main menu.
+     * Returns to the Pharmacist main menu.
      */
-    private void returnToPharmacistUI() {
+
+    private void returntoPharmacistMenu() {
         PharmacistBoundary pharmacistBoundary = new PharmacistBoundary();
         pharmacistBoundary.start();
     }

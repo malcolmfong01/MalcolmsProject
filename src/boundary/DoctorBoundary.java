@@ -23,17 +23,19 @@ import repository.RecordsRepository;
 
 /**
  * DoctorBoundary class represents the user interface for a doctor in the HMS
- * system.
- * This class handles doctor-specific interactions.
+ * system
+ * This class handles doctor-specific interactions
  */
+
 public class DoctorBoundary extends Boundary {
 	private final Doctor doctor;
 
 	/**
-	 * Constructs a DoctorBoundary for the specified doctor.
+	 * Constructs a DoctorBoundary for the specified doctor
 	 *
 	 * @param doctor the doctor interacting with the UI
 	 */
+
 	public DoctorBoundary(Doctor doctor) {
 		this.doctor = doctor;
 	}
@@ -103,7 +105,7 @@ public class DoctorBoundary extends Boundary {
 		for (MedicalRecord record : RecordsRepository.MEDICAL_RECORDS.values()) {
 			if (record.getDoctorID().equals(doctorID)) {
 				recordsFound = true;
-				MedicalRecordBoundary medicalRecordUI = new MedicalRecordBoundary(record);
+				MRBoundary medicalRecordUI = new MRBoundary(record);
 				medicalRecordUI.displayMedicalRecordInBoxForDoctor();
 			}
 		}
@@ -150,8 +152,8 @@ public class DoctorBoundary extends Boundary {
 				for (Appointment appointment : currentAppointment) {
 					// Check if the appointment is relevant (e.g., still pending or needs update)
 					if (appointment.getAppointmentStatus() == AppointmentStatus.COMPLETED) {
-						// Use D_UpdateMRBoundary to handle the updating process
-						D_UpdateMRBoundary updateUI = new D_UpdateMRBoundary(doctor, medicalRecord,
+						// Use UpdateMRBoundary to handle the updating process
+						UpdateMRBoundary updateUI = new UpdateMRBoundary(doctor, medicalRecord,
 								appointment, this);
 						updateUI.start();
 					} else {
@@ -207,7 +209,7 @@ public class DoctorBoundary extends Boundary {
 	 * Opens the UI for setting the doctor's availability for appointments.
 	 */
 	public void setavailabilityforAppointments() {
-		D_SetAvailabilityBoundary availabilityUI = new D_SetAvailabilityBoundary(doctor);
+		AvailabilitySetterBoundary availabilityUI = new AvailabilitySetterBoundary(doctor);
 		availabilityUI.start();
 	}
 
@@ -319,7 +321,7 @@ public class DoctorBoundary extends Boundary {
 	 * allowing the doctor to record outcomes for completed appointments.
 	 */
 	public void recordAppointmentOutcome() {
-		D_RecordOutcomeBoundary outcomeUI = new D_RecordOutcomeBoundary(doctor);
+		RecordOutcomeBoundary outcomeUI = new RecordOutcomeBoundary(doctor);
 		outcomeUI.start();
 	}
 

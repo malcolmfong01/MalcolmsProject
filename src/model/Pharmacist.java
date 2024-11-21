@@ -2,8 +2,8 @@ package model;
 
 import java.time.LocalDateTime;
 
-import controller.StaffController;
-import enums.PersonnelFileType;
+import controller.UserController;
+import enums.UserType;
 
 /**
  * Pharmacist class that extends the User class
@@ -27,7 +27,7 @@ public class Pharmacist extends User {
 
     public Pharmacist( String fullName, String username, String email, String phoneNo,
                       String passwordHash, LocalDateTime DoB, String gender, LocalDateTime dateOfEmployment) {
-        super(StaffController.generateUID(PersonnelFileType.PHARMACISTS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "PHARMACISTS");
+        super(UserController.generateUID(UserType.PHARMACISTS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "PHARMACISTS");
         this.dateOfEmployment = dateOfEmployment;
     }
     

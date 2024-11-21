@@ -1,8 +1,10 @@
 package enums;
+
 /**
  * Enum representing different types of record files within the system.
  * Each enum value is associated with a specific file name for record management.
  */
+
 public enum RecordFileType {
     MEDICAL_RECORDS("medicalRecords"),
     APPOINTMENT_RECORDS("appointmentRecords"),
@@ -11,15 +13,19 @@ public enum RecordFileType {
 	DIAGNOSIS_RECORDS("diagnosisRecords"),
     PRESCRIBED_RECORDS("prescribedRecords"),
 	MEDICINE_RECORDS("medicineRecords");
+
     /**
      * The file name associated with the record type.
      */
+
     public final String fileName;
+
     /**
      * Constructor to associate each RecordFileType with a corresponding file name.
      *
      * @param fileName The file name associated with the record type.
      */
+
     RecordFileType(String fileName) {
         this.fileName = fileName;
     }

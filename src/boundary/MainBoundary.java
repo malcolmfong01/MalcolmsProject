@@ -23,14 +23,12 @@ public class MainBoundary extends Boundary {
      */
 	@Override
 	protected void printChoice() {
-		System.out.println("-------------------------------------");
-		System.out.println("| Welcome to SCSJ Group 3's HMS App |");
-		System.out.println("-------------------------------------");
+		printHeader("Welcome to SCSJ Group 3's HMS App ");
 		System.out.println("| What would you like to do? :      |");
 		System.out.println("| 1. Login                          |");
 		System.out.println("| 2. Register an account            |");
 		System.out.println("| 3. Close App                      |");
-		System.out.println("-------------------------------------");
+		System.out.println("=====================================");
 		System.out.print("Enter your choice: ");
 	}
 
@@ -64,6 +62,12 @@ public class MainBoundary extends Boundary {
 				default -> System.out.println("Invalid choice! Please select a valid option.");
 			}
 		}
+	}
+
+	private static void printHeader(String title) {
+		System.out.println("=".repeat(37));
+		System.out.printf("  %s%n", title);
+		System.out.println("=".repeat(37));
 	}
 
     /**

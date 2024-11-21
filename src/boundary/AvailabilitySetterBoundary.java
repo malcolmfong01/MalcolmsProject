@@ -22,18 +22,18 @@ import repository.RecordsRepository;
 
 import static utility.Validator.sc;
 
-public class D_SetAvailabilityBoundary extends Boundary {
+public class AvailabilitySetterBoundary extends Boundary {
     /**
      * The doctor for whom appointment availability is being managed.
      */
 	private final Doctor doctor;
 
     /**
-     * Constructs an D_SetAvailabilityBoundary with the specified doctor.
+     * Constructs an AvailabilitySetterBoundary with the specified doctor.
      *
      * @param doctor the doctor whose availability is being set
      */
-    public D_SetAvailabilityBoundary(Doctor doctor) {
+    public AvailabilitySetterBoundary(Doctor doctor) {
         this.doctor = doctor;
     }
 

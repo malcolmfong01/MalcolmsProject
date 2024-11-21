@@ -1,5 +1,5 @@
 package model;
-import enums.PersonnelFileType;
+import enums.UserType;
 
 /**
  * UserSessionTracker Class
@@ -9,17 +9,17 @@ import enums.PersonnelFileType;
 
 public class UserSessionTracker {
 	private String uid;
-	private PersonnelFileType role;
+	private UserType role;
 
     /**
      * Constructor for creating a UserSessionTracker instance.
      * The start time of the session is set to the current time.
      *
      * @param uid the unique identifier of the user
-     * @param role the role of the user in the system (e.g., Doctor, Patient, Admin)
+     * @param role the role of the user in the system (e.g., Doctor, Patient, Administrator)
      */
 	// Constructor with parameters
-	public UserSessionTracker(String uid, PersonnelFileType role) {
+	public UserSessionTracker(String uid, UserType role) {
 		this.uid = uid;
 		this.role = role;
 	}
@@ -47,7 +47,7 @@ public class UserSessionTracker {
      *
      * @return the role of the user
      */
-	public PersonnelFileType getRole() {
+	public UserType getRole() {
 		return role;
 	}
 
@@ -56,7 +56,7 @@ public class UserSessionTracker {
      *
      * @param role the new role of the user
      */
-	public void setRole(PersonnelFileType role) {
+	public void setRole(UserType role) {
 		this.role = role;
 	}
 }

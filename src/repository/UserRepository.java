@@ -33,7 +33,7 @@ public class UserRepository extends Repository {
     public static HashMap<String, Doctor> DOCTORS = new HashMap<>();
     public static HashMap<String, Patient> PATIENTS = new HashMap<>();
     public static HashMap<String, Pharmacist> PHARMACISTS = new HashMap<>();
-    public static HashMap<String, Admin> ADMINS = new HashMap<>();
+    public static HashMap<String, Administrator> ADMINS = new HashMap<>();
 
     /**
      * Saves all personnel records to their respective CSV files.
@@ -56,7 +56,7 @@ public class UserRepository extends Repository {
             loadPersonnelFromCSV(doctorsFileName, DOCTORS, Doctor.class);
             loadPersonnelFromCSV(patientsFileName, PATIENTS, Patient.class);
             loadPersonnelFromCSV(pharmacistsFileName, PHARMACISTS, Pharmacist.class);
-            loadPersonnelFromCSV(adminsFileName, ADMINS, Admin.class);
+            loadPersonnelFromCSV(adminsFileName, ADMINS, Administrator.class);
             setRepoLoaded(true);
             return true;
         } catch (Exception e) {
@@ -145,10 +145,10 @@ public class UserRepository extends Repository {
             csvBuilder.append(pharmacist.getDateOfEmployment().toString());
         }
 
-        // Add Admin-specific fields or empty placeholder
-        if (personnel instanceof Admin) {
-            Admin admin = (Admin) personnel;
-            csvBuilder.append(admin.getDateOfCreation().toString());
+        // Add Administrator-specific fields or empty placeholder
+        if (personnel instanceof Administrator) {
+            Administrator administrator = (Administrator) personnel;
+            csvBuilder.append(administrator.getDateOfCreation().toString());
         }
 
         return csvBuilder.toString();
@@ -259,8 +259,8 @@ public class UserRepository extends Repository {
                         fields[8], // role (e.g., Pharmacist)
                         LocalDateTime.parse(fields[9]) // dateOfEmployment (LocalDateTime)
                 ));
-            } else if (type == Admin.class) {
-                return type.cast(new Admin(
+            } else if (type == Administrator.class) {
+                return type.cast(new Administrator(
                         fields[0], // UID
                         fields[1], // fullName
                         fields[2], // username
@@ -269,7 +269,7 @@ public class UserRepository extends Repository {
                         fields[5], // passwordHash
                         LocalDateTime.parse(fields[6]), // DoB (LocalDateTime)
                         fields[7], // gender
-                        fields[8], // role (e.g., Admin)
+                        fields[8], // role (e.g., Administrator)
                         LocalDateTime.parse(fields[9]) // dateOfCreation (LocalDateTime)
                 ));
             }

@@ -1,55 +1,49 @@
 package enums;
 
 /**
- * Enum representing the status of an appointment.
- * It has multiple possible values: CONFIRMED, CANCELED, COMPLETED, AVAILABLE, and PENDING.
+ * Represents the various statuses an appointment can have in the system.
+ * The possible values are:
+ * <ul>
+ *     <li><b>CONFIRMED:</b> The appointment is confirmed.</li>
+ *     <li><b>CANCELED:</b> The appointment has been canceled.</li>
+ *     <li><b>COMPLETED:</b> The appointment has been completed.</li>
+ *     <li><b>AVAILABLE:</b> The appointment slot is available for scheduling.</li>
+ *     <li><b>PENDING:</b> The appointment is pending confirmation.</li>
+ * </ul>
  */
 public enum AppointmentStatus {
     CONFIRMED, CANCELED, COMPLETED, AVAILABLE, PENDING;
+
     /**
-     * Overrides the default toString() method to provide a string representation of
-     * the AppointmentStatus enum.
+     * Returns a string representation of the current appointment status.
      *
-     * @return A string representing the status (e.g., "PENDING", "CONFIRMED", "CANCELED", etc.).
+     * @return A string representing the status, such as "PENDING", "CONFIRMED", "CANCELED", etc.
      */
     @Override
     public String toString() {
-        switch (this) {
-            case PENDING:
-                return "PENDING";
-            case CONFIRMED:
-                return "CONFIRMED";
-            case CANCELED:
-                return "CANCELED";
-            case COMPLETED:
-                return "COMPLETED";
-            case AVAILABLE:
-                return "AVAILABLE";
-            default:
-                return "Unknown";
-        }
-    }
-    /**
-     * Converts a string to the corresponding AppointmentStatus enum value.
-     *
-     * @param status The string representation of the appointment status.
-     * @return The corresponding AppointmentStatus enum value, or null if the input string does not match any status.
-     */
-    public static AppointmentStatus toEnumAppointmentStatus(String status) {
-        switch (status) {
-            case "PENDING":
-                return PENDING;
-            case "CONFIRMED":
-                return CONFIRMED;
-            case "CANCELED":
-                return CANCELED;
-            case "COMPLETED":
-                return COMPLETED;
-            case "AVAILABLE":
-                return AVAILABLE;
-            default:
-                return null; // or throw an exception if you want to handle invalid inputs differently
-        }
+        return switch (this) {
+            case PENDING -> "PENDING";
+            case CONFIRMED -> "CONFIRMED";
+            case CANCELED -> "CANCELED";
+            case COMPLETED -> "COMPLETED";
+            case AVAILABLE -> "AVAILABLE";
+        };
     }
 
+    /**
+     * Converts a string representation of an appointment status to the corresponding enum value.
+     *
+     * @param status A string representing the appointment status (e.g., "PENDING", "CONFIRMED", "CANCELED").
+     * @return The corresponding {@code AppointmentStatus} enum value, or {@code null} if the input string does not match any valid status.
+     */
+    public static AppointmentStatus toEnumAppointmentStatus(String status) {
+        return switch (status) {
+            case "PENDING" -> PENDING;
+            case "CONFIRMED" -> CONFIRMED;
+            case "CANCELED" -> CANCELED;
+            case "COMPLETED" -> COMPLETED;
+            case "AVAILABLE" -> AVAILABLE;
+            default -> null;
+        };
+    }
 }

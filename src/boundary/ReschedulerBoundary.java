@@ -11,19 +11,19 @@ import model.Appointment;
 import model.Patient;
 import repository.RecordsRepository;
 /**
- * The P_RescheduleBoundary class provides functionality to reschedule
+ * The ReschedulerBoundary class provides functionality to reschedule
  * appointments for a patient. It allows users to view confirmed appointments
  * and select available slots for rescheduling.
  */
-public class P_RescheduleBoundary extends Boundary {
+public class ReschedulerBoundary extends Boundary {
 
 	private final Patient patient;
     /**
-     * Constructs a P_RescheduleBoundary instance with the given patient.
+     * Constructs a ReschedulerBoundary instance with the given patient.
      *
      * @param patient The patient using this UI to reschedule appointments.
      */
-	public P_RescheduleBoundary(Patient patient) {
+	public ReschedulerBoundary(Patient patient) {
 		this.patient = patient;
 	}
 	 /**

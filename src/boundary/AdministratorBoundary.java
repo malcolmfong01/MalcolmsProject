@@ -29,21 +29,23 @@ import utility.DateTime;
  */
 
 public class AdministratorBoundary extends Boundary {
-	private final Admin admin;
+	private final Administrator administrator;
+
 	/**
-     * Constructs an AdministratorBoundary instance for the given Admin.
+     * Constructs an AdministratorBoundary instance for the given Administrator.
      * 
-     * @param admin The admin for whom the UI is created.
+     * @param administrator The administrator for whom the UI is created.
      */
-    public AdministratorBoundary(Admin admin) {
-        this.admin = admin;
+
+    public AdministratorBoundary(Administrator administrator) {
+        this.administrator = administrator;
     }
     /**
      * Displays the administrator menu options.
      */
 	@Override
     protected void printChoice() {
-        System.out.printf("Welcome! Admin --- %s ---\n", admin.getFullName());
+        System.out.printf("Welcome! Administrator --- %s ---\n", administrator.getFullName());
         System.out.println("Administrator Menu:");
         System.out.println("1. View and Manage Hospital User");
         System.out.println("2. View Appointments Details");
@@ -54,14 +56,14 @@ public class AdministratorBoundary extends Boundary {
     }
     
 	/**
-     * Starts the Admin UI by showing the Admin Dashboard.
+     * Starts the Administrator UI by showing the Administrator Dashboard.
      */
 	public void start() {
 		showAdminDashboard();
 	}
 
 	/**
-     * Displays the Admin Dashboard and handles the Admin menu choices.
+     * Displays the Administrator Dashboard and handles the Administrator menu choices.
      */
 
     public void showAdminDashboard() {
@@ -88,8 +90,8 @@ public class AdministratorBoundary extends Boundary {
      * Administrator Menu Option 1
      * Displays the options for managing hospital staff (Doctors and Pharmacists).
      */
+
     private static void viewAndManageStaff() {
-        System.out.println("Enter your choice");
         System.out.println("1. View User By Role");
         System.out.println("2. View User By Gender");
         System.out.println("3. View User By Age");
@@ -99,26 +101,24 @@ public class AdministratorBoundary extends Boundary {
         System.out.println("7. Update Pharmacist");
         System.out.println("8. Remove Doctor");
         System.out.println("9. Remove Pharmacist");
-
-        AdministratorBoundary administratorBoundary = new AdministratorBoundary(null);
-        int choice = administratorBoundary.getUserChoice(9);
-
+        System.out.println("Enter your choice");
+        int choice = Validator.readInt("");
         switch (choice) {
             case 1 -> {
-                listPersonnelByRole(PersonnelFileType.DOCTORS);
-                listPersonnelByRole(PersonnelFileType.PHARMACISTS);
+                listStaffByRole(UserType.DOCTORS);
+                listStaffByRole(UserType.PHARMACISTS);
             }
             case 2 -> {
-                listPersonnelByGender("M");
-                listPersonnelByGender("F");
+                listStaffByGender("M");
+                listStaffByGender("F");
             }
-            case 3 -> listPersonnelByAge();
-            case 4 -> addPersonnel("Doctor");
-            case 5 -> addPersonnel("Pharmacist");
-            case 6 -> updatePersonnel("Doctor");
-            case 7 -> updatePersonnel("Pharmacist");
-            case 8 -> removePersonnel("Doctor");
-            case 9 -> removePersonnel("Pharmacist");
+            case 3 -> listStaffByAge();
+            case 4 -> addStaff("Doctor");
+            case 5 -> addStaff("Pharmacist");
+            case 6 -> updateStaff("Doctor");
+            case 7 -> updateStaff("Pharmacist");
+            case 8 -> removeStaff("Doctor");
+            case 9 -> removeStaff("Pharmacist");
             default -> System.out.println("Error: Invalid choice. Please select a valid option.");
         }
     }
@@ -127,9 +127,10 @@ public class AdministratorBoundary extends Boundary {
     /**
      * Prompts the user to enter details for adding a new staff (Doctor or Pharmacist).
      * 
-     * @param role The role of the personnel to be added (Doctor or Pharmacist).
+     * @param role The role of the staff to be added (Doctor or Pharmacist).
      */
-    private static void addPersonnel(String role) {
+
+    private static void addStaff(String role) {
         System.out.println("Enter Full Name: " );
         String fullName = Validator.readString();
         System.out.println("Enter Username: " );
@@ -142,28 +143,29 @@ public class AdministratorBoundary extends Boundary {
              LocalDateTime dateJoin = LocalDateTime.now();
              Doctor doctor = new Doctor(fullName, username, email, phoneNo, "password",
             		 DoB, gender, dateJoin);
-             AdminController.addPersonnel(doctor);
+             AdministratorController.addUser(doctor);
         }      
         
         else {
         	LocalDateTime dateOfEmployment = LocalDateTime.now();
         	Pharmacist pharmacist = new Pharmacist(fullName, username, email, phoneNo, "password", DoB, gender , dateOfEmployment);
-        	AdminController.addPersonnel(pharmacist);
+        	AdministratorController.addUser(pharmacist);
         }
     }
     
     /**
      * Prompts the user to enter details for updating an existing staff (Doctor or Pharmacist).
      * 
-     * @param role The role of the personnel to be updated (Doctor or Pharmacist).
+     * @param role The role of the staff to be updated (Doctor or Pharmacist).
      */
-    private static void updatePersonnel(String role) {
+
+    private static void updateStaff(String role) {
         String UID = Validator.readString("Enter ID: ");
-        User personnel = StaffController.getPersonnelByUID(UID,
-                role.equals("Doctor") ? PersonnelFileType.DOCTORS : PersonnelFileType.PHARMACISTS);
+        User personnel = UserController.getUserbyUID(UID,
+                role.equals("Doctor") ? UserType.DOCTORS : UserType.PHARMACISTS);
 
         if (personnel == null) {
-            System.out.println("Personnel does not exist!");
+            System.out.println("Staff does not exist!");
             return;
         }
 
@@ -190,7 +192,7 @@ public class AdministratorBoundary extends Boundary {
         personnel.setPasswordHash(hashedPassword);
 
         // Update the personnel in the repository
-        AdminController.updatePersonnel(personnel.getUID(), personnel);
+        AdministratorController.updatePersonnel(personnel.getUID(), personnel);
 
         System.out.println(role + " updated successfully.");
     }
@@ -201,17 +203,18 @@ public class AdministratorBoundary extends Boundary {
      * 
      * @param role The role of the personnel to be removed (Doctor or Pharmacist).
      */
-    private static void removePersonnel(String role) {
+
+    private static void removeStaff(String role) {
     	System.out.println("Enter User ID: ");
     	if(role.equals("Doctor")) {
             String uidDoctor = Validator.readID("Doctor", "D\\d{3}");
             System.out.println("Validated Doctor ID: " + uidDoctor);
-            AdminController.removePersonnel(uidDoctor, PersonnelFileType.DOCTORS);
+            AdministratorController.removeUser(uidDoctor, UserType.DOCTORS);
     	}
     	else {
             String uidPharmacist = Validator.readID("Pharmacist", "PH\\d{3}");
             System.out.println("Validated Pharmacist ID: " + uidPharmacist);
-            AdminController.removePersonnel(uidPharmacist, PersonnelFileType.PHARMACISTS);
+            AdministratorController.removeUser(uidPharmacist, UserType.PHARMACISTS);
     	}
     }
 
@@ -219,6 +222,7 @@ public class AdministratorBoundary extends Boundary {
      * Administrator Menu Option 2
      * Lists all appointment records in the system.
      */
+
     private static void listAllAppointments() {
 
         System.out.println("\n--- All Appointment Records ---");
@@ -238,7 +242,7 @@ public class AdministratorBoundary extends Boundary {
             AppointmentOutcomeRecord outcome = appointment.getAppointmentOutcomeRecord();
             if (outcome == null) {
                 System.out.println("Appointment Outcome Record Not Available");
-                System.out.println("---------------------------------------");
+                singleline();
                 continue;
             }
             System.out.println("Appointment Outcome ID: " + outcome.getUID());
@@ -249,7 +253,7 @@ public class AdministratorBoundary extends Boundary {
             Prescription prescription = outcome.getPrescription();
             if (prescription == null) {
                 System.out.println("Prescription Not Available");
-                System.out.println("---------------------------------------");
+                singleline();
                 continue;
             }
             System.out.println();
@@ -257,7 +261,7 @@ public class AdministratorBoundary extends Boundary {
             System.out.println("Prescription Date: " + prescription.getPrescriptionDate());
             if (prescription.getMedications() == null) {
                 System.out.println("Prescribed Medication Not Available");
-                System.out.println("---------------------------------------");
+                singleline();
                 continue;
             }
             for (PrescribedMedication medication : prescription.getMedications()) {
@@ -276,7 +280,7 @@ public class AdministratorBoundary extends Boundary {
                 System.out.println("Prescription Status: " + medication.getPrescriptionStatus());
                 System.out.println();
             }
-            System.out.println("---------------------------------------");
+            singleline();
             found = true;
         }
 
@@ -284,19 +288,20 @@ public class AdministratorBoundary extends Boundary {
             System.out.println("No other appointments found.");
         }
 
-        System.out.println("---------------------------------------");
+        singleline();
     }
 
 
     /**
-     * Prints the details of a given personnel.
+     * Prints the details of a given staff
      *
-     * @param personnel The personnel whose details are to be printed.
+     * @param personnel The staff whose details are to be printed.
      */
-    private static void printPersonnelDetails(User personnel) {
-        System.out.println("--------------------------------------------------");
+
+    private static void printStaffDetails(User personnel) {
+        headerline();
         System.out.println("Personnel Details:");
-        System.out.println("--------------------------------------------------");
+        headerline();
         System.out.printf("%-20s: %s%n", "UID", personnel.getUID());
         System.out.printf("%-20s: %s%n", "Full Name", personnel.getFullName());
         System.out.printf("%-20s: %s%n", "Username", personnel.getUsername());
@@ -306,7 +311,7 @@ public class AdministratorBoundary extends Boundary {
         System.out.printf("%-20s: %s%n", "DOB", personnel.getDoB());
         System.out.printf("%-20s: %s%n", "Gender", personnel.getGender());
         System.out.printf("%-20s: %s%n", "Role", personnel.getRole());
-        System.out.println("--------------------------------------------------\n");
+        headerline();
     }
 
     /**
@@ -315,10 +320,10 @@ public class AdministratorBoundary extends Boundary {
      * @param doctor The doctor whose details are to be printed.
      */
     private static void printDoctorDetails(Doctor doctor) {
-        System.out.println("============== Doctor Details ==============");
-        printPersonnelDetails(doctor);
+        System.out.println("============= Doctor Details ==============");
+        printStaffDetails(doctor);
         System.out.printf("%-20s: %s%n", "Date Joined", doctor.getDateJoin());
-        System.out.println("===========================================\n");
+        System.out.println("===========================================");
         System.out.println();
     }
 
@@ -328,10 +333,10 @@ public class AdministratorBoundary extends Boundary {
      * @param pharmacist The pharmacist whose details are to be printed.
      */
     public static void printPharmacistDetails(Pharmacist pharmacist) {
-        System.out.println("========== Pharmacist Details ===========");
-        printPersonnelDetails(pharmacist);
+        System.out.println("=========== Pharmacist Details ============");
+        printStaffDetails(pharmacist);
         System.out.printf("%-20s: %s%n", "Date of Employment", pharmacist.getDateOfEmployment());
-        System.out.println("=========================================\n");
+        System.out.println("===========================================");
         System.out.println();
     }
 
@@ -340,7 +345,8 @@ public class AdministratorBoundary extends Boundary {
      *
      * @param type The type of personnel to list (Doctors or Pharmacists).
      */
-    private static void listPersonnelByRole(PersonnelFileType type) {
+
+    private static void listStaffByRole(UserType type) {
         Map<String, ? extends User> personnelMap;
 
         switch (type) {
@@ -351,22 +357,22 @@ public class AdministratorBoundary extends Boundary {
                 personnelMap = UserRepository.PHARMACISTS;
                 break;
             default:
-                System.out.println("Error: Unsupported personnel type.");
+                System.out.println("Error: No staff found.");
                 return;
         }
 
         if (personnelMap != null && !personnelMap.isEmpty()) {
-            System.out.println("\nListing all personnel of type: " + type);
-            System.out.println("===========================================");
-            for (User personnel : personnelMap.values()) {
-                if (type == PersonnelFileType.DOCTORS) {
-                    printDoctorDetails((Doctor) personnel);
+            System.out.println("\nListing all staff of type: " + type);
+            System.out.println("==================================================");
+            for (User staff : personnelMap.values()) {
+                if (type == UserType.DOCTORS) {
+                    printDoctorDetails((Doctor) staff);
                 } else  {
                     // No check for Pharmacists since it's already assigned
-                    printPharmacistDetails((Pharmacist) personnel);
+                    printPharmacistDetails((Pharmacist) staff);
                 }
             }
-            System.out.println("===========================================\n");
+            System.out.println("==================================================\n");
         } else {
             System.out.println("No personnel found for type: " + type);
         }
@@ -377,7 +383,7 @@ public class AdministratorBoundary extends Boundary {
      *
      * @param gender The gender of personnel to list.
      */
-    private static void listPersonnelByGender(String gender) {
+    private static void listStaffByGender(String gender) {
         System.out.println("\nListing staff filtered by gender: " + gender);
         System.out.println("===========================================");
 
@@ -398,7 +404,7 @@ public class AdministratorBoundary extends Boundary {
     /**
      * Lists all personnel sorted by age from oldest to youngest.
      */
-    private static void listPersonnelByAge() {
+    private static void listStaffByAge() {
         List<User> combinedList = new ArrayList<>();
 
         combinedList.addAll(UserRepository.DOCTORS.values());
@@ -408,7 +414,7 @@ public class AdministratorBoundary extends Boundary {
         combinedList.sort(Comparator.comparingInt(personnel -> calculateAge((User) personnel)).reversed());
 
         System.out.println("\nListing all personnel sorted by age (oldest to youngest):");
-        System.out.println("===========================================");
+        System.out.println("==================================================");
         for (User personnel : combinedList) {
             if (personnel instanceof Doctor) {
                 printDoctorDetails((Doctor) personnel);
@@ -416,17 +422,18 @@ public class AdministratorBoundary extends Boundary {
                 printPharmacistDetails((Pharmacist) personnel);
             }
         }
-        System.out.println("===========================================\n");
+        System.out.println("==================================================\n");
     }
 
     /**
-     * Calculates the age of a personnel based on their date of birth.
+     * Calculates the age of a staff based on their date of birth.
      *
-     * @param personnel The personnel whose age is to be calculated.
+     * @param staff The staff whose age is to be calculated.
      * @return The age in years.
      */
-    private static int calculateAge(User personnel) {
-        LocalDate birthDate = personnel.getDoB().toLocalDate(); // Ensure this returns LocalDate
+
+    private static int calculateAge(User staff) {
+        LocalDate birthDate = staff.getDoB().toLocalDate(); // Ensure this returns LocalDate
         return Period.between(birthDate, LocalDate.now()).getYears();
     }
 
@@ -434,30 +441,30 @@ public class AdministratorBoundary extends Boundary {
      * Administrator Menu Option 3
      * Displays options for managing the medication inventory.
      */
+
     private static void viewAndManageMedicationInventory() {
-    	System.out.println("Enter your choice");
-		System.out.println("1. View All Medicine");
-	    System.out.println("2. Add Medicine");
-	    System.out.println("3. Update Medicine");
-	    System.out.println("4. Remove Medicine");
-	    int choice = Validator.readInt("");
-	    switch(choice) {
-	    	case 1: MedicineController.listAllMedicines();
-	    	break;
-	    	case 2: addMedicine();
-	    	break;
-	    	case 3: updateMedicine();
-	    	break;
-	    	case 4: removeMedicine();
-	    	break;
-	    	default: System.out.println("Error: Invalid choice. Please select a valid option.");
-	    	break;
-	    }
-	}
-    
+        System.out.println("1. View All Medicine");
+        System.out.println("2. Add Medicine");
+        System.out.println("3. Update Medicine");
+        System.out.println("4. Remove Medicine");
+        System.out.print("Enter your choice: ");
+
+        int choice = Validator.readInt("");
+
+        switch (choice) {
+            case 1 -> MedicineController.listAllMedicines(); // View all medicines
+            case 2 -> addMedicine(); // Add new medicine
+            case 3 -> updateMedicine(); // Update existing medicine
+            case 4 -> removeMedicine(); // Remove a medicine
+            default -> System.out.println("Error: Invalid choice. Please select a valid option.");
+        }
+    }
+
+
     /**
      * Prompts the user to enter details for adding a new medicine to the inventory.
      */
+
     private static void addMedicine() {
         String medicineID = MedicineController.getNextMedicineID();
         String name = Validator.readString("Enter Medicine Name: ");
@@ -481,6 +488,7 @@ public class AdministratorBoundary extends Boundary {
     /**
      * Prompts the user to update the details of an existing medicine in the inventory.
      */
+
     private static void updateMedicine() {
         String medicineID = Validator.readID("Medicine", "M\\d{3}");
         System.out.println("Validated Medicine ID: " + medicineID);
@@ -503,6 +511,7 @@ public class AdministratorBoundary extends Boundary {
     /**
      * Prompts the user to remove a medicine from the inventory.
      */
+
     private static void removeMedicine() {
         System.out.print("Enter Medicine ID to update: ");
         String medicineID = Validator.readID("Medicine", "M\\d{3}");
@@ -565,13 +574,13 @@ public class AdministratorBoundary extends Boundary {
      * Administrator Menu Option 5
      * Displays the options for viewing and managing billing.
      */
+
     private static void viewAndManageBilling() {
         System.out.println("Enter your choice");
         System.out.println("1. View Billing Information By Patient ID");
         System.out.println("2. Manage Billing Information By Patient ID");
-
-        AdministratorBoundary administratorBoundary = new AdministratorBoundary(null);
-        int choice = administratorBoundary.getUserChoice(2);
+        System.out.println("Enter your choice");
+        int choice = Validator.readInt("");
 
         switch (choice) {
             case 1 -> viewBillingByPatientID();
@@ -584,6 +593,7 @@ public class AdministratorBoundary extends Boundary {
      * Administrator Menu Option 5
      * View billing by patient ID.
      */
+
     private static ArrayList <PaymentRecord> viewBillingByPatientID() {
 
         // Create a list to store matching records
@@ -625,6 +635,7 @@ public class AdministratorBoundary extends Boundary {
     /**
      * Prompts the user to enter details for adding a new medicine to the inventory.
      */
+
     private static void manageBilling() {
         System.out.println("Enter Patient ID");
         // Read the patient ID

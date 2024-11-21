@@ -19,9 +19,10 @@ import static repository.AppointmentOutcomeRecordRepository.deleteAppointmentOut
 
 /**
  * PatientBoundary class represents the user interface for a patient in the HMS
- * system.
- * This class handles patient-specific interactions.
+ * system
+ * This class handles patient-specific interactions
  */
+
 public class PatientBoundary extends Boundary {
 
 	private final Patient patient;
@@ -31,12 +32,15 @@ public class PatientBoundary extends Boundary {
 	 *
 	 * @param patient The patient using this user interface.
 	 */
+
 	public PatientBoundary(Patient patient) {
 		this.patient = patient;
 	}
+
 	/**
 	 * Displays the patient menu options.
 	 */
+
 	@Override
 	public void printChoice() {
 		System.out.println("Patient Menu:");
@@ -103,7 +107,7 @@ public class PatientBoundary extends Boundary {
 		for (MedicalRecord record : RecordsRepository.MEDICAL_RECORDS.values()) {
 			if (record.getPatientID().equals(patientID)) {
 				recordsFound = true;
-				MedicalRecordBoundary medicalRecordUI = new MedicalRecordBoundary(record);
+				MRBoundary medicalRecordUI = new MRBoundary(record);
 				medicalRecordUI.displayMedicalRecordInBox();
 			}
 		}
@@ -147,7 +151,7 @@ public class PatientBoundary extends Boundary {
 		for (Patient patient : UserRepository.PATIENTS.values()) {
 			if (patient.getUID().equals(patientId)) {
 				recordsFound = true;
-				P_UpdateDetailsBoundary PUpdateDetailsBoundary = new P_UpdateDetailsBoundary(patient);
+				UpdateDetailsBoundary PUpdateDetailsBoundary = new UpdateDetailsBoundary(patient);
 				PUpdateDetailsBoundary.start();
 			}
 		}
@@ -194,7 +198,7 @@ public class PatientBoundary extends Boundary {
 	private void scheduleAppointment() {
 		if(viewAvailableAppointmentSlots()) {
 			System.out.println("\n--- Schedule Appointment for Patient ID: " + patient.getUID() + " ---");
-			P_ScheduleBoundary scheduleAppointmentUI = new P_ScheduleBoundary(patient);
+			SchedulerBoundary scheduleAppointmentUI = new SchedulerBoundary(patient);
 			scheduleAppointmentUI.start();
 		}
 	}
@@ -206,7 +210,7 @@ public class PatientBoundary extends Boundary {
 	private void rescheduleAppointment() {
 		if(viewAvailableAppointmentSlots()) {
 		System.out.println("\n--- Reschedule an Appointment ---");
-		P_RescheduleBoundary rescheduleAppointmentUI = new P_RescheduleBoundary(patient);
+		ReschedulerBoundary rescheduleAppointmentUI = new ReschedulerBoundary(patient);
 		rescheduleAppointmentUI.start();
 		}
 	}

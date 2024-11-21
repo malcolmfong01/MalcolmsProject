@@ -17,18 +17,18 @@ import utility.Validator;
 import model.*;
 import repository.*;
 
-public class D_RecordOutcomeBoundary extends Boundary {
+public class RecordOutcomeBoundary extends Boundary {
     /**
      * The doctor recording appointment outcomes.
      */
     private final Doctor doctor;
 
     /**
-     * Constructs an D_RecordOutcomeBoundary for the specified doctor.
+     * Constructs an RecordOutcomeBoundary for the specified doctor.
      *
      * @param doctor the doctor managing appointment outcomes
      */
-    public D_RecordOutcomeBoundary(Doctor doctor) {
+    public RecordOutcomeBoundary(Doctor doctor) {
         this.doctor = doctor;
     }
 

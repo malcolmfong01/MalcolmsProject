@@ -1,6 +1,6 @@
 package controller;
 
-import model.Admin;
+import model.Administrator;
 import repository.UserRepository;
 
 /**
@@ -8,7 +8,7 @@ import repository.UserRepository;
  * from the UserRepository.
  */
 
-public class AdminController extends StaffController {
+public class AdministratorController extends UserController {
 
     /**
      * Retrieves a Doctor object based on the provided doctor ID.
@@ -17,7 +17,7 @@ public class AdminController extends StaffController {
      * @return The Doctor object if found in the repository, or null if not found or if the repository is not loaded.
      */
 
-    public static Admin getAdminById(String adminId) {
+    public static Administrator getAdminById(String adminId) {
         if (UserRepository.isRepoLoad())
             return UserRepository.ADMINS.get(adminId);
         else
@@ -33,8 +33,8 @@ public class AdminController extends StaffController {
      */
 
     public static String getAdminNameById(String adminId) {
-        Admin admin = getAdminById(adminId);
-        return admin != null ? admin.getFullName() : "Unknown Administrator";
+        Administrator administrator = getAdminById(adminId);
+        return administrator != null ? administrator.getFullName() : "Unknown Administrator";
     }
 
 

@@ -1,9 +1,11 @@
 package enums;
+
 /**
  * Enum representing different types of personnel files, each associated with a
  * specific file name for personnel data (e.g., doctors, patients, pharmacists, admins).
  */
-public enum PersonnelFileType {
+
+public enum UserType {
     DOCTORS("doctors"),
     PATIENTS("patients"),
     PHARMACISTS("pharmacists"),
@@ -15,23 +17,24 @@ public enum PersonnelFileType {
     public final String fileName;
 
     /**
-     * Constructs a PersonnelFileType with the specified file name.
+     * Constructs a UserType with the specified file name.
      *
      * @param fileName the file name associated with the personnel type
      */
-    PersonnelFileType(String fileName) {
+    UserType(String fileName) {
         this.fileName = fileName;
     }
 
     /**
-     * Converts a file name string to the corresponding PersonnelFileType enum constant.
+     * Converts a file name string to the corresponding UserType enum constant.
      *
      * @param fileName the file name to match with an enum constant
-     * @return the matching PersonnelFileType enum constant
+     * @return the matching UserType enum constant
      * @throws IllegalArgumentException if no matching enum constant is found
      */
-    public static PersonnelFileType toEnum(String fileName) {
-        for (PersonnelFileType type : PersonnelFileType.values()) {
+
+    public static UserType toEnum(String fileName) {
+        for (UserType type : UserType.values()) {
             if (type.fileName.equalsIgnoreCase(fileName)) {
                 return type;
             }

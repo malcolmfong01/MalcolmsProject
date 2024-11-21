@@ -1,9 +1,9 @@
 package boundary;
 
+import enums.UserType;
 import utility.Validator;
 import model.*;
 import controller.*;
-import enums.PersonnelFileType;
 
 import java.util.regex.Pattern;
 
@@ -61,7 +61,7 @@ public class LoginBoundary extends Boundary {
         String passwordHash = Validator.readString("Please enter your password:");
 
         // Call the controller to verify login
-        User personnel = RegisterController.login(username, passwordHash, PersonnelFileType.PATIENTS);
+        User personnel = RegisterController.login(username, passwordHash, UserType.PATIENTS);
 
         if (personnel != null && personnel instanceof Patient) {
             if ("password".equals(passwordHash)) {
@@ -84,7 +84,7 @@ public class LoginBoundary extends Boundary {
         String username = Validator.readString("Please enter your username:");
         String passwordHash = Validator.readString("Please enter your password:");
 
-        User personnel = RegisterController.login(username, passwordHash, PersonnelFileType.DOCTORS);
+        User personnel = RegisterController.login(username, passwordHash, UserType.DOCTORS);
 
         if (personnel instanceof Doctor) {
             if ("password".equals(passwordHash)) {
@@ -105,7 +105,7 @@ public class LoginBoundary extends Boundary {
         String username = Validator.readString("Please enter your username:");
         String passwordHash = Validator.readString("Please enter your password:");
 
-        User personnel = RegisterController.login(username, passwordHash, PersonnelFileType.PHARMACISTS);
+        User personnel = RegisterController.login(username, passwordHash, UserType.PHARMACISTS);
 
         if (personnel instanceof Pharmacist) {
             if ("password".equals(passwordHash)) {
@@ -123,19 +123,19 @@ public class LoginBoundary extends Boundary {
 
     /**
      * Handles the login process for an administrator.
-     * If authentication is successful, redirects the administrator to the Admin UI.
+     * If authentication is successful, redirects the administrator to the Administrator UI.
      */
     public void administratorLogin() {
         String username = Validator.readString("Please enter your username:");
         String passwordHash = Validator.readString("Please enter your password:");
 
-        User personnel = RegisterController.login(username, passwordHash, PersonnelFileType.ADMINS);
+        User personnel = RegisterController.login(username, passwordHash, UserType.ADMINS);
 
-        if (personnel instanceof Admin) {
+        if (personnel instanceof Administrator) {
             if ("password".equals(passwordHash)) {
                 promptChangePassword(personnel);
             }
-            AdministratorBoundary administratorBoundary = new AdministratorBoundary((Admin) personnel);
+            AdministratorBoundary administratorBoundary = new AdministratorBoundary((Administrator) personnel);
             administratorBoundary.start();
         } else {
             System.out.println("Login failed. Invalid username or password.");

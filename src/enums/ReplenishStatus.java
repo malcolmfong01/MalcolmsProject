@@ -20,5 +20,5 @@ public enum ReplenishStatus {
     /**
      * Indicates that a replenishment request has been approved.
      */
-    APPROVED;
+    APPROVED
 }

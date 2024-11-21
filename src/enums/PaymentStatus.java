@@ -1,44 +1,40 @@
 package enums;
 
 /**
- * Enum representing the status of a payment.
- * It has two possible values: OUTSTANDING and CLEARED.
+ * Represents the status of a payment.
+ * The possible values are:
+ * <ul>
+ *     <li><b>OUTSTANDING:</b> Payment is yet to be made.</li>
+ *     <li><b>CLEARED:</b> Payment has been processed and cleared.</li>
+ * </ul>
  */
 public enum PaymentStatus {
     OUTSTANDING, CLEARED;
 
     /**
-     * Overrides the default toString() method to provide a string representation of
-     * the PaymentStatus enum.
+     * Returns a string representation of the current payment status.
      *
-     * @return A string representing the status (e.g., "OUTSTANDING", "CLEARED").
+     * @return A string representing the payment status, such as "OUTSTANDING" or "CLEARED".
      */
     @Override
     public String toString() {
-        switch (this) {
-            case OUTSTANDING:
-                return "OUTSTANDING";
-            case CLEARED:
-                return "CLEARED";
-            default:
-                return "Unknown";
-        }
+        return switch (this) {
+            case OUTSTANDING -> "OUTSTANDING";
+            case CLEARED -> "CLEARED";
+        };
     }
 
     /**
-     * Converts a string to the corresponding PaymentStatus enum value.
+     * Converts a string to the corresponding {@code PaymentStatus} enum value.
      *
-     * @param status The string representation of the payment status.
-     * @return The corresponding PaymentStatus enum value, or null if the input string does not match any status.
+     * @param status A string representing the payment status (e.g., "OUTSTANDING", "CLEARED").
+     * @return The corresponding {@code PaymentStatus} enum value, or {@code null} if the string does not match any valid status.
      */
     public static PaymentStatus toEnumRecordStatusType(String status) {
-        switch (status) {
-            case "OUTSTANDING":
-                return OUTSTANDING;
-            case "CLEARED":
-                return CLEARED;
-            default:
-                return null; // or throw an exception if you want to handle invalid inputs differently
-        }
+        return switch (status) {
+            case "OUTSTANDING" -> OUTSTANDING;
+            case "CLEARED" -> CLEARED;
+            default -> null; // or throw an exception if you want to handle invalid inputs differently
+        };
     }
 }

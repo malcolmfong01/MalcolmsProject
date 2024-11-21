@@ -1,6 +1,6 @@
 package controller;
 
-import boundary.PH_UpdatePrescriptionBoundary;
+import boundary.UpdatePrescriptionBoundary;
 import model.Pharmacist;
 import repository.AppointmentOutcomeRecordRepository;
 import repository.UserRepository;
@@ -43,12 +43,12 @@ public class PharmacistController{
     /**
      * Initiates the UI for updating the status of a specific prescription in an
      * appointment outcome record. This method creates an instance of
-     * PH_UpdatePrescriptionBoundary and calls its method to manage the interaction
+     * UpdatePrescriptionBoundary and calls its method to manage the interaction
      * and update process.
      */
 
     public static void updatePrescriptionStatus() {
-        PH_UpdatePrescriptionBoundary updateStatusUI = new PH_UpdatePrescriptionBoundary();
+        UpdatePrescriptionBoundary updateStatusUI = new UpdatePrescriptionBoundary();
         updateStatusUI.start();
     }
 

@@ -8,11 +8,11 @@ import enums.ReplenishStatus;
 import java.time.LocalDateTime;
 
 /**
- * PH_ReplenishRequestBoundary manages the user interface for submitting
+ * ReplenishRequestBoundary manages the user interface for submitting
  * replenishment requests for low-stock medicines and checking current
  * replenishment request statuses.
  */
-public class PH_ReplenishRequestBoundary extends Boundary {
+public class ReplenishRequestBoundary extends Boundary {
 
     @Override
     public void start() {
@@ -38,7 +38,7 @@ public class PH_ReplenishRequestBoundary extends Boundary {
             switch (choice) {
                 case 1 -> handleReplenishmentRequest();
                 case 2 -> displayReplenishmentStatuses();
-                case 3 -> returnToPharmacistUI();
+                case 3 -> returnToPharmacistMenu();
                 default -> System.out.println("Invalid choice. Please select a valid option.");
             }
         } while (choice != 3);
@@ -101,7 +101,7 @@ public class PH_ReplenishRequestBoundary extends Boundary {
     /**
      * Returns to the Pharmacist UI main menu.
      */
-    private void returnToPharmacistUI() {
+    private void returnToPharmacistMenu() {
         PharmacistBoundary pharmacistBoundary = new PharmacistBoundary();
         pharmacistBoundary.start();
     }
