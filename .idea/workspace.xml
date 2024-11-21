@@ -5,21 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98aba22b-29be-4861-8ba7-d684834ced75" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/boundary/P_PaymentRecordBoundary.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/boundary/AdministratorBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boundary/AdministratorBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/boundary/PatientBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boundary/PatientBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/PaymentRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/PaymentRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boundary/MRBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boundary/MRBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boundary/UpdateMRBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boundary/UpdateMRBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/RegisterController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/RecordsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/RecordsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repository/TreatmentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/TreatmentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repository/data/admins.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/admins.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/appointment_outcome_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/appointment_outcome_records.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/appointment_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/appointment_records.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/diagnosis_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/diagnosis_records.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/doctors.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/doctors.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/medical_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/medical_records.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repository/data/medicines.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/medicines.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/patients.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/patients.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/payment_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/payment_records.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repository/data/pharmacists.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/pharmacists.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repository/data/prescribed_medications.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/prescribed_medications.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repository/data/prescriptions_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/prescriptions_records.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repository/data/treatment_plans_records.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/repository/data/treatment_plans_records.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utility/Validator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/Validator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,26 +68,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Application.HMSMain.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;yanyox2.0&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Application.HMSMain.executor": "Run",
+    "Application.Main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="boundary" />
@@ -141,6 +148,8 @@
       <workItem from="1731762432506" duration="55000" />
       <workItem from="1731762491440" duration="9000000" />
       <workItem from="1731868635746" duration="13633000" />
+      <workItem from="1732189052578" duration="3480000" />
+      <workItem from="1732192590299" duration="1282000" />
     </task>
     <servers />
   </component>
@@ -155,9 +164,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/repository/RecordsRepository.java</url>
-          <line>149</line>
-          <option name="timeStamp" value="6" />
+          <url>file://$PROJECT_DIR$/src/boundary/UpdateMRBoundary.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

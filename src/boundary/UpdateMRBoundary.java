@@ -98,10 +98,10 @@ public class UpdateMRBoundary {
         int updateChoice = sc.nextInt();
         sc.nextLine(); // Consume newline left-over
         switch (updateChoice) {
-            case 1 -> addTreatmentPlan(selectedDiagnosis);
+            case 1 -> addTreatmentPlan(currentAppointment.getAppointmentOutcomeRecordID(),selectedDiagnosis);
             case 2 -> addPrescriptions(selectedDiagnosis);
             case 3 -> {
-                addTreatmentPlan(selectedDiagnosis);
+                addTreatmentPlan(currentAppointment.getAppointmentOutcomeRecordID(),selectedDiagnosis);
                 addPrescriptions(selectedDiagnosis);
             }
             default -> System.out.println("Invalid choice.");
@@ -168,13 +168,13 @@ public class UpdateMRBoundary {
      *
      * @param diagnosis The diagnosis to which the treatment plan will be added.
      */
-    private void addTreatmentPlan(Diagnosis diagnosis) {
+    private void addTreatmentPlan(String appointmentOutcome,Diagnosis diagnosis) {
         System.out.println("Enter Treatment Description:");
         String treatmentDescription = sc.nextLine();
         Treatment treatmentPlan = new Treatment(diagnosis.getDiagnosisID(), LocalDateTime.now(),
                 treatmentDescription);
         diagnosis.setTreatmentPlans(treatmentPlan);
-        TreatmentRepository.diagnosisToTreatmentPlansMap.put(diagnosis.getDiagnosisID(), treatmentPlan);
+        TreatmentRepository.diagnosisToTreatmentPlansMap.put(appointmentOutcome, treatmentPlan);
         TreatmentRepository.saveAlltoCSV();
         // RecordsRepository.saveAllRecordFiles(); // Save changes
         System.out.println("Treatment plan added successfully for Diagnosis ID: " + diagnosis.getDiagnosisID());

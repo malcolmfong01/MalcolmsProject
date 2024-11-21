@@ -107,8 +107,20 @@ public class Validator {
      * @return The string entered by the user.
      */
     public static String readString(String prompt) {
-        System.out.println(prompt);
-        return sc.nextLine();
+
+        while (true) {
+            System.out.println(prompt);
+            // Read the user input
+            String input = sc.nextLine();
+
+            // Check if the input is empty
+            if (input.trim().isEmpty()) {
+                System.out.println("Input cannot be empty. Please try again.");
+            } else {
+                // If input is not empty, return it
+                return input;
+            }
+        }
     }
 
     /**

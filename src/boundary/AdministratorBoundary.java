@@ -474,7 +474,7 @@ public class AdministratorBoundary extends Boundary {
         int inventoryStock = Validator.readInt("Enter Inventory Stock: ");
         int lowStockLevel = Validator.readInt("Enter Low Stock Level: ");
         int replenishStock = 0;
-        System.out.print("Enter Replenish Status: ");
+        //System.out.print("Enter Replenish Status: ");
         ReplenishStatus status = ReplenishStatus.NULL;
         String dateTimeString = "0001-01-01 00:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");

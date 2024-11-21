@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Repository class for managing Treatment data, including loading and saving
@@ -59,11 +60,14 @@ public class TreatmentRepository extends Repository {
         if (!directory.exists()) {
             directory.mkdirs(); // Create the directory if it doesn't exist
         }
+        // Use a HashSet to track unique treatments
+        HashSet<Treatment> uniqueTreatments = new HashSet<>();
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (String diagnosisID : diagnosisTreatmentPlansMap.keySet()) {
                 Treatment treatmentPlan = diagnosisTreatmentPlansMap.get(diagnosisID);
-                if (treatmentPlan != null) {
+                if (treatmentPlan != null && uniqueTreatments.add(treatmentPlan)) {
+                    // Add the treatment to the HashSet and write it to the file if unique
                     writer.write(treatmentPlanToCSV(diagnosisID, treatmentPlan));
                     writer.newLine();
                 }
@@ -132,7 +136,7 @@ public class TreatmentRepository extends Repository {
             while ((line = reader.readLine()) != null) {
                 Treatment treatmentPlan = csvToTreatmentPlan(line);
                 String diagnosisID = getDiagnosisIDFromCSV(line);
-                if (treatmentPlan != null && diagnosisID != null) {
+                if (diagnosisID != null) {
                     diagnosisTreatmentPlansMap.put(diagnosisID, treatmentPlan);
                 }
             }

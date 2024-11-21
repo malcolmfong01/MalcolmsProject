@@ -109,7 +109,7 @@ public class RecordsRepository extends Repository {
                 writer.write(recordToCSV(record));
                 writer.newLine();
             }
-            System.out.println("Records successfully saved to " + fileName);
+            //System.out.println("Records successfully saved to " + fileName);
         } catch (IOException e) {
             System.out.println("Error saving record data: " + e.getMessage());
         }

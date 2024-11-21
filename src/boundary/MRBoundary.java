@@ -99,7 +99,7 @@ public class MRBoundary extends Boundary {
                             }
                         }
                     } else {
-                        System.out.println("| No prescribed medications found |");
+                        System.out.println("| No dispensed medications found |");
                     }
 
                     Treatment treatmentPlan = diagnosis.getTreatmentPlans(); // Assuming single TreatmentPlan
