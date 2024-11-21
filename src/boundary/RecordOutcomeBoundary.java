@@ -139,7 +139,7 @@ public class RecordOutcomeBoundary extends Boundary {
                 // Create and add a new PrescribedMedication object to the list
                 PrescribedMedication medication = new PrescribedMedication(prescribedmedicationID,diagnosisID, medicineID, quantity, periodDays, PrescriptionStatus.PENDING, dosage);
                 medications1.add(medication);
-                PrescribedMedicationRepository.addMedication(medication.getPrescribedMedID(), medication);
+                PrescribedMedicationRepository.addMedication(medication.getDiagnosisID(), medication);
                 PrescribedMedicationRepository.saveAlltoCSV();
 
             }

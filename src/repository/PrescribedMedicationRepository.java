@@ -69,20 +69,12 @@ public class PrescribedMedicationRepository extends Repository {
         Set<String> existingMedicationIDs = new HashSet<>();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             // Iterate over all prescribed medications in the map
-            for (String prescribedMedID : diagnosisToMedicationsMap.keySet()) {
-                for (PrescribedMedication medication : diagnosisToMedicationsMap.get(prescribedMedID)) {
-                    String medicineID = medication.getMedicineID();
 
-                    // If this medication ID has already been processed, skip it
-                    if (existingMedicationIDs.contains(medicineID)) {
-                        continue;  // Skip duplicate
-                    }
-
-                    // Add the medication ID to the set of existing IDs
-                    existingMedicationIDs.add(medicineID);
+            for (String diagnosisID : diagnosisToMedicationsMap.keySet()) {
+                for (PrescribedMedication medication : diagnosisToMedicationsMap.get(diagnosisID)) {
 
                     // Write the medication to the file
-                    writer.write(medicationToCSV(prescribedMedID, medication));
+                    writer.write(medicationToCSV(diagnosisID, medication));
                     writer.newLine();
                 }
             }
@@ -96,14 +88,14 @@ public class PrescribedMedicationRepository extends Repository {
     /**
      * Converts a prescribed medication to a CSV-formatted string.
      *
-     * @param prescribedMedID the ID of the diagnosis associated with the medication
+     * @param diagnosisID the ID of the diagnosis associated with the medication
      * @param medication the PrescribedMedication object to convert
      * @return a CSV-formatted string representing the prescribed medication
      */
-    private static String medicationToCSV(String prescribedMedID, PrescribedMedication medication) {
+    private static String medicationToCSV(String diagnosisID, PrescribedMedication medication) {
         return String.join(",",
                 medication.getPrescribedMedID(),
-                medication.getDiagnosisID(),
+                diagnosisID,
                 medication.getMedicineID(),
                 String.valueOf(medication.getMedicineQuantity()),
                 String.valueOf(medication.getPeriodDays()),
@@ -153,9 +145,9 @@ public class PrescribedMedicationRepository extends Repository {
             String line;
             while ((line = reader.readLine()) != null) {
                 PrescribedMedication medication = csvToMedication(line);
-                String prescribedMedID = getprescribedMedIDFromCSV(line);
-                if (medication != null && prescribedMedID != null) {
-                    addMedication(prescribedMedID, medication);
+                String diagnosisID = getDiagnosisIDFromCSV(line);
+                if (medication != null && diagnosisID != null) {
+                    addMedication(diagnosisID, medication);
                 }
             }
             // Optionally, log the successful loading of data
@@ -168,13 +160,13 @@ public class PrescribedMedicationRepository extends Repository {
     /**
      * Adds a prescribed medication to the map for the specified diagnosis ID.
      *
-     * @param prescribedMedID the ID of the Prescribed Medication associated with the medication
+     * @param diagnosisID the ID of the Prescribed Medication associated with the medication
      * @param medication the PrescribedMedication to add
      */
-    public static void addMedication(String prescribedMedID, PrescribedMedication medication) {
-        ArrayList<PrescribedMedication> medications = diagnosisToMedicationsMap.getOrDefault(prescribedMedID, new ArrayList<>());
+    public static void addMedication(String diagnosisID, PrescribedMedication medication) {
+        ArrayList<PrescribedMedication> medications = diagnosisToMedicationsMap.getOrDefault(diagnosisID, new ArrayList<>());
         medications.add(medication);
-        diagnosisToMedicationsMap.put(prescribedMedID, medications);
+        diagnosisToMedicationsMap.put(diagnosisID, medications);
     }
     /**
      * Extracts the prescribedMed ID from a CSV-formatted string.
@@ -182,9 +174,9 @@ public class PrescribedMedicationRepository extends Repository {
      * @param csv the CSV string containing the diagnosis ID
      * @return the diagnosis ID extracted from the CSV string
      */
-    private static String getprescribedMedIDFromCSV(String csv) {
+    private static String getDiagnosisIDFromCSV(String csv) {
         String[] fields = csv.split(",");
-        return fields[0];
+        return fields[1];
     }
     /**
      * Converts a CSV-formatted string to a PrescribedMedication object.

@@ -1,3 +1,3 @@
 Appointment Outcome ID,PatientID,DoctorID,DiagnosisID,AppointmentTime,TypeOfService,ConsultationNotes,AppointmentOutcomeStatus
 AO-000,P000,D000,DIAG-000,2024-11-22T12:00,"consultation","fever",COMPLETED
-AO-001,P000,D000,DIAG-000,2024-11-21T20:53:19.403750900,"null","null",INCOMPLETED
+AO-001,P000,D000,DIAG-001,2024-12-12T12:12,"fever","fever",COMPLETED

@@ -513,7 +513,6 @@ public class AdministratorBoundary extends Boundary {
      */
 
     private static void removeMedicine() {
-        System.out.print("Enter Medicine ID to update: ");
         String medicineID = Validator.readID("Medicine", "M\\d{3}");
         System.out.println("Validated Medicine ID: " + medicineID);
         MedicineController.removeMedicine(medicineID);
@@ -637,7 +636,6 @@ public class AdministratorBoundary extends Boundary {
      */
 
     private static void manageBilling() {
-        System.out.println("Enter Patient ID");
         // Read the patient ID
         String patientID = Validator.readID("Patient", "P\\d{3}");
 

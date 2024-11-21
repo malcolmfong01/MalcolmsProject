@@ -11,7 +11,10 @@ import model.Prescription;
 import repository.AppointmentOutcomeRecordRepository;
 import utility.Validator;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static repository.PrescribedMedicationRepository.diagnosisToMedicationsMap;
 
 /**
  * The ViewAppointmentOutcomeBoundary class provides a user interface for
@@ -90,14 +93,28 @@ public class ViewAppointmentOutcomeBoundary extends Boundary {
         Prescription prescription = record.getPrescription();
         if (prescription != null && prescription.getMedications() != null) {
             System.out.println("Prescription Details:");
-            for (PrescribedMedication medication : prescription.getMedications()) {
-                System.out.println("Medicine ID: " + medication.getMedicineID());
-                System.out.println("Quantity: " + medication.getMedicineQuantity());
-                System.out.println("Dosage: " + medication.getDosage());
-                System.out.println("Period (days): " + medication.getPeriodDays());
-                System.out.println("Prescription Status: " + medication.getPrescriptionStatus());
-                System.out.println();
+
+            // Display all medicine IDs in the prescription if present
+            String currentdiagnosisID = record.getDiagnosisID();
+            List<PrescribedMedication> medicationsList = new ArrayList<>();
+            // Loop through the map and find the medications for the matching diagnosis ID
+            ArrayList<PrescribedMedication> medications = diagnosisToMedicationsMap.get(currentdiagnosisID);
+            if (medications != null && !medications.isEmpty()) {
+                // Add all medications for this diagnosis
+                medicationsList.addAll(medications);
+
+                // Display the medication IDs
+                for (PrescribedMedication medication : medicationsList) {
+                    System.out.println("Medicine ID: " + medication.getMedicineID());
+                    System.out.println("Quantity: " + medication.getMedicineQuantity());
+                    System.out.println("Dosage: " + medication.getDosage());
+                    System.out.println("Period (days): " + medication.getPeriodDays());
+                    System.out.println("Prescription Status: " + medication.getPrescriptionStatus());
+                    System.out.println();
+                }
+                System.out.println(); // New line after listing all medicine IDs
             }
+
         } else {
             System.out.println("No prescription details available for this appointment outcome record.");
         }

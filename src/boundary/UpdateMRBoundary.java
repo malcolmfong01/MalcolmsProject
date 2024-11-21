@@ -110,7 +110,7 @@ public class UpdateMRBoundary {
         // Save updated medical record back to repository
         RecordsRepository.MEDICAL_RECORDS.put(medicalRecord.getRecordID(), medicalRecord);
         currentAppointment.setAppointmentStatus(AppointmentStatus.COMPLETED);
-        generateAppointmentOutcome(selectedDiagnosis.getPrescription(), selectedDiagnosis);
+        //generateAppointmentOutcome(selectedDiagnosis.getPrescription(), selectedDiagnosis);
         RecordsRepository.saveAllRecordFiles();
 
     }
@@ -173,10 +173,24 @@ public class UpdateMRBoundary {
         String treatmentDescription = sc.nextLine();
         Treatment treatmentPlan = new Treatment(diagnosis.getDiagnosisID(), LocalDateTime.now(),
                 treatmentDescription);
-        diagnosis.setTreatmentPlans(treatmentPlan);
-        TreatmentRepository.diagnosisToTreatmentPlansMap.put(appointmentOutcome, treatmentPlan);
+
+        // Check if the diagnosis already has a treatment plan in the map
+        if (TreatmentRepository.diagnosisToTreatmentPlansMap.containsKey(diagnosis.getDiagnosisID())) {
+            // Update the existing treatment plan
+            System.out.println("Existing treatment plan found for Diagnosis ID: " + diagnosis.getDiagnosisID() + "It will override.");
+            Treatment existingTreatmentPlan = TreatmentRepository.diagnosisToTreatmentPlansMap.get(diagnosis.getDiagnosisID());
+
+            // Update the description and timestamp
+            existingTreatmentPlan.setTreatmentDate(LocalDateTime.now());
+            existingTreatmentPlan.setTreatmentDescription(treatmentDescription);
+            System.out.println("Treatment plan updated successfully.");
+        } else {
+            // Add the new treatment plan to the diagnosis
+            diagnosis.setTreatmentPlans(treatmentPlan);
+            TreatmentRepository.diagnosisToTreatmentPlansMap.put(diagnosis.getDiagnosisID(), treatmentPlan);
+            System.out.println("New treatment plan added successfully.");
+        }
         TreatmentRepository.saveAlltoCSV();
-        // RecordsRepository.saveAllRecordFiles(); // Save changes
         System.out.println("Treatment plan added successfully for Diagnosis ID: " + diagnosis.getDiagnosisID());
     }
 

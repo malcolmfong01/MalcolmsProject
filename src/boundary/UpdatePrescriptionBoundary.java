@@ -13,6 +13,9 @@ import model.PrescribedMedication;
 import repository.AppointmentOutcomeRecordRepository;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static repository.PrescribedMedicationRepository.diagnosisToMedicationsMap;
 
 /**
  * UpdatePrescriptionBoundary handles the user interface for updating the status
@@ -58,9 +61,17 @@ public class UpdatePrescriptionBoundary extends Boundary {
                             DoctorController.getDoctorNameById(appointment.getDoctorID()),
                             PatientController.getPatientNameById(appointment.getPatientID()));
                     // Display all medicine IDs in the prescription if present
-                    if (appointment.getPrescription() != null && !appointment.getPrescription().getMedications().isEmpty()) {
+                    String currentdiagnosisID = appointment.getDiagnosisID();
+                    List<PrescribedMedication> medicationsList = new ArrayList<>();
+                    // Loop through the map and find the medications for the matching diagnosis ID
+                    ArrayList<PrescribedMedication> medications = diagnosisToMedicationsMap.get(currentdiagnosisID);
+                    if (medications != null && !medications.isEmpty()) {
+                        // Add all medications for this diagnosis
+                        medicationsList.addAll(medications);
+
+                        // Display the medication IDs
                         System.out.print("   Medicine IDs: ");
-                        for (PrescribedMedication medication : appointment.getPrescription().getMedications()) {
+                        for (PrescribedMedication medication : medicationsList) {
                             System.out.print(medication.getMedicineID() + " ");
                         }
                         System.out.println(); // New line after listing all medicine IDs
@@ -91,7 +102,6 @@ public class UpdatePrescriptionBoundary extends Boundary {
         }
 
         // Step 3: Verify Medicine ID
-        System.out.print("Enter Medicine ID to update: ");
         String medicineID = Validator.readID("Medicine", "M\\d{3}");
         System.out.println("Validated Medicine ID: " + medicineID);
 
