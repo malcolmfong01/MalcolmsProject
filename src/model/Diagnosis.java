@@ -1,10 +1,12 @@
 package model;
 
 import java.time.LocalDateTime;
+
 /**
  * Represents a Diagnosis made for a patient, which includes details such as the diagnosis description,
  * treatment plans, prescriptions, and relevant IDs for patient, doctor, and medical records.
  */
+
 public class Diagnosis {
     private String patientID;
     private String diagnosisID;

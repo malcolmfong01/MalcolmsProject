@@ -11,6 +11,7 @@ import enums.AppointmentOutcomeStatus;
  * type of service, consultation notes, and the status of the appointment
  * outcome.
  */
+
 public class AppointmentOutcomeRecord {
 
     private String UID;

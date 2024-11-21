@@ -48,7 +48,7 @@ public class RegisterController {
             }
         }
 
-        //System.out.println("Login failed: Invalid username or password.");
+        System.out.println("Login failed: Invalid username or password.");
         return null;
     }
     /**

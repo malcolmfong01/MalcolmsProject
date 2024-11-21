@@ -8,6 +8,7 @@ import enums.ReplenishStatus;
  * Contains information about the medicine's ID, name, manufacturer, expiry date,
  * inventory stock, low stock levels, and replenishment status.
  */
+
 public class Medicine {
     private String medicineID;
     private String name;

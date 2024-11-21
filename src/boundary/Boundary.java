@@ -1,7 +1,5 @@
 package boundary;
 
-import java.util.Scanner;
-
 public abstract class Boundary {
 
     protected abstract void printChoice();

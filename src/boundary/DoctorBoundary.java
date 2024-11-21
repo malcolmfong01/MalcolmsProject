@@ -359,24 +359,6 @@ public class DoctorBoundary extends Boundary {
 	}
 
 	/**
-	 * Updates the status of a specific appointment record.
-	 *
-	 * @param AppointmentRecordID the ID of the appointment record
-	 * @param status              the new status to set
-	 * @return true if the status update was successful, false otherwise
-	 */
-	public boolean setAppointmentRecordStatus(String AppointmentRecordID, String status) {
-		boolean flag = false;
-		Appointment appointment = RecordsRepository.APPOINTMENT_RECORDS.get(AppointmentRecordID);
-		if (appointment != null) {
-			appointment.setAppointmentStatus(AppointmentStatus.toEnumAppointmentStatus(status));
-
-		}
-		return flag;
-
-	}
-
-	/**
 	 * Retrieves a medical record ID for the specified doctor and patient.
 	 * Searches through records in the repository to find the one that matches
 	 * the doctor and patient IDs.

@@ -126,33 +126,23 @@ public class UserRepository extends Repository {
         csvBuilder.append(user.getGender()).append(",");
         csvBuilder.append(user.getRole()).append(",");
 
-        // Add Doctor-specific fields or empty placeholders
-        if (user instanceof Doctor) {
-            Doctor doctor = (Doctor) user;
-            csvBuilder.append(doctor.getDateJoin().toString());
-        }
+        // Add specific fields based on user type using switch expression
+        switch (user) {
+            case Doctor doctor -> csvBuilder.append(doctor.getDateJoin().toString());
+            case Patient patient -> {
+                csvBuilder.append(patient.getAllergies()).append(",");
+                csvBuilder.append(patient.getDateOfAdmission().toString());
+            }
+            case Pharmacist pharmacist -> csvBuilder.append(pharmacist.getDateOfEmployment().toString());
+            case Administrator administrator -> csvBuilder.append(administrator.getDateOfCreation().toString());
+            default -> System.out.println("Error: Unknown user type");
 
-        // Add Patient-specific fields or empty placeholders
-        if (user instanceof Patient) {
-            Patient patient = (Patient) user;
-            csvBuilder.append(patient.getAllergies()).append(",");
-            csvBuilder.append(patient.getDateOfAdmission().toString());
-        }
-
-        // Add Pharmacist-specific fields or empty placeholders
-        if (user instanceof Pharmacist) {
-            Pharmacist pharmacist = (Pharmacist) user;
-            csvBuilder.append(pharmacist.getDateOfEmployment().toString());
-        }
-
-        // Add Administrator-specific fields or empty placeholder
-        if (user instanceof Administrator) {
-            Administrator administrator = (Administrator) user;
-            csvBuilder.append(administrator.getDateOfCreation().toString());
         }
 
         return csvBuilder.toString();
     }
+
+
 
     /**
      * Loads personnel records from a CSV file into the specified personnel map.
@@ -281,33 +271,11 @@ public class UserRepository extends Repository {
     }
 
     /**
-     * Clears all personnel data in the repository and saves empty files.
-     *
-     * @return true if the operation is successful
-     */
-    public static boolean clearPersonnelDatabase() {
-        DOCTORS.clear();
-        PATIENTS.clear();
-        PHARMACISTS.clear();
-        ADMINS.clear();
-        saveAllPersonnelFiles();
-        return true;
-    }
-
-    /**
-     * Checks if the repository has been loaded.
-     *
-     * @return true if the repository is loaded; false otherwise
-     */
-    public static Boolean isRepoLoaded() {
-        return isRepoLoaded;
-    }
-
-    /**
      * Sets the repository load status.
      *
      * @param isRepoLoaded true to set the repository as loaded, false otherwise
      */
+
     public static void setRepoLoaded(Boolean isRepoLoaded) {
         UserRepository.isRepoLoaded = isRepoLoaded;
     }
