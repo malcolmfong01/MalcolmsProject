@@ -1,0 +1,5 @@
+Appointment Outcome ID,PatientID,DoctorID,DiagnosisID,AppointmentTime,TypeOfService,ConsultationNotes,AppointmentOutcomeStatus
+AO-000,P000,D000,DIAG-000,2021-12-12T12:12,"ifk","ifk",COMPLETED
+AO-002,P000,D000,DIAG-001,2023-03-03T03:03,"death certification","L",COMPLETED
+AO-001,P000,D000,DIAG-003,2020-02-02T02:02,"ser","wer",COMPLETED
+AO-003,P000,D000,DIAG-005,2024-02-02T02:02,"oiesg","joisdjv",COMPLETED
