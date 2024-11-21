@@ -1,9 +1,4 @@
-/**
- * Repository class for managing personnel data, including Doctors, Patients,
- * Pharmacists, and Admins. This class provides functionality for loading
- * and saving personnel data to and from CSV files, as well as clearing and managing
- * personnel records in memory.
- */
+
 package repository;
 
 import java.io.BufferedReader;
@@ -17,7 +12,12 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import model.*;
-
+/**
+ * Repository class for managing personnel data, including Doctors, Patients,
+ * Pharmacists, and Admins. This class provides functionality for loading
+ * and saving personnel data to and from CSV files, as well as clearing and managing
+ * personnel records in memory.
+ */
 public class UserRepository extends Repository {
     /**
      * Directory for storing user CSV files.

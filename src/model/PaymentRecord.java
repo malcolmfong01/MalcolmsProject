@@ -123,12 +123,22 @@ public class PaymentRecord extends Records {
     public void setPatientID(String patientID) {
         this.patientID = patientID;
     }
-
+    /**
+     * Gets the payment status associated with the medical record.
+     *
+     * @return the payment status
+     */
     public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
 
+    /**
+     * Sets the payment status for the medical record.
+     *
+     * @param paymentStatus the payment status to set
+     */
     public void setPaymentStatus(PaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
+
 }
