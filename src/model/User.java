@@ -1,5 +1,7 @@
 package model;
 
+import model.userInterfaces.*;
+
 import java.time.LocalDateTime;
 
 /**
@@ -7,7 +9,7 @@ import java.time.LocalDateTime;
  * This class holds personal and contact details for a personnel, as well as their role in the system.
  */
 
-public class User {
+public class User implements Authenticable, Contactable, Identification, PersonalDetails, RoleAssignable {
 
     private String UID;
     private String fullName;
