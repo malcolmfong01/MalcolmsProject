@@ -77,17 +77,17 @@ public class UserController {
 
         // Determine the type of user and add it to the appropriate collection using a switch statement
         switch (user) {
-            case Doctor doc -> {
-                UserRepository.DOCTORS.put(doc.getUID(), doc);
-                System.out.println("Doctor added: " + doc.getFullName());
+            case Doctor doctor -> {
+                UserRepository.DOCTORS.put(doctor.getUID(), doctor);
+                System.out.println("Doctor added: " + doctor.getFullName());
             }
-            case Patient pat -> {
-                UserRepository.PATIENTS.put(pat.getUID(), pat);
-                System.out.println("Patient added: " + pat.getFullName());
+            case Patient patient -> {
+                UserRepository.PATIENTS.put(patient.getUID(), patient);
+                System.out.println("Patient added: " + patient.getFullName());
             }
-            case Pharmacist pharm -> {
-                UserRepository.PHARMACISTS.put(pharm.getUID(), pharm);
-                System.out.println("Pharmacist added: " + pharm.getFullName());
+            case Pharmacist pharmacist -> {
+                UserRepository.PHARMACISTS.put(pharmacist.getUID(), pharmacist);
+                System.out.println("Pharmacist added: " + pharmacist.getFullName());
             }
             case Administrator administrator -> {
                 UserRepository.ADMINS.put(administrator.getUID(), administrator);
@@ -172,33 +172,24 @@ public class UserController {
         System.out.println("Error: Personnel not found with ID Card: " + UID);
         return false;
     }
-    /**
-     * Retrieves a personnel member based on their UID and type.
-     * @param UID the UID of the personnel to retrieve
-     * @param type the type of personnel (Administrator, Doctor, Patient, Pharmacist)
-     * @return the user object if found, or null if not found
-     */
-    // Retrieve personnel by UID
     public static model.User getUserbyUID(String UID, User type) {
         if (UID == null || UID.isEmpty()) {
             System.out.println("Error: Invalid ID Card.");
             return null;
         }
 
-        switch (type) {
-            case DOCTORS:
-                return UserRepository.DOCTORS.get(UID);
-            case PATIENTS:
-                return UserRepository.PATIENTS.get(UID);
-            case PHARMACISTS:
-                return UserRepository.PHARMACISTS.get(UID);
-            case ADMINS:
-                return UserRepository.ADMINS.get(UID);
-            default:
+        return switch (type) {
+            case DOCTORS -> UserRepository.DOCTORS.get(UID);
+            case PATIENTS -> UserRepository.PATIENTS.get(UID);
+            case PHARMACISTS -> UserRepository.PHARMACISTS.get(UID);
+            case ADMINS -> UserRepository.ADMINS.get(UID);
+            default -> {
                 System.out.println("Error: Unsupported personnel type.");
-                return null;
-        }
+                yield null; // 'yield' is used to return values from a block
+            }
+        };
     }
+
     /**
      * Updates the details of a personnel member based on their UID.
      * @param UID the UID of the personnel to update
