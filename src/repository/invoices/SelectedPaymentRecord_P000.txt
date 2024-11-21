@@ -1,0 +1,10 @@
++------------------------------------------+
+Selected Payment Record for Patient ID: P000
++------------------------------------------+
+| Patient Name        : Lam Yan Yee          |
+| Patient DOB         : 2002-02-15T00:00     |
+| Phone Number        : 82880687             |
+| Email               : yanyee720@gmail.com  |
+| Payment Amount      : 1000.0               |
+| Payment Status      : OUTSTANDING          |
++------------------------------------------+
