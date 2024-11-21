@@ -28,7 +28,7 @@ public class PaymentRecord extends Records {
      * @param patientID the ID of the patient associated with the payment
      * @param paymentAmount the amount paid by the patient
      */
-    // Constructor
+
     public PaymentRecord(
             LocalDateTime createdDate,
             LocalDateTime updatedDate,
@@ -75,6 +75,7 @@ public class PaymentRecord extends Records {
      * @param updatedDate  the date and time when the record was last updated
      * @param recordStatus the status of the record (e.g., active, inactive)
      */
+
     public PaymentRecord(String recordID, LocalDateTime createdDate, LocalDateTime updatedDate, RecordStatus recordStatus) {
         super(recordID, createdDate, updatedDate, recordStatus);
     }

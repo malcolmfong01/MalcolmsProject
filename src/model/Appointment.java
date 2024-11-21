@@ -8,6 +8,7 @@ import enums.RecordStatus;
 /**
  * Appointment class extends Records
  */
+
 public class Appointment extends Records {
 	private String appointmentOutcomeRecordID;
 	private String patientID;
