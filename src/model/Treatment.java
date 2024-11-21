@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
  * Represents a Treatment Plan associated with a particular diagnosis.
  * Contains details about the treatment, such as the diagnosis ID, treatment date, and description.
  */
+
 public class Treatment {
 
     /**
