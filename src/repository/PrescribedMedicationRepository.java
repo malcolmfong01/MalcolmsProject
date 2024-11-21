@@ -1,7 +1,6 @@
 package repository;
 
 import enums.PrescriptionStatus;
-import model.Diagnosis;
 import model.PrescribedMedication;
 
 import java.io.*;
@@ -59,7 +58,11 @@ public class PrescribedMedicationRepository extends Repository {
         // Ensure the directory exists
         File directory = new File("./src/repository/" + folder);
         if (!directory.exists()) {
-            directory.mkdirs();  // Create the directory if it doesn't exist
+            boolean dirsCreated = directory.mkdirs();  // Create the directory if it doesn't exist
+            if (!dirsCreated) {
+                System.out.println("Error: Failed to create directory: " + directory.getAbsolutePath());
+                return; // Exit if directory creation fails
+            }
         }
 
         // Use a Set to track existing medication IDs to prevent duplicates
@@ -83,11 +86,12 @@ public class PrescribedMedicationRepository extends Repository {
                     writer.newLine();
                 }
             }
-//            System.out.println("Medications successfully saved to CSV.");
+//        System.out.println("Medications successfully saved to CSV.");
         } catch (IOException e) {
             System.out.println("Error saving medications to CSV: " + e.getMessage());
         }
     }
+
 
     /**
      * Converts a prescribed medication to a CSV-formatted string.
@@ -121,17 +125,26 @@ public class PrescribedMedicationRepository extends Repository {
         // Ensure the directory exists
         File directory = new File("./src/repository/" + folder);
         if (!directory.exists()) {
-            directory.mkdirs();  // Create the directory if it doesn't exist
+            boolean dirsCreated = directory.mkdirs();  // Create the directory if it doesn't exist
+            if (!dirsCreated) {
+                System.out.println("Error: Failed to create directory: " + directory.getAbsolutePath());
+                return; // Exit early if directory creation fails
+            }
         }
 
         File file = new File(filePath);
 
         if (!file.exists()) {
             try {
-                file.createNewFile();  // Create an empty file if it doesn't exist
-                System.out.println("CSV file not found. Created new file: " + filePath);
+                boolean fileCreated = file.createNewFile();  // Create an empty file if it doesn't exist
+                if (fileCreated) {
+                    System.out.println("CSV file not found. Created new file: " + filePath);
+                } else {
+                    System.out.println("CSV file already exists: " + filePath);
+                }
             } catch (IOException e) {
                 System.out.println("Error creating file: " + e.getMessage());
+                return;  // Exit if file creation fails
             }
             return;  // No data to load, as the file was just created
         }
@@ -145,11 +158,13 @@ public class PrescribedMedicationRepository extends Repository {
                     addMedication(prescribedMedID, medication);
                 }
             }
-//            System.out.println("Successfully loaded medications for " + diagnosisToMedicationsMap.size() + " diagnoses from " + fileName);
+            // Optionally, log the successful loading of data
+            // System.out.println("Successfully loaded medications for " + diagnosisToMedicationsMap.size() + " diagnoses from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading medications: " + e.getMessage());
         }
     }
+
     /**
      * Adds a prescribed medication to the map for the specified diagnosis ID.
      *
@@ -196,29 +211,11 @@ public class PrescribedMedicationRepository extends Repository {
     }
 
     /**
-     * Clears all Medication data in the repository and saves empty files.
-     *
-     * @return true if the operation is successful
-     */
-    public static boolean clearPrescribedMedicationDatabase() {
-        diagnosisToMedicationsMap.clear();
-        saveMedicationsToCSV(fileName, diagnosisToMedicationsMap);
-        setRepoLoaded(false);
-        return true;
-    }
-    /**
-     * Checks if the repository has been loaded.
-     *
-     * @return true if the repository is loaded; false otherwise
-     */
-	public static boolean isRepoLoaded() {
-		return isRepoLoaded;
-	}
-    /**
      * Sets the repository load status.
      *
      * @param isRepoLoaded true to set the repository as loaded, false otherwise
      */
+
 	public static void setRepoLoaded(boolean isRepoLoaded) {
 		PrescribedMedicationRepository.isRepoLoaded = isRepoLoaded;
 	}
