@@ -1,14 +1,31 @@
 package boundary;
 
+/**
+ * Base Boundary Class where all the boundary classes inherit from
+ */
 public abstract class Boundary {
 
+    /**
+     * Print Choice method
+     */
     protected abstract void printChoice();
+
+    /**
+     *  Print Start Menu method
+     */
 
     public abstract void start();
 
+    /**
+     * Boundary Constructor
+     */
     public Boundary() {
     }
 
+    /**
+     * To print
+     * @param warning error
+     */
     public void printWarning(String warning) {
         String spaces = String.format("%" + (105 - warning.length()) + "s", "");
         System.out.println( warning + spaces );

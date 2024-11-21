@@ -8,6 +8,10 @@ import enums.User;
 import model.*;
 import repository.UserRepository;
 
+/**
+ * This Register Controller class  is responsible for registering,
+ * handling methods between repository and the Boundary classes
+ */
 public class RegisterController {
     public static UserSessionTracker cookie = new UserSessionTracker(null, null);
     /**

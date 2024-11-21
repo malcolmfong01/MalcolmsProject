@@ -9,6 +9,9 @@ import repository.*;
 import utility.Validator;
 import repository.UserRepository;
 
+/**
+ * The Main User Interface Menu
+ */
 public class MainBoundary extends Boundary {
 
     /**

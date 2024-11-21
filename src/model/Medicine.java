@@ -212,11 +212,22 @@ public class Medicine {
         this.replenishRequestDate = replenishRequestDate;
     }
 
+    /**
+     * Gets the replenishment stock level for the medical record.
+     *
+     * @return the replenishment stock level
+     */
     public int getReplenishmentStock() {
         return replenishmentStock;
     }
 
+    /**
+     * Sets the replenishment stock level for the medical record.
+     *
+     * @param replenishmentStock the replenishment stock level to set
+     */
     public void setReplenishmentStock(int replenishmentStock) {
         this.replenishmentStock = replenishmentStock;
     }
+
 }

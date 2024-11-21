@@ -17,6 +17,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Prescription Repository reads, loads,stores  and updates data for
+ * all csv files for prescription
+ */
 public class PrescriptionRepository extends Repository {
 
     /**

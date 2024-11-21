@@ -4,7 +4,9 @@
  * from a CSV file, checking the load status, and clearing repository data.
  */
 package repository;
-
+/**
+ * Abstract Repository class where all repositories inherit from
+ */
 public abstract class Repository {
     /**
      * A static flag indicating whether the repository data has been loaded.

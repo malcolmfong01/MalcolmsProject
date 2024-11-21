@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- * User Registration handling
+ * User Registration handling Menu
  */
 
 public class RegisterBoundary extends Boundary {

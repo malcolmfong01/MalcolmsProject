@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Prescribed Medication Repository reads, loads,stores  and updates data for
+ * all csv files for prescribed medication
+ */
 public class PrescribedMedicationRepository extends Repository {
     private static final String folder = "data";
     private static final String fileName = "prescribed_medications.csv";

@@ -22,6 +22,10 @@ import repository.RecordsRepository;
 
 import static utility.Validator.sc;
 
+/**
+ * AvailabilitySetter Boundary class represents the user interface for
+ * a doctor setting their availability.
+ */
 public class AvailabilitySetterBoundary extends Boundary {
     /**
      * The doctor for whom appointment availability is being managed.

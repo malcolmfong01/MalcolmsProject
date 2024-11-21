@@ -193,12 +193,58 @@ public class MedicalRecord extends Records {
         this.Diagnosis.add(newDiagnosis);
     }
 
-    public String getPatientName() {return patientName;}
-    public void setPatientName(String patientName) {this.patientName = patientName;}
+    /**
+     * Gets the patient's name associated with the medical record.
+     *
+     * @return the patient's name
+     */
+    public String getPatientName() {
+        return patientName;
+    }
 
-    public String getPatientPhoneNumber() {return patientPhoneNumber;}
-    public void setPatientPhoneNumber(String patientPhoneNumber) {this.patientPhoneNumber = patientPhoneNumber;}
+    /**
+     * Sets the patient's name for the medical record.
+     *
+     * @param patientName the patient's name to set
+     */
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
 
-    public String getPatientEmail() {return patientEmail;}
-    public void setPatientEmail(String patientEmail) {this.patientEmail = patientEmail;}
+    /**
+     * Gets the patient's phone number associated with the medical record.
+     *
+     * @return the patient's phone number
+     */
+    public String getPatientPhoneNumber() {
+        return patientPhoneNumber;
+    }
+
+    /**
+     * Sets the patient's phone number for the medical record.
+     *
+     * @param patientPhoneNumber the patient's phone number to set
+     */
+    public void setPatientPhoneNumber(String patientPhoneNumber) {
+        this.patientPhoneNumber = patientPhoneNumber;
+    }
+
+    /**
+     * Gets the patient's email address associated with the medical record.
+     *
+     * @return the patient's email address
+     */
+    public String getPatientEmail() {
+        return patientEmail;
+    }
+
+    /**
+     * Sets the patient's email address for the medical record.
+     *
+     * @param patientEmail the patient's email address to set
+     */
+    public void setPatientEmail(String patientEmail) {
+        this.patientEmail = patientEmail;
+    }
+
 }

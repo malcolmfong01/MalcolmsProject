@@ -18,6 +18,9 @@ import utility.Validator;
 import model.*;
 import repository.*;
 
+/**
+ * Represents the Boundary for recording appointment outcome
+ */
 public class RecordOutcomeBoundary extends Boundary {
     /**
      * The doctor recording appointment outcomes.

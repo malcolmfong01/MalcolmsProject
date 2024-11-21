@@ -23,6 +23,10 @@ import java.util.Objects;
 
 import enums.AppointmentStatus;
 
+/**
+ * RecordsRepository class for managing all records in the system
+ * such as payment records, medical records, appointment records.
+ */
 public class RecordsRepository extends Repository {
     /**
      * Directory for storing records CSV files.

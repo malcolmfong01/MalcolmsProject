@@ -7,7 +7,7 @@ import model.*;
 import repository.*;
 
 /**
- * The UserController class is a super class that provides methods to access and retrieve staff-related information
+ * The UserController class is a super class that provides methods to access and retrieve user-related information
  * from the UserRepository.
  */
 public class UserController {

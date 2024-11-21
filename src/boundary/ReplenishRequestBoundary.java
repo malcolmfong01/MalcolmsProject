@@ -47,7 +47,7 @@ public class ReplenishRequestBoundary extends Boundary {
     /**
      * Handles the submission of a replenishment request for a specific medicine.
      * Prompts the user for a valid Medicine ID and requested quantity, then updates
-     * the medicine’s replenishment status.
+     * the medicine replenishment status.
      */
     private void handleReplenishmentRequest() {
         Medicine medicine = null;
