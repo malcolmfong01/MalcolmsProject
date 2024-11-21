@@ -129,7 +129,7 @@ public class PatientBoundary extends Boundary {
 		for (PaymentRecord record : RecordsRepository.PAYMENT_RECORDS.values()) {
 			if (PaymentRecord.getPatientID().equals(patientID)) {
 				recordsFound = true;
-				P_PaymentRecordBoundary paymentRecordUI = new P_PaymentRecordBoundary(record);
+				PaymentRecordBoundary paymentRecordUI = new PaymentRecordBoundary(record);
 				paymentRecordUI.displayPaymentRecordInBox();
 			}
 		}

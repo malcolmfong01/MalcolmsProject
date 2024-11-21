@@ -5,7 +5,7 @@
  */
 package boundary;
 
-import controller.StaffController;
+import controller.UserController;
 import model.*;
 import repository.RecordsRepository;
 import utility.Validator;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * This class allows the user to view detailed information about a patient's diagnoses,
  * prescriptions, medications, and treatment plans.
  */
-public class P_PaymentRecordBoundary extends Boundary {
+public class PaymentRecordBoundary extends Boundary {
 
     /**
      * The medical record to be displayed.
@@ -32,9 +32,9 @@ public class P_PaymentRecordBoundary extends Boundary {
      *
      * @param paymentRecord the medical record to be displayed
      */
-    public P_PaymentRecordBoundary(PaymentRecord paymentRecord) {
+    public PaymentRecordBoundary(PaymentRecord paymentRecord) {
         this.paymentRecord = paymentRecord;
-        this.patient = StaffController.getPatientById(PaymentRecord.getPatientID());
+        this.patient = UserController.getPatientById(PaymentRecord.getPatientID());
     }
 
     /**
@@ -112,25 +112,6 @@ public class P_PaymentRecordBoundary extends Boundary {
         System.out.println("1. Make Payment");
         System.out.println("2. Back to Previous Menu");
         System.out.println("Enter your choice: ");
-    }
-    /**
-     * Handles user navigation choice for updating another prescription or returning
-     * to the main menu.
-     */
-    private void handleUserChoice() {
-        int choice = getUserChoice(2);
-        switch (choice) {
-            case 1 -> {
-                System.out.println("1.Make Payment");}
-            case 2 -> returnToPatientUI(); // Return to main menu
-            default -> handleInvalidInput();
-        }
-    }
-
-    private void returnToPatientUI() {
-        PatientBoundary patientBoundary = new PatientBoundary(patient);
-        patientBoundary.start();
-
     }
 
     /**
