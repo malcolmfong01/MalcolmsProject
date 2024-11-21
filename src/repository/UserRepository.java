@@ -126,33 +126,22 @@ public class UserRepository extends Repository {
         csvBuilder.append(user.getGender()).append(",");
         csvBuilder.append(user.getRole()).append(",");
 
-        // Add Doctor-specific fields or empty placeholders
-        if (user instanceof Doctor) {
-            Doctor doctor = (Doctor) user;
-            csvBuilder.append(doctor.getDateJoin().toString());
-        }
-
-        // Add Patient-specific fields or empty placeholders
-        if (user instanceof Patient) {
-            Patient patient = (Patient) user;
-            csvBuilder.append(patient.getAllergies()).append(",");
-            csvBuilder.append(patient.getDateOfAdmission().toString());
-        }
-
-        // Add Pharmacist-specific fields or empty placeholders
-        if (user instanceof Pharmacist) {
-            Pharmacist pharmacist = (Pharmacist) user;
-            csvBuilder.append(pharmacist.getDateOfEmployment().toString());
-        }
-
-        // Add Administrator-specific fields or empty placeholder
-        if (user instanceof Administrator) {
-            Administrator administrator = (Administrator) user;
-            csvBuilder.append(administrator.getDateOfCreation().toString());
+        // Use switch with instanceof pattern matching and default case
+        switch (user) {
+            case Doctor doctor -> csvBuilder.append(doctor.getDateJoin().toString());
+            case Patient patient -> {
+                csvBuilder.append(patient.getAllergies()).append(",");
+                csvBuilder.append(patient.getDateOfAdmission().toString());
+            }
+            case Pharmacist pharmacist -> csvBuilder.append(pharmacist.getDateOfEmployment().toString());
+            case Administrator administrator -> csvBuilder.append(administrator.getDateOfCreation().toString());
+            default -> System.out.println("Warning: Unrecognized user type: " + user.getClass().getSimpleName());
         }
 
         return csvBuilder.toString();
     }
+
+
 
     /**
      * Loads personnel records from a CSV file into the specified personnel map.
@@ -169,19 +158,27 @@ public class UserRepository extends Repository {
         // Ensure the directory exists
         File directory = new File("./src/repository/" + folder);
         if (!directory.exists()) {
-            directory.mkdirs(); // Create the directory if it doesn't exist
+            boolean dirsCreated = directory.mkdirs(); // Create the directory if it doesn't exist
+            if (!dirsCreated) {
+                System.out.println("Error: Failed to create directory: " + directory.getAbsolutePath());
+                return; // Exit if directory creation fails
+            }
         }
 
         File file = new File(filePath);
 
         if (!file.exists()) {
             try {
-                file.createNewFile(); // Create an empty file if it doesn't exist
+                boolean fileCreated = file.createNewFile(); // Create an empty file if it doesn't exist
+                if (!fileCreated) {
+                    System.out.println("Error: Failed to create file: " + filePath);
+                    return; // Exit if file creation fails
+                }
                 System.out.println("Created empty file: " + filePath);
             } catch (IOException e) {
                 System.out.println("Error creating file: " + e.getMessage());
+                return; // Exit if there is an error during file creation
             }
-            return; // No data to load, as the file was just created
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -201,11 +198,11 @@ public class UserRepository extends Repository {
                     System.out.println("Warning: Failed to parse personnel in file: " + fileName);
                 }
             }
-//            System.out.println("Successfully loaded from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading personnel data: " + e.getMessage());
         }
     }
+
 
     /**
      * Converts a CSV line to a personnel object of the specified type.
@@ -278,29 +275,6 @@ public class UserRepository extends Repository {
         }
 
         return null;
-    }
-
-    /**
-     * Clears all personnel data in the repository and saves empty files.
-     *
-     * @return true if the operation is successful
-     */
-    public static boolean clearPersonnelDatabase() {
-        DOCTORS.clear();
-        PATIENTS.clear();
-        PHARMACISTS.clear();
-        ADMINS.clear();
-        saveAllPersonnelFiles();
-        return true;
-    }
-
-    /**
-     * Checks if the repository has been loaded.
-     *
-     * @return true if the repository is loaded; false otherwise
-     */
-    public static Boolean isRepoLoaded() {
-        return isRepoLoaded;
     }
 
     /**

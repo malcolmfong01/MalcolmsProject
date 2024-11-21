@@ -99,14 +99,18 @@ public class RecordsRepository extends Repository {
         // Ensure the directory exists
         File directory = new File("./src/repository/" + folder);
         if (!directory.exists()) {
-            directory.mkdirs(); // Create the directory if it doesn't exist
+            boolean dirsCreated = directory.mkdirs(); // Create the directory if it doesn't exist
+            if (!dirsCreated) {
+                System.out.println("Error: Failed to create directory: " + directory.getAbsolutePath());
+                return; // Exit if directory creation fails
+            }
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write(getCsvHeader(fileName));
+            writer.write(getCsvHeader(fileName)); // Assuming getCsvHeader() provides a valid header
             writer.newLine();
             for (T record : recordsMapRecordID.values()) {
-                writer.write(recordToCSV(record));
+                writer.write(recordToCSV(record)); // Assuming recordToCSV() formats the record correctly
                 writer.newLine();
             }
             System.out.println("Records successfully saved to " + fileName);
@@ -114,6 +118,7 @@ public class RecordsRepository extends Repository {
             System.out.println("Error saving record data: " + e.getMessage());
         }
     }
+
 
     /**
      * Converts a record object to a CSV-formatted string.
@@ -178,15 +183,23 @@ public class RecordsRepository extends Repository {
         // Ensure the directory exists
         File directory = new File("./src/repository/" + folder);
         if (!directory.exists()) {
-            directory.mkdirs(); // Create the directory if it doesn't exist
+            boolean dirsCreated = directory.mkdirs(); // Create the directory if it doesn't exist
+            if (!dirsCreated) {
+                System.out.println("Error: Failed to create directory: " + directory.getAbsolutePath());
+                return; // Exit if directory creation fails
+            }
         }
 
         File file = new File(filePath);
 
         if (!file.exists()) {
             try {
-                file.createNewFile(); // Create an empty file if it doesn't exist
-                System.out.println("Created empty file: " + filePath);
+                boolean fileCreated = file.createNewFile(); // Create an empty file if it doesn't exist
+                if (fileCreated) {
+                    System.out.println("Created empty file: " + filePath);
+                } else {
+                    System.out.println("File already exists: " + filePath);
+                }
             } catch (IOException e) {
                 System.out.println("Error creating file: " + e.getMessage());
             }
@@ -204,7 +217,6 @@ public class RecordsRepository extends Repository {
                 }
                 T record = csvToRecord(line, type);
                 if (record != null) {
-
                     recordsMapRecordID.put(record.getRecordID(), record);
                 }
             }
