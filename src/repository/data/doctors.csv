@@ -1,3 +1,1 @@
 ID,FullName,Username,Email,PhoneNo,PasswordHash,DoB,Gender,Role,DateJoin
-D001,doctor,doctor,doctor@gmail.com,82880687,Doctor12!,2002-08-10T00:00,M,Doctors,2024-11-21T15:44:49.419297300
-D000,yanyox,NIL,NIL@gmail.com,90000000,Password123!,2001-01-01T00:00,M,Doctors,2024-11-17T20:21:57.035461
