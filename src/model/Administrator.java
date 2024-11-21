@@ -3,13 +3,12 @@ package model;
 import java.time.LocalDateTime;
 
 import controller.UserController;
-import enums.UserType;
 
 /**
  * Administrator class that extends the User class
  */
 
-public class Administrator extends User {
+public class Administrator extends model.User {
     private final LocalDateTime dateOfCreation;
 
     /**
@@ -29,7 +28,7 @@ public class Administrator extends User {
 
     public Administrator(String fullName, String username, String email, String phoneNo,
                          String passwordHash, LocalDateTime DoB, String gender, String role, LocalDateTime dateOfCreation) {
-        super(UserController.generateUID(UserType.ADMINS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Admins");
+        super(UserController.generateUID(enums.User.ADMINS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Admins");
         this.dateOfCreation = dateOfCreation;
     }
     

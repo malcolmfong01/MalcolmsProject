@@ -3,13 +3,13 @@ package model;
 import java.time.LocalDateTime;
 
 import controller.UserController;
-import enums.UserType;
+import enums.User;
 
 /**
  * Doctor class that extends the User class
  */
 
-public class Doctor extends User {
+public class Doctor extends model.User {
     private final LocalDateTime dateJoin;
 
     /**
@@ -29,7 +29,7 @@ public class Doctor extends User {
     			String fullName, String username, String email, String phoneNo,
                   String passwordHash, LocalDateTime DoB, String gender,
                    LocalDateTime dateJoin) {
-        super(UserController.generateUID(UserType.DOCTORS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Doctors");
+        super(UserController.generateUID(User.DOCTORS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Doctors");
         this.dateJoin = dateJoin;
 
     }

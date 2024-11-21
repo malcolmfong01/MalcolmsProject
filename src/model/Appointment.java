@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDateTime;
 
 import enums.AppointmentStatus;
-import enums.RecordStatusType;
+import enums.RecordStatus;
 
 /**
  * Appointment class extends Records
@@ -36,7 +36,7 @@ public class Appointment extends Records {
 	public Appointment(String recordID,
 					   LocalDateTime createdDate,
 					   LocalDateTime updatedDate,
-					   RecordStatusType recordStatus,
+					   RecordStatus recordStatus,
 					   String appointmentOutcomeRecordID,
 					   String patientID,
 					   String doctorID,

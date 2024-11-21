@@ -3,13 +3,12 @@ package model;
 import java.time.LocalDateTime;
 
 import controller.UserController;
-import enums.UserType;
 
 /**
  * Patient class that extends the User class
  */
 
-public class Patient extends User {
+public class Patient extends model.User {
     private String allergies;
     private LocalDateTime dateOfAdmission;
 
@@ -29,7 +28,7 @@ public class Patient extends User {
 
     public Patient(String fullName, String username, String email, String phoneNo,
                    String passwordHash, LocalDateTime DoB, String gender, String allergies, LocalDateTime dateOfAdmission) {
-        super(UserController.generateUID(UserType.PATIENTS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Patients");
+        super(UserController.generateUID(enums.User.PATIENTS), fullName, username, email, phoneNo, passwordHash, DoB, gender, "Patients");
 
 
 

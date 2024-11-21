@@ -4,7 +4,7 @@ import java.util.*;
 
 import enums.AppointmentOutcomeStatus;
 import enums.AppointmentStatus;
-import enums.RecordFileType;
+import enums.Record;
 import model.*;
 import repository.AppointmentOutcomeRecordRepository;
 import repository.DiagnosisRepository;
@@ -21,16 +21,16 @@ public class AppointmentController {
 	/** Map to keep track of the next ID for each record type
 	 * Generates a unique record ID for a specific record type using UUID.
 	 */
-	private static final Map<RecordFileType, Integer> recordCounters = new HashMap<>();
+	private static final Map<Record, Integer> recordCounters = new HashMap<>();
 
 	static {
 		// Initialize counters for each record type starting at 0
-		for (RecordFileType recType : RecordFileType.values()) {
+		for (Record recType : Record.values()) {
 			recordCounters.put(recType, 0);
 		}
 	}
 
-	public static String generateRecordID(RecordFileType recType) {
+	public static String generateRecordID(Record recType) {
 		String prefix;
 		int nextId = 0;
 

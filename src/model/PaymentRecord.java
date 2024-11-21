@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 import controller.RecordsController;
 import enums.PaymentStatus;
-import enums.RecordFileType;
-import enums.RecordStatusType;
+import enums.Record;
+import enums.RecordStatus;
 
 /**
  * Represents a payment record in the system. Inherits from the Records class to include
@@ -32,10 +32,10 @@ public class PaymentRecord extends Records {
     public PaymentRecord(
             LocalDateTime createdDate,
             LocalDateTime updatedDate,
-            RecordStatusType recordStatus,
+            RecordStatus recordStatus,
             String patientID,
             double paymentAmount) {
-        super(RecordsController.generateRecordID(RecordFileType.PAYMENT_RECORDS), createdDate, updatedDate,
+        super(RecordsController.generateRecordID(Record.PAYMENT_RECORDS), createdDate, updatedDate,
                 recordStatus);
         this.patientID = patientID;
         this.paymentAmount = paymentAmount;
@@ -57,7 +57,7 @@ public class PaymentRecord extends Records {
             String recordID,
             LocalDateTime createdDate,
             LocalDateTime updatedDate,
-            RecordStatusType recordStatus,
+            RecordStatus recordStatus,
             String patientID,
             PaymentStatus paymentStatus,
             double paymentAmount) {
@@ -75,11 +75,11 @@ public class PaymentRecord extends Records {
      * @param updatedDate  the date and time when the record was last updated
      * @param recordStatus the status of the record (e.g., active, inactive)
      */
-    public PaymentRecord(String recordID, LocalDateTime createdDate, LocalDateTime updatedDate, RecordStatusType recordStatus) {
+    public PaymentRecord(String recordID, LocalDateTime createdDate, LocalDateTime updatedDate, RecordStatus recordStatus) {
         super(recordID, createdDate, updatedDate, recordStatus);
     }
 
-    public PaymentRecord(String billingID, LocalDateTime createdDate, LocalDateTime updateDate, RecordStatusType recordStatus, PaymentStatus paymentStatus, String patientID,int paymentAmount) {
+    public PaymentRecord(String billingID, LocalDateTime createdDate, LocalDateTime updateDate, RecordStatus recordStatus, PaymentStatus paymentStatus, String patientID, int paymentAmount) {
         super(billingID, createdDate, updateDate, recordStatus);
         this.patientID = patientID;
         this.paymentAmount = paymentAmount;

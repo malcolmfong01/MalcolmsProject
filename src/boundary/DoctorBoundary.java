@@ -10,11 +10,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
-import HMSApp.HMSMain;
+import Main.Main;
 import controller.*;
 import enums.AppointmentOutcomeStatus;
 import enums.AppointmentStatus;
-import enums.RecordFileType;
+import enums.Record;
 import utility.Validator;
 import model.*;
 import repository.AppointmentOutcomeRecordRepository;
@@ -83,7 +83,7 @@ public class DoctorBoundary extends Boundary {
 				case 7 -> recordAppointmentOutcome();
 				case 8 -> {
 					System.out.println("Logging out...");
-					HMSMain.main(null);
+					Main.main(null);
 					return;
 				}
 				default -> System.out.println("Invalid choice!");
@@ -340,7 +340,7 @@ public class DoctorBoundary extends Boundary {
 	 */
 	public String generateAppointmentOutcomeRecord(MedicalRecord medicalRecord, String diagnosisID,
 			String typeOfService, String consultationNotes, LocalDateTime appointmentTime) {
-		String UID = AppointmentController.generateRecordID(RecordFileType.APPOINTMENT_OUTCOME_RECORDS);
+		String UID = AppointmentController.generateRecordID(Record.APPOINTMENT_OUTCOME_RECORDS);
 		AppointmentOutcomeRecord outcomeRecord = new AppointmentOutcomeRecord(
 				UID,
 				medicalRecord.getPatientID(),

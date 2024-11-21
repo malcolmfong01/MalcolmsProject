@@ -7,7 +7,7 @@
 package repository;
 
 import enums.PaymentStatus;
-import enums.RecordStatusType;
+import enums.RecordStatus;
 import model.*;
 
 import java.io.BufferedReader;
@@ -243,7 +243,7 @@ public class RecordsRepository extends Repository {
                         fields[3], // patient email
                         LocalDateTime.parse(fields[4]), // createdDate
                         LocalDateTime.parse(fields[5]), // updatedDate
-                        RecordStatusType.toEnumRecordStatusType(fields[6]), // recordStatus //ACTIVE
+                        RecordStatus.toEnumRecordStatusType(fields[6]), // recordStatus //ACTIVE
                         fields[7], // patientID
                         fields[8], // doctorID
                         fields[9], // bloodType
@@ -264,7 +264,7 @@ public class RecordsRepository extends Repository {
                         fields[0], // recordID (MRID)
                         LocalDateTime.parse(fields[1]), // createdDate
                         LocalDateTime.parse(fields[2]), // updatedDate
-                        RecordStatusType.toEnumRecordStatusType(fields[3]), // recordStatus
+                        RecordStatus.toEnumRecordStatusType(fields[3]), // recordStatus
                         fields[4], // appointmentOutcomeRecordID
                         fields[5], // patientID
                         fields[6], // doctorID
@@ -279,7 +279,7 @@ public class RecordsRepository extends Repository {
                         fields[0], // recordID
                         LocalDateTime.parse(fields[1]), // createdDate
                         LocalDateTime.parse(fields[2]), // updatedDate
-                        RecordStatusType.toEnumRecordStatusType(fields[3]), // recordStatus
+                        RecordStatus.toEnumRecordStatusType(fields[3]), // recordStatus
                         fields[4], // patientID
                         PaymentStatus.toEnumRecordStatusType(fields[6]), // recordStatus
                         Double.parseDouble(fields[5]) // paymentAmount

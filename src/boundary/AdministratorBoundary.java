@@ -9,8 +9,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import HMSApp.HMSMain;
+import Main.Main;
 import enums.*;
+import enums.User;
 import model.*;
 import repository.RecordsRepository;
 import repository.UserRepository;
@@ -77,7 +78,7 @@ public class AdministratorBoundary extends Boundary {
                 case 5 -> viewAndManageBilling();
                 case 6 -> {
                     System.out.println("Logging out...");
-                    HMSMain.main(null); // Restart application
+                    Main.main(null); // Restart application
                     return; // Exit after logging out
                 }
                 default -> System.out.println("Invalid choice! Please try again.");
@@ -104,8 +105,8 @@ public class AdministratorBoundary extends Boundary {
         int choice = Validator.readInt("");
         switch (choice) {
             case 1 -> {
-                listStaffByRole(UserType.DOCTORS);
-                listStaffByRole(UserType.PHARMACISTS);
+                listStaffByRole(User.DOCTORS);
+                listStaffByRole(User.PHARMACISTS);
             }
             case 2 -> {
                 listStaffByGender("M");
@@ -160,8 +161,8 @@ public class AdministratorBoundary extends Boundary {
 
     private static void updateStaff(String role) {
         String UID = Validator.readString("Enter ID: ");
-        User personnel = UserController.getUserbyUID(UID,
-                role.equals("Doctor") ? UserType.DOCTORS : UserType.PHARMACISTS);
+        model.User personnel = UserController.getUserbyUID(UID,
+                role.equals("Doctor") ? User.DOCTORS : User.PHARMACISTS);
 
         if (personnel == null) {
             System.out.println("Staff does not exist!");
@@ -208,12 +209,12 @@ public class AdministratorBoundary extends Boundary {
     	if(role.equals("Doctor")) {
             String uidDoctor = Validator.readID("Doctor", "D\\d{3}");
             System.out.println("Validated Doctor ID: " + uidDoctor);
-            AdministratorController.removeUser(uidDoctor, UserType.DOCTORS);
+            AdministratorController.removeUser(uidDoctor, User.DOCTORS);
     	}
     	else {
             String uidPharmacist = Validator.readID("Pharmacist", "PH\\d{3}");
             System.out.println("Validated Pharmacist ID: " + uidPharmacist);
-            AdministratorController.removeUser(uidPharmacist, UserType.PHARMACISTS);
+            AdministratorController.removeUser(uidPharmacist, User.PHARMACISTS);
     	}
     }
 
@@ -297,7 +298,7 @@ public class AdministratorBoundary extends Boundary {
      * @param personnel The staff whose details are to be printed.
      */
 
-    private static void printStaffDetails(User personnel) {
+    private static void printStaffDetails(model.User personnel) {
         headerline();
         System.out.println("Personnel Details:");
         headerline();
@@ -345,8 +346,8 @@ public class AdministratorBoundary extends Boundary {
      * @param type The type of personnel to list (Doctors or Pharmacists).
      */
 
-    private static void listStaffByRole(UserType type) {
-        Map<String, ? extends User> personnelMap;
+    private static void listStaffByRole(User type) {
+        Map<String, ? extends model.User> personnelMap;
 
         switch (type) {
             case DOCTORS:
@@ -363,8 +364,8 @@ public class AdministratorBoundary extends Boundary {
         if (personnelMap != null && !personnelMap.isEmpty()) {
             System.out.println("\nListing all staff of type: " + type);
             System.out.println("==================================================");
-            for (User staff : personnelMap.values()) {
-                if (type == UserType.DOCTORS) {
+            for (model.User staff : personnelMap.values()) {
+                if (type == User.DOCTORS) {
                     printDoctorDetails((Doctor) staff);
                 } else  {
                     // No check for Pharmacists since it's already assigned
@@ -404,17 +405,17 @@ public class AdministratorBoundary extends Boundary {
      * Lists all personnel sorted by age from oldest to youngest.
      */
     private static void listStaffByAge() {
-        List<User> combinedList = new ArrayList<>();
+        List<model.User> combinedList = new ArrayList<>();
 
         combinedList.addAll(UserRepository.DOCTORS.values());
         combinedList.addAll(UserRepository.PHARMACISTS.values());
 
         // Sort the combined list by age from oldest to youngest
-        combinedList.sort(Comparator.comparingInt(personnel -> calculateAge((User) personnel)).reversed());
+        combinedList.sort(Comparator.comparingInt(personnel -> calculateAge((model.User) personnel)).reversed());
 
         System.out.println("\nListing all personnel sorted by age (oldest to youngest):");
         System.out.println("==================================================");
-        for (User personnel : combinedList) {
+        for (model.User personnel : combinedList) {
             if (personnel instanceof Doctor) {
                 printDoctorDetails((Doctor) personnel);
             } else if (personnel instanceof Pharmacist) {
@@ -431,7 +432,7 @@ public class AdministratorBoundary extends Boundary {
      * @return The age in years.
      */
 
-    private static int calculateAge(User staff) {
+    private static int calculateAge(model.User staff) {
         LocalDate birthDate = staff.getDoB().toLocalDate(); // Ensure this returns LocalDate
         return Period.between(birthDate, LocalDate.now()).getYears();
     }
@@ -654,7 +655,7 @@ public class AdministratorBoundary extends Boundary {
                     matchingRecords.add(record);
                     record.setPaymentStatus(paymentStatus);
                     record.setUpdatedDate(updateDate);
-                    record.setRecordStatus(RecordStatusType.ARCHIVED);
+                    record.setRecordStatus(RecordStatus.ARCHIVED);
                     RecordsRepository.PAYMENT_RECORDS.put(record.getPatientID(), record);
                     RecordsRepository.saveAllRecordFiles();
                 }
