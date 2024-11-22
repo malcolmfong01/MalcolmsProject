@@ -9,10 +9,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Prescribed Medication Repository reads, loads,stores  and updates data for
- * all csv files for prescribed medication
- */
 public class PrescribedMedicationRepository extends Repository {
     private static final String folder = "data";
     private static final String fileName = "prescribed_medications.csv";
@@ -82,6 +78,7 @@ public class PrescribedMedicationRepository extends Repository {
                     writer.newLine();
                 }
             }
+//        System.out.println("Medications successfully saved to CSV.");
         } catch (IOException e) {
             System.out.println("Error saving medications to CSV: " + e.getMessage());
         }
@@ -153,6 +150,8 @@ public class PrescribedMedicationRepository extends Repository {
                     addMedication(diagnosisID, medication);
                 }
             }
+            // Optionally, log the successful loading of data
+            // System.out.println("Successfully loaded medications for " + diagnosisToMedicationsMap.size() + " diagnoses from " + fileName);
         } catch (IOException e) {
             System.out.println("Error reading medications: " + e.getMessage());
         }
@@ -165,9 +164,24 @@ public class PrescribedMedicationRepository extends Repository {
      * @param medication the PrescribedMedication to add
      */
     public static void addMedication(String diagnosisID, PrescribedMedication medication) {
+        // Retrieve the list of medications for the given diagnosis ID, or create a new list if it doesn't exist
         ArrayList<PrescribedMedication> medications = diagnosisToMedicationsMap.getOrDefault(diagnosisID, new ArrayList<>());
-        medications.add(medication);
-        diagnosisToMedicationsMap.put(diagnosisID, medications);
+        // Check if the medication already exists in the list for the given diagnosis (based on unique medicineID)
+        boolean isDuplicate = false;
+        for (PrescribedMedication existingMedication : medications) {
+            if (existingMedication.getMedicineID().equals(medication.getMedicineID())) {
+                isDuplicate = true;
+                break; // Exit the loop once a duplicate is found
+            }
+        }
+        // If the medication is not a duplicate, add it to the list
+        if (!isDuplicate) {
+            medications.add(medication);
+            // Update the map with the updated medication list for the diagnosisID
+            diagnosisToMedicationsMap.put(diagnosisID, medications);
+        } else {
+            System.out.println("Medication with ID " + medication.getMedicineID() + " already exists for Diagnosis ID " + diagnosisID);
+        }
     }
     /**
      * Extracts the prescribedMed ID from a CSV-formatted string.
